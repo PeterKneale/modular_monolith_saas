@@ -1,0 +1,36 @@
+﻿@page
+@model Micro.Web.Pages.Translate.Summary
+
+<div class="card mb-2">
+    <div class="card-header">
+        <span class="float-end">
+            Total Terms: <strong>@Model.Results.TotalTerms</strong>
+            Total Translations: <strong>@Model.Results.TotalTranslations</strong>
+        </span>
+        <h5>Translation Summary</h5>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model.Results.Languages)
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">
+
+                        @item.Language @item.Percentage%
+                    </h5>
+                    <p class="card-text">
+                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: @item.Percentage%"></div>
+                        </div>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <a class="card-link" asp-page="Translations" asp-route-language="@item.Language">
+                        Edit
+                    </a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

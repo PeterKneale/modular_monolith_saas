@@ -1,0 +1,6 @@
+﻿@model Guid
+@{
+    var fieldName = ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix;
+}
+
+<input type="hidden" asp-for="@Model" data-testid="@fieldName"/>

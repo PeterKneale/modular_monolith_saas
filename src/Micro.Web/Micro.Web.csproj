@@ -8,13 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
+
     <ItemGroup>
-      <Folder Include="Pages\Translations\" />
+        <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
+        <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1"/>
     </ItemGroup>
 
 </Project>

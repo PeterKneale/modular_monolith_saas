@@ -1,0 +1,18 @@
+﻿@model string
+@{
+    var fieldName = ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix;
+    var parameters = new Dictionary<string, object>
+    {
+        { "class", "form-control" },
+        { "data-testid", fieldName }
+    };
+    if (ViewContext.ViewData.Keys.Contains("autofocus"))
+    {
+        parameters.Add("autofocus", "autofocus");
+    }
+}
+<div class="mb-3">
+    <label asp-for="@Model" class="form-label"></label>
+    @Html.TextBoxFor(x => x, null, parameters)
+    <span asp-validation-for="@Model"></span>
+</div>

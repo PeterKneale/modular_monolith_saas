@@ -1,0 +1,14 @@
+﻿@if (!ViewData.ModelState.IsValid)
+{
+    var messages = new List<string>();
+    foreach (var key in ViewData.ModelState.Keys)
+    {
+        foreach (var error in ViewData.ModelState[key].Errors)
+        {
+            messages.Add(error.ErrorMessage);
+        }
+    }
+
+    var text = string.Join(",", messages);
+    @await Html.PartialAsync("Shared/_Alert", Alert.Danger(text))
+}

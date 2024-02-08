@@ -1,0 +1,25 @@
+﻿@page
+@model Micro.Web.Pages.Translate.Translations
+
+<div class="card mb-2">
+    <div class="card-header">
+        <span class="float-end">
+            Terms: <strong>@Model.Results.TotalTerms</strong>
+            Translations: <strong>@Model.Results.TotalTranslations</strong>
+        </span>
+        <h5>Translation for @Model.Language</h5>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model.Results.Languages)
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Term</h5>
+                    <p class="card-text">
+                        @item.Text
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
