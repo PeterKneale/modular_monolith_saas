@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants", "src\Micro.Tenants\Micro.Tenants.csproj", "{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.IntegrationTests", "Tests\Micro.Tenants.IntegrationTests\Micro.Tenants.IntegrationTests.csproj", "{74F19403-CCCC-4B1C-9810-58E139698770}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{CC782926-4967-457F-88A2-A4BCD13C38EB}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-infra.yml = docker-compose-infra.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations", "src\Micro.Translations\Micro.Translations.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common", "Micro.Common\Micro.Common.csproj", "{A06906F0-2CB1-4D81-B2C7-8B55BD409617}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.IntegrationTests", "tests\Micro.Translations.IntegrationTests\Micro.Translations.IntegrationTests.csproj", "{2137843E-DE15-468B-8126-01C8DA8651C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Cli", "src\Micro.Cli\Micro.Cli.csproj", "{EC07F9A9-C93F-4E60-B1F0-EB031463181B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web", "src\Micro.Web\Micro.Web.csproj", "{89D08F8E-6B4C-494E-995F-B35314A1C233}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74F19403-CCCC-4B1C-9810-58E139698770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F19403-CCCC-4B1C-9810-58E139698770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F19403-CCCC-4B1C-9810-58E139698770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F19403-CCCC-4B1C-9810-58E139698770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78DC164C-08C1-4797-8229-502F45FF4C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DC164C-08C1-4797-8229-502F45FF4C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DC164C-08C1-4797-8229-502F45FF4C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DC164C-08C1-4797-8229-502F45FF4C96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A06906F0-2CB1-4D81-B2C7-8B55BD409617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A06906F0-2CB1-4D81-B2C7-8B55BD409617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A06906F0-2CB1-4D81-B2C7-8B55BD409617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A06906F0-2CB1-4D81-B2C7-8B55BD409617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2137843E-DE15-468B-8126-01C8DA8651C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2137843E-DE15-468B-8126-01C8DA8651C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2137843E-DE15-468B-8126-01C8DA8651C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2137843E-DE15-468B-8126-01C8DA8651C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC07F9A9-C93F-4E60-B1F0-EB031463181B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC07F9A9-C93F-4E60-B1F0-EB031463181B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC07F9A9-C93F-4E60-B1F0-EB031463181B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC07F9A9-C93F-4E60-B1F0-EB031463181B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D08F8E-6B4C-494E-995F-B35314A1C233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D08F8E-6B4C-494E-995F-B35314A1C233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D08F8E-6B4C-494E-995F-B35314A1C233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D08F8E-6B4C-494E-995F-B35314A1C233}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

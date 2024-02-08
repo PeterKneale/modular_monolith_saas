@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:15.3-alpine
+    container_name: db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    command: "-c log_statement=all"
+    ports:
+      - "5432:5432"
+
+
+      
