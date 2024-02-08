@@ -5,7 +5,7 @@ using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Application;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Terms;
-using static Micro.Translations.Infrastructure.Database.Constants;
+using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
 
@@ -13,7 +13,7 @@ internal class TermRepository(ConnectionFactory connections, ICurrentContext con
 {
     public async Task CreateAsync(Term term)
     {
-        const string sql = $"INSERT INTO {SchemaName}.{TableNameTerms} (id, organisation_id, app_id, name) VALUES (@Id, @OrganisationId, @AppId, @Name)";
+        const string sql = $"INSERT INTO {TermsTable} (id, organisation_id, app_id, name) VALUES (@Id, @OrganisationId, @AppId, @Name)";
         var row = new Row
         {
             Id = term.Id.Value,
@@ -27,7 +27,7 @@ internal class TermRepository(ConnectionFactory connections, ICurrentContext con
 
     public async Task UpdateAsync(Term term)
     {
-        const string sql = $"UPDATE {SchemaName}.{TableNameTerms} SET name = @Name WHERE id = @Id";
+        const string sql = $"UPDATE {TermsTable} SET name = @Name WHERE id = @Id";
         var row = new Row
         {
             Id = term.Id.Value,
@@ -39,7 +39,7 @@ internal class TermRepository(ConnectionFactory connections, ICurrentContext con
 
     public async Task<Term?> GetAsync(TermId id)
     {
-        const string sql = $"SELECT * FROM {SchemaName}.{TableNameTerms} WHERE id = @Id";
+        const string sql = $"SELECT * FROM {TermsTable} WHERE id = @Id";
         using var con = connections.CreateConnection();
         var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Id = id.Value });
         return row == null ? null : Map(row);

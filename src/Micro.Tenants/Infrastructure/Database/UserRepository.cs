@@ -5,7 +5,7 @@ using Micro.Tenants.Application;
 using Micro.Tenants.Domain;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.Domain.Users;
-using static Micro.Tenants.Infrastructure.Database.Constants;
+using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
@@ -13,7 +13,7 @@ internal class UserRepository(ConnectionFactory connections) : IUserRepository
 {
     public async Task CreateAsync(User user)
     {
-        const string sql = $"INSERT INTO {SchemaName}.Users (id, organisation_id, first_name, last_name, email, password, role) " +
+        const string sql = $"INSERT INTO {UsersTable} (id, organisation_id, first_name, last_name, email, password, role) " +
                            "VALUES (@Id, @OrganisationId, @FirstName, @LastName, @Email, @Password, @Role)";
         using var con = connections.CreateConnection();
         var row = new Row
@@ -31,7 +31,7 @@ internal class UserRepository(ConnectionFactory connections) : IUserRepository
 
     public async Task<User?> GetAsync(UserId id)
     {
-        const string sql = $"SELECT * FROM {SchemaName}.Users WHERE id = @Id";
+        const string sql = $"SELECT * FROM {UsersTable} WHERE id = @Id";
         using var con = connections.CreateConnection();
         var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Id = id.Value });
         return row == null ? null : Map(row);

@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Dapper;
 using Micro.Common.Infrastructure.Database;
+using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Application.Translations;
 
@@ -27,15 +28,15 @@ public static class ListTranslations
 
         private async Task<int> CountTerms(Guid appId, CancellationToken token)
         {
-            var sql = $"SELECT COUNT(1) FROM {schema}.terms WHERE app_id = @AppId";
+            var sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE app_id = @AppId";
             using var con = connections.CreateConnection();
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { appId }, cancellationToken: token));
         }
 
         private async Task<int> CountTranslations(Guid appId, string language, CancellationToken token)
         {
-            var sql = $"SELECT COUNT(1) FROM {schema}.translations " +
-                      $"JOIN {schema}.terms on {schema}.translations.term_id = terms.id " +
+            var sql = $"SELECT COUNT(1) FROM {TranslationsTable} " +
+                      $"JOIN {TermsTable} on {TranslationsTable}.term_id = {TermsTable}.id " +
                       "WHERE app_id = @appId " +
                       "AND language_code = @language";
             using var con = connections.CreateConnection();
@@ -45,8 +46,8 @@ public static class ListTranslations
         private async Task<IDictionary<string, string?>> ListTranslationsByLanguage(Guid appId, string language, CancellationToken token)
         {
             var sql = $"SELECT t.name, tr.text " +
-                      $"FROM translations.terms t " +
-                      $"LEFT JOIN translations.translations tr ON t.id = tr.term_id AND tr.language_code = @language " +
+                      $"FROM {TermsTable} t " +
+                      $"LEFT JOIN {TranslationsTable} tr ON t.id = tr.term_id AND tr.language_code = @language " +
                       $"WHERE t.app_id = @appId";
                       
             using var con = connections.CreateConnection();

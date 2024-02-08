@@ -3,7 +3,7 @@ using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Application;
 using Micro.Tenants.Domain.Organisations;
-using static Micro.Tenants.Infrastructure.Database.Constants;
+using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
@@ -11,7 +11,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 {
     public async Task CreateAsync(Organisation organisation)
     {
-        const string sql = $"INSERT INTO {SchemaName}.organisations (id, name) VALUES (@Id, @Name)";
+        const string sql = $"INSERT INTO {OrganisationsTable} (id, name) VALUES (@Id, @Name)";
         var row = new Row
         {
             Id = organisation.Id.Value,
@@ -23,7 +23,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     public async Task UpdateAsync(Organisation organisation)
     {
-        const string sql = $"UPDATE {SchemaName}.organisations SET name = @Name WHERE id = @Id";
+        const string sql = $"UPDATE {OrganisationsTable} SET name = @Name WHERE id = @Id";
         var row = new Row
         {
             Id = organisation.Id.Value,
@@ -35,7 +35,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     public async Task<Organisation?> GetAsync(OrganisationId id)
     {
-        const string sql = $"SELECT * FROM {SchemaName}.organisations WHERE id = @Id";
+        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE id = @Id";
         using var con = connections.CreateConnection();
         var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Id = id.Value });
         return row == null ? null : Map(row);
@@ -43,7 +43,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     public async Task<Organisation?> GetAsync(OrganisationName name)
     {
-        const string sql = $"SELECT * FROM {SchemaName}.organisations WHERE name = @Name";
+        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE name = @Name";
         using var con = connections.CreateConnection();
         var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Name = name.Value });
         return row == null ? null : Map(row);

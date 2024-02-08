@@ -1,17 +1,17 @@
 ﻿using Dapper;
-using Micro.Common.Application;
 using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Application;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Translations;
+using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
 
-internal class TranslationRepository(ConnectionFactory connections, ICurrentContext context) : ITranslationRepository
+internal class TranslationRepository(ConnectionFactory connections) : ITranslationRepository
 {
     public async Task CreateAsync(Translation translation, CancellationToken token)
     {
-        const string sql = $"INSERT INTO {Constants.SchemaName}.translations (id, term_id, language_code, text) VALUES (@Id, @TermId, @LanguageCode, @Text)";
+        const string sql = $"INSERT INTO {Schema}.translations (id, term_id, language_code, text) VALUES (@Id, @TermId, @LanguageCode, @Text)";
         
         var parameters = new Row
         {
@@ -27,7 +27,7 @@ internal class TranslationRepository(ConnectionFactory connections, ICurrentCont
 
     public async Task UpdateAsync(Translation translation, CancellationToken token)
     {
-        const string sql = $"UPDATE {Constants.SchemaName}.translations SET text = @Text WHERE id = @Id";
+        const string sql = $"UPDATE {Schema}.translations SET text = @Text WHERE id = @Id";
         
         var parameters = new Row
         {
@@ -41,7 +41,7 @@ internal class TranslationRepository(ConnectionFactory connections, ICurrentCont
 
     public async Task<Translation?> GetAsync(TranslationId id, CancellationToken token)
     {
-        const string sql = $"SELECT * FROM {Constants.SchemaName}.translations WHERE id = @Id";
+        const string sql = $"SELECT * FROM {Schema}.translations WHERE id = @Id";
         
         var parameters = new Row { Id = id.Value };
         

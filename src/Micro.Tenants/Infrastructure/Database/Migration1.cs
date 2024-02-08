@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
@@ -7,11 +8,11 @@ public class Migration1 : Migration
 {
     public override void Up()
     {
-        Create.Table("organisations")
+        Create.Table(OrganisationsTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("name").AsString(100).Unique();
 
-        Create.Table("users")
+        Create.Table(UsersTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("organisation_id").AsGuid()
             .WithColumn("first_name").AsString(100)
@@ -20,14 +21,14 @@ public class Migration1 : Migration
             .WithColumn("password").AsString(100)
             .WithColumn("role").AsString(50);
 
-        Create.ForeignKey("fk_users_organisations")
-            .FromTable("users").ForeignColumn("organisation_id")
-            .ToTable("organisations").PrimaryColumn("id");
+        Create.ForeignKey($"fk_{UsersTable}_{OrganisationsTable}")
+            .FromTable(UsersTable).ForeignColumn("organisation_id")
+            .ToTable(OrganisationsTable).PrimaryColumn("id");
     }
 
     public override void Down()
     {
-        Delete.Table("users").IfExists();
-        Delete.Table("organisations").IfExists();
+        Delete.Table(UsersTable).IfExists();
+        Delete.Table(OrganisationsTable).IfExists();
     }
 }

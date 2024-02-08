@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Micro.Common.Infrastructure.Database;
+using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Application.Translations;
 
@@ -24,15 +25,15 @@ public static class GetTranslationSummary
 
         private async Task<int> CountTerms(Guid appId, CancellationToken token)
         {
-            var sql = "SELECT COUNT(1) FROM translations.terms WHERE app_id = @AppId";
+            var sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE app_id = @AppId";
             using var con = connections.CreateConnection();
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { appId }, cancellationToken: token));
         }
 
         private async Task<int> CountTranslations(Guid appId, CancellationToken token)
         {
-            var sql = "SELECT COUNT(1) FROM translations.translations " +
-                      "JOIN translations.terms ON translations.term_id = terms.id " +
+            var sql = $"SELECT COUNT(1) FROM {TranslationsTable} " +
+                      $"JOIN {TermsTable} ON {TranslationsTable}.term_id = terms.id " +
                       "WHERE app_id = @AppId";
             using var con = connections.CreateConnection();
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { appId }, cancellationToken: token));
@@ -40,9 +41,9 @@ public static class GetTranslationSummary
 
         private async Task<IDictionary<string, int>> CountTranslationsByLanguage(Guid appId, CancellationToken token)
         {
-            var sql = $"SELECT language_code, COUNT(1) FROM translations.terms " +
-                      $"INNER JOIN translations.translations t ON terms.id = t.term_id " +
-                      $"WHERE terms.app_id = @AppId " +
+            var sql = $"SELECT language_code, COUNT(1) FROM {TermsTable} " +
+                      $"INNER JOIN {TranslationsTable} t ON {TermsTable}.id = t.term_id " +
+                      $"WHERE {TermsTable}.app_id = @AppId " +
                       $"GROUP BY language_code";
 
             using var con = connections.CreateConnection();

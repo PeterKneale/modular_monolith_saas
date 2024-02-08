@@ -32,7 +32,7 @@ internal static class ServiceCollectionExtensions
         
         // Database Migrations
         services
-            .AddSingleton<IConventionSet>(new DefaultConventionSet("translations", null))
+            .AddSingleton<IConventionSet>(new DefaultConventionSet(Constants.Schema, null))
             .AddFluentMigratorCore()
             .ConfigureRunner(runner => runner
                 .AddPostgres()

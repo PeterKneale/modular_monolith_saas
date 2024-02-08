@@ -4,7 +4,7 @@ namespace Micro.Common.Infrastructure.Database;
 
 public static class ConfigurationExtensions
 {
-    private const string Template = "Username={0};Password={1};Database={2};Host={3};Port={4};Include Error Detail=true;Log Parameters=true";
+    private const string Template = "Username={0};Password={1};Database={2};Host={3};Port={4};Search Path=tenants,translate;Include Error Detail=true;Log Parameters=true";
 
     public static string GetDbConnectionString(this IConfiguration configuration)
     {
