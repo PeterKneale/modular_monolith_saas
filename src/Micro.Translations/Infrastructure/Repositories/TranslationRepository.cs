@@ -5,22 +5,22 @@ using Micro.Translations.Domain;
 using Micro.Translations.Domain.Translations;
 using static Micro.Translations.Constants;
 
-namespace Micro.Translations.Infrastructure.Database;
+namespace Micro.Translations.Infrastructure.Repositories;
 
 internal class TranslationRepository(ConnectionFactory connections) : ITranslationRepository
 {
     public async Task CreateAsync(Translation translation, CancellationToken token)
     {
         const string sql = $"INSERT INTO {Schema}.translations (id, term_id, language_code, text) VALUES (@Id, @TermId, @LanguageCode, @Text)";
-        
-        var parameters = new Row
+
+        var parameters = new
         {
             Id = translation.Id.Value,
             TermId = translation.TermId.Value,
-            LanguageCode = translation.Language.Name,
+            LanguageCode = translation.Language.Code,
             Text = translation.Text.Value
         };
-        
+
         using var con = connections.CreateConnection();
         await con.ExecuteAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
     }
@@ -28,13 +28,13 @@ internal class TranslationRepository(ConnectionFactory connections) : ITranslati
     public async Task UpdateAsync(Translation translation, CancellationToken token)
     {
         const string sql = $"UPDATE {Schema}.translations SET text = @Text WHERE id = @Id";
-        
-        var parameters = new Row
+
+        var parameters = new
         {
             Id = translation.Id.Value,
             Text = translation.Text.Value
         };
-        
+
         using var con = connections.CreateConnection();
         await con.ExecuteAsync(sql, parameters);
     }
@@ -42,31 +42,20 @@ internal class TranslationRepository(ConnectionFactory connections) : ITranslati
     public async Task<Translation?> GetAsync(TranslationId id, CancellationToken token)
     {
         const string sql = $"SELECT * FROM {Schema}.translations WHERE id = @Id";
-        
-        var parameters = new Row { Id = id.Value };
-        
+
+        var parameters = new { Id = id.Value };
+
         using var con = connections.CreateConnection();
-        var result = await con.QuerySingleOrDefaultAsync<Row>(new CommandDefinition(sql, parameters, cancellationToken: token));
+        var result = await con.QuerySingleOrDefaultAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
         
-        return result == null 
-            ? null 
-            : Map(result);
-    }
-
-    private class Row
-    {
-        public Guid Id { get; init; }
-        public Guid TermId { get; set; }
-        public string LanguageCode { get; init; } = null!;
-        public string Text { get; init; } = null!;
-    }
-
-    private static Translation Map(Row row)
-    {
-        var id = new TranslationId(row.Id);
-        var termId = new TermId(row.TermId);
-        var language = Language.FromName(row.LanguageCode);
-        var text = new Text(row.Text);
-        return new Translation(id, termId, language, text);
+        if (result == null)
+        {
+            return null;
+        }
+        
+        var termId = new TermId(result.TermId);
+        var languageCode = LanguageCode.FromIsoCode(result.LanguageCode);
+        var text = new Text(result.Text);
+        return new Translation(id, termId, languageCode, text);
     }
 }

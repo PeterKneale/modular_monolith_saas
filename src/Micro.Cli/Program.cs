@@ -30,7 +30,7 @@ TenantsModuleStartup.Start(accessor, configuration, true);
 TranslationModuleStartup.Start(accessor, configuration, true);
 
 await services.GetRequiredService<ITranslationModule>()
-    .SendCommand(new CreateTerm.Command(Guid.NewGuid(), Guid.NewGuid(), "x"));
+    .SendCommand(new AddTerm.Command(Guid.NewGuid(), Guid.NewGuid(), "x"));
 
 public class Accessor : IContextAccessor
 {

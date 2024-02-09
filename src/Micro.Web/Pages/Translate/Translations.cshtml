@@ -7,17 +7,30 @@
             Terms: <strong>@Model.Results.TotalTerms</strong>
             Translations: <strong>@Model.Results.TotalTranslations</strong>
         </span>
-        <h5>Translation for @Model.Language</h5>
+        <h5>Translation for @Model.LanguageCode</h5>
     </div>
     <div class="card-body">
         @foreach (var item in Model.Results.Languages)
         {
             <div class="card mb-2">
                 <div class="card-body">
-                    <h5 class="card-title">@item.Term</h5>
-                    <p class="card-text">
-                        @item.Text
-                    </p>
+                    <h5 class="card-title">@item.TermName</h5>
+                    @if(item.TranslationText == null)
+                    {
+                        <p class="card-text text-danger">
+                            No Translation
+                        </p>
+                        <a asp-page="AddTranslation" 
+                           asp-route-termId="@item.TermId" 
+                           asp-route-languageCode="@Model.LanguageCode" 
+                           class="btn btn-primary">Add Translation</a>
+                    }
+                    else
+                    {
+                        <p class="card-text">
+                            @item.TranslationText
+                        </p>
+                    }
                 </div>
             </div>
         }

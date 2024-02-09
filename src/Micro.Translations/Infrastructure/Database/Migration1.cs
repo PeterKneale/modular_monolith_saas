@@ -19,6 +19,12 @@ public class Migration1 : Migration
             .WithColumn("term_id").AsGuid()
             .WithColumn("language_code").AsString(10)
             .WithColumn("text").AsString(100);
+        
+        Create.Table(LanguagesTable)
+            .WithColumn("id").AsGuid().PrimaryKey()
+            .WithColumn("app_id").AsGuid()
+            .WithColumn("name").AsString(100)
+            .WithColumn("code").AsString(10);
 
         Create.ForeignKey($"fk_{TranslationsTable}_{TermsTable}")
             .FromTable(TranslationsTable).ForeignColumn("term_id")
@@ -28,6 +34,7 @@ public class Migration1 : Migration
     public override void Down()
     {
         Delete.Table(TranslationsTable).IfExists();
+        Delete.Table(LanguagesTable).IfExists();
         Delete.Table(TermsTable).IfExists();
     }
 }

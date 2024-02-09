@@ -4,6 +4,7 @@ using FluentMigrator.Runner.Conventions;
 using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database;
+using Micro.Translations.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 
 namespace Micro.Translations.Infrastructure;
@@ -29,6 +30,7 @@ internal static class ServiceCollectionExtensions
         // Repositories
         services.AddSingleton<ITermRepository, TermRepository>();
         services.AddSingleton<ITranslationRepository, TranslationRepository>();
+        services.AddSingleton<ILanguageRepository, LanguageRepository>();
         
         // Database Migrations
         services

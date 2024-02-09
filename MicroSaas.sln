@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web", "src\Micro.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common", "src\Micro.Common\Micro.Common.csproj", "{7F5702D7-1808-443D-BD92-FFD5FADE5158}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web.AcceptanceTests", "tests\Micro.Web.AcceptanceTests\Micro.Web.AcceptanceTests.csproj", "{303110BA-112C-4CF4-AE69-7376AA933F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.UnitTests", "tests\Micro.Translations.UnitTests\Micro.Translations.UnitTests.csproj", "{8C389821-57AF-4369-8B35-F5AD237B8DC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +57,13 @@ Global
 		{7F5702D7-1808-443D-BD92-FFD5FADE5158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F5702D7-1808-443D-BD92-FFD5FADE5158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F5702D7-1808-443D-BD92-FFD5FADE5158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{303110BA-112C-4CF4-AE69-7376AA933F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{303110BA-112C-4CF4-AE69-7376AA933F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{303110BA-112C-4CF4-AE69-7376AA933F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{303110BA-112C-4CF4-AE69-7376AA933F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C389821-57AF-4369-8B35-F5AD237B8DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C389821-57AF-4369-8B35-F5AD237B8DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C389821-57AF-4369-8B35-F5AD237B8DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C389821-57AF-4369-8B35-F5AD237B8DC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

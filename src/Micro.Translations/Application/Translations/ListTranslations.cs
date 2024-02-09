@@ -9,20 +9,18 @@ public static class ListTranslations
 {
     public record Query(Guid AppId, string Language) : IRequest<Result>;
 
-    public record LanguageResult(string Term, string? Text);
+    public record LanguageResult(Guid TermId, string TermName, string? TranslationText);
 
     public record Result(int TotalTerms, int TotalTranslations, IEnumerable<LanguageResult> Languages);
 
     private class Handler(ConnectionFactory connections) : IRequestHandler<Query, Result>
     {
-        const string schema = "translations";
-        
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
             var totalTerms = await CountTerms(query.AppId, token);
             var totalTranslations = await CountTranslations(query.AppId, query.Language, token);
             var translationsByLanguage = await ListTranslationsByLanguage(query.AppId, query.Language, token);
-            var languages = translationsByLanguage.Select(x => new LanguageResult(x.Key, x.Value));
+            var languages = translationsByLanguage.Select(x => new LanguageResult(x.Key.TermId, x.Key.TermName, x.Value));
             return new Result(totalTerms, totalTranslations, languages);
         }
 
@@ -43,27 +41,29 @@ public static class ListTranslations
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { appId, language }, cancellationToken: token));
         }
 
-        private async Task<IDictionary<string, string?>> ListTranslationsByLanguage(Guid appId, string language, CancellationToken token)
+        private async Task<IDictionary<(Guid TermId, string TermName), string?>> ListTranslationsByLanguage(Guid appId, string language, CancellationToken token)
         {
-            var sql = $"SELECT t.name, tr.text " +
+            var sql = $"SELECT t.id, t.name, tr.text " +
                       $"FROM {TermsTable} t " +
                       $"LEFT JOIN {TranslationsTable} tr ON t.id = tr.term_id AND tr.language_code = @language " +
                       $"WHERE t.app_id = @appId";
-                      
+
             using var con = connections.CreateConnection();
             var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { appId, language }, cancellationToken: token));
             return ToDictionary(reader);
         }
 
-        private static Dictionary<string, string?> ToDictionary(IDataReader reader)
+        private static Dictionary<(Guid TermId, string TermName), string?> ToDictionary(IDataReader reader)
         {
-            var result = new Dictionary<string, string?>();
+            var result = new Dictionary<(Guid TermId, string TermName), string?>();
             while (reader.Read())
             {
-                var term = reader.GetString(0);
-                var text = reader.IsDBNull(1) ? null : reader.GetString(1);
-                result.Add(term, text);
+                var termId = reader.GetGuid(0);
+                var termName = reader.GetString(1);
+                var translationText = reader.IsDBNull(2) ? null : reader.GetString(2);
+                result.Add(new ValueTuple<Guid, string>(termId, termName), translationText);
             }
+
             return result;
         }
     }

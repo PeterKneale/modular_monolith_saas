@@ -3,9 +3,9 @@ using Micro.Translations.Domain.Translations;
 
 namespace Micro.Translations.Application.Translations;
 
-public static class CreateTranslation
+public static class AddTranslation
 {
-    public record Command(Guid Id, Guid TermId, string Language, string Text) : IRequest;
+    public record Command(Guid Id, Guid TermId, string LanguageCode, string Text) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
@@ -13,7 +13,7 @@ public static class CreateTranslation
         {
             RuleFor(m => m.Id).NotEmpty();
             RuleFor(m => m.TermId).NotEmpty();
-            RuleFor(m => m.Language).NotEmpty().MaximumLength(100);
+            RuleFor(m => m.LanguageCode).NotEmpty().MaximumLength(100);
             RuleFor(m => m.Text).NotEmpty().MaximumLength(100);
         }
     }
@@ -24,10 +24,10 @@ public static class CreateTranslation
         {
             var id = new TranslationId(command.Id);
             var termId = new TermId(command.TermId);
-            var language = Language.FromName(command.Language);
+            var languageCode = LanguageCode.FromIsoCode(command.LanguageCode);
             var text = new Text(command.Text);
 
-            var translation = new Translation(id, termId, language, text);
+            var translation = new Translation(id, termId, languageCode, text);
             await translations.CreateAsync(translation, token);
             return Unit.Value;
         }

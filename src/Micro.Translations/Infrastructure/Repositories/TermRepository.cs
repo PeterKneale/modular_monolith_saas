@@ -7,7 +7,7 @@ using Micro.Translations.Domain;
 using Micro.Translations.Domain.Terms;
 using static Micro.Translations.Constants;
 
-namespace Micro.Translations.Infrastructure.Database;
+namespace Micro.Translations.Infrastructure.Repositories;
 
 internal class TermRepository(ConnectionFactory connections, ICurrentContext context) : ITermRepository
 {

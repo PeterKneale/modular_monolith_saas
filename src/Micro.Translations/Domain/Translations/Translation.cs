@@ -1,20 +1,12 @@
 ﻿namespace Micro.Translations.Domain.Translations;
 
-public class Translation
+public class Translation(TranslationId id, TermId termId, LanguageCode language, Text text)
 {
-    public TranslationId Id { get; }
-    public TermId TermId { get; }
-    public Language Language { get; }
-    public Text Text { get; private set; }
+    public TranslationId Id { get; } = id;
+    public TermId TermId { get; } = termId;
+    public LanguageCode Language { get; } = language;
+    public Text Text { get; private set; } = text;
 
-    public Translation(TranslationId id, TermId termId, Language language, Text text)
-    {
-        Id = id;
-        TermId = termId;
-        Language = language;
-        Text = text;
-    }    
-    
     public void SetText(Text text)
     {
         Text = text;

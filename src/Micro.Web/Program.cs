@@ -18,7 +18,14 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Add services to the container.
-builder.Services.AddRazorPages()
+builder.Services.AddRazorPages(options =>
+    {
+        options.Conventions.AllowAnonymousToPage("/Auth/Forbidden");
+        options.Conventions.AllowAnonymousToPage("/Auth/Forgot");
+        options.Conventions.AllowAnonymousToPage("/Auth/Login");
+        options.Conventions.AllowAnonymousToPage("/Auth/Logout");
+        options.Conventions.AllowAnonymousToPage("/Auth/Register");
+    })
     .AddRazorRuntimeCompilation();
 
 builder.Services

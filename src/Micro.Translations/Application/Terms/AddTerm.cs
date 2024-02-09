@@ -5,7 +5,7 @@ using Micro.Translations.Domain.Terms;
 
 namespace Micro.Translations.Application.Terms;
 
-public static class CreateTerm
+public static class AddTerm
 {
     public record Command(Guid TermId, Guid AppId, string Name) : IRequest;
 

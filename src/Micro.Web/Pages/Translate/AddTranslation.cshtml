@@ -1,0 +1,15 @@
+﻿@page
+@model Micro.Web.Pages.Translate.AddTranslationPage
+
+<partial name="_ValidationSummary"/>
+
+<form method="post" class="card">
+    <div class="card-body">
+        @Html.EditorFor(x => x.Text, null, new { autofocus = "autofocus" })
+        @Html.HiddenFor(x => x.LanguageCode)
+        @Html.HiddenFor(x => x.TermId)
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>
+    </div>
+</form>
