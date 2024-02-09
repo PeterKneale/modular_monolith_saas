@@ -13,7 +13,7 @@ public static class GetTranslationStatistics
     
     public record Statistics(Language Language, int Percentage);
     
-    public record Result(int TotalTerms, int TotalTranslations, IEnumerable<Statistics> Languages);
+    public record Result(int TotalTerms, int TotalTranslations, IEnumerable<Statistics> Statistics);
 
     private class Handler(ConnectionFactory connections) : IRequestHandler<Query, Result>
     {

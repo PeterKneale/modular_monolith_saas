@@ -18,7 +18,7 @@ public class AddTermPage(ITranslationModule module, ILogger<AddTermPage> logs) :
         {
             await module.SendCommand(new AddTerm.Command(Guid.NewGuid(),Constants.AppId,Term));
             TempData.SetAlert(Alert.Success("You have added a new term"));
-            return RedirectToPage(nameof(Terms));
+            return RedirectToPage(nameof(Index));
         }
         catch (BusinessRuleBrokenException e)
         {

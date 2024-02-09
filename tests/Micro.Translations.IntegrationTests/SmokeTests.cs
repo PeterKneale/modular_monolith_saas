@@ -67,10 +67,11 @@ public class SmokeTests
         var summary = await _service.Tenants.SendQuery(new GetTranslationStatistics.Query(appId));
         summary.TotalTerms.Should().Be(3);
         summary.TotalTranslations.Should().Be(3);
-        summary.Languages.Select(x => x.Language.Code).Should().BeEquivalentTo([languageCode1, languageCode2]);
-        summary.Languages.Select(x => x.Language.Name).Should().BeEquivalentTo([languageName1, languageName2]);
-        summary.Languages.Should().ContainSingle(x => x.Language.Code == languageCode1 && x.Percentage == 66);
-        summary.Languages.Should().ContainSingle(x => x.Language.Code == languageCode2 && x.Percentage == 33);
+        summary.Statistics.Should().BeEquivalentTo(new GetTranslationStatistics.Statistics[]
+        {
+            new(new GetTranslationStatistics.Language(languageName1, languageCode1), 66),
+            new(new GetTranslationStatistics.Language(languageName2, languageCode2), 33)
+        });
 
         var list1 = await _service.Tenants.SendQuery(new ListTranslations.Query(appId, languageCode1));
         list1.Should().BeEquivalentTo(new ListTranslations.Result(3, 2, new ListTranslations.LanguageResult[]
@@ -83,9 +84,9 @@ public class SmokeTests
         var list2 = await _service.Tenants.SendQuery(new ListTranslations.Query(appId, languageCode2));
         list2.Should().BeEquivalentTo(new ListTranslations.Result(3, 1, new ListTranslations.LanguageResult[]
         {
-            new(termId1,term1, text3),
-            new(termId2,term2, null),
-            new(termId3,term3, null)
+            new(termId1, term1, text3),
+            new(termId2, term2, null),
+            new(termId3, term3, null)
         }));
     }
 }
