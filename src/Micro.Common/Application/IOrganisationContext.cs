@@ -2,8 +2,7 @@
 
 namespace Micro.Common.Application;
 
-public interface ICurrentContext
+public interface IOrganisationContext
 {
-    UserId UserId { get; }
     OrganisationId OrganisationId { get; }
 }

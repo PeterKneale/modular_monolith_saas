@@ -19,7 +19,7 @@ public static class AddTerm
         }
     }
 
-    public class Handler(ICurrentContext context, ITermRepository terms) : IRequestHandler<Command>
+    public class Handler(IOrganisationContext context, ITermRepository terms) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {

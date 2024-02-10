@@ -19,15 +19,8 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddContextAccessor(this IServiceCollection services, IContextAccessor accessor)
     {
-        services.AddScoped<ICurrentContext>(_ =>
-        {
-            var context = accessor.CurrentContext;
-            if (context == null)
-            {
-                throw new Exception("No context available");
-            }
-            return context;
-        });
+        services.AddScoped<IUserContext>(_ => accessor.User ?? throw new Exception("No user context available"));
+        services.AddScoped<IOrganisationContext>(_ => accessor.Organisation ?? throw new Exception("No organisation context available"));
         return services;
     }
 }

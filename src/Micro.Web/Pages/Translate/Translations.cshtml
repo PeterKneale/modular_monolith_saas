@@ -30,6 +30,9 @@
                         <p class="card-text">
                             @item.TranslationText
                         </p>
+                        <a asp-page="UpdateTranslation" 
+                           asp-route-id="@item.TranslationId" 
+                           class="btn btn-primary">Update Translation</a>
                     }
                 </div>
             </div>

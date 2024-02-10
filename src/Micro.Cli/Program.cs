@@ -13,7 +13,8 @@ var organisationId = Guid.NewGuid();
 var userId = Guid.NewGuid();
 var accessor = new Accessor
 {
-    CurrentContext = new CurrentContext(new OrganisationId(organisationId), new UserId(userId))
+    User = new UserContext(new UserId(userId)),
+    Organisation = new OrganisationContext(new OrganisationId(organisationId))
 };
 
 var configuration = new ConfigurationBuilder()
@@ -34,5 +35,6 @@ await services.GetRequiredService<ITranslationModule>()
 
 public class Accessor : IContextAccessor
 {
-    public ICurrentContext? CurrentContext { get; set; }
+    public IUserContext? User { get; set; }
+    public IOrganisationContext? Organisation { get; set; }
 }

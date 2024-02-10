@@ -3,9 +3,7 @@ using Micro.Common.Domain;
 
 namespace Micro.Common.Infrastructure.Context;
 
-public class CurrentContext(OrganisationId organisationId, UserId userId) : ICurrentContext
+public class OrganisationContext(OrganisationId organisationId) : IOrganisationContext
 {
     public OrganisationId OrganisationId => organisationId;
-    
-    public UserId UserId => userId;
 }

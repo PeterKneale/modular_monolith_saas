@@ -4,5 +4,6 @@ namespace Micro.Common.Infrastructure.Context;
 
 public interface IContextAccessor
 {
-    ICurrentContext? CurrentContext { get; }
+    IUserContext? User { get; }
+    IOrganisationContext? Organisation { get; }
 }

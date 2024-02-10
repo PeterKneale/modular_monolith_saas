@@ -7,8 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Micro.Web.Pages.Translate;
 
-public class AddTranslationPage(ITranslationModule module) : PageModel
+public class UpdateTranslationPage(ITranslationModule module) : PageModel
 {
+    public async Task OnGet()
+    {
+        var query = new GetTranslation.Query(Id);
+        var result = await module.SendQuery(query);
+        Text = result.Text;
+    }
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
@@ -18,9 +24,9 @@ public class AddTranslationPage(ITranslationModule module) : PageModel
 
         try
         {
-            await module.SendCommand(new AddTranslation.Command(Guid.NewGuid(), TermId, LanguageCode, Text));
-            TempData.SetAlert(Alert.Success("You have added a translation"));
-            return RedirectToPage(nameof(Translations), new { LanguageCode });
+            await module.SendCommand(new UpdateTranslation.Command(Id, Text));
+            TempData.SetAlert(Alert.Success("You have updated a translation"));
+            return RedirectToPage(nameof(Index));
         }
         catch (BusinessRuleBrokenException e)
         {
@@ -33,9 +39,5 @@ public class AddTranslationPage(ITranslationModule module) : PageModel
 
     [Required]
     [BindProperty(SupportsGet = true)]
-    public Guid TermId { get; set; }
-
-    [Required]
-    [BindProperty(SupportsGet = true)]
-    public string LanguageCode { get; set; }
+    public Guid Id { get; set; }
 }

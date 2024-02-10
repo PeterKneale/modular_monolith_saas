@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Micro.Common.Application;
 using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Application;
@@ -9,7 +8,7 @@ using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Infrastructure.Repositories;
 
-internal class TermRepository(ConnectionFactory connections, ICurrentContext context) : ITermRepository
+internal class TermRepository(ConnectionFactory connections) : ITermRepository
 {
     public async Task CreateAsync(Term term)
     {
@@ -17,7 +16,7 @@ internal class TermRepository(ConnectionFactory connections, ICurrentContext con
         var row = new Row
         {
             Id = term.Id.Value,
-            OrganisationId = context.OrganisationId.Value,
+            OrganisationId = term.OrganisationId.Value,
             AppId = term.AppId.Value,
             Name = term.Name.Value
         };

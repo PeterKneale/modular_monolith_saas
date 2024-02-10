@@ -76,17 +76,17 @@ public class SmokeTests
         var list1 = await _service.Tenants.SendQuery(new ListTranslations.Query(appId, languageCode1));
         list1.Should().BeEquivalentTo(new ListTranslations.Result(3, 2, new ListTranslations.LanguageResult[]
         {
-            new(termId1, term1, text1),
-            new(termId2, term2, text2),
-            new(termId3, term3, null)
+            new(translationId1,termId1, term1, text1),
+            new(translationId2,termId2, term2, text2),
+            new(null,termId3, term3, null)
         }));
 
         var list2 = await _service.Tenants.SendQuery(new ListTranslations.Query(appId, languageCode2));
         list2.Should().BeEquivalentTo(new ListTranslations.Result(3, 1, new ListTranslations.LanguageResult[]
         {
-            new(termId1, term1, text3),
-            new(termId2, term2, null),
-            new(termId3, term3, null)
+            new(translationId3,termId1, term1, text3),
+            new(null, termId2, term2, null),
+            new(null,termId3, term3, null)
         }));
     }
 }

@@ -1,17 +1,15 @@
 ﻿using Bogus;
-using Micro.Tenants.Application.Auth;
+using Micro.Tenants.Application.Users;
 
 namespace Micro.Tenants.IntegrationTests;
 
 public static class Build
 {
-    public static Register.Command BuildRegisterCommand(Guid organisationId, Guid userId, string? email = null, string? password = null)
+    public static RegisterUser.Command RegisterCommand(Guid userId, string? email = null, string? password = null)
     {
-        return new Faker<Register.Command>()
+        return new Faker<RegisterUser.Command>()
             .CustomInstantiator(f =>
-                new Register.Command(
-                    organisationId,
-                    f.Company.CompanyName(),
+                new RegisterUser.Command(
                     userId,
                     f.Name.FirstName(),
                     f.Name.LastName(),

@@ -4,5 +4,6 @@ public static class Constants
 {
     public const string SchemaName = "tenants";
     public const string OrganisationsTable ="organisations";
+    public const string MembershipsTable ="memberships";
     public const string UsersTable = "users";
 }

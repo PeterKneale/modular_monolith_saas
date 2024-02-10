@@ -4,58 +4,40 @@ using Micro.Common.Infrastructure.Context;
 
 namespace Micro.Web.Code;
 
-public class ContextAccessor : IContextAccessor
+public class ContextAccessor(IHttpContextAccessor accessor) : IContextAccessor
 {
-    private readonly IHttpContextAccessor _accessor;
+    public IUserContext? User => UserId.HasValue ? new UserContext(new UserId(UserId.Value)) : null;
+    public IOrganisationContext? Organisation => OrganisationId.HasValue ? new OrganisationContext(new OrganisationId(OrganisationId.Value)) : null;
 
-    public ContextAccessor(IHttpContextAccessor accessor)
+    private Guid? UserId => GetClaim(accessor.HttpContext, "UserId");
+    private Guid? OrganisationId => GetItem(accessor.HttpContext, "OrganisationId");
+
+    private static Guid? GetItem(HttpContext? context, string name)
     {
-        _accessor = accessor;
+        var item = context?.Items[name];
+        if (item == null)
+            return null;
+        return Guid.Parse(item.ToString()!);
     }
 
-    public ICurrentContext? CurrentContext
+    private static Guid? GetClaim(HttpContext? context, string name)
     {
-        get
+        var identity = context?.User.Identity;
+        if (identity is null)
         {
-            var httpContext = _accessor.HttpContext;
-            if (httpContext is null)
-            {
-                return null;
-            }
-
-            var identity = httpContext.User.Identity;
-            if (identity is null)
-            {
-                return null;
-            }
-
-            var authenticated = identity.IsAuthenticated;
-            if (!authenticated)
-            {
-                return null;
-            }
-
-            var organisationId = GetClaim(httpContext, "OrganisationId");
-            if (organisationId == null)
-            {
-                return null;
-            }
-
-            var userId = GetClaim(httpContext, "UserId");
-            if (userId == null)
-            {
-                return null;
-            }
-
-            return new CurrentContext(new OrganisationId(organisationId.Value), new UserId(userId.Value));
+            return null;
         }
-    }
 
-    private static Guid? GetClaim(HttpContext httpContext, string name)
-    {
-        var claim = httpContext.User.FindFirst(name);
+        var authenticated = identity.IsAuthenticated;
+        if (!authenticated)
+        {
+            return null;
+        }
+
+        var claim = context.User.FindFirst(name);
         if (claim == null)
             return null;
+
         return Guid.Parse(claim.Value);
     }
 }

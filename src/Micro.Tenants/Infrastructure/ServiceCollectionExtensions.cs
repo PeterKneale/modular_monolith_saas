@@ -35,6 +35,7 @@ internal static class ServiceCollectionExtensions
         // Repositories
         services.AddSingleton<IOrganisationRepository, OrganisationRepository>();
         services.AddSingleton<IUserRepository, UserRepository>();
+        services.AddSingleton<IMembershipRepository, MembershipRepository>();
         
         // Database Migrations
         

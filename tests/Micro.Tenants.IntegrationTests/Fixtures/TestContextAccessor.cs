@@ -2,5 +2,6 @@
 
 public class TestContextAccessor : IContextAccessor
 {
-    public ICurrentContext? CurrentContext { get; set; }
+    public IUserContext? User { get; set; }
+    public IOrganisationContext? Organisation { get; set; }
 }

@@ -25,24 +25,31 @@ public class ServiceFixture : ITestOutputHelperAccessor
     public ITestOutputHelper? OutputHelper { get; set; }
 
     public IModule Tenants => _module;
-
-    public async Task Exec(Func<IModule, Task> action, Guid organisationId, Guid userId)
-    {
-        SetContext(organisationId, userId);
-        await action(_module);
-        ClearContext();
-    }
     
     public async Task Exec(Func<IModule, Task> action)
     {
-        ClearContext();
         await action(_module);
+        ClearContext();
     }
     
-    private void SetContext(Guid organisationId, Guid userId) => 
-        _accessor.CurrentContext = new CurrentContext(new OrganisationId(organisationId), new UserId(userId));
-
-    private void ClearContext() => 
-        _accessor.CurrentContext = null;
-
+    public async Task Exec(Func<IModule, Task> action, Guid userId)
+    {
+        _accessor.User = new UserContext(new UserId(userId));
+        await action(_module);
+        ClearContext();
+    }
+    
+    public async Task Exec(Func<IModule, Task> action, Guid userId, Guid organisationId)
+    {
+        _accessor.User = new UserContext(new UserId(userId));
+        _accessor.Organisation = new OrganisationContext(new OrganisationId(organisationId));
+        await Exec(action, userId);
+        ClearContext();
+    }
+    
+    private void ClearContext()
+    {
+        _accessor.User = null;
+        _accessor.Organisation = null;
+    }
 }

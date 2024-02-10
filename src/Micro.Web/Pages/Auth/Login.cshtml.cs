@@ -21,8 +21,8 @@ public class Login(ITenantsModule module, ILogger<Login> logs) : PageModel
         {
             var principal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
             {
-                new("UserId", "69ff55d7-b9cc-4786-a646-e1ee280d8b76"),
-                new("OrganisationId", "96c89ebd-c639-4123-9e9f-b3a27350f936")
+                new("UserId", "c0ee363f-5542-4f7e-930f-e7baa19afce2"),
+                new("OrganisationId", "255e007f-0f46-4885-8b39-95b334e2acfc")
             }, CookieAuthenticationDefaults.AuthenticationScheme));
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);

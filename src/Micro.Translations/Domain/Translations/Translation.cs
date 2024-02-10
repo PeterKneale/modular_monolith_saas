@@ -7,7 +7,7 @@ public class Translation(TranslationId id, TermId termId, LanguageCode language,
     public LanguageCode Language { get; } = language;
     public Text Text { get; private set; } = text;
 
-    public void SetText(Text text)
+    public void UpdateText(Text text)
     {
         Text = text;
     }
