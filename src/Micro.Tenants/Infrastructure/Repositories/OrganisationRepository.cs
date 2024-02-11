@@ -1,17 +1,16 @@
 ﻿using Dapper;
-using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Application;
 using Micro.Tenants.Domain.Organisations;
 using static Micro.Tenants.Constants;
 
-namespace Micro.Tenants.Infrastructure.Database;
+namespace Micro.Tenants.Infrastructure.Repositories;
 
 internal class OrganisationRepository(ConnectionFactory connections) : IOrganisationRepository
 {
     public async Task CreateAsync(Organisation organisation)
     {
-        const string sql = $"INSERT INTO {OrganisationsTable} (id, name) VALUES (@Id, @Name)";
+        const string sql = $"INSERT INTO {OrganisationsTable} ({IdColumn}, {NameColumn}) VALUES (@Id, @Name)";
         var row = new Row
         {
             Id = organisation.Id.Value,
@@ -23,7 +22,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     public async Task UpdateAsync(Organisation organisation)
     {
-        const string sql = $"UPDATE {OrganisationsTable} SET name = @Name WHERE id = @Id";
+        const string sql = $"UPDATE {OrganisationsTable} SET {NameColumn} = @Name WHERE {IdColumn} = @Id";
         var row = new Row
         {
             Id = organisation.Id.Value,
@@ -35,7 +34,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     public async Task<Organisation?> GetAsync(OrganisationId id)
     {
-        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE id = @Id";
+        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE {IdColumn} = @Id";
         using var con = connections.CreateConnection();
         var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Id = id.Value });
         return row == null ? null : Map(row);
@@ -43,7 +42,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     public async Task<Organisation?> GetAsync(OrganisationName name)
     {
-        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE name = @Name";
+        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE {NameColumn} = @Name";
         using var con = connections.CreateConnection();
         var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Name = name.Value });
         return row == null ? null : Map(row);

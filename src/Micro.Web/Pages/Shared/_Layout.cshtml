@@ -27,11 +27,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Login">Login</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Register">Register</a>
+                        </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Organisations/Create">Organisations</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Organisations/Index">Organisations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Organisations/Create">Create Organisations</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Translate/Index">Translate</a>
@@ -39,6 +45,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Logout">Logout</a>
                         </li>
+                        @User.Claims.Single(x=>x.Type == "UserId").Value
                     }
                 </ul>
             </div>

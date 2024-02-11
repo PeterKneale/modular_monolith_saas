@@ -1,7 +1,5 @@
-﻿using Micro.Common.Domain;
-using Micro.Translations;
+﻿using Micro.Translations;
 using Micro.Translations.Application.Terms;
-using Micro.Web.Code;
 
 namespace Micro.Web.Pages.Translate;
 

@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
-using Micro.Common.Domain;
-using Micro.Tenants;
+using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.Users;
-using Micro.Web.Code;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -19,16 +17,20 @@ public class Login(ITenantsModule module, ILogger<Login> logs) : PageModel
 
         try
         {
-            var principal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
+            var result = await module.SendQuery(new CanAuthenticate.Query(Email, Password));
+            if (!result.Success)
             {
-                new("UserId", "c0ee363f-5542-4f7e-930f-e7baa19afce2"),
-                new("OrganisationId", "255e007f-0f46-4885-8b39-95b334e2acfc")
-            }, CookieAuthenticationDefaults.AuthenticationScheme));
+                TempData.SetAlert(Alert.Danger("Login failed. Please try again."));
+                return Page();
+            }
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
+            {
+                new("UserId", result.UserId!.Value.ToString())
+            }, CookieAuthenticationDefaults.AuthenticationScheme)));
 
             logs.LogInformation("Authentication was successful: {Email}", Email);
-            
+
             TempData.SetAlert(Alert.Success("You have been successfully logged in."));
             return Redirect(returnUrl ?? "/");
         }

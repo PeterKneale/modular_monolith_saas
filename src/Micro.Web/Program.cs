@@ -1,7 +1,5 @@
 using Micro.Common.Infrastructure.Context;
-using Micro.Tenants;
 using Micro.Translations;
-using Micro.Web.Code;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,11 +53,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
-
+app.MapGet("/health/alive", () => "alive");
+app.MapGet("/health/ready", () => "ready");
 app.Run();

@@ -1,6 +1,4 @@
-﻿using Micro.Common.Domain;
-
-namespace Micro.Tenants.Domain.Memberships;
+﻿namespace Micro.Tenants.Domain.Memberships;
 
 public class Membership(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole membershipRole) : BaseEntity
 {

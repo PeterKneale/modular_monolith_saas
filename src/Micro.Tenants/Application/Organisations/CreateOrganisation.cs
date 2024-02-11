@@ -1,5 +1,4 @@
 ﻿using Micro.Common.Application;
-using Micro.Common.Domain;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 

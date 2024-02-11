@@ -1,6 +1,5 @@
 ﻿using Micro.Common;
 using Micro.Common.Application;
-using Micro.Common.Domain;
 using Micro.Tenants.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 

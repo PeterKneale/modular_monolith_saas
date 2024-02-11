@@ -1,10 +1,10 @@
-﻿using Micro.Common.Domain;
-using Micro.Tenants.Domain.Users;
+﻿using Micro.Tenants.Domain.Users;
 
 namespace Micro.Tenants.Application;
 
 public interface IUserRepository
 {
-    Task CreateAsync(User user);
-    Task<User?> GetAsync(UserId id);
+    Task CreateAsync(User user, CancellationToken token);
+    Task<User?> GetAsync(UserId id, CancellationToken token);
+    Task<User?> GetAsync(string email, CancellationToken token);
 }

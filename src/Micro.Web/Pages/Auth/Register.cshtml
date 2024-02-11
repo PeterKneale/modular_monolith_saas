@@ -1,0 +1,19 @@
+﻿@page
+@model RegisterPage
+@{
+    ViewBag.Title = "Register";
+}
+
+<partial name="_ValidationSummary"/>
+
+<form method="post" class="card">
+    <div class="card-body">
+        @Html.EditorFor(x => x.FirstName, null, new { autofocus = "autofocus" })
+        @Html.EditorFor(x => x.LastName)
+        @Html.EditorFor(x => x.Email)
+        @Html.EditorFor(x => x.Password)
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="Register" class="btn btn-primary ms-auto" data-testid="Register"/>
+    </div>
+</form>

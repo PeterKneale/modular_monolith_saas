@@ -1,8 +1,6 @@
-﻿using Micro.Common.Domain;
-using Micro.Translations;
+﻿using Micro.Translations;
 using Micro.Translations.Application.Terms;
 using Micro.Translations.Application.Translations;
-using Micro.Web.Code;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Micro.Web.Pages.Translate;

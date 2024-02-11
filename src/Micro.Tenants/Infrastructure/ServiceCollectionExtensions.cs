@@ -5,6 +5,7 @@ using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Application;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.Infrastructure.Database;
+using Micro.Tenants.Infrastructure.Repositories;
 using Micro.Tenants.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

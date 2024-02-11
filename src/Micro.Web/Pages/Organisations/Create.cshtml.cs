@@ -1,12 +1,9 @@
-﻿using Micro.Common.Domain;
-using Micro.Tenants;
-using Micro.Tenants.Application.Organisations;
-using Micro.Web.Code;
+﻿using Micro.Tenants.Application.Organisations;
 using Index = Micro.Web.Pages.Translate.Index;
 
 namespace Micro.Web.Pages.Organisations;
 
-public class CreatePage(ITenantsModule module, ILogger<CreatePage> logs) : PageModel
+public class CreatePage(ITenantsModule module) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -18,7 +15,7 @@ public class CreatePage(ITenantsModule module, ILogger<CreatePage> logs) : PageM
         try
         {
             await module.SendCommand(new CreateOrganisation.Command(Guid.NewGuid(), Name));
-            TempData.SetAlert(Alert.Success("You have added a new organisation"));
+            TempData.SetAlert(Alert.Success("You have created a new organisation"));
             return RedirectToPage(nameof(Index));
         }
         catch (BusinessRuleBrokenException e)

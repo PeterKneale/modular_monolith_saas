@@ -1,5 +1,4 @@
-﻿using Micro.Common.Domain;
-using Micro.Tenants.Domain.Organisations;
+﻿using Micro.Tenants.Domain.Organisations;
 
 namespace Micro.Tenants.Application.Organisations;
 

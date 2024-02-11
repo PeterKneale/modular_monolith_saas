@@ -1,5 +1,3 @@
-using Micro.Common.Domain;
-
 namespace Micro.Tenants.Domain.Organisations;
 
 public interface IOrganisationNameCheck

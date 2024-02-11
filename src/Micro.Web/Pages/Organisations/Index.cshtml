@@ -1,2 +1,14 @@
 ﻿@page
 @model Micro.Web.Pages.Organisations.Index
+
+@{
+    ViewData["Title"] = "Organisations";
+}
+
+@foreach(var membership in Model.Memberships)
+{
+    <div>
+        <h2>@membership.OrganisationName [@membership.OrganisationId]</h2>
+        <p>@membership.Role</p>
+    </div>
+}

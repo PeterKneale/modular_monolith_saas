@@ -1,5 +1,4 @@
 ﻿using Micro.Common.Application;
-using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Context;
 
 namespace Micro.Web.Code;

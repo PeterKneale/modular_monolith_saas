@@ -15,9 +15,9 @@ public static class GetTranslation
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var sql = $"SELECT text FROM {TranslationsTable} WHERE id = @Id";
+            const string sql = $"SELECT text FROM {TranslationsTable} WHERE id = @Id";
             using var con = connections.CreateConnection();
-            var text = await con.ExecuteScalarAsync<string>(new CommandDefinition(sql, new { Id= query.TranslationId }, cancellationToken: token));
+            var text = await con.ExecuteScalarAsync<string>(new CommandDefinition(sql, new { Id = query.TranslationId }, cancellationToken: token));
             return new Result(text!);
         }
     }

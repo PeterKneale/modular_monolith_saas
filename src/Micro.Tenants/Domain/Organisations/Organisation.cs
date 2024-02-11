@@ -1,6 +1,4 @@
-﻿using Micro.Common.Domain;
-
-namespace Micro.Tenants.Domain.Organisations;
+﻿namespace Micro.Tenants.Domain.Organisations;
 
 public class Organisation(OrganisationId id, OrganisationName name) : BaseEntity
 {
