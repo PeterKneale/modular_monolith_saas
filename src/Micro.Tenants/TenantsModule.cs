@@ -1,13 +1,8 @@
-﻿using Micro.Common;
-using Micro.Common.Application;
+﻿using Micro.Common.Application;
 using Micro.Tenants.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Tenants;
-
-public interface ITenantsModule : IModule
-{
-}
 
 public class TenantsModule : ITenantsModule
 {

@@ -25,7 +25,7 @@ public static class AddLanguage
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var languageId = new LanguageId(command.LanguageId);
-            var appId = new AppId(command.AppId);
+            var appId = new ProjectId(command.AppId);
             var languageCode = LanguageCode.FromIsoCode(command.LanguageCode);
             var language = new Language(languageId, appId, languageCode);
             

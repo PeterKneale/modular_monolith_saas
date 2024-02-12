@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using Micro.Tenants.Application.Users;
-using Micro.Tenants.Domain.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Constants = Micro.Web.Code.Constants;
 
 namespace Micro.Web.Pages.Auth;
 
@@ -24,10 +24,16 @@ public class Login(ITenantsModule module, ILogger<Login> logs) : PageModel
                 return Page();
             }
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
+            var claims = new Claim[]
             {
-                new("UserId", result.UserId!.Value.ToString())
-            }, CookieAuthenticationDefaults.AuthenticationScheme)));
+                new(Constants.UserClaimKey, result.UserId!.Value.ToString())
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             logs.LogInformation("Authentication was successful: {Email}", Email);
 

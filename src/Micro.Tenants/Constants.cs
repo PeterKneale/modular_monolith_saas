@@ -6,6 +6,7 @@ public static class Constants
     public const string OrganisationsTable ="organisations";
     public const string MembershipsTable ="memberships";
     public const string UsersTable = "users";
+    public const string ProjectsTable ="projects";
     
     // Common Column Names
     public const string IdColumn = "id";

@@ -17,7 +17,7 @@ internal class TermRepository(ConnectionFactory connections) : ITermRepository
         {
             Id = term.Id.Value,
             OrganisationId = term.OrganisationId.Value,
-            AppId = term.AppId.Value,
+            AppId = term.ProjectId.Value,
             Name = term.Name.Value
         };
         using var con = connections.CreateConnection();
@@ -48,7 +48,7 @@ internal class TermRepository(ConnectionFactory connections) : ITermRepository
     {
         var id = new TermId(row.Id);
         var organisationId = new OrganisationId(row.OrganisationId);
-        var appId = new AppId(row.AppId);
+        var appId = new ProjectId(row.AppId);
         var name = new TermName(row.Name);
         return new Term(id, organisationId, appId, name);
     }

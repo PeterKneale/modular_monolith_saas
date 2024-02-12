@@ -25,7 +25,7 @@ public static class AddTerm
         {
             var termId = new TermId(command.TermId);
             var organisationId = context.OrganisationId;
-            var appId = new AppId(command.AppId);
+            var appId = new ProjectId(command.AppId);
             var name = new TermName(command.Name);
             var term = new Term(termId, organisationId, appId, name);
             await terms.CreateAsync(term);

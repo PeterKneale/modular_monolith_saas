@@ -3,7 +3,7 @@ using Index = Micro.Web.Pages.Translate.Index;
 
 namespace Micro.Web.Pages.Organisations;
 
-public class CreatePage(ITenantsModule module) : PageModel
+public class Create(ITenantsModule module) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -16,7 +16,7 @@ public class CreatePage(ITenantsModule module) : PageModel
         {
             await module.SendCommand(new CreateOrganisation.Command(Guid.NewGuid(), Name));
             TempData.SetAlert(Alert.Success("You have created a new organisation"));
-            return RedirectToPage(nameof(Index));
+            return RedirectToPage(nameof(Details), new {org = Name});
         }
         catch (BusinessRuleBrokenException e)
         {

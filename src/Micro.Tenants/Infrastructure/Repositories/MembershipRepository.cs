@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Application;
+using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
 using static Micro.Tenants.Constants;
 

@@ -1,0 +1,9 @@
+﻿@page "/org/{org}/projects/{project}"
+@model Details
+
+@{
+    ViewData["Title"] = "Project";
+}
+
+@Model.Result.Id
+@Model.Result.Name

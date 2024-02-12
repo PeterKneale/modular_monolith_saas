@@ -8,6 +8,7 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;xUnit::74F19403-CCCC-4B1C-9810-58E139698770::net8.0::Micro.Tenants.IntegrationTests.RegistrationTests.Registering_allows_login&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas\Tests\Micro.Tenants.IntegrationTests" Presentation="&amp;lt;Micro.Tenants.IntegrationTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=beb9baf9_002Df192_002D4fbe_002Da41a_002D357f21c9766f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Can_change_organisation_name" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;

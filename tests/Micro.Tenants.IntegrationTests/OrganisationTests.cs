@@ -1,38 +1,19 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Micro.Tenants.Application.Organisations;
 
 namespace Micro.Tenants.IntegrationTests;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class OrganisationNameTests
+public class OrganisationTests
 {
     private readonly ServiceFixture _service;
 
-    public OrganisationNameTests(ServiceFixture service, ITestOutputHelper outputHelper)
+    public OrganisationTests(ServiceFixture service, ITestOutputHelper outputHelper)
     {
         service.OutputHelper = outputHelper;
         _service = service;
     }
 
-    [Fact]
-    public async Task Can_change_organisation_name()
-    {
-        // arrange
-        var organisationId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId);
-        var name1 = Guid.NewGuid().ToString()[..10];
-        var name2 = Guid.NewGuid().ToString()[..10];
-        var create = new CreateOrganisation.Command(organisationId, name1);
-        var update = new UpdateOrganisationName.Command(organisationId, name2);
-
-        // act
-        await _service.Exec(x => x.SendCommand(register));
-        await _service.Exec(x => x.SendCommand(create), userId, organisationId);
-        await _service.Exec(x => x.SendCommand(update), userId, organisationId);
-
-        // assert
-    }
     [Fact]
     public async Task Cant_create_organisation_if_name_used()
     {

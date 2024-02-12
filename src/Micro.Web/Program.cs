@@ -1,6 +1,9 @@
+using Micro.Common.Application;
 using Micro.Common.Infrastructure.Context;
+using Micro.Tenants.Application.Organisations;
 using Micro.Translations;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Constants = Micro.Web.Code.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +60,23 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+
+app.Use(async (ctx, next) =>
+{
+    // This is a middleware that will run for every request
+    // It will check if the request has an organisation route value
+    // If so, it will get the organisation from the database and add it to the HttpContext.Items
+    var module = ctx.RequestServices.GetRequiredService<ITenantsModule>();
+    if (ctx.Request.RouteValues.TryGetValue(Constants.OrgRouteKey, out var org))
+    {
+        var name = org!.ToString()!;
+        var result = await module.SendQuery(new GetOrganisationByName.Query(name));
+        ctx.Request.HttpContext.SetOrganisationId(result.Id);
+    }
+
+    await next.Invoke();
+});
 app.MapGet("/health/alive", () => "alive");
 app.MapGet("/health/ready", () => "ready");
+
 app.Run();

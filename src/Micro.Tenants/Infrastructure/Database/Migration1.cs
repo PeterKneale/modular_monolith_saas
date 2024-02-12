@@ -25,6 +25,11 @@ public class Migration1 : Migration
             .WithColumn(EmailColumn).AsString(EmailMaxLength).Unique()
             .WithColumn(PasswordColumn).AsString(NameMaxLength);
 
+        Create.Table(ProjectsTable)
+            .WithColumn(IdColumn).AsGuid().PrimaryKey()
+            .WithColumn(OrganisationIdColumn).AsGuid()
+            .WithColumn(NameColumn).AsString(NameMaxLength).Unique();
+
         Create.ForeignKey($"fk_{MembershipsTable}_{OrganisationsTable}")
             .FromTable(MembershipsTable).ForeignColumn(OrganisationIdColumn)
             .ToTable(OrganisationsTable).PrimaryColumn(IdColumn);
@@ -32,10 +37,15 @@ public class Migration1 : Migration
         Create.ForeignKey($"fk_{MembershipsTable}_{UsersTable}")
             .FromTable(MembershipsTable).ForeignColumn(UserIdColumn)
             .ToTable(UsersTable).PrimaryColumn(IdColumn);
+        
+        Create.ForeignKey($"fk_{ProjectsTable}_{OrganisationsTable}")
+            .FromTable(ProjectsTable).ForeignColumn(OrganisationIdColumn)
+            .ToTable(OrganisationsTable).PrimaryColumn(IdColumn);
     }
 
     public override void Down()
     {
+        Delete.Table(ProjectsTable).IfExists();
         Delete.Table(MembershipsTable).IfExists();
         Delete.Table(UsersTable).IfExists();
         Delete.Table(OrganisationsTable).IfExists();

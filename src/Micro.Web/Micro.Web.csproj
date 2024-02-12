@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <NoWarn>$(NoWarn);CS8618</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,6 +19,15 @@
         <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
         <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Shared\Components\OrgSelector\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Projects\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Projects\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Organisations\Projects\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Organisations\Projects\Details.cshtml" />
     </ItemGroup>
 
 </Project>

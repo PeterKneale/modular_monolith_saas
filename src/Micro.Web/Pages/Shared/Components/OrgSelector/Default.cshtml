@@ -1,0 +1,28 @@
+﻿@model Model
+
+<div class="btn-group w-25" role="group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        @if (Model.Organisation != null)
+        {
+            @Model.Organisation.Name
+        }
+        else
+        {
+            <span>Select organisation</span>
+        }
+    </button>
+    <ul class="dropdown-menu">
+        @foreach (var item in Model.Memberships)
+        {
+            <li>
+                <a class="dropdown-item" asp-page="/Organisations/Details" asp-route-org="@item.OrganisationName">@item.OrganisationName</a>
+            </li>
+        }
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <a class="dropdown-item" asp-page="/Organisations/Create">Create new...</a>
+        </li>
+    </ul>
+</div>

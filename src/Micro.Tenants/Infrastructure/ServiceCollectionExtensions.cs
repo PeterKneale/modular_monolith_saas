@@ -3,6 +3,10 @@ using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Application;
+using Micro.Tenants.Application.Memberships;
+using Micro.Tenants.Application.Organisations;
+using Micro.Tenants.Application.Projects;
+using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.Infrastructure.Database;
 using Micro.Tenants.Infrastructure.Repositories;
@@ -31,12 +35,14 @@ internal static class ServiceCollectionExtensions
         services.AddSingleton<ConnectionFactory>(_=> new ConnectionFactory(connectionString));
         
         // Services
-        services.AddScoped<IOrganisationNameCheck, OrganisationNameCheck>();
         
         // Repositories
         services.AddSingleton<IOrganisationRepository, OrganisationRepository>();
+        services.AddSingleton<IOrganisationNameCheck, OrganisationNameCheck>();
         services.AddSingleton<IUserRepository, UserRepository>();
         services.AddSingleton<IMembershipRepository, MembershipRepository>();
+        services.AddSingleton<IProjectRepository, ProjectRepository>();
+        services.AddSingleton<IProjectNameCheck, ProjectNameCheck>();
         
         // Database Migrations
         

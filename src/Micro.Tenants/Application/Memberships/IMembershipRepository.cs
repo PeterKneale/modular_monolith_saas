@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Domain.Memberships;
 
-namespace Micro.Tenants.Application;
+namespace Micro.Tenants.Application.Memberships;
 
 public interface IMembershipRepository
 {

@@ -12,5 +12,3 @@ public class Membership(MembershipId id, OrganisationId organisationId, UserId u
         MembershipRole = membershipRole;
     }
 }
-
-public record MembershipId(Guid Value);

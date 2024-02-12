@@ -13,7 +13,7 @@ internal class LanguageRepository(ConnectionFactory connections) : ILanguageRepo
         var parameters = new
         {
             Id = language.Id.Value,
-            AppId = language.AppId.Value,
+            AppId = language.ProjectId.Value,
             Name = language.LanguageCode.Name,
             Code = language.LanguageCode.Code
         };

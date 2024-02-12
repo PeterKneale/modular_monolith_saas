@@ -2,9 +2,9 @@
 
 namespace Micro.Translations.Domain.Languages;
 
-public class Language(LanguageId id, AppId appId, LanguageCode languageCode)
+public class Language(LanguageId id, ProjectId projectId, LanguageCode languageCode)
 {
     public LanguageId Id { get; } = id;
-    public AppId AppId { get; } = appId;
+    public ProjectId ProjectId { get; } = projectId;
     public LanguageCode LanguageCode { get; } = languageCode;
 }

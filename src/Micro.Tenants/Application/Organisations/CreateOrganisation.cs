@@ -1,4 +1,5 @@
 ﻿using Micro.Common.Application;
+using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 
@@ -23,19 +24,19 @@ public static class CreateOrganisation
         {
             var organisationId = new OrganisationId(command.OrganisationId);
 
-            if (await organisations.GetAsync(organisationId) != null)
+            if (await organisations.GetAsync(organisationId, token) != null)
             {
                 throw new Exception("Organisation already exists");
             }
 
             var name = new OrganisationName(command.Name);
-            if (await check.AnyOrganisationUsesNameAsync(name))
+            if (await check.AnyOrganisationUsesNameAsync(name, token))
             {
                 throw new Exception("Name already in use");
             }
 
             var organisation = new Organisation(organisationId, name);
-            await organisations.CreateAsync(organisation);
+            await organisations.CreateAsync(organisation, token);
 
             var membershipId = new MembershipId(Guid.NewGuid());
             var membership = new Membership(membershipId, organisationId, context.UserId, MembershipRole.Owner);

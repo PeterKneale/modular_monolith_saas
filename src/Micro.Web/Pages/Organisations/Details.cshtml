@@ -1,0 +1,11 @@
+﻿@page "/org/{org}"
+@model Micro.Web.Pages.Organisations.Details
+
+@{
+    ViewData["Title"] = "Organisation";
+}
+
+@Model.Result.Id
+@Model.Result.Name
+
+<a asp-page="/Projects/Create" asp-route-org="@Model.Result.Name">Create Project</a>

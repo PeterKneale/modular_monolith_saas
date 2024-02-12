@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Domain.Users;
 
-namespace Micro.Tenants.Application;
+namespace Micro.Tenants.Application.Users;
 
 public interface IUserRepository
 {

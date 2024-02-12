@@ -1,0 +1,13 @@
+﻿@page "/org/{org}/projects/create"
+@model Create
+
+<partial name="_ValidationSummary"/>
+
+<form method="post" class="card">
+    <div class="card-body">
+        @Html.EditorFor(x => x.Name, null, new { autofocus = "autofocus" })
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="Create" class="btn btn-primary ms-auto" data-testid="Create"/>
+    </div>
+</form>

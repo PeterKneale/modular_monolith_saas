@@ -21,20 +21,20 @@ public static class UpdateOrganisationName
         {
             var organisationId = new OrganisationId(command.OrganisationId);
 
-            var organisation = await organisations.GetAsync(organisationId);
+            var organisation = await organisations.GetAsync(organisationId, token);
             if (organisation == null)
             {
                 throw new Exception("Organisation not found");
             }
 
             var name = new OrganisationName(command.Name);
-            if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name))
+            if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token))
             {
                 throw new Exception("Name already in use");
             }
 
             organisation.ChangeName(name);
-            await organisations.UpdateAsync(organisation);
+            await organisations.UpdateAsync(organisation, token);
             return Unit.Value;
         }
     }

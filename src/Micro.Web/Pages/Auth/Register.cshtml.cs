@@ -2,7 +2,7 @@
 
 namespace Micro.Web.Pages.Auth;
 
-public class RegisterPage(ITenantsModule module, ILogger<Login> logs) : PageModel
+public class Register(ITenantsModule module, ILogger<Login> logs) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
