@@ -5,5 +5,9 @@
     ViewData["Title"] = "Project";
 }
 
-@Model.Result.Id
-@Model.Result.Name
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Project: @Model.Result.Name</h5>
+        <div class="card-subtitle text-muted">@Model.Result.Id</div>
+    </div>
+</div>

@@ -30,4 +30,9 @@
       <_ContentIncludedByDefault Remove="Pages\Organisations\Projects\Details.cshtml" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\Shared\Components\ProjectSelector\Default.cshtml" />
+    </ItemGroup>
+
 </Project>

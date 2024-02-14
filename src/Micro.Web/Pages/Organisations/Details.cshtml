@@ -4,8 +4,9 @@
 @{
     ViewData["Title"] = "Organisation";
 }
-
-@Model.Result.Id
-@Model.Result.Name
-
-<a asp-page="/Projects/Create" asp-route-org="@Model.Result.Name">Create Project</a>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Organisation: @Model.Result.Name</h5>
+        <div class="card-subtitle text-muted">@Model.Result.Id</div>
+    </div>
+</div>

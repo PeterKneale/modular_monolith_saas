@@ -1,0 +1,18 @@
+﻿@using Micro.Web.Code.Contexts
+@inject IWebContext Ctx
+@{
+    var org = Ctx.OrganisationId.HasValue 
+        ? Ctx.OrganisationId.ToString() 
+        : "None";
+    var project = Ctx.ProjectId.HasValue
+        ? Ctx.ProjectId.ToString()
+        : "None";
+    var user = Ctx.UserId.HasValue 
+        ? Ctx.UserId.ToString() 
+        : "None";
+}
+<ul class="list-group">
+    <li class="list-group-item">Organisation: @org</li>
+    <li class="list-group-item">Project: @project</li>
+    <li class="list-group-item">User: @user</li>
+</ul>

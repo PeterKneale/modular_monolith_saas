@@ -1,6 +1,5 @@
-﻿using Micro.Common.Application;
-using Micro.Common.Infrastructure.Context;
-using Micro.Tenants.Application.Projects;
+﻿using Micro.Tenants.Application.Projects;
+using Micro.Web.Code.Contexts;
 
 namespace Micro.Web.Pages.Projects;
 
@@ -18,11 +17,7 @@ public class Create(ITenantsModule module) : PageModel
             await module.SendCommand(new CreateProject.Command(Guid.NewGuid(), Name));
             TempData.SetAlert(Alert.Success("You have created a new project"));
             
-            // TODO: NEED ORG CONTEXT HERE
-            // TODO: NEED ORG NAME IN CONTEXT (TECHNICALLY THE SLUG)
-            
-            
-            return RedirectToPage(nameof(Details), new { org = "Alpha", project = Name });
+            return RedirectToPage(nameof(Details), new { org = this.Ctx().OrganisationName, project = Name });
         }
         catch (BusinessRuleBrokenException e)
         {

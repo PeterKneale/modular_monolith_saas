@@ -3,6 +3,7 @@ using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
+using Micro.Web.Code.Contexts;
 
 namespace Micro.Web.Pages.Shared.Components.OrgSelector;
 
@@ -24,10 +25,4 @@ public class OrgSelector(ITenantsModule module) : ViewComponent
         }
         return View(model);
     }
-}
-
-public class Model
-{
-    public GetOrganisationByContext.Result? Organisation { get; set; }
-    public IEnumerable<ListOrganisations.Result> Memberships { get; set; }
 }

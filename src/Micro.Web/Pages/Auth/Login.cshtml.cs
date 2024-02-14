@@ -2,7 +2,7 @@
 using Micro.Tenants.Application.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Constants = Micro.Web.Code.Constants;
+using Constants = Micro.Web.Code.Contexts.Constants;
 
 namespace Micro.Web.Pages.Auth;
 

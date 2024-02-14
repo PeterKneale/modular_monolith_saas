@@ -1,4 +1,7 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+﻿@using Micro.Web.Code.Contexts
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IWebContext Ctx
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
         <a class="navbar-brand" asp-area="" asp-page="/Index">Micro.Web</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -10,7 +13,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                 </li>
-                @if (!User.Identity.IsAuthenticated)
+                @if (!Ctx.IsAuthenticated)
                 {
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Login">Login</a>
@@ -22,6 +25,7 @@
                 else
                 {
                     <vc:org-selector />
+                    <vc:project-selector />
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Logout">Logout</a>
                     </li>
