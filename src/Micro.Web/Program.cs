@@ -1,18 +1,16 @@
-using Micro.Common.Application;
 using Micro.Common.Infrastructure.Context;
-using Micro.Tenants.Application.Organisations;
 using Micro.Translations;
 using Micro.Web.Code.Contexts;
+using Micro.Web.Code.PageContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Constants = Micro.Web.Code.Contexts.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
 builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
-
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IContextAccessor, ContextAccessor>();
+
+builder.Services.AddHttpContextAccessor();
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
@@ -40,8 +38,11 @@ builder.Services
         options.LogoutPath = "/Auth/Logout";
         options.AccessDeniedPath = "/Auth/Forbidden";
     });
-builder.Services.AddScoped<ContextMiddleware>();
-builder.Services.AddScoped<IWebContext, WebContext>();
+
+builder.Services.AddScoped<PageContextMiddleware>();
+builder.Services.AddScoped<IPageContextAccessor, PageContextAccessor>();
+builder.Services.AddScoped<IOrganisationPageContext>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
+builder.Services.AddScoped<IProjectPageContext>(c=> c.GetRequiredService<IPageContextAccessor>().Project);
 
 var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();
@@ -62,7 +63,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
-app.UseMiddleware<ContextMiddleware>();
+app.UseMiddleware<PageContextMiddleware>();
 app.MapGet("/health/alive", () => "alive");
 app.MapGet("/health/ready", () => "ready");
 

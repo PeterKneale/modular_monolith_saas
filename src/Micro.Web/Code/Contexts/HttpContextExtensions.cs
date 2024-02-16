@@ -1,39 +1,26 @@
-﻿namespace Micro.Web.Code.Contexts;
+﻿using Micro.Web.Code.PageContext;
+using static Micro.Web.Code.Contexts.Constants;
+
+namespace Micro.Web.Code.Contexts;
 
 public static class HttpContextExtensions
 {
-    public static bool HasOrganisationId(this HttpContext context) => 
-        context.Items.ContainsKey(Constants.OrganisationIdHttpItemKey);
-
-    public static void SetOrganisationId(this HttpContext context, Guid organisationId) => 
-        context.Items[Constants.OrganisationIdHttpItemKey] = organisationId;
-
-    public static void SetOrganisationName(this HttpContext context, string name) => 
-        context.Items[Constants.OrganisationNameHttpItemKey] = name;
-
-    public static Guid? GetOrganisationId(this HttpContext context)
-    {
-        var item = context.Items[Constants.OrganisationIdHttpItemKey];
-        return item == null ? null : Guid.Parse(item.ToString()!);
-    }
+    public static bool HasOrganisationContext(this HttpContext context) => 
+        context.Items.ContainsKey(OrganisationContextKey);
     
-    public static string? GetOrganisationName(this HttpContext context)
-    {
-        var item = context.Items[Constants.OrganisationNameHttpItemKey];
-        return item?.ToString();
-    }
+    public static bool HasProjectContext(this HttpContext context) => 
+        context.Items.ContainsKey(ProjectContextKey);
 
-    public static bool HasProjectId(this HttpContext context) => 
-        context.Items.ContainsKey(Constants.ProjectIdHttpItemKey);
+    public static void SetOrganisationContext(this HttpContext context, OrganisationPageContext value) => 
+        context.Items[OrganisationContextKey] = value;
+    public static void SetProjectContext(this HttpContext context, ProjectPageContext value) => 
+        context.Items[ProjectContextKey] = value;
 
-    public static void SetProjectId(this HttpContext context, Guid projectId) => 
-        context.Items[Constants.ProjectIdHttpItemKey] = projectId;
+    public static OrganisationPageContext? GetOrganisationContext(this HttpContext context) => 
+        context.Items[OrganisationContextKey] as OrganisationPageContext;
     
-    public static Guid? GetProjectId(this HttpContext context)
-    {
-        var item = context.Items[Constants.ProjectIdHttpItemKey];
-        return item == null ? null : Guid.Parse(item.ToString()!);
-    }
+    public static ProjectPageContext? GetProjectContext(this HttpContext context) => 
+        context.Items[ProjectContextKey] as ProjectPageContext;
 
     public static Guid? GetUserId(this HttpContext context)
     {
@@ -49,7 +36,7 @@ public static class HttpContextExtensions
             return null;
         }
 
-        var claim = context.User.FindFirst(Constants.UserClaimKey);
+        var claim = context.User.FindFirst(UserClaimKey);
         if (claim == null)
             return null;
 

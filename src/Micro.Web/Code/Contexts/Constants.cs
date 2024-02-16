@@ -10,7 +10,6 @@ public static class Constants
     public const string ProjectRouteKey = "project";
     
     // http items
-    public const string OrganisationIdHttpItemKey = "organisationId";
-    public const string OrganisationNameHttpItemKey = "organisationName";
-    public const string ProjectIdHttpItemKey = "projectId";
+    public const string OrganisationContextKey = "organisation";
+    public const string ProjectContextKey = "project";
 }

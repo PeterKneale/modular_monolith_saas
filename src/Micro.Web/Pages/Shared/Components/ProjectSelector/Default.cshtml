@@ -1,33 +1,40 @@
-﻿@model Model
-@{
-    var org = this.Ctx().OrganisationName;
-}
+﻿@using Micro.Web.Code.PageContext
+@model Model
+@inject IOrganisationPageContext Organisation
+
 @if (Model.Show)
 {
-    <div class="btn-group w-25" role="group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            @if (Model.CurrentProject != null)
-            {
-                @Model.CurrentProject.ProjectName
-            }
-            else
-            {
-                <span>Select project</span>
-            }
-        </button>
-        <ul class="dropdown-menu">
-            @foreach (var item in Model.Projects)
-            {
+    <div class="btn-group" role="group">
+        @if (Model.Projects.Any())
+        {
+            <button type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown">
+                @if (Model.CurrentProject != null)
+                {
+                    @Model.CurrentProject.ProjectName
+                }
+                else
+                {
+                    <span>Select project</span>
+                }
+            </button>
+            <ul class="dropdown-menu">
+                @foreach (var item in Model.Projects)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Organisation.Name" asp-route-project="@item.ProjectName">@item.ProjectName</a>
+                    </li>
+                }
                 <li>
-                    <a class="dropdown-item" asp-page="/Projects/Details" asp-route-org="@org" asp-route-project="@item.ProjectName">@item.ProjectName</a>
+                    <hr class="dropdown-divider">
                 </li>
-            }
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-            <li>
-                <a class="dropdown-item" asp-route-org="@org" asp-page="/Projects/Create">Create new...</a>
-            </li>
-        </ul>
+                <li>
+                    <a class="dropdown-item" asp-route-org="@Organisation.Name" asp-page="/Projects/Create">Create project</a>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <a class="btn btn-link" asp-route-org="@Organisation.Name" asp-page="/Projects/Create">Create project</a>
+        }
     </div>
 }

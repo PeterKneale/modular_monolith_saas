@@ -4,10 +4,11 @@ using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Web.Code.Contexts;
+using Micro.Web.Code.PageContext;
 
 namespace Micro.Web.Pages.Shared.Components.OrgSelector;
 
-public class OrgSelector(ITenantsModule module) : ViewComponent
+public class OrgSelector(ITenantsModule module, IPageContextAccessor context) : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -15,14 +16,18 @@ public class OrgSelector(ITenantsModule module) : ViewComponent
         {
             Memberships = await module.SendQuery(new ListOrganisations.Query())
         };
-        if (HttpContext.HasOrganisationId())
+
+        if (context.Organisation == null)
         {
-            // Get the current organisation
-            model.Organisation = await module.SendQuery(new GetOrganisationByContext.Query());
-            
-            // Remove the current organisation from the list of memberships
-            model.Memberships = model.Memberships.Where(x => x.OrganisationId != model.Organisation.Id);
+            return View(model);
         }
+        
+        // Get the current organisation
+        model.Organisation = await module.SendQuery(new GetOrganisationByContext.Query());
+
+        // Remove the current organisation from the list of memberships
+        model.Memberships = model.Memberships.Where(x => x.OrganisationId != model.Organisation.Id);
+
         return View(model);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Micro.Tenants.Application.Projects;
-using Micro.Web.Code.Contexts;
+using Micro.Web.Code.PageContext;
 
 namespace Micro.Web.Pages.Projects;
 
-public class Create(ITenantsModule module) : PageModel
+public class Create(ITenantsModule module, IOrganisationPageContext org) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -17,7 +17,7 @@ public class Create(ITenantsModule module) : PageModel
             await module.SendCommand(new CreateProject.Command(Guid.NewGuid(), Name));
             TempData.SetAlert(Alert.Success("You have created a new project"));
             
-            return RedirectToPage(nameof(Details), new { org = this.Ctx().OrganisationName, project = Name });
+            return RedirectToPage("/Project/Details", new { org = org.Name, project = Name });
         }
         catch (BusinessRuleBrokenException e)
         {

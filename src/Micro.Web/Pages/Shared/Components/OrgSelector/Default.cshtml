@@ -1,7 +1,7 @@
 ﻿@model Model
 
-<div class="btn-group w-25" role="group">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
         @if (Model.Organisation != null)
         {
             @Model.Organisation.Name
@@ -10,19 +10,19 @@
         {
             <span>Select organisation</span>
         }
-    </button>
+    </a>
     <ul class="dropdown-menu">
         @foreach (var item in Model.Memberships)
         {
             <li>
-                <a class="dropdown-item" asp-page="/Organisations/Details" asp-route-org="@item.OrganisationName">@item.OrganisationName</a>
+                <a class="dropdown-item" asp-page="/Organisation/Details" asp-route-org="@item.OrganisationName">@item.OrganisationName</a>
             </li>
         }
         <li>
             <hr class="dropdown-divider">
         </li>
         <li>
-            <a class="dropdown-item" asp-page="/Organisations/Create">Create new...</a>
+            <a class="dropdown-item" asp-page="/Organisations/Create">Create new organisation...</a>
         </li>
     </ul>
-</div>
+</li>

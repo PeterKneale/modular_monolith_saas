@@ -1,5 +1,4 @@
 ﻿using Micro.Tenants.Application.Organisations;
-using Index = Micro.Web.Pages.Translate.Index;
 
 namespace Micro.Web.Pages.Organisations;
 
@@ -16,7 +15,7 @@ public class Create(ITenantsModule module) : PageModel
         {
             await module.SendCommand(new CreateOrganisation.Command(Guid.NewGuid(), Name));
             TempData.SetAlert(Alert.Success("You have created a new organisation"));
-            return RedirectToPage(nameof(Details), new {org = Name});
+            return RedirectToPage("/Organisation/Details", new {org = Name});
         }
         catch (BusinessRuleBrokenException e)
         {

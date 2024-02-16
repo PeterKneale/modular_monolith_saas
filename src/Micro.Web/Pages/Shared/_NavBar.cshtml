@@ -1,36 +1,40 @@
-﻿@using Micro.Web.Code.Contexts
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject IWebContext Ctx
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container">
-        <a class="navbar-brand" asp-area="" asp-page="/Index">Micro.Web</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
+﻿@inject Micro.Web.Code.PageContext.IPageContextAccessor PageContext
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">MicroSAAS</a>
+        <ul class="navbar-nav">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <vc:project-selector/>
+                <vc:org-selector/>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                    <a class="nav-link" asp-area="" asp-page="/Auth/Logout">Logout</a>
                 </li>
-                @if (!Ctx.IsAuthenticated)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Register">Register</a>
-                    </li>
-                }
-                else
-                {
-                    <vc:org-selector />
-                    <vc:project-selector />
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Auth/Logout">Logout</a>
-                    </li>
-                }
-            </ul>
-        </div>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-page="/Auth/Login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-page="/Auth/Register">Register</a>
+                </li>
+            }
+        </ul>
     </div>
+</nav>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (PageContext.Organisation != null)
+        {
+            <li class="breadcrumb-item">Organisation</li>
+            <li class="breadcrumb-item"><a href="#">@PageContext.Organisation.Name</a></li>
+            @if (PageContext.Project != null)
+            {
+                <li class="breadcrumb-item">Project</li>
+                <li class="breadcrumb-item"><a href="#">@PageContext.Project.Name</a></li>
+            }
+        }
+    </ol>
 </nav>
