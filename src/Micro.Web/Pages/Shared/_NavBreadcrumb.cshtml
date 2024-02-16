@@ -1,0 +1,30 @@
+﻿@using Micro.Web.Code.Contexts.Page
+@inject IPageContextAccessor PageContext
+<div class="container mb-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @if (PageContext.HasOrganisation)
+            {
+                <li class="breadcrumb-item">
+                    Organisation
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-page="/Organisation/Details" asp-route-org="@PageContext.Organisation.Name">
+                        @PageContext.Organisation.Name
+                    </a>
+                </li>
+                @if (PageContext.HasProject)
+                {
+                    <li class="breadcrumb-item">
+                        Project
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-page="/Project/Details" asp-route-org="@PageContext.Project.Name" asp-route-project="@PageContext.Organisation.Name">
+                            @PageContext.Project.Name
+                        </a>
+                    </li>
+                }
+            }
+        </ol>
+    </nav>
+</div>

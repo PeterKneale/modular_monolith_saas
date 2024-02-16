@@ -19,12 +19,12 @@ public static class AddTerm
         }
     }
 
-    public class Handler(IOrganisationContext context, ITermRepository terms) : IRequestHandler<Command>
+    public class Handler(IOrganisationExecutionContext executionContext, ITermRepository terms) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var termId = new TermId(command.TermId);
-            var organisationId = context.OrganisationId;
+            var organisationId = executionContext.OrganisationId;
             var appId = new ProjectId(command.AppId);
             var name = new TermName(command.Name);
             var term = new Term(termId, organisationId, appId, name);

@@ -3,8 +3,7 @@ using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
-using Micro.Web.Code.Contexts;
-using Micro.Web.Code.PageContext;
+using Micro.Web.Code.Contexts.Page;
 
 namespace Micro.Web.Pages.Shared.Components.OrgSelector;
 
@@ -17,7 +16,7 @@ public class OrgSelector(ITenantsModule module, IPageContextAccessor context) : 
             Memberships = await module.SendQuery(new ListOrganisations.Query())
         };
 
-        if (context.Organisation == null)
+        if (!context.HasOrganisation)
         {
             return View(model);
         }

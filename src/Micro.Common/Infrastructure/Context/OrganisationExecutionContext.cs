@@ -3,7 +3,7 @@ using Micro.Common.Domain;
 
 namespace Micro.Common.Infrastructure.Context;
 
-public class OrganisationContext(OrganisationId organisationId) : IOrganisationContext
+public class OrganisationExecutionContext(OrganisationId organisationId) : IOrganisationExecutionContext
 {
     public OrganisationId OrganisationId => organisationId;
 }

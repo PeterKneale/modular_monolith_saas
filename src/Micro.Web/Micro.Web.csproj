@@ -33,6 +33,12 @@
 
     <ItemGroup>
       <AdditionalFiles Include="Pages\Shared\Components\ProjectSelector\Default.cshtml" />
+      <AdditionalFiles Include="Pages\Shared\Components\UserMenu\Default.cshtml" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Code\Contexts\" />
     </ItemGroup>
 
 </Project>

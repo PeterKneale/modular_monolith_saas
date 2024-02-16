@@ -11,7 +11,7 @@ public static class ListProjects
 
     public record Result(Guid ProjectId, string ProjectName);
 
-    private class Handler(IOrganisationContext context, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
+    private class Handler(IOrganisationExecutionContext executionContext, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
     {
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {
@@ -19,7 +19,7 @@ public static class ListProjects
                                $"FROM {ProjectsTable} m " +
                                $"WHERE {OrganisationIdColumn} = @OrganisationId";
             using var con = connections.CreateConnection();
-            var results = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { OrganisationId = context.OrganisationId.Value }, cancellationToken: token));
+            var results = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { OrganisationId = executionContext.OrganisationId.Value }, cancellationToken: token));
             var list = new List<Result>();
             while (results.Read())
             {

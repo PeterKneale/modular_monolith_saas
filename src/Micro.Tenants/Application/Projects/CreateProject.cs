@@ -16,7 +16,7 @@ public static class CreateProject
         }
     }
 
-    public class Handler(IOrganisationContext context, IProjectRepository projects, IProjectNameCheck check) : IRequestHandler<Command>
+    public class Handler(IOrganisationExecutionContext executionContext, IProjectRepository projects, IProjectNameCheck check) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
@@ -33,7 +33,7 @@ public static class CreateProject
                 throw new Exception("Name already in use");
             }
 
-            var project = new Project(projectId, context.OrganisationId, name);
+            var project = new Project(projectId, executionContext.OrganisationId, name);
             await projects.CreateAsync(project, token);
 
             return Unit.Value;

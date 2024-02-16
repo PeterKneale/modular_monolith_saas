@@ -2,7 +2,7 @@
 
 public class TestContextAccessor : IContextAccessor
 {
-    public IUserContext? User { get; set; }
-    public IOrganisationContext? Organisation { get; set; }
-    public IProjectContext? Project { get; set; }
+    public IUserExecutionContext? User { get; set; }
+    public IOrganisationExecutionContext? Organisation { get; set; }
+    public IProjectExecutionContext? Project { get; set; }
 }

@@ -34,15 +34,15 @@ public class ServiceFixture : ITestOutputHelperAccessor
     
     public async Task Exec(Func<IModule, Task> action, Guid userId)
     {
-        _accessor.User = new UserContext(new UserId(userId));
+        _accessor.User = new UserExecutionContext(new UserId(userId));
         await action(_module);
         ClearContext();
     }
     
     public async Task Exec(Func<IModule, Task> action, Guid userId, Guid organisationId)
     {
-        _accessor.User = new UserContext(new UserId(userId));
-        _accessor.Organisation = new OrganisationContext(new OrganisationId(organisationId));
+        _accessor.User = new UserExecutionContext(new UserId(userId));
+        _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId));
         await Exec(action, userId);
         ClearContext();
     }

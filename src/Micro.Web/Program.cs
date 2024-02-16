@@ -1,7 +1,8 @@
 using Micro.Common.Infrastructure.Context;
 using Micro.Translations;
-using Micro.Web.Code.Contexts;
-using Micro.Web.Code.PageContext;
+using Micro.Web.Code.Contexts.Authentication;
+using Micro.Web.Code.Contexts.Execution;
+using Micro.Web.Code.Contexts.Page;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,10 +40,14 @@ builder.Services
         options.AccessDeniedPath = "/Auth/Forbidden";
     });
 
+// Authentication context
+builder.Services.AddScoped<IAuthContext, AuthContext>();
+
+// Page Context
 builder.Services.AddScoped<PageContextMiddleware>();
 builder.Services.AddScoped<IPageContextAccessor, PageContextAccessor>();
-builder.Services.AddScoped<IOrganisationPageContext>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
-builder.Services.AddScoped<IProjectPageContext>(c=> c.GetRequiredService<IPageContextAccessor>().Project);
+builder.Services.AddScoped<IPageContextOrganisation>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
+builder.Services.AddScoped<IPageContextProject>(c=> c.GetRequiredService<IPageContextAccessor>().Project);
 
 var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();

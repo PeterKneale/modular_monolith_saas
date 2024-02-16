@@ -1,10 +1,7 @@
-﻿namespace Micro.Web.Code.Contexts;
+﻿namespace Micro.Web.Code.Contexts.Page;
 
 public static class Constants
 {
-    // claims
-    public const string UserClaimKey = "userId";
-    
     // routes
     public const string OrganisationRouteKey = "org";
     public const string ProjectRouteKey = "project";

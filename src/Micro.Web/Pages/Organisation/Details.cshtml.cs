@@ -1,5 +1,5 @@
 ﻿using Micro.Tenants.Application.Organisations;
-using Constants = Micro.Web.Code.Contexts.Constants;
+using Constants = Micro.Web.Code.Contexts.Page.Constants;
 
 namespace Micro.Web.Pages.Organisation;
 

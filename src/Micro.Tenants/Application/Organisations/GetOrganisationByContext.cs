@@ -14,11 +14,11 @@ public static class GetOrganisationByContext
         
     }
 
-    public class Handler(IOrganisationContext context, IOrganisationRepository organisations) : IRequestHandler<Query, Result>
+    public class Handler(IOrganisationExecutionContext executionContext, IOrganisationRepository organisations) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var organisation = await organisations.GetAsync(context.OrganisationId, token);
+            var organisation = await organisations.GetAsync(executionContext.OrganisationId, token);
             if (organisation == null)
             {
                 throw new Exception("not found");

@@ -1,5 +1,5 @@
 ﻿using Micro.Tenants.Application.Projects;
-using static Micro.Web.Code.Contexts.Constants;
+using static Micro.Web.Code.Contexts.Page.Constants;
 
 namespace Micro.Web.Pages.Project;
 

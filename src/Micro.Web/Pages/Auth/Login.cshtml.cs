@@ -2,7 +2,7 @@
 using Micro.Tenants.Application.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Constants = Micro.Web.Code.Contexts.Constants;
+using static Micro.Web.Code.Contexts.Authentication.Constants;
 
 namespace Micro.Web.Pages.Auth;
 
@@ -26,7 +26,8 @@ public class Login(ITenantsModule module, ILogger<Login> logs) : PageModel
 
             var claims = new Claim[]
             {
-                new(Constants.UserClaimKey, result.UserId!.Value.ToString())
+                new(UserClaimKey, result.UserId!.Value.ToString()),
+                new(UserClaimEmail, Email)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

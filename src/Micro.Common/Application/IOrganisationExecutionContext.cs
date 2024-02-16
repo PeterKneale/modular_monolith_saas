@@ -2,7 +2,7 @@
 
 namespace Micro.Common.Application;
 
-public interface IOrganisationContext
+public interface IOrganisationExecutionContext
 {
     OrganisationId OrganisationId { get; }
 }

@@ -4,9 +4,9 @@ namespace Micro.Common.Infrastructure.Context;
 
 public interface IContextAccessor
 {
-    IUserContext? User { get; }
+    IUserExecutionContext? User { get; }
     
-    IOrganisationContext? Organisation { get; }
+    IOrganisationExecutionContext? Organisation { get; }
     
-    IProjectContext? Project { get; }
+    IProjectExecutionContext? Project { get; }
 }

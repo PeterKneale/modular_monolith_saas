@@ -1,0 +1,24 @@
+﻿@model Model
+
+<form class="d-flex align-items-center">
+    <div class="input-group input-group-sm">
+        <span class="input-group-text">User</span>
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @Model.Email
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <a class="dropdown-item">Menu Item #1</a>
+            </li>
+            <li>
+                <a class="dropdown-item">Menu Item #2</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item" asp-area="" asp-page="/Auth/Logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</form>

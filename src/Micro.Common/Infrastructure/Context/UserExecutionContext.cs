@@ -3,7 +3,7 @@ using Micro.Common.Domain;
 
 namespace Micro.Common.Infrastructure.Context;
 
-public class ProjectContext(ProjectId projectId) : IProjectContext
+public class UserExecutionContext(UserId userId) : IUserExecutionContext
 {
-    public ProjectId ProjectId => projectId;
+    public UserId UserId => userId;
 }

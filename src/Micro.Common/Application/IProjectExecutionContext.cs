@@ -2,7 +2,7 @@
 
 namespace Micro.Common.Application;
 
-public interface IProjectContext
+public interface IProjectExecutionContext
 {
     ProjectId ProjectId { get; }
 }

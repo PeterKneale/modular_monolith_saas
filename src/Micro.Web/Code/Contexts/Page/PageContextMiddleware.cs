@@ -1,9 +1,7 @@
 ﻿using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
-using Micro.Web.Code.Contexts;
-using Constants = Micro.Web.Code.Contexts.Constants;
 
-namespace Micro.Web.Code.PageContext;
+namespace Micro.Web.Code.Contexts.Page;
 
 public class PageContextMiddleware(ITenantsModule tenants, ILogger<PageContextMiddleware> logs) : IMiddleware
 {
@@ -19,7 +17,7 @@ public class PageContextMiddleware(ITenantsModule tenants, ILogger<PageContextMi
             var name = organisationRoute!.ToString()!;
             logs.LogInformation("Setting organisation context: {Name}", name);
             var result = await tenants.SendQuery(new GetOrganisationByName.Query(name));
-            context.SetOrganisationContext(new OrganisationPageContext(result.Id, result.Name));
+            context.SetOrganisationContext(new PageContextOrganisation(result.Id, result.Name));
         }
         else
         {
@@ -31,7 +29,7 @@ public class PageContextMiddleware(ITenantsModule tenants, ILogger<PageContextMi
             var name = projectRoute!.ToString()!;
             logs.LogInformation("Setting project context: {Name}", name);
             var result = await tenants.SendQuery(new GetProjectByName.Query(name));
-            context.SetProjectContext(new ProjectPageContext(result.Id, result.Name));
+            context.SetProjectContext(new PageContextProject(result.Id, result.Name));
         }
         else
         {

@@ -2,7 +2,7 @@
 
 namespace Micro.Common.Application;
 
-public interface IUserContext
+public interface IUserExecutionContext
 {
     UserId UserId { get; }
 }

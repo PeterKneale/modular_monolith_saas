@@ -1,9 +1,9 @@
 ﻿using Micro.Tenants.Application.Projects;
-using Micro.Web.Code.PageContext;
+using Micro.Web.Code.Contexts.Page;
 
 namespace Micro.Web.Pages.Projects;
 
-public class Create(ITenantsModule module, IOrganisationPageContext org) : PageModel
+public class Create(ITenantsModule module, IPageContextOrganisation org) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {

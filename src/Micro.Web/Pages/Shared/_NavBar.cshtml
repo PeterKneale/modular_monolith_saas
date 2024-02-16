@@ -1,15 +1,23 @@
-﻿@inject Micro.Web.Code.PageContext.IPageContextAccessor PageContext
+﻿@using Micro.Web.Code.Contexts.Page
+@using Micro.Web.Pages.Shared.Components.ProjectSelector
+@using Micro.Web.Pages.Shared.Components.UserMenu
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Micro.Web.Code.Contexts.Authentication
+@inject IAuthContext AuthContext
+@inject IPageContextAccessor PageContext
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="/">MicroSAAS</a>
         <ul class="navbar-nav">
-            @if (User.Identity.IsAuthenticated)
+            @if (AuthContext.IsAuthenticated)
             {
-                <vc:project-selector/>
-                <vc:org-selector/>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-page="/Auth/Logout">Logout</a>
-                </li>
+                <div class="me-2">
+                    <vc:project-selector/>
+                </div>
+                <div class="me-2">
+                    <vc:org-selector/>
+                </div>
+                <vc:user-menu/>
             }
             else
             {
@@ -22,19 +30,4 @@
             }
         </ul>
     </div>
-</nav>
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        @if (PageContext.Organisation != null)
-        {
-            <li class="breadcrumb-item">Organisation</li>
-            <li class="breadcrumb-item"><a href="#">@PageContext.Organisation.Name</a></li>
-            @if (PageContext.Project != null)
-            {
-                <li class="breadcrumb-item">Project</li>
-                <li class="breadcrumb-item"><a href="#">@PageContext.Project.Name</a></li>
-            }
-        }
-    </ol>
 </nav>
