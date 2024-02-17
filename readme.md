@@ -42,18 +42,15 @@
 :question: should modules have defined user, org and project scoped functionality? or should the modular nature be confined to the backend of the modular monolith?
 
 - User Scoped modules
-
-  :computer: `/users/{user}/{module}/{path}`
-  :computer: `/users/peter/tasks/list
+  - :computer: `/users/{user}/{module}/{path}`
+  - :computer: `/users/peter/tasks/list
   
 
 - Org Scoped modules
-
-  :computer: `/orgs/{org}/{module}/{path}`
-  :computer: `/ogs/microsoft/invitations/list
+  - :computer: `/orgs/{org}/{module}/{path}`
+  - :computer: `/ogs/microsoft/invitations/list
 
 - Project Scoped modules
-
-  :computer: `/orgs/{org}/projects/{project}/{module}/{path}`
-  :computer: `/ogs/microsoft/projects/landing-page/translations/terms/list
-  :computer: `/ogs/microsoft/projects/landing-page/translations/en-au/list
+  - :computer: `/orgs/{org}/projects/{project}/{module}/{path}`
+  - :computer: `/ogs/microsoft/projects/landing-page/translations/terms/list
+  - :computer: `/ogs/microsoft/projects/landing-page/translations/en-au/list
