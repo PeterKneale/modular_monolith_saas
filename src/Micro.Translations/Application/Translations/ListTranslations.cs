@@ -7,7 +7,7 @@ namespace Micro.Translations.Application.Translations;
 
 public static class ListTranslations
 {
-    public record Query(Guid AppId, string Language) : IRequest<Result>;
+    public record Query(Guid ProjectId, string Language) : IRequest<Result>;
 
     public record LanguageResult(Guid? TranslationId, Guid TermId, string TermName, string? TranslationText);
 
@@ -17,39 +17,39 @@ public static class ListTranslations
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var totalTerms = await CountTerms(query.AppId, token);
-            var totalTranslations = await CountTranslations(query.AppId, query.Language, token);
-            var translationsByLanguage = await ListTranslationsByLanguage(query.AppId, query.Language, token);
+            var totalTerms = await CountTerms(query.ProjectId, token);
+            var totalTranslations = await CountTranslations(query.ProjectId, query.Language, token);
+            var translationsByLanguage = await ListTranslationsByLanguage(query.ProjectId, query.Language, token);
             var languages = translationsByLanguage.Select(x => new LanguageResult(x.Key.TranslationId, x.Key.TermId, x.Key.TermName, x.Value));
             return new Result(totalTerms, totalTranslations, languages);
         }
 
-        private async Task<int> CountTerms(Guid appId, CancellationToken token)
+        private async Task<int> CountTerms(Guid projectId, CancellationToken token)
         {
-            var sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE app_id = @AppId";
+            var sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE project_id = @ProjectId";
             using var con = connections.CreateConnection();
-            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { appId }, cancellationToken: token));
+            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { ProjectId = projectId }, cancellationToken: token));
         }
 
-        private async Task<int> CountTranslations(Guid appId, string language, CancellationToken token)
+        private async Task<int> CountTranslations(Guid projectId, string language, CancellationToken token)
         {
             var sql = $"SELECT COUNT(1) FROM {TranslationsTable} " +
                       $"JOIN {TermsTable} on {TranslationsTable}.term_id = {TermsTable}.id " +
-                      "WHERE app_id = @appId " +
+                      "WHERE project_id = @ProjectId " +
                       "AND language_code = @language";
             using var con = connections.CreateConnection();
-            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { appId, language }, cancellationToken: token));
+            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { projectId, language }, cancellationToken: token));
         }
 
-        private async Task<IDictionary<(Guid? TranslationId, Guid TermId, string TermName), string?>> ListTranslationsByLanguage(Guid appId, string language, CancellationToken token)
+        private async Task<IDictionary<(Guid? TranslationId, Guid TermId, string TermName), string?>> ListTranslationsByLanguage(Guid projectId, string language, CancellationToken token)
         {
             var sql = $"SELECT tr.id, t.id, t.name, tr.text " +
                       $"FROM {TermsTable} t " +
                       $"LEFT JOIN {TranslationsTable} tr ON t.id = tr.term_id AND tr.language_code = @language " +
-                      $"WHERE t.app_id = @appId";
+                      $"WHERE t.project_id = @ProjectId";
 
             using var con = connections.CreateConnection();
-            var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { appId, language }, cancellationToken: token));
+            var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { projectId, language }, cancellationToken: token));
             var result = new Dictionary<(Guid? TranslationId, Guid TermId, string TermName), string?>();
             while (reader.Read())
             {

@@ -7,7 +7,7 @@ public class Index(ITranslationModule module) : PageModel
 {
     public async Task OnGet()
     {
-        var command = new Query(Constants.AppId);
+        var command = new Query(Constants.ProjectId);
         Results = await module.SendQuery(command);
     }
 

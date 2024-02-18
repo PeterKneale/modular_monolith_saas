@@ -7,7 +7,7 @@ namespace Micro.Translations.Application.Terms;
 
 public static class AddTerm
 {
-    public record Command(Guid TermId, Guid AppId, string Name) : IRequest;
+    public record Command(Guid TermId, Guid ProjectId, string Name) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
@@ -25,9 +25,9 @@ public static class AddTerm
         {
             var termId = new TermId(command.TermId);
             var organisationId = executionContext.OrganisationId;
-            var appId = new ProjectId(command.AppId);
+            var projectId = new ProjectId(command.ProjectId);
             var name = new TermName(command.Name);
-            var term = new Term(termId, organisationId, appId, name);
+            var term = new Term(termId, organisationId, projectId, name);
             await terms.CreateAsync(term);
             return Unit.Value;
         }

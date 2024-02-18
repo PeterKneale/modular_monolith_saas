@@ -2,7 +2,7 @@
 
 namespace Micro.Web.AcceptanceTests.UseCases.Auth;
 
-public class RegisterPageData
+public record RegisterPageData
 {
     private static readonly Faker<RegisterPageData> Fake;
 

@@ -18,8 +18,8 @@ public class RegistrationTests : PageTest
         var loginPage = LoginPage.Goto(Page);
         await loginPage.Login(registerPageData.Email, registerPageData.Password);
 
-        var createPage = CreatePage.Goto(Page);
-        var createPageData = CreatePageData.CreateValid();
+        var createPage = OrganisationCreatePage.Goto(Page);
+        var createPageData = OrganisationCreatePageData.CreateValid();
         await createPage.Create(createPageData.Name);
     }
 }

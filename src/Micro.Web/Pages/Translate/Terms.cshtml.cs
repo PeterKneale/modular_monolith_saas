@@ -7,7 +7,7 @@ public class Terms(ITranslationModule module) : PageModel
 {
     public async Task OnGet()
     {
-        var query = new Query(Constants.AppId);
+        var query = new Query(Constants.ProjectId);
         Results = await module.SendQuery(query);
     }  
     

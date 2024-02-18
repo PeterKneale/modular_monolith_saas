@@ -1,6 +1,14 @@
 ﻿@page "/org/{org}/projects/{project}"
+@inject IPageContextAccessor Context
+
+@using Micro.Web.Code.Contexts.Page
 @model Details
 
 @{
     ViewData["Title"] = "Project";
 }
+
+<a asp-page="/Translate/Index"
+   asp-route-org="@Context.Organisation.Name"
+   asp-route-project="@Context.Project.Name"
+   >Translate</a>

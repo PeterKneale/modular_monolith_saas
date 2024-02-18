@@ -12,12 +12,12 @@ internal class TermRepository(ConnectionFactory connections) : ITermRepository
 {
     public async Task CreateAsync(Term term)
     {
-        const string sql = $"INSERT INTO {TermsTable} (id, organisation_id, app_id, name) VALUES (@Id, @OrganisationId, @AppId, @Name)";
+        const string sql = $"INSERT INTO {TermsTable} (id, organisation_id, project_id, name) VALUES (@Id, @OrganisationId, @ProjectId, @Name)";
         var row = new Row
         {
             Id = term.Id.Value,
             OrganisationId = term.OrganisationId.Value,
-            AppId = term.ProjectId.Value,
+            ProjectId = term.ProjectId.Value,
             Name = term.Name.Value
         };
         using var con = connections.CreateConnection();
@@ -48,16 +48,16 @@ internal class TermRepository(ConnectionFactory connections) : ITermRepository
     {
         var id = new TermId(row.Id);
         var organisationId = new OrganisationId(row.OrganisationId);
-        var appId = new ProjectId(row.AppId);
+        var projectId = new ProjectId(row.ProjectId);
         var name = new TermName(row.Name);
-        return new Term(id, organisationId, appId, name);
+        return new Term(id, organisationId, projectId, name);
     }
 
     private class Row
     {
         public Guid Id { get; init; }
         public Guid OrganisationId { get; init; }
-        public Guid AppId { get; init; }
+        public Guid ProjectId { get; init; }
         public string Name { get; init; } = null!;
     }
 }

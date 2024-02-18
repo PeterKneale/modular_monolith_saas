@@ -9,11 +9,11 @@ internal class LanguageRepository(ConnectionFactory connections) : ILanguageRepo
 {
     public async Task CreateAsync(Language language)
     {
-        const string sql = $"INSERT INTO {Constants.LanguagesTable} (id, app_id, name, code) VALUES (@Id, @AppId, @Name, @Code)";
+        const string sql = $"INSERT INTO {Constants.LanguagesTable} (id, project_id, name, code) VALUES (@Id, @ProjectId, @Name, @Code)";
         var parameters = new
         {
             Id = language.Id.Value,
-            AppId = language.ProjectId.Value,
+            ProjectId = language.ProjectId.Value,
             Name = language.LanguageCode.Name,
             Code = language.LanguageCode.Code
         };
