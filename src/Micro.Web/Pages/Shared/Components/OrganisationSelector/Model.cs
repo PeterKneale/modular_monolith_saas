@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Application.Organisations;
 
-namespace Micro.Web.Pages.Shared.Components.OrgSelector;
+namespace Micro.Web.Pages.Shared.Components.OrganisationSelector;
 
 public class Model
 {

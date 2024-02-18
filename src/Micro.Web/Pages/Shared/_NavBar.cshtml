@@ -3,6 +3,7 @@
 @using Micro.Web.Pages.Shared.Components.UserMenu
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Micro.Web.Code.Contexts.Authentication
+@using Micro.Web.Pages.Shared.Components.OrganisationSelector
 @inject IAuthContext AuthContext
 @inject IPageContextAccessor PageContext
 <nav class="navbar navbar-expand-lg">
@@ -15,7 +16,7 @@
                     <vc:project-selector/>
                 </div>
                 <div class="me-2">
-                    <vc:org-selector/>
+                    <vc:organisation-selector/>
                 </div>
                 <vc:user-menu/>
             }

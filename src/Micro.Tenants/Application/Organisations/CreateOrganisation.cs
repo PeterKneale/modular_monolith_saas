@@ -32,7 +32,7 @@ public static class CreateOrganisation
             var name = new OrganisationName(command.Name);
             if (await check.AnyOrganisationUsesNameAsync(name, token))
             {
-                throw new Exception("Name already in use");
+                throw new Exception($"Name {name} already in use");
             }
 
             var organisation = new Organisation(organisationId, name);

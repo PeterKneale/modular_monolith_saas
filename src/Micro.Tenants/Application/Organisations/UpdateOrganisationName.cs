@@ -30,7 +30,7 @@ public static class UpdateOrganisationName
             var name = new OrganisationName(command.Name);
             if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token))
             {
-                throw new Exception("Name already in use");
+                throw new Exception($"Name {name} already in use");
             }
 
             organisation.ChangeName(name);

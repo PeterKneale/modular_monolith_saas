@@ -1,13 +1,9 @@
-﻿using Micro.Common.Infrastructure.Context;
-using Micro.Tenants.Application.Memberships;
-using Micro.Tenants.Application.Organisations;
-using Micro.Tenants.Domain.Memberships;
-using Micro.Tenants.Domain.Organisations;
+﻿using Micro.Tenants.Application.Organisations;
 using Micro.Web.Code.Contexts.Page;
 
-namespace Micro.Web.Pages.Shared.Components.OrgSelector;
+namespace Micro.Web.Pages.Shared.Components.OrganisationSelector;
 
-public class OrgSelector(ITenantsModule module, IPageContextAccessor context) : ViewComponent
+public class OrganisationSelector(ITenantsModule module, IPageContextAccessor context) : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
     {

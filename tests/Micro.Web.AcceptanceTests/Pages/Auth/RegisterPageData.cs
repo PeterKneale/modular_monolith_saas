@@ -1,6 +1,6 @@
 ﻿using Bogus;
 
-namespace Micro.Web.AcceptanceTests.UseCases.Auth;
+namespace Micro.Web.AcceptanceTests.Pages.Auth;
 
 public record RegisterPageData
 {

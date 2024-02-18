@@ -30,7 +30,7 @@ public static class CreateProject
             var name = new ProjectName(command.Name);
             if (await check.AnyProjectUsesNameAsync(name, token))
             {
-                throw new Exception("Name already in use");
+                throw new Exception($"Name {name} already in use");
             }
 
             var project = new Project(projectId, executionContext.OrganisationId, name);

@@ -34,7 +34,7 @@ public class OrganisationTests
         Func<Task> action = async () => await _service.Exec(x => x.SendCommand(create2), userId1);
 
         // assert
-        await action.Should().ThrowAsync<Exception>().WithMessage("Name already in use");
+        await action.Should().ThrowAsync<Exception>().WithMessage("*already in use*");
     }
 
     [Fact]
@@ -60,6 +60,6 @@ public class OrganisationTests
         Func<Task> action = async () => await _service.Exec(x => x.SendCommand(update), userId1, organisationId1);
 
         // assert
-        await action.Should().ThrowAsync<Exception>().WithMessage("Name already in use");
+        await action.Should().ThrowAsync<Exception>().WithMessage("*already in use*");
     }
 }

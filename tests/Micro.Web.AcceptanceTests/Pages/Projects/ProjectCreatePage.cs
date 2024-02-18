@@ -1,15 +1,13 @@
-﻿using static Micro.Web.AcceptanceTests.Constants;
+﻿namespace Micro.Web.AcceptanceTests.Pages.Projects;
 
-namespace Micro.Web.AcceptanceTests.Pages.Projects;
-
-public class ProjectCreatePage(IPage page)
+public class ProjectCreatePage(IPage page) : ProjectPageLayout(page)
 {
     private static string NameField => "Name";
     private static string CreateButton => "Create";
 
-    public static ProjectCreatePage Goto(IPage page, string org)
+    public static async Task<ProjectCreatePage> Goto(IPage page, string org)
     {
-        page.GotoAsync(BaseUrl + $"{OrgRoute}/{org}/Projects/Create");
+        await page.GotoAsync(BaseUrl + $"{OrgRoute}/{org}/Projects/Create");
         return new ProjectCreatePage(page);
     }
 

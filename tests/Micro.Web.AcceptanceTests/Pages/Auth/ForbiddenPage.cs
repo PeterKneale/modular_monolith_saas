@@ -1,10 +1,10 @@
 ﻿namespace Micro.Web.AcceptanceTests.Pages.Auth;
 
-public class ForbiddenPage(IPage page)
+public class ForbiddenPage(IPage page) : PageLayout(page)
 {
-    public static ForbiddenPage Goto(IPage page)
+    public static async Task<ForbiddenPage> Goto(IPage page)
     {
-        page.GotoAsync(Constants.BaseUrl + "Auth/Forbidden");
+        await page.GotoAsync(BaseUrl + "Auth/Forbidden");
         return new ForbiddenPage(page);
     }
 }

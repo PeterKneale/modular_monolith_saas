@@ -1,14 +1,14 @@
 ﻿namespace Micro.Web.AcceptanceTests.Pages.Auth;
 
-public class LoginPage(IPage page)
+public class LoginPage(IPage page) : PageLayout(page)
 {
     private static string EmailField => "Email";
     private static string PasswordField => "Password";
     private static string LoginButton => "Login";
 
-    public static LoginPage Goto(IPage page)
+    public static async Task<LoginPage> Goto(IPage page)
     {
-        page.GotoAsync(Constants.BaseUrl + "Auth/Login");
+        await page.GotoAsync(BaseUrl + "Auth/Login");
         return new LoginPage(page);
     }
 

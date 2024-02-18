@@ -2,42 +2,44 @@
 
 @if (Model.Show)
 {
-    <form class="d-flex align-items-center">
-        <div class="input-group input-group-sm">
-            <span class="input-group-text">Project</span>
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                @if (Model.CurrentProject != null)
-                {
-                    @Model.CurrentProject.ProjectName
-                }
-                else
-                {
-                    <span>Select project</span>
-                }
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                @if (Model.CurrentProject != null)
-                {
-                    <li>
-                        <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">Settings</a>
-                    </li>
+    <div data-testid="ProjectSelector">
+        <form class="d-flex align-items-center">
+            <div class="input-group input-group-sm">
+                <span class="input-group-text">Project</span>
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @if (Model.CurrentProject != null)
+                    {
+                        @Model.CurrentProject.ProjectName
+                    }
+                    else
+                    {
+                        <span>Select project</span>
+                    }
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    @if (Model.CurrentProject != null)
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">Settings</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    }
+                    @foreach (var item in Model.Projects)
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@item.ProjectName">@item.ProjectName</a>
+                        </li>
+                    }
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                }
-                @foreach (var item in Model.Projects)
-                {
                     <li>
-                        <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@item.ProjectName">@item.ProjectName</a>
+                        <a class="dropdown-item" asp-route-org="@Model.OrganisationName" asp-page="/Projects/Create">Create new project</a>
                     </li>
-                }
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-route-org="@Model.OrganisationName" asp-page="/Projects/Create">Create new project</a>
-                </li>
-            </ul>
-        </div>
-    </form>
+                </ul>
+            </div>
+        </form>
+    </div>
 }

@@ -10,15 +10,15 @@ public class RegistrationTests : PageTest
     [Test]
     public async Task Can_register_and_login_create_an_organisation()
     {
-        var registerPage = RegisterPage.Goto(Page);
+        var registerPage = await RegisterPage.Goto(Page);
         var registerPageData = RegisterPageData.CreateValid();
 
         await registerPage.Register(registerPageData.FirstName, registerPageData.LastName, registerPageData.Email, registerPageData.Password);
         
-        var loginPage = LoginPage.Goto(Page);
+        var loginPage = await LoginPage.Goto(Page);
         await loginPage.Login(registerPageData.Email, registerPageData.Password);
 
-        var createPage = OrganisationCreatePage.Goto(Page);
+        var createPage = await OrganisationCreatePage.Goto(Page);
         var createPageData = OrganisationCreatePageData.CreateValid();
         await createPage.Create(createPageData.Name);
     }

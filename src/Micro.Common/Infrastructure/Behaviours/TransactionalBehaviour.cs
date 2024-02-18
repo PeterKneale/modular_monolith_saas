@@ -6,9 +6,12 @@ public class TransactionalBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        using var trn = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        using var tx = new TransactionScope(
+            TransactionScopeOption.Required,
+            new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted },
+            TransactionScopeAsyncFlowOption.Enabled);
         var response = await next();
-        trn.Complete();
+        tx.Complete();
         return response;
     }
 }

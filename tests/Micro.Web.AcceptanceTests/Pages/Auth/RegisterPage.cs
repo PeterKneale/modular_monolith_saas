@@ -1,6 +1,6 @@
 ﻿namespace Micro.Web.AcceptanceTests.Pages.Auth;
 
-public class RegisterPage(IPage page)
+public class RegisterPage(IPage page) : PageLayout(page)
 {
     private static string FirstNameField => "FirstName";
     private static string LastNameField => "LastName";
@@ -8,9 +8,9 @@ public class RegisterPage(IPage page)
     private static string PasswordField => "Password";
     private static string RegisterButton => "Register";
 
-    public static RegisterPage Goto(IPage page)
+    public static async Task<RegisterPage> Goto(IPage page)
     {
-        page.GotoAsync(Constants.BaseUrl + "Auth/Register");
+        await page.GotoAsync(BaseUrl + "Auth/Register");
         return new RegisterPage(page);
     }
 

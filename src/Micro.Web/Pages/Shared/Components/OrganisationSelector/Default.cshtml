@@ -1,0 +1,48 @@
+﻿@model Model
+<div data-testid="OrganisationSelector">
+    <form class="d-flex align-items-center">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">
+                Organisation
+            </span>
+
+            <button class="btn btn-outline-secondary dropdown-toggle" 
+                    type="button" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false"
+                    data-testid="OrganisationSelectionButton">
+                @if (Model.Organisation != null)
+                {
+                    <span data-testid="OrganisationSelected">@Model.Organisation.Name</span>
+                }
+                else
+                {
+                    <span>Select organisation</span>
+                }
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                @if (Model.Organisation != null)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-page="/Organisation/Details" asp-route-org="@Model.Organisation.Name">Settings</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                }
+                @foreach (var item in Model.Memberships)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-page="/Organisation/Details" asp-route-org="@item.OrganisationName" data-testid="OrganisationOption">@item.OrganisationName</a>
+                    </li>
+                }
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-page="/Organisations/Create">Create new organisation</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>

@@ -1,10 +1,10 @@
 ﻿namespace Micro.Web.AcceptanceTests.Pages.Auth;
 
-public class LogoutPage(IPage page)
+public class LogoutPage(IPage page) : PageLayout(page)
 {
-    public static LogoutPage Goto(IPage page)
+    public static async Task<LogoutPage> Goto(IPage page)
     {
-        page.GotoAsync(Constants.BaseUrl + "Auth/Logout");
+        await page.GotoAsync(BaseUrl + "Auth/Logout");
         return new LogoutPage(page);
     }
 }
