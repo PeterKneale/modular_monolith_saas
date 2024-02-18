@@ -1,5 +1,7 @@
 ﻿@page "/org/{org}/projects/{project}/translate"
+@using Micro.Web.Code.Contexts.Page
 @model Micro.Web.Pages.Translate.Index
+@inject IPageContextAccessor Context;
 
 <div class="card mb-2">
     <div class="card-header">
@@ -11,8 +13,14 @@
     <div class="card-body">
         <div class="card mb-2">
             <div class="card-body">
-                <a asp-page="Terms" class="card-link">View Terms</a>
-                <a asp-page="AddTerm" class="btn btn-primary float-end">Add Term</a>
+                <a asp-page="Terms" 
+                   asp-route-org="@Context.Organisation.Name"
+                   asp-route-project="@Context.Project.Name"
+                   class="card-link">View Terms</a>
+                <a asp-page="AddTerm" 
+                   asp-route-org="@Context.Organisation.Name"
+                   asp-route-project="@Context.Project.Name"
+                   class="btn btn-primary float-end">Add Term</a>
             </div>
         </div>
     </div>
@@ -39,7 +47,10 @@
                     </p>
                 </div>
                 <div class="card-body">
-                    <a class="card-link" asp-page="Translations" asp-route-languagecode="@item.Language.Code">
+                    <a class="card-link" asp-page="Translations" 
+                       asp-route-org="@Context.Organisation.Name"
+                       asp-route-project="@Context.Project.Name" 
+                       asp-route-languagecode="@item.Language.Code">
                         View Translations
                     </a>
                 </div>

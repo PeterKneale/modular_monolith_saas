@@ -2,7 +2,6 @@ using Micro.Common.Infrastructure.Context;
 using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
-using Micro.Web.Code.Contexts.Page;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);

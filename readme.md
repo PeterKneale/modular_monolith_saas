@@ -54,3 +54,9 @@
   - :computer: `/orgs/{org}/projects/{project}/{module}/{path}`
   - :computer: `/ogs/microsoft/projects/landing-page/translations/terms/list
   - :computer: `/ogs/microsoft/projects/landing-page/translations/en-au/list
+
+# Acceptance Tests
+- Added PageIds to identify the current page
+- :v: Organisation Selector Tests
+- :x: Project Selector Tests
+- :x: User Menu Tests

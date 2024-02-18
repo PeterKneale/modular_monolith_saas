@@ -1,5 +1,8 @@
-﻿@page
+﻿@page "/org/{org}/projects/{project}/translate/translations"
+@using Micro.Web.Code.Contexts.Page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Micro.Web.Pages.Translate.Translations
+@inject IPageContextAccessor Context;
 
 <div class="card mb-2">
     <div class="card-header">
@@ -15,24 +18,32 @@
             <div class="card mb-2">
                 <div class="card-body">
                     <h5 class="card-title">@item.TermName</h5>
-                    @if(item.TranslationText == null)
+                    @if (item.TranslationText == null)
                     {
                         <p class="card-text text-danger">
                             No Translation
                         </p>
-                        <a asp-page="AddTranslation" 
-                           asp-route-termId="@item.TermId" 
-                           asp-route-languageCode="@Model.LanguageCode" 
-                           class="btn btn-primary">Add Translation</a>
+                        <a asp-page="AddTranslation"
+                           asp-route-org="@Context.Organisation.Name"
+                           asp-route-project="@Context.Project.Name"
+                           asp-route-termId="@item.TermId"
+                           asp-route-languageCode="@Model.LanguageCode"
+                           class="btn btn-primary">
+                            Add Translation
+                        </a>
                     }
                     else
                     {
                         <p class="card-text">
                             @item.TranslationText
                         </p>
-                        <a asp-page="UpdateTranslation" 
-                           asp-route-id="@item.TranslationId" 
-                           class="btn btn-primary">Update Translation</a>
+                        <a asp-page="UpdateTranslation"
+                           asp-route-org="@Context.Organisation.Name"
+                           asp-route-project="@Context.Project.Name"
+                           asp-route-id="@item.TranslationId"
+                           class="btn btn-primary">
+                            Update Translation
+                        </a>
                     }
                 </div>
             </div>
