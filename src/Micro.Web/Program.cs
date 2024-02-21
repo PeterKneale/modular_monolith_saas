@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); });
 builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
 builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
 builder.Services.AddSingleton<IContextAccessor, ContextAccessor>();
@@ -46,7 +47,7 @@ builder.Services.AddScoped<IAuthContext, AuthContext>();
 builder.Services.AddScoped<PageContextMiddleware>();
 builder.Services.AddScoped<IPageContextAccessor, PageContextAccessor>();
 builder.Services.AddScoped<IPageContextOrganisation>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
-builder.Services.AddScoped<IPageContextProject>(c=> c.GetRequiredService<IPageContextAccessor>().Project);
+builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageContextAccessor>().Project);
 
 var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();
