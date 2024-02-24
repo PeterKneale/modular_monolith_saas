@@ -1,4 +1,5 @@
 ﻿using Micro.Common;
+using Micro.Common.Infrastructure.Context;
 using Micro.Translations.Infrastructure;
 
 namespace Micro.Translations;

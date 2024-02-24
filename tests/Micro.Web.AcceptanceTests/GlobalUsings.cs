@@ -5,3 +5,6 @@ global using Microsoft.Playwright;
 global using Microsoft.Playwright.NUnit;
 global using NUnit.Framework;
 global using static Micro.Web.AcceptanceTests.Constants;
+using System.Diagnostics.CodeAnalysis;
+
+[assembly:ExcludeFromCodeCoverage]

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Micro.Web.Pages.Translate;
 
-public class AddTranslationPage(ITranslationModule module) : PageModel
+public class AddTranslationPage(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -18,7 +18,13 @@ public class AddTranslationPage(ITranslationModule module) : PageModel
         {
             await module.SendCommand(new AddTranslation.Command(Guid.NewGuid(), TermId, LanguageCode, Text));
             TempData.SetAlert(Alert.Success("You have added a translation"));
-            return RedirectToPage(nameof(Translations), new { LanguageCode });
+            
+            return RedirectToPage(nameof(Translations), new
+            {
+                LanguageCode = LanguageCode,
+                Org = context.Organisation.Name, 
+                Project = context.Project.Name
+            });
         }
         catch (BusinessRuleBrokenException e)
         {

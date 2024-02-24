@@ -3,7 +3,7 @@ using Micro.Translations.Application.Terms;
 
 namespace Micro.Web.Pages.Translate;
 
-public class AddTermPage(ITranslationModule module, ILogger<AddTermPage> logs) : PageModel
+public class AddTermPage(ITranslationModule module, IPageContextAccessor context, ILogger<AddTermPage> logs) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -14,9 +14,13 @@ public class AddTermPage(ITranslationModule module, ILogger<AddTermPage> logs) :
 
         try
         {
-            await module.SendCommand(new AddTerm.Command(Guid.NewGuid(), Constants.ProjectId, Term));
+            await module.SendCommand(new AddTerm.Command(Guid.NewGuid(), Term));
             TempData.SetAlert(Alert.Success("You have added a new term"));
-            return RedirectToPage(nameof(Index));
+            return RedirectToPage(nameof(Index), new
+            {
+                Org = context.Organisation.Name,
+                Project = context.Project.Name
+            });
         }
         catch (BusinessRuleBrokenException e)
         {

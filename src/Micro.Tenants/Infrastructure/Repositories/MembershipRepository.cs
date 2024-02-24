@@ -44,6 +44,7 @@ internal class MembershipRepository(ConnectionFactory connections) : IMembership
         }
         return list;
     }
+    
     public async Task<IEnumerable<Membership>> ListAsync(OrganisationId organisationId)
     {
         const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {RoleColumn} from {MembershipsTable} " +

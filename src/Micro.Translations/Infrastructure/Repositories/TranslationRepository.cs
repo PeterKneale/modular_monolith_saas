@@ -1,5 +1,4 @@
-﻿using Dapper;
-using Micro.Common.Infrastructure.Database;
+﻿using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Application;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Translations;

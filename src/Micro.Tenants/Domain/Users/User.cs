@@ -1,6 +1,4 @@
-﻿using Micro.Tenants.Domain.Organisations;
-
-namespace Micro.Tenants.Domain.Users;
+﻿namespace Micro.Tenants.Domain.Users;
 
 public class User(UserId id, UserName name, UserCredentials credentials)
 {

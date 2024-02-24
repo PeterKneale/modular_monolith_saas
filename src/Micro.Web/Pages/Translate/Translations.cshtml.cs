@@ -11,7 +11,7 @@ public class Translations(ITranslationModule module) : PageModel
 
     public async Task OnGet()
     {
-        var query = new Query(Constants.ProjectId, LanguageCode);
+        var query = new Query(LanguageCode);
         Results = await module.SendQuery(query);
     }  
     

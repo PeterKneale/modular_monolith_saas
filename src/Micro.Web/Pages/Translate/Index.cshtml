@@ -1,5 +1,4 @@
 ﻿@page "/org/{org}/projects/{project}/translate"
-@using Micro.Web.Code.Contexts.Page
 @model Micro.Web.Pages.Translate.Index
 @inject IPageContextAccessor Context;
 
@@ -38,7 +37,7 @@
             <div class="card mb-2">
                 <div class="card-body">
                     <h5 class="card-title">
-                        @item.Language.Name @item.Percentage%
+                        @item.ResultLanguage.Name @item.Percentage%
                     </h5>
                     <p class="card-text">
                         <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -50,7 +49,7 @@
                     <a class="card-link" asp-page="Translations" 
                        asp-route-org="@Context.Organisation.Name"
                        asp-route-project="@Context.Project.Name" 
-                       asp-route-languagecode="@item.Language.Code">
+                       asp-route-languagecode="@item.ResultLanguage.Code">
                         View Translations
                     </a>
                 </div>

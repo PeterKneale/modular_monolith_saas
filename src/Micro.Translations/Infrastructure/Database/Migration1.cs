@@ -10,7 +10,6 @@ public class Migration1 : Migration
     {
         Create.Table(TermsTable)
             .WithColumn("id").AsGuid().PrimaryKey()
-            .WithColumn("organisation_id").AsGuid()
             .WithColumn("project_id").AsGuid()
             .WithColumn("name").AsString(100);
 

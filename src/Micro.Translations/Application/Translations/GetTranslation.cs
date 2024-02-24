@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using Dapper;
 using Micro.Common.Infrastructure.Database;
 using static Micro.Translations.Constants;
 

@@ -1,5 +1,6 @@
 ﻿using System.Data;
-using Dapper;
+using Micro.Common.Application;
+using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Database;
 using static Micro.Translations.Constants;
 
@@ -7,37 +8,38 @@ namespace Micro.Translations.Application.Terms;
 
 public static class ListTerms
 {
-    public record Query(Guid ProjectId) : IRequest<Result>;
+    public record Query() : IRequest<Result>;
 
     public record TermResult(Guid Id, string Name);
 
     public record Result(int TotalTerms, IEnumerable<TermResult> Terms);
 
-    private class Handler(ConnectionFactory connections) : IRequestHandler<Query, Result>
+    private class Handler(ConnectionFactory connections, IProjectExecutionContext context) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var total = await CountTerms(query.ProjectId, token);
-            var terms = await ListTerms(query.ProjectId, token);
+            var projectId = context.ProjectId;
+            var total = await CountTerms(projectId, token);
+            var terms = await ListTerms(projectId, token);
             var models = terms.Select(x => new TermResult(x.Key, x.Value));
             return new Result(total, models);
         }
 
-        private async Task<int> CountTerms(Guid projectId, CancellationToken token)
+        private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
         {
             var sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE project_id = @ProjectId";
             using var con = connections.CreateConnection();
-            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { projectID = projectId }, cancellationToken: token));
+            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { projectID = projectId.Value }, cancellationToken: token));
         }
 
-        private async Task<IDictionary<Guid, string>> ListTerms(Guid projectId, CancellationToken token)
+        private async Task<IDictionary<Guid, string>> ListTerms(ProjectId projectId, CancellationToken token)
         {
             var sql = $"SELECT t.id, t.name " +
                       $"FROM {TermsTable} t " +
                       $"WHERE t.project_id = @ProjectId";
                       
             using var con = connections.CreateConnection();
-            var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { projectID = projectId }, cancellationToken: token));
+            var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { projectID = projectId.Value }, cancellationToken: token));
             return ToDictionary(reader);
         }
 

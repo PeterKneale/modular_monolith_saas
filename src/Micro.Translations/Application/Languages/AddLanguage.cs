@@ -27,8 +27,8 @@ public static class AddLanguage
             var languageId = new LanguageId(command.LanguageId);
             var projectId = new ProjectId(command.ProjectId);
             var languageCode = LanguageCode.FromIsoCode(command.LanguageCode);
-            var language = new Language(languageId, projectId, languageCode);
-            
+            var language = new ResultLanguage(languageId, projectId, languageCode);
+
             await languages.CreateAsync(language);
             return Unit.Value;
         }

@@ -3,6 +3,7 @@ using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Application;
+using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
@@ -25,27 +26,29 @@ internal static class ServiceCollectionExtensions
         {
             throw new Exception("Connection string missing");
         }
-        
+
         // application
         var assembly = Assembly.GetExecutingAssembly();
         services.AddMediatR(assembly);
         services.AddValidatorsFromAssembly(assembly);
-        
+
         // Connections
-        services.AddSingleton<ConnectionFactory>(_=> new ConnectionFactory(connectionString));
-        
+        services.AddSingleton<ConnectionFactory>(_ => new ConnectionFactory(connectionString));
+
         // Services
-        
+        services.AddSingleton<IOrganisationNameCheck, OrganisationNameCheck>();
+        services.AddSingleton<IProjectNameCheck, ProjectNameCheck>();
+        services.AddSingleton<IApiKeyService, ApiKeyService>();
+
         // Repositories
         services.AddSingleton<IOrganisationRepository, OrganisationRepository>();
-        services.AddSingleton<IOrganisationNameCheck, OrganisationNameCheck>();
         services.AddSingleton<IUserRepository, UserRepository>();
+        services.AddSingleton<IApiKeyRepository, ApiKeyRepository>();
         services.AddSingleton<IMembershipRepository, MembershipRepository>();
         services.AddSingleton<IProjectRepository, ProjectRepository>();
-        services.AddSingleton<IProjectNameCheck, ProjectNameCheck>();
-        
+
         // Database Migrations
-        
+
         services
             .AddSingleton<IConventionSet>(new DefaultConventionSet(Constants.SchemaName, null))
             .AddFluentMigratorCore()

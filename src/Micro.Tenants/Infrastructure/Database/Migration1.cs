@@ -28,7 +28,14 @@ public class Migration1 : Migration
         Create.Table(ProjectsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(OrganisationIdColumn).AsGuid()
-            .WithColumn(NameColumn).AsString(NameMaxLength).Unique();
+            .WithColumn(NameColumn).AsString(NameMaxLength);
+
+        Create.Table(UserApiKeysTable)
+            .WithColumn(IdColumn).AsGuid().PrimaryKey()
+            .WithColumn(UserIdColumn).AsGuid()
+            .WithColumn(NameColumn).AsString(NameMaxLength)
+            .WithColumn(KeyColumn).AsString(KeyMaxLength)
+            .WithColumn(CreatedAtColumn).AsDateTimeOffset();
 
         Create.ForeignKey($"fk_{MembershipsTable}_{OrganisationsTable}")
             .FromTable(MembershipsTable).ForeignColumn(OrganisationIdColumn)
@@ -41,10 +48,15 @@ public class Migration1 : Migration
         Create.ForeignKey($"fk_{ProjectsTable}_{OrganisationsTable}")
             .FromTable(ProjectsTable).ForeignColumn(OrganisationIdColumn)
             .ToTable(OrganisationsTable).PrimaryColumn(IdColumn);
+        
+        Create.ForeignKey($"fk_{UserApiKeysTable}_{UsersTable}")
+            .FromTable(UserApiKeysTable).ForeignColumn(UserIdColumn)
+            .ToTable(UsersTable).PrimaryColumn(IdColumn);
     }
 
     public override void Down()
     {
+        Delete.Table(UserApiKeysTable).IfExists();
         Delete.Table(ProjectsTable).IfExists();
         Delete.Table(MembershipsTable).IfExists();
         Delete.Table(UsersTable).IfExists();

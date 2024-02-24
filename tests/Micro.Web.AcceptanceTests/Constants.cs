@@ -7,5 +7,4 @@ public static class Constants
     // routes
     public const string OrgRoute = "org";
     public const string ProjectRoute = "project";
-
 }

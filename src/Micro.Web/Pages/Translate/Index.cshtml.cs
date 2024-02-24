@@ -1,4 +1,5 @@
 ﻿using Micro.Translations;
+using Micro.Translations.Application.Translations;
 using static Micro.Translations.Application.Translations.GetTranslationStatistics;
 
 namespace Micro.Web.Pages.Translate;
@@ -7,9 +8,8 @@ public class Index(ITranslationModule module) : PageModel
 {
     public async Task OnGet()
     {
-        var command = new Query(Constants.ProjectId);
-        Results = await module.SendQuery(command);
+        Results = await module.SendQuery(new Query());
     }
 
-    public Result Results { get; set; }
+    public GetTranslationStatistics.Results Results { get; set; }
 }
