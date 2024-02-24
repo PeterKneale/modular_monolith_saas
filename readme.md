@@ -43,17 +43,16 @@
 
 - User Scoped modules
   - :computer: `/users/{user}/{module}/{path}`
-  - :computer: `/users/peter/tasks/list
+  - :computer: `/users/peter/tasks/list`
   
-
 - Org Scoped modules
   - :computer: `/orgs/{org}/{module}/{path}`
-  - :computer: `/ogs/microsoft/invitations/list
+  - :computer: `/ogs/microsoft/invitations/list`
 
 - Project Scoped modules
   - :computer: `/orgs/{org}/projects/{project}/{module}/{path}`
-  - :computer: `/ogs/microsoft/projects/landing-page/translations/terms/list
-  - :computer: `/ogs/microsoft/projects/landing-page/translations/en-au/list
+  - :computer: `/ogs/microsoft/projects/landing-page/localisation/terms/list`
+  - :computer: `/ogs/microsoft/projects/landing-page/localisation/translations/en-au/list`
 
 # Acceptance Tests
 - Added PageIds to identify the current page
