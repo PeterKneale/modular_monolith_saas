@@ -1,4 +1,6 @@
 using Micro.Translations.Application.Terms;
+using Micro.Translations.Application.Terms.Commands;
+using Micro.Translations.Application.Terms.Queries;
 
 namespace Micro.Translations.IntegrationTests.UseCases;
 
@@ -35,9 +37,8 @@ public class ListTermsTests
             await ctx.SendCommand(new AddTerm.Command(termId3, term3));
 
             // assert
-            var terms = await ctx.SendQuery(new ListTerms.Query());
-            terms.TotalTerms.Should().Be(3);
-            terms.Terms.Should().BeEquivalentTo(new List<ListTerms.TermResult>
+            var results = await ctx.SendQuery(new ListTerms.Query());
+            results.Should().BeEquivalentTo(new List<ListTerms.Result>
             {
                 new(termId1, term1),
                 new(termId2, term2),

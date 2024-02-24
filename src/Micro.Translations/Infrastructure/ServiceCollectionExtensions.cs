@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
-using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Application;
+using Micro.Translations.Infrastructure.Dapper;
 using Micro.Translations.Infrastructure.Database;
 using Micro.Translations.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +41,13 @@ internal static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
+        // Infrastructure
+        SqlMapper.AddTypeHandler(LanguageIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(LanguageCodeTypeHandler.Default);
+        SqlMapper.AddTypeHandler(TermIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(TermNameTypeHandler.Default);
+        SqlMapper.AddTypeHandler(TranslationIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(TranslationTextTypeHandler.Default);
         return services;
     }
 }

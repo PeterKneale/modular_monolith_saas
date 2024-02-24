@@ -4,12 +4,12 @@
 <div class="card mb-2">
     <div class="card-header">
         <span class="float-end">
-            Terms: <strong>@Model.Results.TotalTerms</strong>
+            Terms: <strong>@Model.Total</strong>
         </span>
         <h5>Terms</h5>
     </div>
     <div class="card-body">
-        @foreach (var item in Model.Results.Terms)
+        @foreach (var item in Model.Results)
         {
             <div class="card mb-2">
                 <div class="card-body">

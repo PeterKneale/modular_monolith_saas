@@ -1,9 +1,8 @@
 ﻿using Micro.Common.Application;
-using Micro.Common.Domain;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Terms;
 
-namespace Micro.Translations.Application.Terms;
+namespace Micro.Translations.Application.Terms.Commands;
 
 public static class AddTerm
 {
@@ -19,7 +18,7 @@ public static class AddTerm
         }
     }
 
-    public class Handler(ITermRepository terms,IProjectExecutionContext context) : IRequestHandler<Command>
+    public class Handler(ITermRepository terms, IProjectExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
@@ -27,7 +26,7 @@ public static class AddTerm
             var projectId = context.ProjectId;
             var name = new TermName(command.Name);
             var term = new Term(termId, projectId, name);
-            await terms.CreateAsync(term);
+            await terms.CreateAsync(term, token);
             return Unit.Value;
         }
     }

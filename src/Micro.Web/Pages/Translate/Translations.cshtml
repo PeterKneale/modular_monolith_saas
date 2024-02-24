@@ -10,7 +10,7 @@
             Terms: <strong>@Model.Results.TotalTerms</strong>
             Translations: <strong>@Model.Results.TotalTranslations</strong>
         </span>
-        <h5>Translation for @Model.LanguageCode</h5>
+        <h5>Translation for @Model.LanguageId</h5>
     </div>
     <div class="card-body">
         @foreach (var item in Model.Results.Languages)
@@ -27,7 +27,7 @@
                            asp-route-org="@Context.Organisation.Name"
                            asp-route-project="@Context.Project.Name"
                            asp-route-termId="@item.TermId"
-                           asp-route-languageCode="@Model.LanguageCode"
+                           asp-route-languageId="@Model.LanguageId"
                            class="btn btn-primary">
                             Add Translation
                         </a>

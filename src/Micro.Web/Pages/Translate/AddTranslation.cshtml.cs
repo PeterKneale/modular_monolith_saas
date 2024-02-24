@@ -1,7 +1,5 @@
 ﻿using Micro.Translations;
-using Micro.Translations.Application.Terms;
-using Micro.Translations.Application.Translations;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Micro.Translations.Application.Translations.Commands;
 
 namespace Micro.Web.Pages.Translate;
 
@@ -16,12 +14,12 @@ public class AddTranslationPage(ITranslationModule module, IPageContextAccessor 
 
         try
         {
-            await module.SendCommand(new AddTranslation.Command(Guid.NewGuid(), TermId, LanguageCode, Text));
+            await module.SendCommand(new AddTranslation.Command(Guid.NewGuid(), TermId, LanguageId, Text));
             TempData.SetAlert(Alert.Success("You have added a translation"));
             
             return RedirectToPage(nameof(Translations), new
             {
-                LanguageCode = LanguageCode,
+                LanguageId = LanguageId,
                 Org = context.Organisation.Name, 
                 Project = context.Project.Name
             });
@@ -41,5 +39,5 @@ public class AddTranslationPage(ITranslationModule module, IPageContextAccessor 
 
     [Required]
     [BindProperty(SupportsGet = true)]
-    public string LanguageCode { get; set; }
+    public Guid LanguageId { get; set; }
 }

@@ -1,6 +1,4 @@
-﻿using Micro.Common.Domain;
-
-namespace Micro.Translations.Domain.Terms;
+﻿namespace Micro.Translations.Domain.Terms;
 
 public class Term(TermId id, ProjectId projectId, TermName name)
 {

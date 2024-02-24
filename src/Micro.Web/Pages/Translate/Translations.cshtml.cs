@@ -1,5 +1,5 @@
 ﻿using Micro.Translations;
-using static Micro.Translations.Application.Translations.ListTranslations;
+using Micro.Translations.Application.Translations.Queries;
 
 namespace Micro.Web.Pages.Translate;
 
@@ -7,13 +7,13 @@ public class Translations(ITranslationModule module) : PageModel
 {
     [Required]
     [BindProperty(SupportsGet = true)]
-    public string LanguageCode { get; set; }
+    public Guid LanguageId { get; set; }
 
     public async Task OnGet()
     {
-        var query = new Query(LanguageCode);
+        var query = new ListTranslations.Query(LanguageId);
         Results = await module.SendQuery(query);
     }  
     
-    public Result Results { get; set; }
+    public ListTranslations.Result Results { get; set; }
 }

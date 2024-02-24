@@ -1,13 +1,5 @@
 ﻿namespace Micro.Web.Code.Contexts.Page;
 
-public interface IPageContextAccessor
-{
-    bool HasOrganisation { get; }
-    bool HasProject { get; }
-    IPageContextOrganisation Organisation { get; }
-    IPageContextProject Project { get; }
-}
-
 internal class PageContextAccessor(IHttpContextAccessor accessor) : IPageContextAccessor
 {
     public bool HasOrganisation => accessor.HttpContext!.GetOrganisationContext() != null;

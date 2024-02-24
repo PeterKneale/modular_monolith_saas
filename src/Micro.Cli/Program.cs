@@ -1,12 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Micro.Cli;
-using Micro.Common.Application;
 using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Context;
 using Micro.Tenants;
 using Micro.Translations;
 using Micro.Translations.Application.Terms;
+using Micro.Translations.Application.Terms.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,13 +33,3 @@ TranslationModuleStartup.Start(accessor, configuration, true);
 
 await services.GetRequiredService<ITranslationModule>()
     .SendCommand(new AddTerm.Command(Guid.NewGuid(), "x"));
-
-namespace Micro.Cli
-{
-    public class Accessor : IContextAccessor
-    {
-        public IUserExecutionContext? User { get; set; }
-        public IOrganisationExecutionContext? Organisation { get; set; }
-        public IProjectExecutionContext? Project { get; set; }
-    }
-}

@@ -1,8 +1,6 @@
-﻿using System.Data;
-using Micro.Common.Infrastructure.Database;
-using static Micro.Translations.Constants;
+﻿using static Micro.Translations.Constants;
 
-namespace Micro.Translations.Application.Translations;
+namespace Micro.Translations.Application.Translations.Queries;
 
 public static class GetTranslation
 {

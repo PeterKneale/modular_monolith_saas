@@ -1,6 +1,4 @@
-﻿using Micro.Common.Domain;
-using Micro.Common.Infrastructure.Database;
-using Micro.Translations.Application;
+﻿using Micro.Translations.Application;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Terms;
 using static Micro.Translations.Constants;
@@ -9,51 +7,42 @@ namespace Micro.Translations.Infrastructure.Repositories;
 
 internal class TermRepository(ConnectionFactory connections) : ITermRepository
 {
-    public async Task CreateAsync(Term term)
+    public async Task CreateAsync(Term term, CancellationToken token)
     {
-        const string sql = $"INSERT INTO {TermsTable} (id, project_id, name) VALUES (@Id, @ProjectId, @Name)";
-        var row = new Row
+        const string sql = $"INSERT INTO {TermsTable} ({IdColumn},{ProjectIdColumn},{NameColumn}) VALUES (@Id, @ProjectId, @Name)";
+        using var con = connections.CreateConnection();
+        await con.ExecuteAsync(new CommandDefinition(sql, new
         {
-            Id = term.Id.Value,
-            ProjectId = term.ProjectId.Value,
-            Name = term.Name.Value
-        };
-        using var con = connections.CreateConnection();
-        await con.ExecuteAsync(sql, row);
+            term.Id,
+            term.ProjectId,
+            term.Name
+        }, cancellationToken: token));
     }
 
-    public async Task UpdateAsync(Term term)
+    public async Task UpdateAsync(Term term, CancellationToken token)
     {
-        const string sql = $"UPDATE {TermsTable} SET name = @Name WHERE id = @Id";
-        var row = new Row
+        const string sql = $"UPDATE {TermsTable} SET {NameColumn} = @Name WHERE {IdColumn} = @Id";
+        using var con = connections.CreateConnection();
+        await con.ExecuteAsync(new CommandDefinition(sql, new
         {
-            Id = term.Id.Value,
-            Name = term.Name.Value
-        };
-        using var con = connections.CreateConnection();
-        await con.ExecuteAsync(sql, row);
+            term.Id,
+            term.Name
+        }, cancellationToken: token));
     }
 
-    public async Task<Term?> GetAsync(TermId id)
+    public async Task<Term?> GetAsync(TermId id, CancellationToken token)
     {
-        const string sql = $"SELECT * FROM {TermsTable} WHERE id = @Id";
+        const string sql = $"SELECT {IdColumn},{ProjectIdColumn},{NameColumn} FROM {TermsTable} WHERE {IdColumn} = @Id";
         using var con = connections.CreateConnection();
-        var row = await con.QuerySingleOrDefaultAsync<Row>(sql, new { Id = id.Value });
-        return row == null ? null : Map(row);
+        var row = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { id }, cancellationToken: token));
+        return row.Read() ? Map(row) : null;
     }
 
-    private static Term Map(Row row)
+    private static Term Map(IDataRecord record)
     {
-        var id = new TermId(row.Id);
-        var projectId = new ProjectId(row.ProjectId);
-        var name = new TermName(row.Name);
+        var id = new TermId(record.GetGuid(0));
+        var projectId = new ProjectId(record.GetGuid(1));
+        var name = new TermName(record.GetString(2));
         return new Term(id, projectId, name);
-    }
-
-    private class Row
-    {
-        public Guid Id { get; init; }
-        public Guid ProjectId { get; init; }
-        public string Name { get; init; } = null!;
     }
 }

@@ -16,18 +16,21 @@ public class Migration1 : Migration
         Create.Table(TranslationsTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("term_id").AsGuid()
-            .WithColumn("language_code").AsString(10)
+            .WithColumn("language_id").AsGuid()
             .WithColumn("text").AsString(100);
         
         Create.Table(LanguagesTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("project_id").AsGuid()
-            .WithColumn("name").AsString(100)
             .WithColumn("code").AsString(10);
 
         Create.ForeignKey($"fk_{TranslationsTable}_{TermsTable}")
             .FromTable(TranslationsTable).ForeignColumn("term_id")
             .ToTable(TermsTable).PrimaryColumn("id");
+        
+        Create.ForeignKey($"fk_{TranslationsTable}_{LanguagesTable}")
+            .FromTable(TranslationsTable).ForeignColumn("language_id")
+            .ToTable(LanguagesTable).PrimaryColumn("id");
     }
 
     public override void Down()

@@ -4,5 +4,5 @@ namespace Micro.Translations.Application;
 
 public interface ILanguageRepository
 {
-    Task CreateAsync(ResultLanguage resultLanguage);
+    Task CreateAsync(Language language, CancellationToken token);
 }

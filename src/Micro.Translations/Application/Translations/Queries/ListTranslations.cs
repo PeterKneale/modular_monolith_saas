@@ -1,14 +1,13 @@
 ﻿using Micro.Common.Application;
-using Micro.Common.Domain;
-using Micro.Common.Infrastructure.Database;
 using Micro.Translations.Domain;
+using Micro.Translations.Domain.Languages;
 using static Micro.Translations.Constants;
 
-namespace Micro.Translations.Application.Translations;
+namespace Micro.Translations.Application.Translations.Queries;
 
 public static class ListTranslations
 {
-    public record Query(string Language) : IRequest<Result>;
+    public record Query(Guid LanguageId) : IRequest<Result>;
 
     public record LanguageResult(Guid? TranslationId, Guid TermId, string TermName, string? TranslationText);
 
@@ -19,10 +18,10 @@ public static class ListTranslations
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
             var projectId = context.ProjectId;
-            var language = LanguageCode.FromIsoCode(query.Language);
+            var languageId = new LanguageId(query.LanguageId);
             var totalTerms = await CountTerms(projectId, token);
-            var totalTranslations = await CountTranslations(projectId, language, token);
-            var translations = await ListTranslations(projectId, language, token);
+            var totalTranslations = await CountTranslations(projectId, languageId, token);
+            var translations = await ListTranslations(projectId, languageId, token);
             return new Result(totalTerms, totalTranslations, translations);
         }
 
@@ -36,32 +35,32 @@ public static class ListTranslations
             }, cancellationToken: token));
         }
 
-        private async Task<int> CountTranslations(ProjectId projectId, LanguageCode language, CancellationToken token)
+        private async Task<int> CountTranslations(ProjectId projectId, LanguageId languageId, CancellationToken token)
         {
             const string sql = $"SELECT COUNT(1) FROM {TranslationsTable} " +
-                               $"JOIN {TermsTable} on {TranslationsTable}.term_id = {TermsTable}.id " +
-                               "WHERE project_id = @ProjectId " +
-                               "AND language_code = @LanguageCode";
+                               $"JOIN {TermsTable} on {TermsTable}.{IdColumn} = {TranslationsTable}.{TermIdColumn} " +
+                               $"WHERE {ProjectIdColumn} = @ProjectId " +
+                               $"AND {TranslationsTable}.{LanguageIdColumn} = @LanguageId";
             using var con = connections.CreateConnection();
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new
             {
-                ProjectId = projectId.Value, 
-                LanguageCode = language.Code
+                ProjectId = projectId, 
+                LanguageId = languageId
             }, cancellationToken: token));
         }
 
-        private async Task<IEnumerable<LanguageResult>> ListTranslations(ProjectId projectId, LanguageCode language, CancellationToken token)
+        private async Task<IEnumerable<LanguageResult>> ListTranslations(ProjectId projectId, LanguageId languageId, CancellationToken token)
         {
             const string sql = $"SELECT tr.id, t.id, t.name, tr.text " +
                                $"FROM {TermsTable} t " +
-                               $"LEFT JOIN {TranslationsTable} tr ON t.id = tr.term_id AND tr.language_code = @LanguageCode " +
+                               $"LEFT JOIN {TranslationsTable} tr ON t.id = tr.term_id AND tr.language_id = @LanguageId " +
                                $"WHERE t.project_id = @ProjectId";
 
             using var con = connections.CreateConnection();
             var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new
             {
-                ProjectId = projectId.Value, 
-                LanguageCode = language.Code
+                ProjectId = projectId, 
+                LanguageId = languageId
             }, cancellationToken: token));
             
             var result = new List<LanguageResult>();

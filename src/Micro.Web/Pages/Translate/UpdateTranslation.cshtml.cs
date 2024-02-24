@@ -1,6 +1,8 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Terms;
 using Micro.Translations.Application.Translations;
+using Micro.Translations.Application.Translations.Commands;
+using Micro.Translations.Application.Translations.Queries;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Micro.Web.Pages.Translate;

@@ -1,22 +1,20 @@
-﻿using Micro.Common.Infrastructure.Database;
-using Micro.Translations.Application;
+﻿using Micro.Translations.Application;
 using Micro.Translations.Domain.Languages;
+using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Infrastructure.Repositories;
 
 internal class LanguageRepository(ConnectionFactory connections) : ILanguageRepository
 {
-    public async Task CreateAsync(ResultLanguage resultLanguage)
+    public async Task CreateAsync(Language language, CancellationToken token)
     {
-        const string sql = $"INSERT INTO {Constants.LanguagesTable} (id, project_id, name, code) VALUES (@Id, @ProjectId, @Name, @Code)";
-        var parameters = new
-        {
-            Id = resultLanguage.Id.Value,
-            ProjectId = resultLanguage.ProjectId.Value,
-            Name = resultLanguage.LanguageCode.Name,
-            Code = resultLanguage.LanguageCode.Code
-        };
+        const string sql = $"INSERT INTO {LanguagesTable} ({IdColumn},{ProjectIdColumn},{CodeColumn}) VALUES (@Id, @ProjectId, @Code)";
         using var con = connections.CreateConnection();
-        await con.ExecuteAsync(sql, parameters);
+        await con.ExecuteAsync(new CommandDefinition(sql, new
+        {
+            language.Id,
+            language.ProjectId,
+            language.LanguageCode.Code
+        }, cancellationToken: token));
     }
 }

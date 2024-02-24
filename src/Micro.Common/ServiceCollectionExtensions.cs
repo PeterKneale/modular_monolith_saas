@@ -1,6 +1,8 @@
-﻿using Micro.Common.Application;
+﻿using Dapper;
+using Micro.Common.Application;
 using Micro.Common.Infrastructure.Behaviours;
 using Micro.Common.Infrastructure.Context;
+using Micro.Common.Infrastructure.Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +12,9 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCommon(this IServiceCollection services, IConfiguration configuration)
     {
+        SqlMapper.AddTypeHandler(OrganisationIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(UserIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(ProjectIdTypeHandler.Default);
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionalBehaviour<,>));

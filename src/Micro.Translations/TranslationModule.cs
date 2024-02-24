@@ -1,12 +1,7 @@
-﻿using Micro.Common;
-using Micro.Common.Infrastructure.Context;
+﻿using Micro.Common.Infrastructure.Context;
 using Micro.Translations.Infrastructure;
 
 namespace Micro.Translations;
-
-public interface ITranslationModule : IModule
-{
-}
 
 public class TranslationModule : ITranslationModule
 {

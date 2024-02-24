@@ -1,6 +1,7 @@
-using Micro.Translations.Application.Languages;
-using Micro.Translations.Application.Terms;
-using Micro.Translations.Application.Translations;
+using Micro.Translations.Application.Languages.Commands;
+using Micro.Translations.Application.Terms.Commands;
+using Micro.Translations.Application.Translations.Commands;
+using Micro.Translations.Application.Translations.Queries;
 
 namespace Micro.Translations.IntegrationTests.UseCases;
 
@@ -22,10 +23,6 @@ public class GetTranslationStatisticsTests
         var projectId = Guid.NewGuid();
         var languageId1 = Guid.NewGuid();
         var languageId2 = Guid.NewGuid();
-        var languageCode1 = TestLanguageCode1;
-        var languageCode2 = TestLanguageCode2;
-        var languageName1 = TestLanguageName1;
-        var languageName2 = TestLanguageName2;
         var termId1 = Guid.NewGuid();
         var termId2 = Guid.NewGuid();
         var termId3 = Guid.NewGuid();
@@ -44,8 +41,8 @@ public class GetTranslationStatisticsTests
         await _service.ExecuteInContext(async ctx =>
         {
             // Add languages
-            await ctx.SendCommand(new AddLanguage.Command(languageId1, projectId, languageCode1));
-            await ctx.SendCommand(new AddLanguage.Command(languageId2, projectId, languageCode2));
+            await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
+            await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
 
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, term1));
@@ -53,19 +50,43 @@ public class GetTranslationStatisticsTests
             await ctx.SendCommand(new AddTerm.Command(termId3, term3));
 
             // lang 1 is 66% translated en-AU
-            await ctx.SendCommand(new AddTranslation.Command(translationId1, termId1, languageCode1, text1));
-            await ctx.SendCommand(new AddTranslation.Command(translationId2, termId2, languageCode1, text2));
+            await ctx.SendCommand(new AddTranslation.Command(translationId1, termId1, languageId1, text1));
+            await ctx.SendCommand(new AddTranslation.Command(translationId2, termId2, languageId1, text2));
 
             // lang 2 is 33% translated en-UK
-            await ctx.SendCommand(new AddTranslation.Command(translationId3, termId1, languageCode2, text3));
+            await ctx.SendCommand(new AddTranslation.Command(translationId3, termId1, languageId2, text3));
 
             var summary = await ctx.SendQuery(new GetTranslationStatistics.Query());
             summary.TotalTerms.Should().Be(3);
-            summary.TotalTranslations.Should().Be(3);
             summary.Statistics.Should().BeEquivalentTo(new GetTranslationStatistics.Result[]
             {
-                new(new GetTranslationStatistics.ResultLanguage(languageName1, languageCode1), 66),
-                new(new GetTranslationStatistics.ResultLanguage(languageName2, languageCode2), 33)
+                new(languageId1, 2, 66),
+                new(languageId2, 1, 33)
+            });
+        }, projectId: projectId);
+    }
+    
+    [Fact]
+    public async Task Can_see_languages_when_no_terms_exist()
+    {
+        // arrange
+        var projectId = Guid.NewGuid();
+        var languageId1 = Guid.NewGuid();
+        var languageId2 = Guid.NewGuid();
+
+        // act
+        await _service.ExecuteInContext(async ctx =>
+        {
+            // Add languages
+            await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
+            await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
+
+            var summary = await ctx.SendQuery(new GetTranslationStatistics.Query());
+            summary.TotalTerms.Should().Be(0);
+            summary.Statistics.Should().BeEquivalentTo(new GetTranslationStatistics.Result[]
+            {
+                new(languageId1, 0, 0),
+                new(languageId2, 0, 0)
             });
         }, projectId: projectId);
     }

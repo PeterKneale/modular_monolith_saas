@@ -1,6 +1,6 @@
 ﻿using Micro.Translations.Domain.Translations;
 
-namespace Micro.Translations.Application.Translations;
+namespace Micro.Translations.Application.Translations.Commands;
 
 public static class UpdateTranslation
 {
@@ -27,7 +27,7 @@ public static class UpdateTranslation
                 throw new Exception("Not found");
             }
 
-            var text = new Text(command.Text);
+            var text = new TranslationText(command.Text);
             translation.UpdateText(text);
 
             await translations.UpdateAsync(translation, token);

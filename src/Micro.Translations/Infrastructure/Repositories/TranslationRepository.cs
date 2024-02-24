@@ -1,5 +1,4 @@
-﻿using Micro.Common.Infrastructure.Database;
-using Micro.Translations.Application;
+﻿using Micro.Translations.Application;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Translations;
 using static Micro.Translations.Constants;
@@ -10,14 +9,14 @@ internal class TranslationRepository(ConnectionFactory connections) : ITranslati
 {
     public async Task CreateAsync(Translation translation, CancellationToken token)
     {
-        const string sql = $"INSERT INTO {Schema}.translations (id, term_id, language_code, text) VALUES (@Id, @TermId, @LanguageCode, @Text)";
+        const string sql = $"INSERT INTO {Schema}.translations (id, term_id, language_id, text) VALUES (@Id, @TermId, @LanguageId, @TranslationText)";
 
         var parameters = new
         {
-            Id = translation.Id.Value,
-            TermId = translation.TermId.Value,
-            LanguageCode = translation.Language.Code,
-            Text = translation.Text.Value
+            translation.Id,
+            translation.TermId,
+            translation.LanguageId,
+            translation.TranslationText
         };
 
         using var con = connections.CreateConnection();
@@ -31,7 +30,7 @@ internal class TranslationRepository(ConnectionFactory connections) : ITranslati
         var parameters = new
         {
             Id = translation.Id.Value,
-            Text = translation.Text.Value
+            Text = translation.TranslationText.Value
         };
 
         using var con = connections.CreateConnection();
@@ -54,7 +53,7 @@ internal class TranslationRepository(ConnectionFactory connections) : ITranslati
         
         var termId = new TermId(result.TermId);
         var languageCode = LanguageCode.FromIsoCode(result.LanguageCode);
-        var text = new Text(result.Text);
+        var text = new TranslationText(result.Text);
         return new Translation(id, termId, languageCode, text);
     }
 }
