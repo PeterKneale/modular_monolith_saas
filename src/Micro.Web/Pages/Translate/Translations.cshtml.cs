@@ -3,7 +3,7 @@ using Micro.Translations.Application.Translations.Queries;
 
 namespace Micro.Web.Pages.Translate;
 
-public class Translations(ITranslationModule module) : PageModel
+public class Translations(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     [Required]
     [BindProperty(SupportsGet = true)]

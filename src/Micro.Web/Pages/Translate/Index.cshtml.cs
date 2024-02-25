@@ -3,7 +3,7 @@ using Micro.Translations.Application.Translations.Queries;
 
 namespace Micro.Web.Pages.Translate;
 
-public class Index(ITranslationModule module) : PageModel
+public class Index(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     public async Task OnGet()
     {

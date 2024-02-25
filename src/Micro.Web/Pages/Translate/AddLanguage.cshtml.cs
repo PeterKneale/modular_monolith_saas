@@ -1,7 +1,5 @@
-﻿using System.Globalization;
-using Micro.Translations;
+﻿using Micro.Translations;
 using Micro.Translations.Application.Languages.Commands;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Micro.Web.Pages.Translate;
 

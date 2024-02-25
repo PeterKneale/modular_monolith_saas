@@ -7,9 +7,11 @@ public static class GetTranslationStatistics
 {
     public record Query : IRequest<Results>;
 
-    public record Results(int TotalTerms, IEnumerable<Result> Statistics);
+    public record Results(int TotalTerms, IEnumerable<Statistic> Statistics);
 
-    public record Result(Guid LanguageId, int Number, int Percentage);
+    public record Statistic(Language Language, int Number, int Percentage);
+    
+    public record Language (Guid Id, string Code);
 
     private class Handler(ConnectionFactory connections, IProjectExecutionContext context, ILogger<Handler> logs) : IRequestHandler<Query, Results>
     {
@@ -18,7 +20,7 @@ public static class GetTranslationStatistics
             var projectId = context.ProjectId;
             var totalTerms = await CountTerms(projectId, token);
             var translationsByLanguage = await CountTranslationsByLanguage(projectId, token);
-            var statistics = translationsByLanguage.Select(x => new Result(x.Key, x.Value, totalTerms == 0 ? 0 : x.Value * 100 / totalTerms));
+            var statistics = translationsByLanguage.Select(x => new Statistic(x.Key, x.Value, totalTerms == 0 ? 0 : x.Value * 100 / totalTerms));
             return new Results(totalTerms, statistics);
         }
 
@@ -29,21 +31,24 @@ public static class GetTranslationStatistics
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { ProjectId = projectId.Value }, cancellationToken: token));
         }
 
-        private async Task<IDictionary<Guid, int>> CountTranslationsByLanguage(ProjectId projectId, CancellationToken token)
+        private async Task<IDictionary<Language, int>> CountTranslationsByLanguage(ProjectId projectId, CancellationToken token)
         {
-            var sql = $"SELECT {LanguagesTable}.{IdColumn}, COUNT(DISTINCT {TranslationsTable}.{TermIdColumn}) FROM {LanguagesTable} " +
+            var sql = $"SELECT {LanguagesTable}.{IdColumn}, {LanguagesTable}.{CodeColumn}, COUNT(DISTINCT {TranslationsTable}.{TermIdColumn}) " +
+                      $"FROM {LanguagesTable} " +
                       $"LEFT JOIN {TranslationsTable} ON {LanguagesTable}.{IdColumn} = {TranslationsTable}.{LanguageIdColumn} " +
                       $"WHERE {LanguagesTable}.{ProjectIdColumn} = @ProjectId " +
-                      $"GROUP BY {LanguagesTable}.{IdColumn}";
+                      $"GROUP BY {LanguagesTable}.{IdColumn}, {LanguagesTable}.{CodeColumn}";
             
             using var con = connections.CreateConnection();
             var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { ProjectId = projectId.Value }, cancellationToken: token));
-            var result = new Dictionary<Guid, int>();
+            var result = new Dictionary<Language, int>();
             while (reader.Read())
             {
                 var id = reader.GetGuid(0);
-                var count = reader.GetInt32(1);
-                result.Add(id, count);
+                var code = reader.GetString(1);
+                var count = reader.GetInt32(2);
+                var language = new Language(id, code);
+                result.Add(language, count);
             }
 
             return result;

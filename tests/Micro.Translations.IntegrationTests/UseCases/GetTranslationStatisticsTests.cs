@@ -1,7 +1,7 @@
 using Micro.Translations.Application.Languages.Commands;
 using Micro.Translations.Application.Terms.Commands;
 using Micro.Translations.Application.Translations.Commands;
-using Micro.Translations.Application.Translations.Queries;
+using static Micro.Translations.Application.Translations.Queries.GetTranslationStatistics;
 
 namespace Micro.Translations.IntegrationTests.UseCases;
 
@@ -56,16 +56,16 @@ public class GetTranslationStatisticsTests
             // lang 2 is 33% translated en-UK
             await ctx.SendCommand(new AddTranslation.Command(translationId3, termId1, languageId2, text3));
 
-            var summary = await ctx.SendQuery(new GetTranslationStatistics.Query());
+            var summary = await ctx.SendQuery(new Query());
             summary.TotalTerms.Should().Be(3);
-            summary.Statistics.Should().BeEquivalentTo(new GetTranslationStatistics.Result[]
+            summary.Statistics.Should().BeEquivalentTo(new Statistic[]
             {
-                new(languageId1, 2, 66),
-                new(languageId2, 1, 33)
+                new(new Language(languageId1,TestLanguageCode1), 2, 66),
+                new(new Language(languageId2,TestLanguageCode2), 1, 33)
             });
         }, projectId: projectId);
     }
-    
+
     [Fact]
     public async Task Can_see_languages_when_no_terms_exist()
     {
@@ -81,12 +81,12 @@ public class GetTranslationStatisticsTests
             await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
             await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
 
-            var summary = await ctx.SendQuery(new GetTranslationStatistics.Query());
+            var summary = await ctx.SendQuery(new Query());
             summary.TotalTerms.Should().Be(0);
-            summary.Statistics.Should().BeEquivalentTo(new GetTranslationStatistics.Result[]
+            summary.Statistics.Should().BeEquivalentTo(new Statistic[]
             {
-                new(languageId1, 0, 0),
-                new(languageId2, 0, 0)
+                new(new Language(languageId1, TestLanguageCode1), 0, 0),
+                new(new Language(languageId2, TestLanguageCode2), 0, 0)
             });
         }, projectId: projectId);
     }

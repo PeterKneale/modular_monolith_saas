@@ -1,7 +1,6 @@
 ﻿@page "/org/{org}/projects/{project}"
-@using Micro.Web.Code.TagHelpers
 @model Details
 
-<a href="@Url.LinkWithPageContext($"/{nameof(Translate)}/{nameof(Translate.Index)}")">
+<a asp-page="/Translate/Index" asp-route-org="@Model.RouteOrg" asp-route-project="@Model.RouteProject">
     Translate
 </a>

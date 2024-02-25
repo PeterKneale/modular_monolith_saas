@@ -3,7 +3,7 @@ using static Micro.Web.Code.Contexts.Page.Constants;
 
 namespace Micro.Web.Pages.Project;
 
-public class Details(ITenantsModule module) : PageModel
+public class Details(ITenantsModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     [BindProperty(SupportsGet = true, Name = ProjectRouteKey)]
     public string Name { get; set; }
