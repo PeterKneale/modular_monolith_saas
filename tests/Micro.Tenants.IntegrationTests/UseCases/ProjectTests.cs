@@ -1,7 +1,7 @@
-using Micro.Tenants.Application.Organisations;
-using Micro.Tenants.Application.Projects;
+using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Application.Projects.Commands;
 
-namespace Micro.Tenants.IntegrationTests;
+namespace Micro.Tenants.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class ProjectTests

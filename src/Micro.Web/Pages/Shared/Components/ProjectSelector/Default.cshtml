@@ -20,7 +20,14 @@
                     @if (Model.CurrentProject != null)
                     {
                         <li>
-                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">Settings</a>
+                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">
+                                Details
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-page="/Translate/Index" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">
+                                Translate
+                            </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">

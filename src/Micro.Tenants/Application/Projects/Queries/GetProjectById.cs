@@ -1,10 +1,8 @@
-﻿using Micro.Tenants.Domain.Projects;
+﻿namespace Micro.Tenants.Application.Projects.Queries;
 
-namespace Micro.Tenants.Application.Projects;
-
-public static class GetProjectByName
+public static class GetProjectById
 {
-    public record Query(string Name) : IRequest<Result>;
+    public record Query(Guid Id) : IRequest<Result>;
 
     public record Result(Guid Id, string Name);
 
@@ -12,7 +10,7 @@ public static class GetProjectByName
     {
         public Validator()
         {
-            RuleFor(m => m.Name).NotEmpty().MaximumLength(50);
+            RuleFor(m => m.Id).NotEmpty();
         }
     }
 
@@ -20,9 +18,8 @@ public static class GetProjectByName
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var name = new ProjectName(query.Name);
-            
-            var project = await projects.GetAsync(name, token);
+            var id = new ProjectId(query.Id);
+            var project = await projects.GetAsync(id, token);
             if (project == null)
             {
                 throw new Exception("not found");

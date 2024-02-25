@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Micro.Tenants.Application.Users;
+using Micro.Tenants.Application.Users.Commands;
 
 namespace Micro.Tenants.IntegrationTests;
 

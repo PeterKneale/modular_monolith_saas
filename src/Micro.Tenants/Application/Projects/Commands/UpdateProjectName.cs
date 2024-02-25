@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Domain.Projects;
 
-namespace Micro.Tenants.Application.Projects;
+namespace Micro.Tenants.Application.Projects.Commands;
 
 public static class UpdateProjectName
 {

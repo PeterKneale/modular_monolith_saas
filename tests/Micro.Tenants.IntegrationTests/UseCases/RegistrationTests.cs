@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Micro.Tenants.Application.Users;
+using Micro.Tenants.Application.Users.Queries;
 
-namespace Micro.Tenants.IntegrationTests;
+namespace Micro.Tenants.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class RegistrationTests

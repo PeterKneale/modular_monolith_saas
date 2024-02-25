@@ -14,7 +14,7 @@ public static class AlertTempDataExtensions
     {
         if (dictionary.HasAlert())
         {
-            throw new Exception("Already already set");
+            throw new Exception("Alert already set");
         }
         var value = JsonConvert.SerializeObject(alert);
         dictionary.Add(Key, value);

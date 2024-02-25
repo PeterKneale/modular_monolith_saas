@@ -1,10 +1,9 @@
-﻿@using Micro.Web.Code.Contexts.Page
-@inject IPageContextAccessor PageContext
-<div class="container mb-2">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            @if (PageContext.HasOrganisation)
-            {
+﻿@inject IPageContextAccessor PageContext
+@if (PageContext.HasOrganisation)
+{
+    <div class="container mb-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                 <li class="breadcrumb-item">
                     Organisation
                 </li>
@@ -24,7 +23,7 @@
                         </a>
                     </li>
                 }
-            }
-        </ol>
-    </nav>
-</div>
+            </ol>
+        </nav>
+    </div>
+}

@@ -1,3 +1,3 @@
-﻿namespace Micro.Translations.Domain.Languages;
+﻿namespace Micro.Translations.Domain;
 
 public record LanguageId(Guid Value);

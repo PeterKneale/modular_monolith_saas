@@ -3,7 +3,7 @@ using Micro.Common.Application;
 using Micro.Common.Infrastructure.Database;
 using static Micro.Tenants.Constants;
 
-namespace Micro.Tenants.Application.Organisations;
+namespace Micro.Tenants.Application.Organisations.Queries;
 
 public static class ListOrganisations
 {

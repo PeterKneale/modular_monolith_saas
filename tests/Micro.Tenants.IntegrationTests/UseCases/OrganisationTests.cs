@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Micro.Tenants.Application.Organisations;
+using Micro.Tenants.Application.Organisations.Commands;
 
-namespace Micro.Tenants.IntegrationTests;
+namespace Micro.Tenants.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class OrganisationTests

@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Domain.Users;
 
-namespace Micro.Tenants.Application.Users;
+namespace Micro.Tenants.Application.Users.Queries;
 
 public static class CanAuthenticate
 {

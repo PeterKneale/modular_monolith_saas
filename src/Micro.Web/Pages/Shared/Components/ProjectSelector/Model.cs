@@ -1,4 +1,5 @@
 ﻿using Micro.Tenants.Application.Projects;
+using Micro.Tenants.Application.Projects.Queries;
 
 namespace Micro.Web.Pages.Shared.Components.ProjectSelector;
 

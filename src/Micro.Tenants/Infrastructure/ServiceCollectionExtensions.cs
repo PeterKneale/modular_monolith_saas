@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Dapper;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common.Infrastructure.Database;
@@ -9,6 +10,7 @@ using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
 using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.Organisations;
+using Micro.Tenants.Infrastructure.Dapper;
 using Micro.Tenants.Infrastructure.Database;
 using Micro.Tenants.Infrastructure.Repositories;
 using Micro.Tenants.Infrastructure.Services;
@@ -57,6 +59,9 @@ internal static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
+        // Infrastructure
+        SqlMapper.AddTypeHandler(UserApiKeyIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(ApiKeyNameTypeHandler.Default);
         return services;
     }
 }

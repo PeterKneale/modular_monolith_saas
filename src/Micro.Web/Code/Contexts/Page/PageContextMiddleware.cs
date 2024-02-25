@@ -1,5 +1,7 @@
 ﻿using Micro.Tenants.Application.Organisations;
+using Micro.Tenants.Application.Organisations.Queries;
 using Micro.Tenants.Application.Projects;
+using Micro.Tenants.Application.Projects.Queries;
 
 namespace Micro.Web.Code.Contexts.Page;
 

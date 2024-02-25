@@ -1,12 +1,12 @@
 ﻿using Micro.Tenants.Domain.ApiKeys;
 
-namespace Micro.Tenants.Application.ApiKeys;
+namespace Micro.Tenants.Application.ApiKeys.Queries;
 
-public static class CanUserApiKeyAuthenticate
+public static class IsValid
 {
     public record Query(string ApiKeyValue) : IRequest<Result>;
 
-    public record Result(bool Success, Guid? UserId = null);
+    public record Result(bool Valid, Guid? UserId = null);
 
     public class Validator : AbstractValidator<Query>
     {

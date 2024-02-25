@@ -1,6 +1,6 @@
-﻿namespace Micro.Tenants.Application.Projects;
+﻿namespace Micro.Tenants.Application.Organisations.Queries;
 
-public static class GetProjectById
+public static class GetOrganisationById
 {
     public record Query(Guid Id) : IRequest<Result>;
 
@@ -14,18 +14,18 @@ public static class GetProjectById
         }
     }
 
-    public class Handler(IProjectRepository projects) : IRequestHandler<Query, Result>
+    public class Handler(IOrganisationRepository organisations) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var id = new ProjectId(query.Id);
-            var project = await projects.GetAsync(id, token);
-            if (project == null)
+            var id = new OrganisationId(query.Id);
+            var organisation = await organisations.GetAsync(id, token);
+            if (organisation == null)
             {
                 throw new Exception("not found");
             }
 
-            return new Result(project.Id.Value, project.Name.Value);
+            return new Result(organisation.Id.Value, organisation.Name.Value);
         }
     }
 }

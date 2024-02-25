@@ -1,4 +1,5 @@
 ﻿using Micro.Tenants.Application.Organisations;
+using Micro.Tenants.Application.Organisations.Queries;
 
 namespace Micro.Web.Pages.Shared.Components.OrganisationSelector;
 

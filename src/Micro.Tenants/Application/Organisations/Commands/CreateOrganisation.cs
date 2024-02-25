@@ -3,7 +3,7 @@ using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 
-namespace Micro.Tenants.Application.Organisations;
+namespace Micro.Tenants.Application.Organisations.Commands;
 
 public static class CreateOrganisation
 {

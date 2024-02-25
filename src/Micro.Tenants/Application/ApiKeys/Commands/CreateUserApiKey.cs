@@ -2,7 +2,7 @@
 using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.ApiKeys;
 
-namespace Micro.Tenants.Application.ApiKeys;
+namespace Micro.Tenants.Application.ApiKeys.Commands;
 
 public static class CreateUserApiKey
 {
@@ -17,15 +17,15 @@ public static class CreateUserApiKey
         }
     }
 
-    public class Handler(IUserExecutionContext executionContext, IApiKeyRepository keys, IApiKeyService service) : IRequestHandler<Command>
+    public class Handler(IUserExecutionContext context, IApiKeyRepository keys, IApiKeyService service) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var id = new UserApiKeyId(command.Id);
             var name = new ApiKeyName(command.Name);
-            var userId = executionContext.UserId;
-            
-            if (await keys.GetAsync(id, token) != null)
+            var userId = context.UserId;
+
+            if (await keys.GetAsync(userId, id, token) != null)
             {
                 throw new Exception("User api key already exists");
             }

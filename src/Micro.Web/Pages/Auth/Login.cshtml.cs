@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Micro.Tenants.Application.Users;
+using Micro.Tenants.Application.Users.Queries;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using static Micro.Web.Code.Contexts.Authentication.Constants;

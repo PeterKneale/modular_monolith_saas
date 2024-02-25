@@ -1,17 +1,6 @@
 ﻿@{
     Layout = "_LayoutPageOrganisationProject";
 }
-@inject IPageContextAccessor PageContext;
-<div class="card mb-2">
-    <div class="card-body">
-        <div class="card-title">
-            <a asp-page="/Translate/Index"
-               asp-route-org="@PageContext.Organisation.Name"
-               asp-route-project="@PageContext.Project.Name">
-                Translate
-            </a>
-        </div>
-    </div>
-</div>
+<h1>Translations</h1>
 
 @RenderBody()

@@ -25,12 +25,12 @@ internal class ApiKeyRepository(ConnectionFactory connections) : IApiKeyReposito
         await con.ExecuteAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
     }
 
-    public async Task<UserApiKey?> GetAsync(UserApiKeyId id, CancellationToken token)
+    public async Task<UserApiKey?> GetAsync(UserId userId, UserApiKeyId id, CancellationToken token)
     {
         const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
-                           $"FROM {UserApiKeysTable} WHERE {IdColumn} = @Id";
+                           $"FROM {UserApiKeysTable} WHERE {UserIdColumn} = @UserId AND {IdColumn} = @Id";
         using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { Id = id.Value }, cancellationToken: token));
+        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { userId, id }, cancellationToken: token));
         return reader.Read() ? Map(reader) : null;
     }
 
@@ -39,8 +39,17 @@ internal class ApiKeyRepository(ConnectionFactory connections) : IApiKeyReposito
         const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
                            $"FROM {UserApiKeysTable} WHERE {UserIdColumn} = @UserId AND {NameColumn} = @Name";
         using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { Id = userId.Value, Name = name.Name }, cancellationToken: token));
+        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { userId, name }, cancellationToken: token));
         return reader.Read() ? Map(reader) : null;
+    }
+
+    public async Task<IEnumerable<UserApiKey>> ListAsync(UserId userId, CancellationToken token)
+    {
+        const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
+                           $"FROM {UserApiKeysTable} WHERE {UserIdColumn} = @UserId";
+        using var con = connections.CreateConnection();
+        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { userId }, cancellationToken: token));
+        return MapMany(reader);
     }
 
     public async Task<UserApiKey?> GetAsync(ApiKeyValue key, CancellationToken token)
@@ -50,6 +59,17 @@ internal class ApiKeyRepository(ConnectionFactory connections) : IApiKeyReposito
         using var con = connections.CreateConnection();
         var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { Key = key.Value }, cancellationToken: token));
         return reader.Read() ? Map(reader) : null;
+    }
+
+    private static IEnumerable<UserApiKey> MapMany(IDataReader reader)
+    {
+        var list = new List<UserApiKey>();
+        while (reader.Read())
+        {
+            list.Add(Map(reader));
+        }
+
+        return list;
     }
 
     private static UserApiKey Map(IDataRecord reader)

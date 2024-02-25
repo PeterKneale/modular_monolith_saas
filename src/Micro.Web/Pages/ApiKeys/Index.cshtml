@@ -1,0 +1,23 @@
+﻿@page "/user/apikeys"
+@model Index
+
+<div class="card mb-2">
+    <div class="card-header">
+        <span class="float-end">
+            <a asp-page="Add" class="btn btn-primary btn-sm">
+                Add
+            </a>
+        </span>
+        <h5>API Keys</h5>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model.Results)
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>

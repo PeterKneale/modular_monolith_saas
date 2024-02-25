@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Micro.Tenants.Application.Memberships;
-using Micro.Tenants.Application.Organisations;
+using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Application.Organisations.Queries;
 
-namespace Micro.Tenants.IntegrationTests;
+namespace Micro.Tenants.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class MembershipTests

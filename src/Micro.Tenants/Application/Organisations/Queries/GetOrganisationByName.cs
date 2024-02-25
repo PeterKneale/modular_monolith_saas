@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Domain.Organisations;
 
-namespace Micro.Tenants.Application.Organisations;
+namespace Micro.Tenants.Application.Organisations.Queries;
 
 public static class GetOrganisationByName
 {

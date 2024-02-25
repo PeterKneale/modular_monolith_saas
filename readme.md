@@ -59,3 +59,8 @@
 - :v: Organisation Selector Tests
 - :x: Project Selector Tests
 - :x: User Menu Tests
+
+# Architecture
+
+## Questions
+- Should contexts, such as user, org and project be retrieved at the application code, or in the repository code
