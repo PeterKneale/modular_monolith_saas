@@ -16,10 +16,47 @@
 
 ## Modules
 
+### Ideas
+- Monitoring
+  - Check HTTP Endpoint health
+  - Check IP Address health
+  - Check DNS resolution
+- Image resizing
+  - Thumbnail generation
+- PDF generation
+  - HTML to PDF
+  - URL to PDF
+- Feature switches
+  - Manual
+  - User based
+  - Time based
+  - Percentage based
+  - Random
+- Content Management
+  - Data Types
+  - Tags
+  - Search / List / Filter
+- Organisation Invitations
+- Project Invitations
+- Notifications (Email, SMS, Push)
+- Analytics
+- Metrics
+  - Counters
+  - Gauges
+  - Timers 
+  - Embeddable via URL / Iframe
+- Security
+  - User permissions
+  - User role
+  - User groups
+
 ### Tenants Module
 
 - :v: Users can register
 - :v: Users can login
+- :v: Users can create ApiKey
+- :v: Users can list ApiKeys
+- :x: Users can revoke ApiKeys
 - :v: Users can create organisations
 - :v: Users can be organisation administrators
 - :v: Users can operate within an organisation's context
@@ -28,6 +65,8 @@
 - :x: Users can reject invitations
 - :v: Users can create projects within organisations
 - :v: Users can operate within an projects's context
+- :question: Should organisations and projects be moved to their own modules?
+- :question: Should invitiations be moved out to its own module too?
 
 ### Translations Module
 
@@ -37,8 +76,15 @@
 - :v: Users can add languages
 - :v: Users can add translations of a term to a language
 - :x: Users can export to RESX files
+- :x: Route to this via a 'Project scoped module' route
+- :x: Rename to 'Localisation' module
 
-# Routes
+## System Considerations
+- :x: Publish integration events via transactional outbox
+- :x: Publish queued commands via transactional outbox
+- :x: Security at the postgres connection level via connection context being set
+ 
+### Routes
 :question: should modules have defined user, org and project scoped functionality? or should the modular nature be confined to the backend of the modular monolith?
 
 - User Scoped modules
