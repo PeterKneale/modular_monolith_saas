@@ -6,10 +6,14 @@
         <form class="d-flex align-items-center">
             <div class="input-group input-group-sm">
                 <span class="input-group-text">Project</span>
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-outline-secondary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        data-testid="ProjectSelectorActivationButton">
                     @if (Model.CurrentProject != null)
                     {
-                        @Model.CurrentProject.ProjectName
+                        <span data-testid="ProjectSelectorSelected">@Model.CurrentProject.ProjectName</span>
                     }
                     else
                     {
@@ -36,7 +40,7 @@
                     @foreach (var item in Model.Projects)
                     {
                         <li>
-                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@item.ProjectName">@item.ProjectName</a>
+                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@item.ProjectName" data-testid="ProjectSelectorOption">@item.ProjectName</a>
                         </li>
                     }
                     <li>

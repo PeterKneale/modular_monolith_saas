@@ -12,7 +12,7 @@ public static class HttpContextExtensions
     
     public static Guid GetUserId(this HttpContext context)
     {
-        var claim = GetClaim(context, Constants.UserClaimKey);
+        var claim = GetClaim(context, Constants.UserClaimUserId);
         return claim != null 
             ? Guid.Parse(claim.Value) 
             : throw new InvalidOperationException("User Id claim not found");

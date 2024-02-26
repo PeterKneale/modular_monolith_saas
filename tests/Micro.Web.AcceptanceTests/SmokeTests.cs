@@ -1,8 +1,6 @@
-using FluentAssertions;
 using Micro.Web.AcceptanceTests.Pages.Auth;
 using Micro.Web.AcceptanceTests.Pages.Organisations;
 using Micro.Web.AcceptanceTests.Pages.Projects;
-using Micro.Web.AcceptanceTests.UseCases.Auth;
 
 namespace Micro.Web.AcceptanceTests;
 

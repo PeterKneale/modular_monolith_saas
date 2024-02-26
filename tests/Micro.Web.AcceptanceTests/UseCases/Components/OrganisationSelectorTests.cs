@@ -1,6 +1,7 @@
+using FluentAssertions;
 using Micro.Web.AcceptanceTests.Pages;
-using Micro.Web.AcceptanceTests.Pages.Components.OrganisationSelector;
 using Micro.Web.AcceptanceTests.Pages.Components.PageId;
+using Micro.Web.AcceptanceTests.Pages.Organisations;
 
 namespace Micro.Web.AcceptanceTests.UseCases.Components;
 
@@ -16,31 +17,32 @@ public class OrganisationSelectorTests : PageTest
         var home = await HomePage.Goto(Page);
         await home.AssertPageId();
         
-        await home.OrganisationSelector.OrganisationSelectorShouldBeVisible();
-        await home.OrganisationSelector.OrganisationShouldNotBeSelected();
-        await home.OrganisationSelector.OrganisationsShouldBeEmpty();
+        (await home.OrganisationSelector.IsVisible()).Should().BeTrue();
+        (await home.OrganisationSelector.IsOrganisationSelected()).Should().BeFalse();
+        (await home.OrganisationSelector.ListOrganisations()).Should().BeEmpty();
     }
     
     [Theory]
     [TestCase(1)]
     [TestCase(2)]
     [TestCase(3)]
-    public async Task A_user_with_N_organisations_on_home_page_can_navigate_to_all_organisations(int count)
+    public async Task A_user_with_multiple_organisations_can_navigate_to_all_organisations_from_home_page(int count)
     {
         await Page.GivenLoggedIn();
-        await Page.GivenOrganisationOwned(count);
+        var organisations = await Page.GivenANumberOfOrganisationOwned(count);
 
         var home = await HomePage.Goto(Page);
         
-        await home.OrganisationSelector.OrganisationSelectorShouldBeVisible();
-        await home.OrganisationSelector.OrganisationShouldNotBeSelected();
-        await home.OrganisationSelector.OrganisationsShouldHaveCount(count);
+        (await home.OrganisationSelector.IsVisible()).Should().BeTrue();
+        (await home.OrganisationSelector.IsOrganisationSelected()).Should().BeFalse();
+        (await home.OrganisationSelector.ListOrganisations()).Should().HaveCount(count);
 
-        for (var i = 1; i <= count; i++)
+        foreach (var organisation in organisations)
         {
             home = await HomePage.Goto(Page);
-            var details = await home.OrganisationSelector.SelectOrganisationAtPosition(i);
+            var details = await home.OrganisationSelector.SelectOrganisation(organisation);
             await details.AssertPageId();
+            (await details.OrganisationSelector.GetSelectedOrganisation()).Should().Be(organisation);
         }
     }
     
@@ -49,17 +51,15 @@ public class OrganisationSelectorTests : PageTest
     {
         // arrange
         await Page.GivenLoggedIn();
-        await Page.GivenOrganisationOwned();
+        var organisation = await Page.GivenAnOrganisationOwned();
         
         // act
-        var home = await HomePage.Goto(Page);
-        var organisations = await home.OrganisationSelector.ListOrganisations();
-        var organisation = organisations.Single();
-        var details = await home.OrganisationSelector.SelectOrganisation(organisation);
+        var details = await OrganisationDetailsPage.Goto(Page, organisation);
         
         // assert   
-        await details.OrganisationSelector.OrganisationSelectorShouldBeVisible();
-        await details.OrganisationSelector.OrganisationShouldBeSelected();
-        await details.OrganisationSelector.OrganisationsShouldBeEmpty();
+        (await details.OrganisationSelector.IsVisible()).Should().BeTrue();
+        (await details.OrganisationSelector.IsOrganisationSelected()).Should().BeTrue();
+        (await details.OrganisationSelector.ListOrganisations()).Should().BeEmpty();
+        (await details.OrganisationSelector.GetSelectedOrganisation()).Should().Be(organisation);
     }
 }

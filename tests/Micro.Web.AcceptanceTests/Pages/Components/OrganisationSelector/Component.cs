@@ -7,7 +7,7 @@ public class Component(IPage page)
     private readonly ILocator _component = page.GetByTestId("OrganisationSelector");
     private readonly ILocator _selected = page.GetByTestId("OrganisationSelected");
     private readonly ILocator _options = page.GetByTestId("OrganisationOption");
-    private readonly ILocator _button = page.GetByTestId("OrganisationSelectionButton");
+    private readonly ILocator _button = page.GetByTestId("OrganisationSelectorActivationButton");
 
     public async Task<bool> IsVisible() =>
         await _component.IsVisibleAsync();
@@ -18,6 +18,16 @@ public class Component(IPage page)
     public async Task<IEnumerable<string>> ListOrganisations() =>
         await _options.AllInnerTextsAsync();
 
+    public async Task<object> GetSelectedOrganisation() => 
+        await _selected.InnerTextAsync();
+
+    public async Task<OrganisationDetailsPage> SelectTheOnlyOrganisation()
+    {
+        var organisations = await ListOrganisations();
+        var organisation = organisations.Single();
+        return await SelectOrganisation(organisation);
+    }
+    
     public async Task<OrganisationDetailsPage> SelectOrganisationAtPosition(int position)
     {
         var organisations = await ListOrganisations();

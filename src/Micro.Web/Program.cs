@@ -40,6 +40,8 @@ builder.Services
         options.AccessDeniedPath = "/Auth/Forbidden";
     });
 
+builder.Services.AddSingleton<LoginService>();
+
 // Authentication context
 builder.Services.AddScoped<IAuthContext, AuthContext>();
 
@@ -54,11 +56,9 @@ var accessor = app.Services.GetRequiredService<IContextAccessor>();
 TenantsModuleStartup.Start(accessor, configuration);
 TranslationModuleStartup.Start(accessor, configuration);
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -71,5 +71,12 @@ app.MapRazorPages();
 app.UseMiddleware<PageContextMiddleware>();
 app.MapGet("/health/alive", () => "alive");
 app.MapGet("/health/ready", () => "ready");
-
+app.MapGet("/test/auth/impersonate/", async ctx =>
+{
+    // TODO: This is for testing purposes only and will be restricted
+    var login = ctx.RequestServices.GetRequiredService<LoginService>();
+    var userId = Guid.Parse(ctx.Request.Query["userId"]!);
+    await login.Impersonate(userId);
+    ctx.Response.Redirect("/");
+});
 app.Run();

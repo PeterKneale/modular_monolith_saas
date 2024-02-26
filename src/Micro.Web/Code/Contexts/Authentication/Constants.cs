@@ -3,6 +3,6 @@
 public static class Constants
 {
     // claims
-    public const string UserClaimKey = "userId";
+    public const string UserClaimUserId = "userId";
     public const string UserClaimEmail = "email";
 }

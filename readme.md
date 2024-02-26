@@ -103,8 +103,9 @@
 # Acceptance Tests
 - Added PageIds to identify the current page
 - :v: Organisation Selector Tests
-- :x: Project Selector Tests
+- :v: Project Selector Tests
 - :x: User Menu Tests
+- Logs impersonation links for easier manual retesting of scenarios
 
 # Architecture
 

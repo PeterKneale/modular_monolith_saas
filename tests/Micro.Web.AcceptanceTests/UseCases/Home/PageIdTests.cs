@@ -19,7 +19,7 @@ public class PageIdTests : PageTest
     public async Task On_organisation_create_page()
     {
         await Page.GivenLoggedIn();
-        await Page.GivenOrganisationOwned();
+        await Page.GivenAnOrganisationOwned();
 
         var page = await OrganisationCreatePage.Goto(Page);
         await page.AssertPageId();
@@ -29,7 +29,7 @@ public class PageIdTests : PageTest
     public async Task On_organisation_details_page()
     {
         await Page.GivenLoggedIn();
-        await Page.GivenOrganisationOwned();
+        await Page.GivenAnOrganisationOwned();
 
         var home = await HomePage.Goto(Page);
         await home.AssertPageId();
