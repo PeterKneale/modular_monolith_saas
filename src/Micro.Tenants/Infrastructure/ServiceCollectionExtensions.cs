@@ -62,6 +62,7 @@ internal static class ServiceCollectionExtensions
         // Infrastructure
         SqlMapper.AddTypeHandler(UserApiKeyIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(ApiKeyNameTypeHandler.Default);
+        SqlMapper.AddTypeHandler(OrganisationNameTypeHandler.Default);
         return services;
     }
 }
