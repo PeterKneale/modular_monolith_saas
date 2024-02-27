@@ -38,7 +38,7 @@ public class GetTranslationStatisticsTests
         const string text3 = "text3";
 
         // act
-        await _service.ExecuteInContext(async ctx =>
+        await _service.Execute(async ctx =>
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
@@ -75,7 +75,7 @@ public class GetTranslationStatisticsTests
         var languageId2 = Guid.NewGuid();
 
         // act
-        await _service.ExecuteInContext(async ctx =>
+        await _service.Execute(async ctx =>
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));

@@ -31,7 +31,7 @@ public class TranslationTests
         var translationId3 = Guid.NewGuid();
 
         // act
-        await _service.ExecuteInContext(async ctx =>
+        await _service.Execute(async ctx =>
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));

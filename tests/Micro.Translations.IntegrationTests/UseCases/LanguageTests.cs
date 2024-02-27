@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Application.Languages;
-using Micro.Translations.Application.Languages.Commands;
+﻿using Micro.Translations.Application.Languages.Commands;
 using Micro.Translations.Application.Languages.Queries;
 
 namespace Micro.Translations.IntegrationTests.UseCases;
@@ -24,34 +23,21 @@ public class LanguageTests
         var languageId1 = Guid.NewGuid();
         var languageId2 = Guid.NewGuid();
 
-        await _service.ExecuteInContext(async ctx =>
-        {
-            await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
-        }, projectId: projectId1);
+        await _service.Command(new AddLanguage.Command(languageId1, TestLanguageCode1), projectId: projectId1);
 
-        await _service.ExecuteInContext(async ctx =>
-        {
-            await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
-        }, projectId: projectId2);
+        await _service.Command(new AddLanguage.Command(languageId2, TestLanguageCode2), projectId: projectId2);
 
         // assert
-        await _service.ExecuteInContext(async ctx =>
+        var results1 = await _service.Query(new ListLanguages.Query(projectId1), projectId: projectId1);
+        results1.Should().BeEquivalentTo(new List<ListLanguages.Result>
         {
-            var results1 = await ctx.SendQuery(new ListLanguages.Query(projectId1));
-            results1.Should().BeEquivalentTo(new List<ListLanguages.Result>
-            {
-                new(TestLanguageName1, TestLanguageCode1)
-            });
-        }, projectId: projectId1);
+            new(TestLanguageName1, TestLanguageCode1)
+        });
 
-        await _service.ExecuteInContext(async ctx =>
+        var results2 = await _service.Query(new ListLanguages.Query(projectId2), projectId: projectId2);
+        results2.Should().BeEquivalentTo(new List<ListLanguages.Result>
         {
-            var results2 = await ctx.SendQuery(new ListLanguages.Query(projectId2));
-
-            results2.Should().BeEquivalentTo(new List<ListLanguages.Result>
-            {
-                new(TestLanguageName2, TestLanguageCode2)
-            });
-        }, projectId: projectId2);
+            new(TestLanguageName2, TestLanguageCode2)
+        });
     }
 }

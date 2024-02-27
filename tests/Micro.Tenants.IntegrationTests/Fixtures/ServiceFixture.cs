@@ -26,6 +26,15 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     public ITestOutputHelper? OutputHelper { get; set; }
 
+    public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        SetUserContext(userId);
+        SetOrgContext(organisationId);
+        SetProjectContext(projectId);
+        await action(_module);
+        ClearContext();
+    }
+    
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         SetUserContext(userId);
@@ -54,28 +63,22 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     private void SetProjectContext(Guid? projectId)
     {
-        if (projectId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting project ID to {projectId}");
-            _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
-        }
+        if (!projectId.HasValue) return;
+        OutputHelper?.WriteLine($"Setting project ID to {projectId}");
+        _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
     }
 
     private void SetOrgContext(Guid? organisationId)
     {
-        if (organisationId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
-            _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
-        }
+        if (!organisationId.HasValue) return;
+        OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
+        _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
     }
 
     private void SetUserContext(Guid? userId)
     {
-        if (userId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting user ID to {userId}");
-            _accessor.User = new UserExecutionContext(new UserId(userId.Value));
-        }
+        if (!userId.HasValue) return;
+        OutputHelper?.WriteLine($"Setting user ID to {userId}");
+        _accessor.User = new UserExecutionContext(new UserId(userId.Value));
     }
 }

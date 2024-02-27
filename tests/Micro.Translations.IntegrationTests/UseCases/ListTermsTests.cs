@@ -29,7 +29,7 @@ public class ListTermsTests
         const string term2 = "APP_LOGIN";
         const string term3 = "APP_LOGOUT";
         
-        await _service.ExecuteInContext(async ctx =>
+        await _service.Execute(async ctx =>
         {
             // act
             await ctx.SendCommand(new AddTerm.Command(termId1, term1));

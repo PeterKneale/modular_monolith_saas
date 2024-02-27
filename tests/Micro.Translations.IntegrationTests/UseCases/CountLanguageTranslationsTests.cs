@@ -1,8 +1,5 @@
-﻿using Micro.Translations.Application.Languages;
-using Micro.Translations.Application.Languages.Commands;
-using Micro.Translations.Application.Terms;
+﻿using Micro.Translations.Application.Languages.Commands;
 using Micro.Translations.Application.Terms.Commands;
-using Micro.Translations.Application.Translations;
 using Micro.Translations.Application.Translations.Commands;
 using Micro.Translations.Application.Translations.Queries;
 
@@ -31,7 +28,7 @@ public class CountLanguageTranslationsTests
         var termId3 = Guid.NewGuid();
 
         // act
-        await _service.ExecuteInContext(async ctx =>
+        await _service.Execute(async ctx =>
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
@@ -50,7 +47,6 @@ public class CountLanguageTranslationsTests
             await ctx.SendCommand(new AddTranslation.Command(Guid.NewGuid(), termId1, languageId2, TestText3));
 
             // assert
-
             var count1 = await ctx.SendQuery(new CountLanguageTranslations.Query(languageId1));
             count1.Should().Be(2);
 

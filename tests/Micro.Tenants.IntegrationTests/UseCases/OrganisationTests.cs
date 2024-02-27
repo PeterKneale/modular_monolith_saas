@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Micro.Tenants.Application;
 using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Application.Organisations.Queries;
 
 namespace Micro.Tenants.IntegrationTests.UseCases;
 
@@ -13,6 +14,28 @@ public class OrganisationTests
     {
         service.OutputHelper = outputHelper;
         _service = service;
+    }
+    
+    [Fact]
+    public async Task Organisation_name_can_be_changed()
+    {
+        // arrange
+        var organisationId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
+        var name1 = Guid.NewGuid().ToString()[..10];
+        var name2 = Guid.NewGuid().ToString()[..10];
+        
+        var registerUser = Build.RegisterCommand(userId);
+        var createOrganisation = new CreateOrganisation.Command(organisationId, name1);
+        var updateOrganisation = new UpdateOrganisationName.Command(name2);
+
+        await _service.Command(registerUser);
+        await _service.Command(createOrganisation, userId);
+        await _service.Command(updateOrganisation, userId, organisationId);
+
+        // assert
+        var organisation = await _service.Query(new GetOrganisationByName.Query(name2));
+        organisation.Id.Should().Be(organisationId);
     }
 
     [Fact]
@@ -52,7 +75,7 @@ public class OrganisationTests
         var name2 = Guid.NewGuid().ToString()[..10];
         var create1 = new CreateOrganisation.Command(organisationId1, name1);
         var create2 = new CreateOrganisation.Command(organisationId2, name2);
-        var update = new UpdateOrganisationName.Command(organisationId1, name2);
+        var update = new UpdateOrganisationName.Command(name2);
 
         await _service.Command(register1);
         await _service.Command(register2);
