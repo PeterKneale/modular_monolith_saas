@@ -1,4 +1,4 @@
-namespace TestProject1Micro.Tenants;
+namespace Micro.Tenants.UnitTests;
 
 public class UnitTest1
 {
