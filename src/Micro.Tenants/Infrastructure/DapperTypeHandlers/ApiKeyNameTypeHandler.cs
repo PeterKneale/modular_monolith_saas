@@ -2,7 +2,7 @@
 using Dapper;
 using Micro.Tenants.Domain.ApiKeys;
 
-namespace Micro.Tenants.Infrastructure.Dapper;
+namespace Micro.Tenants.Infrastructure.DapperTypeHandlers;
 
 public class ApiKeyNameTypeHandler : SqlMapper.TypeHandler<ApiKeyName>
 {

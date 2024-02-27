@@ -1,9 +1,8 @@
 ﻿using System.Data;
 using Dapper;
-using Micro.Tenants.Domain.ApiKeys;
 using Micro.Tenants.Domain.Projects;
 
-namespace Micro.Tenants.Infrastructure.Dapper;
+namespace Micro.Tenants.Infrastructure.DapperTypeHandlers;
 
 public class ProjectNameTypeHandler : SqlMapper.TypeHandler<ProjectName>
 {

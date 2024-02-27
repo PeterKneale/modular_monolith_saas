@@ -12,10 +12,10 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
     {
         const string sql = $"INSERT INTO {OrganisationsTable} ({IdColumn}, {NameColumn}) VALUES (@Id, @Name)";
         using var con = connections.CreateConnection();
-        await con.ExecuteAsync(new CommandDefinition(sql, new
+        await con.ExecuteAsync(new CommandDefinition(sql, new Row
         {
-            organisation.Id,
-            organisation.Name
+            Id = organisation.Id,
+            Name = organisation.Name
         }, cancellationToken: token));
     }
 
@@ -23,45 +23,43 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
     {
         const string sql = $"UPDATE {OrganisationsTable} SET {NameColumn} = @Name WHERE {IdColumn} = @Id";
         using var con = connections.CreateConnection();
-        await con.ExecuteAsync(new CommandDefinition(sql, new
+        await con.ExecuteAsync(new CommandDefinition(sql, new Row
         {
-            organisation.Id,
-            organisation.Name
+            Id = organisation.Id,
+            Name = organisation.Name
         }, cancellationToken: token));
     }
 
     public async Task<Organisation?> GetAsync(OrganisationId id, CancellationToken token)
     {
-        const string sql = $"SELECT {NameColumn} FROM {OrganisationsTable} WHERE {IdColumn} = @Id";
+        const string sql = $"SELECT {IdColumn}, {NameColumn} FROM {OrganisationsTable} WHERE {IdColumn} = @Id";
         using var con = connections.CreateConnection();
-        var name = await con.QuerySingleAsync<string>(new CommandDefinition(sql, new
+        var row = await con.QuerySingleOrDefaultAsync<Row>(new CommandDefinition(sql, new Row
         {
-            id
+            Id = id
         }, cancellationToken: token));
-        return new Organisation(id, new OrganisationName(name));
+        return Map(row);
     }
 
     public async Task<Organisation?> GetAsync(OrganisationName name, CancellationToken token)
     {
-        const string sql = $"SELECT * FROM {OrganisationsTable} WHERE {NameColumn} = @Name";
+        const string sql = $"SELECT {IdColumn}, {NameColumn} FROM {OrganisationsTable} WHERE {NameColumn} = @Name";
         using var con = connections.CreateConnection();
-        var row = await con.QuerySingleOrDefaultAsync<Row>(new CommandDefinition(sql, new
+        var row = await con.QuerySingleOrDefaultAsync<Row>(new CommandDefinition(sql, new Row
         {
-            name
+            Name = name
         }, cancellationToken: token));
-        return row == null ? null : Map(row);
+        return Map(row);
     }
 
-    private static Organisation Map(Row row)
-    {
-        var id = new OrganisationId(row.Id);
-        var name = new OrganisationName(row.Name);
-        return new Organisation(id, name);
-    }
+    private static Organisation? Map(Row? row) => 
+        row != null 
+            ? new Organisation(row.Id, row.Name) 
+            : null;
 
     private class Row
     {
-        public Guid Id { get; init; }
-        public string Name { get; init; } = null!;
+        public OrganisationId Id { get; init; } = null!;
+        public OrganisationName Name { get; init; } = null!;
     }
 }

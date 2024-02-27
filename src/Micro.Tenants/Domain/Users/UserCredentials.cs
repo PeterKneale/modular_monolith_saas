@@ -1,9 +1,9 @@
 ﻿namespace Micro.Tenants.Domain.Users;
 
-public class UserCredentials(string email, string password)
+public class UserCredentials(EmailAddress email, Password password)
 {
-    public string Email { get; init; } = email.ToLowerInvariant();
-    public string Password { get; init; } = password;
+    public EmailAddress Email { get; init; } = email;
+    public Password Password { get; init; } = password;
 
     public bool Match(UserCredentials credentials)
     {

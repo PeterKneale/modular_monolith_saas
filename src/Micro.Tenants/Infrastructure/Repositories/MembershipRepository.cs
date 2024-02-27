@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Micro.Common.Infrastructure.Database;
-using Micro.Tenants.Application;
 using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
 using static Micro.Tenants.Constants;
@@ -9,60 +8,52 @@ namespace Micro.Tenants.Infrastructure.Repositories;
 
 internal class MembershipRepository(ConnectionFactory connections) : IMembershipRepository
 {
-    public async Task CreateAsync(Membership membership)
+    public async Task CreateAsync(Membership membership, CancellationToken token)
     {
         const string sql = $"INSERT INTO {MembershipsTable} ({IdColumn}, {OrganisationIdColumn}, {UserIdColumn}, {RoleColumn}) " +
                            "VALUES (@Id, @OrganisationId, @UserId, @Role)";
         using var con = connections.CreateConnection();
-        var parameters = new
+        await con.ExecuteAsync(new CommandDefinition(sql, new Row
         {
-            Id = membership.Id.Value,
-            OrganisationId = membership.OrganisationId.Value,
-            UserId = membership.UserId.Value,
-            Role = membership.MembershipRole.Name
-        };
-        await con.ExecuteAsync(sql, parameters);
+            Id = membership.Id,
+            OrganisationId = membership.OrganisationId,
+            UserId = membership.UserId,
+            Role = membership.MembershipRole
+        }, cancellationToken: token));
     }
-    
-    public async Task<IEnumerable<Membership>> ListByUserAsync(UserId userId)
+
+    public async Task<IEnumerable<Membership>> ListByUserAsync(UserId userId, CancellationToken token)
     {
         const string sql = $"SELECT {IdColumn}, {OrganisationIdColumn}, {RoleColumn} from {MembershipsTable} " +
                            $"WHERE {UserIdColumn} = @UserId)";
         using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(sql, new
+        var rows = await con.QueryAsync<Row>(new CommandDefinition(sql, new
         {
             UserId = userId.Value
-        });
-        var list = new List<Membership>();
-        while (reader.Read())
-        {
-            var id = new MembershipId(reader.GetGuid(0));
-            var organisationId = new OrganisationId(reader.GetGuid(1));
-            var role = MembershipRole.FromString(reader.GetString(2));
-            var membership = new Membership(id, organisationId, userId, role);
-            list.Add(membership);
-        }
-        return list;
+        }, cancellationToken: token));
+        return rows.Select(Map);
     }
-    
-    public async Task<IEnumerable<Membership>> ListAsync(OrganisationId organisationId)
+
+    public async Task<IEnumerable<Membership>> ListAsync(OrganisationId organisationId, CancellationToken token)
     {
         const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {RoleColumn} from {MembershipsTable} " +
                            $"WHERE {OrganisationIdColumn} = @OrganisationId)";
         using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(sql, new
+        var rows = await con.QueryAsync<Row>(new CommandDefinition(sql, new Row
         {
-            OrganisationId = organisationId.Value
-        });
-        var list = new List<Membership>();
-        while (reader.Read())
-        {
-            var id = new MembershipId(reader.GetGuid(0));
-            var userId = new UserId(reader.GetGuid(1));
-            var role = MembershipRole.FromString(reader.GetString(2));
-            var membership = new Membership(id, organisationId, userId, role);
-            list.Add(membership);
-        }
-        return list;
+            OrganisationId = organisationId
+        }, cancellationToken: token));
+        return rows.Select(Map);
+    }
+
+    private static Membership Map(Row row) =>
+        new(row.Id, row.OrganisationId, row.UserId, row.Role);
+
+    public class Row
+    {
+        public MembershipId Id { get; init; } = null!;
+        public UserId UserId { get; init; } = null!;
+        public OrganisationId OrganisationId { get; init; } = null!;
+        public MembershipRole Role { get; init; } = null!;
     }
 }

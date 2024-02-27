@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Micro.Tenants.Domain.Organisations;
 
-namespace Micro.Tenants.Infrastructure.Dapper;
+namespace Micro.Tenants.Infrastructure.DapperTypeHandlers;
 
 public class OrganisationNameTypeHandler : SqlMapper.TypeHandler<OrganisationName>
 {

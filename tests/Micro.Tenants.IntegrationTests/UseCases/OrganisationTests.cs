@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Micro.Tenants.Application;
 using Micro.Tenants.Application.Organisations.Commands;
 
 namespace Micro.Tenants.IntegrationTests.UseCases;
@@ -28,13 +29,13 @@ public class OrganisationTests
         var create1 = new CreateOrganisation.Command(organisationId1, name);
         var create2 = new CreateOrganisation.Command(organisationId2, name);
 
-        await _service.Exec(x => x.SendCommand(register1));
-        await _service.Exec(x => x.SendCommand(register2));
-        await _service.Exec(x => x.SendCommand(create1), userId1);
-        Func<Task> action = async () => await _service.Exec(x => x.SendCommand(create2), userId1);
+        await _service.Command(register1);
+        await _service.Command(register2);
+        await _service.Command(create1, userId1);
+        Func<Task> action = async () => await _service.Command(create2, userId1);
 
         // assert
-        await action.Should().ThrowAsync<Exception>().WithMessage("*already in use*");
+        await action.Should().ThrowAsync<OrganisationNameInUseException>();
     }
 
     [Fact]
@@ -53,13 +54,13 @@ public class OrganisationTests
         var create2 = new CreateOrganisation.Command(organisationId2, name2);
         var update = new UpdateOrganisationName.Command(organisationId1, name2);
 
-        await _service.Exec(x => x.SendCommand(register1));
-        await _service.Exec(x => x.SendCommand(register2));
-        await _service.Exec(x => x.SendCommand(create1), userId1);
-        await _service.Exec(x => x.SendCommand(create2), userId2);
-        Func<Task> action = async () => await _service.Exec(x => x.SendCommand(update), userId1, organisationId1);
+        await _service.Command(register1);
+        await _service.Command(register2);
+        await _service.Command(create1, userId1);
+        await _service.Command(create2, userId2);
+        Func<Task> action = async () => await _service.Command(update, userId1, organisationId1);
 
         // assert
-        await action.Should().ThrowAsync<Exception>().WithMessage("*already in use*");
+        await action.Should().ThrowAsync<OrganisationNameInUseException>();
     }
 }

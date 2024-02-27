@@ -29,8 +29,8 @@ public static class RegisterUser
             }
 
             var userName = new UserName(command.FirstName, command.LastName);
-            var userEmail = command.Email;
-            var userPassword = command.Password;
+            var userEmail = new EmailAddress(command.Email);
+            var userPassword = new Password(command.Password);
             var userCredentials = new UserCredentials(userEmail, userPassword);
             var user = new User(userId, userName, userCredentials);
             await users.CreateAsync(user, token);

@@ -21,18 +21,18 @@ public class ApiKeyTests
         // arrange
         var userId = Guid.NewGuid();
         var keyId = Guid.NewGuid();
-        
+
         var register = Build.RegisterCommand(userId);
-        await _service.ExecuteInContext(x => x.SendCommand(register));
-        
+        await _service.Command(register);
+
         var createKey = new CreateUserApiKey.Command(keyId, "x");
-        await _service.ExecuteInContext(x => x.SendCommand(createKey), userId:userId);
-        
+        await _service.Command(createKey, userId);
+
         var getKey = new GetById.Query(keyId);
-        var key = await _service.ExecuteInContextQ(x => x.SendQuery(getKey), userId:userId);
+        var key = await _service.Query(getKey, userId);
 
         var validateKey = new IsValid.Query(key);
-        var isValid = await _service.ExecuteInContextQ(x => x.SendQuery(validateKey), userId:userId);
+        var isValid = await _service.Query(validateKey, userId);
         isValid.Valid.Should().BeTrue();
         isValid.UserId.Should().Be(userId);
     }

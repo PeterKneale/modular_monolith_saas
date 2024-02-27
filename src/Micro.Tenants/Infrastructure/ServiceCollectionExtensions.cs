@@ -3,15 +3,12 @@ using Dapper;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common.Infrastructure.Database;
-using Micro.Tenants.Application;
 using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
 using Micro.Tenants.Application.Users;
-using Micro.Tenants.Domain.Organisations;
-using Micro.Tenants.Infrastructure.Dapper;
-using Micro.Tenants.Infrastructure.Database;
+using Micro.Tenants.Infrastructure.DapperTypeHandlers;
 using Micro.Tenants.Infrastructure.Repositories;
 using Micro.Tenants.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
@@ -60,9 +57,13 @@ internal static class ServiceCollectionExtensions
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
         // Infrastructure
+        Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         SqlMapper.AddTypeHandler(UserApiKeyIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(ApiKeyNameTypeHandler.Default);
         SqlMapper.AddTypeHandler(OrganisationNameTypeHandler.Default);
+        SqlMapper.AddTypeHandler(ProjectNameTypeHandler.Default);
+        SqlMapper.AddTypeHandler(MembershipIdTypeHandler.Default);
+        SqlMapper.AddTypeHandler(MembershipRoleTypeHandler.Default);
         return services;
     }
 }

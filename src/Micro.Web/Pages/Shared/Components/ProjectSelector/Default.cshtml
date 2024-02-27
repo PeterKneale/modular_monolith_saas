@@ -13,7 +13,7 @@
                         data-testid="ProjectSelectorActivationButton">
                     @if (Model.CurrentProject != null)
                     {
-                        <span data-testid="ProjectSelectorSelected">@Model.CurrentProject.ProjectName</span>
+                        <span data-testid="ProjectSelectorSelected">@Model.CurrentProject.Name</span>
                     }
                     else
                     {
@@ -24,12 +24,12 @@
                     @if (Model.CurrentProject != null)
                     {
                         <li>
-                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">
+                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.Name">
                                 Details
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" asp-page="/Translate/Index" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.ProjectName">
+                            <a class="dropdown-item" asp-page="/Translate/Index" asp-route-org="@Model.OrganisationName" asp-route-project="@Model.CurrentProject.Name">
                                 Translate
                             </a>
                         </li>
@@ -40,7 +40,7 @@
                     @foreach (var item in Model.Projects)
                     {
                         <li>
-                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@item.ProjectName" data-testid="ProjectSelectorOption">@item.ProjectName</a>
+                            <a class="dropdown-item" asp-page="/Project/Details" asp-route-org="@Model.OrganisationName" asp-route-project="@item.Name" data-testid="ProjectSelectorOption">@item.Name</a>
                         </li>
                     }
                     <li>

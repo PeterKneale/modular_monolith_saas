@@ -23,8 +23,8 @@ public class RegistrationTests
         var login = new CanAuthenticate.Query(register.Email, register.Password);
 
         // act
-        await _service.Exec(x => x.SendCommand(register));
-        var results = await _service.ExecQ(x => x.SendQuery(login));
+        await _service.Command(register);
+        var results = await _service.Query(login);
 
         // assert
         results.Success.Should().BeTrue();

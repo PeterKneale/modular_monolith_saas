@@ -1,25 +1,25 @@
-﻿using Micro.Tenants.Domain.Projects;
+﻿using Micro.Common.Application;
+using Micro.Tenants.Domain.Projects;
 
 namespace Micro.Tenants.Application.Projects.Commands;
 
 public static class UpdateProjectName
 {
-    public record Command(Guid ProjectId, string Name) : IRequest;
+    public record Command(string Name) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
-            RuleFor(m => m.ProjectId).NotEmpty();
             RuleFor(m => m.Name).NotEmpty().MaximumLength(100);
         }
     }
 
-    public class Handler(IProjectRepository projects, IProjectNameCheck check) : IRequestHandler<Command>
+    public class Handler(IProjectRepository projects, IProjectNameCheck check, IProjectExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
-            var projectId = new ProjectId(command.ProjectId);
+            var projectId = context.ProjectId;
 
             var project = await projects.GetAsync(projectId, token);
             if (project == null)

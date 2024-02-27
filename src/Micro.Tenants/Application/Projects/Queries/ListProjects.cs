@@ -9,7 +9,7 @@ public static class ListProjects
 {
     public record Query : IRequest<IEnumerable<Result>>;
 
-    public record Result(Guid ProjectId, string ProjectName);
+    public record Result(Guid Id, string Name);
 
     private class Handler(IOrganisationExecutionContext executionContext, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
     {
@@ -19,15 +19,10 @@ public static class ListProjects
                                $"FROM {ProjectsTable} m " +
                                $"WHERE {OrganisationIdColumn} = @OrganisationId";
             using var con = connections.CreateConnection();
-            var results = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { OrganisationId = executionContext.OrganisationId.Value }, cancellationToken: token));
-            var list = new List<Result>();
-            while (results.Read())
+            return await con.QueryAsync<Result>(new CommandDefinition(sql, new
             {
-                var id = results.GetGuid(0);
-                var name = results.GetString(1);
-                list.Add(new Result(id, name));
-            }
-            return list;
+                OrganisationId = executionContext.OrganisationId
+            }, cancellationToken: token));
         }
     }
 }

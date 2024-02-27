@@ -22,7 +22,7 @@ public static class GetOrganisationById
             var organisation = await organisations.GetAsync(id, token);
             if (organisation == null)
             {
-                throw new Exception("not found");
+                throw new OrganisationNotFoundException(id);
             }
 
             return new Result(organisation.Id.Value, organisation.Name.Value);

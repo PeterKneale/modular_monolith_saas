@@ -109,5 +109,7 @@
 
 # Architecture
 
-## Questions
-- Should contexts, such as user, org and project be retrieved at the application code, or in the repository code
+## Context
+- Endpoint
+  - Endpoint provides a context accessor for modules to retreive the context of a command or query
+  - Context is retrieved via route parameters and authentication details

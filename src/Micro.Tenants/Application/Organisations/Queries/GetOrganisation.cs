@@ -2,7 +2,7 @@
 
 namespace Micro.Tenants.Application.Organisations.Queries;
 
-public static class GetOrganisationByContext
+public static class GetOrganisation
 {
     public record Query : IRequest<Result>;
 
@@ -17,10 +17,12 @@ public static class GetOrganisationByContext
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var organisation = await organisations.GetAsync(executionContext.OrganisationId, token);
+            var organisationId = executionContext.OrganisationId;
+            
+            var organisation = await organisations.GetAsync(organisationId, token);
             if (organisation == null)
             {
-                throw new Exception("not found");
+                throw new OrganisationNotFoundException(organisationId);
             }
 
             return new Result(organisation.Id.Value, organisation.Name.Value);

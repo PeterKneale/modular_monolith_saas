@@ -1,4 +1,5 @@
 ﻿using MartinCostello.Logging.XUnit;
+using MediatR;
 using Micro.Common;
 using Micro.Common.Domain;
 using Micro.Tenants.Application.Users;
@@ -25,108 +26,56 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     public ITestOutputHelper? OutputHelper { get; set; }
 
-    public IModule Tenants => _module;
-    
-    [Obsolete]
-    public async Task Exec(Func<IModule, Task> action)
+    public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        await action(_module);
-        ClearContext();
-    }
-
-    [Obsolete]
-    public async Task Exec(Func<IModule, Task> action, Guid userId)
-    {
-        _accessor.User = new UserExecutionContext(new UserId(userId));
-        await action(_module);
-        ClearContext();
-    }
-
-    [Obsolete]
-    public async Task<T> ExecQ<T>(Func<IModule, Task<T>> action, Guid userId)
-    {
-        _accessor.User = new UserExecutionContext(new UserId(userId));
-        var t = await action(_module);
-        ClearContext();
-        return t;
-    }
-
-    [Obsolete]
-    public async Task<T> ExecQ<T>(Func<IModule, Task<T>> action)
-    {
-        var t = await action(_module);
-        ClearContext();
-        return t;
-    }
-    
-    [Obsolete]
-    public async Task Exec(Func<IModule, Task> action, Guid userId, Guid organisationId)
-    {
-        _accessor.User = new UserExecutionContext(new UserId(userId));
-        _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId));
-        await Exec(action, userId);
+        SetUserContext(userId);
+        SetOrgContext(organisationId);
+        SetProjectContext(projectId);
+        await _module.SendCommand(command);
         ClearContext();
     }
     
-    [Obsolete]
+    public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        SetUserContext(userId);
+        SetOrgContext(organisationId);
+        SetProjectContext(projectId);
+        var result = await _module.SendQuery(query);
+        ClearContext();
+        return result;
+    }
+
     private void ClearContext()
     {
         _accessor.User = null;
         _accessor.Organisation = null;
+        _accessor.Project = null;
     }
-    
-    public async Task ExecuteInContext(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+
+    private void SetProjectContext(Guid? projectId)
+    {
+        if (projectId.HasValue)
+        {
+            OutputHelper?.WriteLine($"Setting project ID to {projectId}");
+            _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
+        }
+    }
+
+    private void SetOrgContext(Guid? organisationId)
+    {
+        if (organisationId.HasValue)
+        {
+            OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
+            _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
+        }
+    }
+
+    private void SetUserContext(Guid? userId)
     {
         if (userId.HasValue)
         {
             OutputHelper?.WriteLine($"Setting user ID to {userId}");
             _accessor.User = new UserExecutionContext(new UserId(userId.Value));
         }
-
-        if (organisationId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
-            _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
-        }
-
-        if (projectId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting project ID to {projectId}");
-            _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
-        }
-
-        await action(_module);
-
-        _accessor.User = null;
-        _accessor.Organisation = null;
-        _accessor.Project = null;
-    }
-    
-    public async Task<T> ExecuteInContextQ<T>(Func<IModule, Task<T>> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
-    {
-        if (userId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting user ID to {userId}");
-            _accessor.User = new UserExecutionContext(new UserId(userId.Value));
-        }
-
-        if (organisationId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
-            _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
-        }
-
-        if (projectId.HasValue)
-        {
-            OutputHelper?.WriteLine($"Setting project ID to {projectId}");
-            _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
-        }
-
-        var result = await action(_module);
-
-        _accessor.User = null;
-        _accessor.Organisation = null;
-        _accessor.Project = null;
-        return result;
     }
 }

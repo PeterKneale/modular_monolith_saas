@@ -1,7 +1,5 @@
-﻿using System.Data;
-using Dapper;
+﻿using Dapper;
 using Micro.Common.Infrastructure.Database;
-using Micro.Tenants.Application;
 using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.Users;
 using static Micro.Tenants.Constants;
@@ -15,13 +13,13 @@ internal class UserRepository(ConnectionFactory connections) : IUserRepository
         const string sql = $"INSERT INTO {UsersTable} ({IdColumn}, {FirstNameColumn}, {LastNameColumn}, {EmailColumn}, {PasswordColumn}) " +
                            "VALUES (@Id, @FirstName, @LastName, @Email, @Password)";
         using var con = connections.CreateConnection();
-        await con.ExecuteAsync(new CommandDefinition(sql, new
+        await con.ExecuteAsync(new CommandDefinition(sql, new Row
         {
-            Id = user.Id.Value,
+            Id = user.Id,
             FirstName = user.Name.First,
-            LastName = user.Name.Last,
+            LastName = user.Name.First,
             Email = user.Credentials.Email,
-            Password = user.Credentials.Password,
+            Password = user.Credentials.Password
         }, cancellationToken: token));
     }
 
@@ -31,30 +29,37 @@ internal class UserRepository(ConnectionFactory connections) : IUserRepository
                            $"FROM {UsersTable} WHERE {IdColumn} = @Id";
 
         using var con = connections.CreateConnection();
-        var row = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { id }, cancellationToken: token));
-        return row.Read() ? Map(row) : null;
+        var row = await con.QuerySingleOrDefaultAsync<Row>(new CommandDefinition(sql, new
+        {
+            id
+        }, cancellationToken: token));
+        return Map(row);
     }
 
-    public async Task<User?> GetAsync(string email, CancellationToken token)
+    public async Task<User?> GetAsync(EmailAddress email, CancellationToken token)
     {
         const string sql = $"SELECT {IdColumn}, {FirstNameColumn}, {LastNameColumn}, {EmailColumn}, {PasswordColumn} " +
                            $"FROM {UsersTable} WHERE {EmailColumn} = @Email";
 
         using var con = connections.CreateConnection();
-        var row = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { Email = email }, cancellationToken: token));
-        return row.Read() ? Map(row) : null;
+        var row = await con.QuerySingleOrDefaultAsync<Row>(new CommandDefinition(sql, new
+        {
+            Email = email
+        }, cancellationToken: token));
+        return Map(row);
     }
 
-    private static User Map(IDataRecord row)
+    private static User? Map(Row? row) =>
+        row != null
+            ? new User(row.Id, new UserName(row.FirstName, row.LastName), new UserCredentials(row.Email, row.Password))
+            : null;
+
+    public class Row
     {
-        var id = row.GetGuid(0);
-        var first = row.GetString(1);
-        var last = row.GetString(2);
-        var email = row.GetString(3);
-        var password = row.GetString(4);
-        var userId = new UserId(id);
-        var name = new UserName(first, last);
-        var credentials = new UserCredentials(email, password);
-        return new User(userId, name, credentials);
+        public UserId Id { get; init; } = null!;
+        public string FirstName { get; init; } = null!;
+        public string LastName { get; init; } = null!;
+        public EmailAddress Email { get; init; } = null!;
+        public Password Password { get; init; } = null!;
     }
 }

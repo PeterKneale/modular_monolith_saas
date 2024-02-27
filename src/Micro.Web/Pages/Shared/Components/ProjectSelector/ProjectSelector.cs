@@ -24,10 +24,10 @@ public class ProjectSelector(ITenantsModule module, IPageContextAccessor context
         
         var projectId = context.Project.Id;
 
-        model.CurrentProject = model.Projects.Single(x => x.ProjectId == projectId);
+        model.CurrentProject = model.Projects.Single(x => x.Id == projectId);
 
         // remove the current project from the list
-        model.Projects = model.Projects.Where(x => x.ProjectId != projectId);
+        model.Projects = model.Projects.Where(x => x.Id != projectId);
 
         return View(model);
     }

@@ -24,13 +24,13 @@ public static class UpdateOrganisationName
             var organisation = await organisations.GetAsync(organisationId, token);
             if (organisation == null)
             {
-                throw new Exception("Organisation not found");
+                throw new OrganisationNotFoundException(organisationId);
             }
 
             var name = new OrganisationName(command.Name);
             if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token))
             {
-                throw new Exception($"Name {name} already in use");
+                throw new OrganisationNameInUseException(name);
             }
 
             organisation.ChangeName(name);
