@@ -56,7 +56,7 @@
 - :v: Users can login
 - :v: Users can create ApiKey
 - :v: Users can list ApiKeys
-- :x: Users can revoke ApiKeys
+- :v: Users can revoke ApiKeys
 - :v: Users can create organisations
 - :v: Users can be organisation administrators
 - :v: Users can operate within an organisation's context
@@ -75,7 +75,8 @@
 - :v: Users can delete terms
 - :v: Users can add languages
 - :v: Users can add translations of a term to a language
-- :x: Users can export to RESX files
+- :v: Users can export to RESX files
+- :v: Users can export to CSV files
 - :x: Route to this via a 'Project scoped module' route
 - :x: Rename to 'Localisation' module
 
