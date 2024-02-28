@@ -3,7 +3,7 @@ using Micro.Tenants.Domain.ApiKeys;
 
 namespace Micro.Tenants.Application.ApiKeys.Queries;
 
-public static class GetById
+public static class GetUserApiKeyById
 {
     public record Query(Guid Id) : IRequest<string>;
 
@@ -15,17 +15,16 @@ public static class GetById
         }
     }
 
-    public class Handler(IApiKeyRepository keys, IUserExecutionContext context) : IRequestHandler<Query, string>
+    public class Handler(IApiKeyRepository keys) : IRequestHandler<Query, string>
     {
         public async Task<string> Handle(Query query, CancellationToken token)
         {
             var id = new UserApiKeyId(query.Id);
-            var userId = context.UserId;
             
-            var item = await keys.GetAsync(userId, id, token);
+            var item = await keys.GetById(id, token);
             if (item == null)
             {
-                throw new Exception($"api key not found {query.Id}");
+                throw new ApiKeyNotFoundException(id);
             }
 
             return item.ApiKey.Key.Value;

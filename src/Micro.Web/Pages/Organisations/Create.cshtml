@@ -5,14 +5,19 @@
     ViewData["PageId"] = "OrganisationCreate";
 }
 
-<partial name="_ValidationSummary"/>
-
-<form method="post" class="card">
+<div class="card mb-2">
+    <div class="card-header">
+        <h5>Create a new organisation</h5>
+    </div>
     <div class="card-body">
-        <h5 class="card-title">Create a new organisation</h5>
-        @Html.EditorFor(x => x.Name, null, new { autofocus = "autofocus" })
+        <partial name="_ValidationSummary"/>
+        <form method="post" class="card">
+            <div class="card-body">
+                @Html.EditorFor(x => x.Name, null, new { autofocus = "autofocus" })
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Create" class="btn btn-primary ms-auto" data-testid="Create"/>
+            </div>
+        </form>
     </div>
-    <div class="card-footer">
-        <input type="submit" value="Create" class="btn btn-primary ms-auto" data-testid="Create"/>
-    </div>
-</form>
+</div>

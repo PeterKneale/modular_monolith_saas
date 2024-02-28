@@ -9,4 +9,6 @@ public class UserCredentials(EmailAddress email, Password password)
     {
         return credentials.Email == Email && credentials.Password == Password; 
     }
+    
+    public override string ToString() => $"{Email}";
 }

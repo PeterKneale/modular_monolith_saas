@@ -1,5 +1,4 @@
-﻿using Micro.Tenants.Application.Projects;
-using Micro.Tenants.Application.Projects.Commands;
+﻿using Micro.Tenants.Application.Projects.Commands;
 
 namespace Micro.Web.Pages.Projects;
 
@@ -19,7 +18,7 @@ public class Create(ITenantsModule module, IPageContextOrganisation org) : PageM
             
             return RedirectToPage("/Project/Details", new { org = org.Name, project = Name });
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();

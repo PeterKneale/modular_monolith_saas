@@ -6,6 +6,9 @@
   &lt;Or&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;tenants&amp;gt;" /&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::2137843E-DE15-468B-8126-01C8DA8651C1::net8.0::Micro.Translations.IntegrationTests.UseCases.TranslationTests.Can_create_term_with_multiple_translations&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

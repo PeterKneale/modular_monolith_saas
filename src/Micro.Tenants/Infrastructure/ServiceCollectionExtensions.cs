@@ -60,6 +60,7 @@ internal static class ServiceCollectionExtensions
         Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         SqlMapper.AddTypeHandler(UserApiKeyIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(ApiKeyNameTypeHandler.Default);
+        SqlMapper.AddTypeHandler(ApiKeyValueTypeHandler.Default);
         SqlMapper.AddTypeHandler(OrganisationNameTypeHandler.Default);
         SqlMapper.AddTypeHandler(ProjectNameTypeHandler.Default);
         SqlMapper.AddTypeHandler(MembershipIdTypeHandler.Default);

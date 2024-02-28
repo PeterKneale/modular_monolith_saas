@@ -28,10 +28,10 @@ public class ApiKeyTests
         var createKey = new CreateUserApiKey.Command(keyId, "x");
         await _service.Command(createKey, userId);
 
-        var getKey = new GetById.Query(keyId);
+        var getKey = new GetUserApiKeyById.Query(keyId);
         var key = await _service.Query(getKey, userId);
 
-        var validateKey = new IsValid.Query(key);
+        var validateKey = new CanAuthenticateWithApiKey.Query(key);
         var isValid = await _service.Query(validateKey, userId);
         isValid.Valid.Should().BeTrue();
         isValid.UserId.Should().Be(userId);

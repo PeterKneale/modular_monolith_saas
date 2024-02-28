@@ -24,7 +24,7 @@ public class AddTranslationPage(ITranslationModule module, IPageContextAccessor 
                 Project = context.Project.Name
             });
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();

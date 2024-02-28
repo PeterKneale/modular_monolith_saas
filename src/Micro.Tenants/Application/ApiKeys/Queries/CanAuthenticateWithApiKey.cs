@@ -2,7 +2,7 @@
 
 namespace Micro.Tenants.Application.ApiKeys.Queries;
 
-public static class IsValid
+public static class CanAuthenticateWithApiKey
 {
     public record Query(string ApiKeyValue) : IRequest<Result>;
 
@@ -22,7 +22,7 @@ public static class IsValid
         {
             var value = new ApiKeyValue(query.ApiKeyValue);
 
-            var userApiKey = await keys.GetAsync(value, token);
+            var userApiKey = await keys.GetByKey(value, token);
             
             return userApiKey != null 
                 ? new Result(true, userApiKey.UserId.Value) 

@@ -7,40 +7,48 @@
             Terms: <strong>@Model.Results.TotalTerms</strong>
             Translations: <strong>@Model.Results.TotalTranslations</strong>
         </span>
-        <h5>Translation for @Model.LanguageId</h5>
+        <h5>Translation for @Model.Results.LanguageName</h5>
     </div>
     <div class="card-body">
-        @foreach (var item in Model.Results.Languages)
+        @foreach (var item in Model.Results.Translations)
         {
             <div class="card mb-2">
                 <div class="card-body">
-                    <h5 class="card-title">@item.TermName</h5>
+                    <h5 class="card-title">
+                        @if (item.TranslationText != null)
+                        {
+                            <a asp-page="UpdateTranslation"
+                               asp-route-org="@Model.RouteOrg"
+                               asp-route-project="@Model.RouteProject"
+                               asp-route-id="@item.TranslationId"
+                               class="btn btn-secondary float-end">
+                                Update Translation
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-page="AddTranslation"
+                               asp-route-org="@Model.RouteOrg"
+                               asp-route-project="@Model.RouteProject"
+                               asp-route-termId="@item.TermId"
+                               asp-route-languageId="@Model.LanguageId"
+                               class="btn btn-primary float-end">
+                                Add Translation
+                            </a>
+                        }
+                        Term: @item.TermName
+                    </h5>
                     @if (item.TranslationText == null)
                     {
                         <p class="card-text text-danger">
                             No Translation
                         </p>
-                        <a asp-page="AddTranslation"
-                           asp-route-org="@Model.RouteOrg"
-                           asp-route-project="@Model.RouteProject"
-                           asp-route-termId="@item.TermId"
-                           asp-route-languageId="@Model.LanguageId"
-                           class="btn btn-primary">
-                            Add Translation
-                        </a>
                     }
                     else
                     {
                         <p class="card-text">
                             @item.TranslationText
                         </p>
-                        <a asp-page="UpdateTranslation"
-                           asp-route-org="@Model.RouteOrg"
-                           asp-route-project="@Model.RouteProject"
-                           asp-route-id="@item.TranslationId"
-                           class="btn btn-primary">
-                            Update Translation
-                        </a>
                     }
                 </div>
             </div>

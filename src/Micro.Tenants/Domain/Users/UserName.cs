@@ -4,4 +4,6 @@ public class UserName(string first, string last)
 {
     public string First { get; init; } = first;
     public string Last { get; init; } = last;
+    
+    public override string ToString() => $"{First} {Last}";
 }

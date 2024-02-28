@@ -12,5 +12,7 @@ public record ProjectName
         Value = value;
     }
 
+    public override string ToString() => $"{Value}";
+    
     public string Value { get; init; }
 }

@@ -10,15 +10,17 @@ public class ApiKey
     }
 
     public ApiKeyName Name { get; }
-    
+
     public ApiKeyValue Key { get; }
-    
+
     public DateTime CreatedAt { get; }
 
     public bool Match(ApiKey apiKey)
     {
         return apiKey.Key == Key;
     }
+
+    public override string ToString() => $"{Name}:{Key}";
 
     public static ApiKey Create(ApiKeyName name, ApiKeyValue key) => new(name, key, SystemClock.Now);
 

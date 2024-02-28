@@ -25,21 +25,51 @@ internal class ApiKeyRepository(ConnectionFactory connections) : IApiKeyReposito
         await con.ExecuteAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
     }
 
-    public async Task<UserApiKey?> GetAsync(UserId userId, UserApiKeyId id, CancellationToken token)
+    public async Task DeleteAsync(UserApiKeyId id, CancellationToken token)
+    {
+        const string sql = $"DELETE FROM {UserApiKeysTable} WHERE {IdColumn} = @Id";
+        using var con = connections.CreateConnection();
+        var parameters = new
+        {
+            id
+        };
+        await con.ExecuteAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
+    }
+
+    public async Task<UserApiKey?> GetById(UserApiKeyId id, CancellationToken token)
     {
         const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
-                           $"FROM {UserApiKeysTable} WHERE {UserIdColumn} = @UserId AND {IdColumn} = @Id";
+                           $"FROM {UserApiKeysTable} WHERE {IdColumn} = @Id";
         using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { userId, id }, cancellationToken: token));
+        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new
+        {
+            id
+        }, cancellationToken: token));
         return reader.Read() ? Map(reader) : null;
     }
 
-    public async Task<UserApiKey?> GetAsync(UserId userId, ApiKeyName name, CancellationToken token)
+    public async Task<UserApiKey?> GetByName(UserId userId, ApiKeyName name, CancellationToken token)
     {
         const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
                            $"FROM {UserApiKeysTable} WHERE {UserIdColumn} = @UserId AND {NameColumn} = @Name";
         using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { userId, name }, cancellationToken: token));
+        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new
+        {
+            userId,
+            name
+        }, cancellationToken: token));
+        return reader.Read() ? Map(reader) : null;
+    }
+
+    public async Task<UserApiKey?> GetByKey(ApiKeyValue key, CancellationToken token)
+    {
+        const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
+                           $"FROM {UserApiKeysTable} WHERE {KeyColumn} = @Key";
+        using var con = connections.CreateConnection();
+        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new
+        {
+            Key = key
+        }, cancellationToken: token));
         return reader.Read() ? Map(reader) : null;
     }
 
@@ -50,15 +80,6 @@ internal class ApiKeyRepository(ConnectionFactory connections) : IApiKeyReposito
         using var con = connections.CreateConnection();
         var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { userId }, cancellationToken: token));
         return MapMany(reader);
-    }
-
-    public async Task<UserApiKey?> GetAsync(ApiKeyValue key, CancellationToken token)
-    {
-        const string sql = $"SELECT {IdColumn}, {UserIdColumn}, {NameColumn}, {KeyColumn}, {CreatedAtColumn} " +
-                           $"FROM {UserApiKeysTable} WHERE {KeyColumn} = @Key";
-        using var con = connections.CreateConnection();
-        var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { Key = key.Value }, cancellationToken: token));
-        return reader.Read() ? Map(reader) : null;
     }
 
     private static IEnumerable<UserApiKey> MapMany(IDataReader reader)

@@ -1,10 +1,6 @@
+using Micro.Common.Exceptions;
+
 namespace Micro.Common.Domain;
 
 [ExcludeFromCodeCoverage]
-public class BusinessRuleBrokenException : Exception
-{
-    public BusinessRuleBrokenException(string message)
-        : base(message)
-    {
-    }
-}
+public class BusinessRuleBrokenException(string message) : PlatformException(message);

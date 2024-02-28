@@ -29,7 +29,7 @@ public class AddLanguagePage(ITranslationModule module, IPageContextAccessor con
                 Project = context.Project.Name
             });
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();

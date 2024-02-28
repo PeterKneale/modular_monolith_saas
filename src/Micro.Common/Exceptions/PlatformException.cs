@@ -1,11 +1,8 @@
-﻿using Micro.Common.Domain;
+﻿namespace Micro.Common.Exceptions;
 
-namespace Micro.Common.Exceptions;
-
-public class PlatformException:Exception
+public class PlatformException : Exception
 {
-    protected PlatformException(string message):base(message)
+    protected PlatformException(string message) : base(message)
     {
     }
 }
-public class NotFoundException(string message) : PlatformException(message);

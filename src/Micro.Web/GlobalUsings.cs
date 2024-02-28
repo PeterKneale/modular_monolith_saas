@@ -2,6 +2,7 @@
 
 global using System.ComponentModel.DataAnnotations;
 global using Micro.Common.Domain;
+global using Micro.Common.Exceptions;
 global using Micro.Tenants;
 global using Micro.Web.Code;
 global using Micro.Web.Code.Contexts.Page;

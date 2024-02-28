@@ -2,7 +2,7 @@
 
 namespace Micro.Tenants.Application.ApiKeys.Queries;
 
-public static class List
+public static class ListUserApiKeys
 {
     public record Query : IRequest<IEnumerable<Result>>;
 
@@ -17,10 +17,10 @@ public static class List
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {
             var userId = context.UserId;
-            
+
             var items = await keys.ListAsync(userId, token);
-            
-            return items.Select(x=>new Result(x.Id.Value, x.ApiKey.Name.Name));
+
+            return items.Select(x => new Result(x.Id.Value, x.ApiKey.Name.Name));
         }
     }
 }

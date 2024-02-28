@@ -15,5 +15,5 @@ public class Translations(ITranslationModule module, IPageContextAccessor contex
         Results = await module.SendQuery(query);
     }  
     
-    public ListTranslations.Result Results { get; set; }
+    public ListTranslations.Results Results { get; set; }
 }

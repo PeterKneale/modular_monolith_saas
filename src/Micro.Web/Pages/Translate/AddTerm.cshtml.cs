@@ -23,7 +23,7 @@ public class AddTermPage(ITranslationModule module, IPageContextAccessor context
                 Project = context.Project.Name
             });
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();

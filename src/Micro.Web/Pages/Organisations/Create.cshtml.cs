@@ -1,5 +1,4 @@
-﻿using Micro.Tenants.Application.Organisations;
-using Micro.Tenants.Application.Organisations.Commands;
+﻿using Micro.Tenants.Application.Organisations.Commands;
 
 namespace Micro.Web.Pages.Organisations;
 
@@ -18,7 +17,7 @@ public class Create(ITenantsModule module) : PageModel
             TempData.SetAlert(Alert.Success("You have created a new organisation"));
             return RedirectToPage("/Organisation/Details", new {org = Name});
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();

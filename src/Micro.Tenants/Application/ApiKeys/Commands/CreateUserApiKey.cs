@@ -25,14 +25,14 @@ public static class CreateUserApiKey
             var name = new ApiKeyName(command.Name);
             var userId = context.UserId;
 
-            if (await keys.GetAsync(userId, id, token) != null)
+            if (await keys.GetById(id, token) != null)
             {
-                throw new Exception("User api key already exists");
+                throw new ApiKeyAlreadyExistsException(id);
             }
 
-            if (await keys.GetAsync(userId, name, token) != null)
+            if (await keys.GetByName(userId, name, token) != null)
             {
-                throw new Exception($"Name {name} already in use");
+                throw new ApiKeyNameInUseException(name);
             }
 
             var key = UserApiKey.CreateNew(id, userId, name, service);

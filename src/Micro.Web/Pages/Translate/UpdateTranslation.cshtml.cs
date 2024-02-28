@@ -28,7 +28,7 @@ public class UpdateTranslationPage(ITranslationModule module) : PageModel
             TempData.SetAlert(Alert.Success("You have updated a translation"));
             return RedirectToPage(nameof(Index));
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();

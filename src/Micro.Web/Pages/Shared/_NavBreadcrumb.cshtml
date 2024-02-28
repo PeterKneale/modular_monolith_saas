@@ -1,11 +1,12 @@
 ﻿@inject IPageContextAccessor PageContext
+
 @if (PageContext.HasOrganisation)
 {
-    <div class="container mb-2">
+    <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                 <li class="breadcrumb-item">
-                    Organisation
+                    Organisations
                 </li>
                 <li class="breadcrumb-item">
                     <a asp-page="/Organisation/Details" asp-route-org="@PageContext.Organisation.Name">
@@ -15,7 +16,7 @@
                 @if (PageContext.HasProject)
                 {
                     <li class="breadcrumb-item">
-                        Project
+                        Projects
                     </li>
                     <li class="breadcrumb-item">
                         <a asp-page="/Project/Details" asp-route-org="@PageContext.Organisation.Name" asp-route-project="@PageContext.Project.Name">

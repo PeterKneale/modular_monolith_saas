@@ -17,6 +17,8 @@ public class UserApiKey
 
     public ApiKey ApiKey { get; }
 
+    public override string ToString() => $"{Id} - {UserId} - {ApiKey}";
+    
     public static UserApiKey CreateNew(UserApiKeyId id, UserId userId, ApiKeyName name, IApiKeyService service) =>
         new UserApiKey(id, userId, ApiKey.Create(name, service.GenerateApiKey()));
 

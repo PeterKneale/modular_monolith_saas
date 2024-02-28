@@ -1,4 +1,5 @@
-﻿using Micro.Tenants.Application.ApiKeys.Queries;
+﻿using Micro.Tenants.Application.ApiKeys.Commands;
+using Micro.Tenants.Application.ApiKeys.Queries;
 
 namespace Micro.Web.Pages.ApiKeys;
 
@@ -6,8 +7,23 @@ public class Index(ITenantsModule module) : PageModel
 {
     public async Task OnGet()
     {
-        Results = await module.SendQuery(new List.Query());
+        Results = await module.SendQuery(new ListUserApiKeys.Query());
     }
 
-    public IEnumerable<List.Result> Results { get; set; }
+    public async Task<IActionResult> OnPostDelete()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+
+        await module.SendQuery(new DeleteUserApiKey.Command(Id));
+
+        TempData.SetAlert(Alert.Success("ApiKey has been deleted."));
+        return RedirectToPage(nameof(Index));
+    }
+
+    public IEnumerable<ListUserApiKeys.Result> Results { get; set; }
+
+    [BindProperty] [Required] public Guid Id { get; set; }
 }

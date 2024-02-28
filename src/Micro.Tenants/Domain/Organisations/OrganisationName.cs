@@ -11,6 +11,8 @@ public record OrganisationName
         
         Value = value;
     }
+    
+    public override string ToString() => $"{Value}";
 
     public string Value { get; init; }
 }
