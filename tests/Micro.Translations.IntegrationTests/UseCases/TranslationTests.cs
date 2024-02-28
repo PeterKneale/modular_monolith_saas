@@ -50,7 +50,7 @@ public class TranslationTests
             await ctx.SendCommand(new AddTranslation.Command(translationId3, termId1, languageId2, TestText3));
 
             var list1 = await ctx.SendQuery(new ListTranslations.Query(languageId1));
-            list1.Should().BeEquivalentTo(new ListTranslations.Results(3, 2, TestLanguageName1, new ListTranslations.Result[]
+            list1.Should().BeEquivalentTo(new ListTranslations.Results(3, 2, TestLanguageName1, TestLanguageCode1,new ListTranslations.Result[]
             {
                 new(translationId1, termId1, TestTerm1, TestText1),
                 new(translationId2, termId2, TestTerm2, TestText2),
@@ -58,7 +58,7 @@ public class TranslationTests
             }));
 
             var list2 = await ctx.SendQuery(new ListTranslations.Query(languageId2));
-            list2.Should().BeEquivalentTo(new ListTranslations.Results(3, 1, TestLanguageName2, new ListTranslations.Result[]
+            list2.Should().BeEquivalentTo(new ListTranslations.Results(3, 1, TestLanguageName2, TestLanguageCode2, new ListTranslations.Result[]
             {
                 new(translationId3, termId1, TestTerm1, TestText3),
                 new(null, termId2, TestTerm2, null),

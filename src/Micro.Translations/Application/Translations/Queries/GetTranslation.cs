@@ -5,9 +5,17 @@ namespace Micro.Translations.Application.Translations.Queries;
 public static class GetTranslation
 {
     public record Query(Guid TranslationId) : IRequest<Result>;
-
+    
     public record Result(string Text);
 
+    public class Validator : AbstractValidator<Query>
+    {
+        public Validator()
+        {
+            RuleFor(m => m.TranslationId).NotEmpty();
+        }
+    }
+    
     private class Handler(ConnectionFactory connections) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)

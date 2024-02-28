@@ -19,26 +19,8 @@
         <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
         <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1"/>
+        <PackageReference Include="ResXResourceReader.NetStandard" Version="1.2.0" />
     </ItemGroup>
-
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\Shared\Components\OrgSelector\Default.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\Projects\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\Projects\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\Organisations\Projects\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\Organisations\Projects\Details.cshtml" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <AdditionalFiles Include="Pages\Shared\Components\ProjectSelector\Default.cshtml" />
-      <AdditionalFiles Include="Pages\Shared\Components\UserMenu\Default.cshtml" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <Folder Include="Code\Contexts\" />
-    </ItemGroup>
-
+    
+    
 </Project>

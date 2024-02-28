@@ -45,6 +45,11 @@
             <div class="card mb-2">
                 <div class="card-body">
                     <h5 class="card-title">
+                        @if (item.Number > 0)
+                        {
+                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageId="@item.Language.Id">Download CSV</a>
+                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageId="@item.Language.Id">Download RESX</a>
+                        }
                         @item.Language.Code @item.Percentage%
                     </h5>
                     <p class="card-text">

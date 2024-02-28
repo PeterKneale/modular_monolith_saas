@@ -7,6 +7,14 @@ public static class CountLanguageTranslations
 {
     public record Query(Guid LanguageId) : IRequest<int>;
 
+    public class Validator : AbstractValidator<Query>
+    {
+        public Validator()
+        {
+            RuleFor(m => m.LanguageId).NotEmpty();
+        }
+    }
+
     private class Handler(ConnectionFactory connections, IProjectExecutionContext context) : IRequestHandler<Query, int>
     {
         public async Task<int> Handle(Query query, CancellationToken token)

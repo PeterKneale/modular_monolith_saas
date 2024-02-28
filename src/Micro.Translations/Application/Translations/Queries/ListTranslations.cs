@@ -1,6 +1,5 @@
 ﻿using Micro.Common.Application;
 using Micro.Translations.Domain;
-using Micro.Translations.Domain.Languages;
 using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Application.Translations.Queries;
@@ -9,10 +8,18 @@ public static class ListTranslations
 {
     public record Query(Guid LanguageId) : IRequest<Results>;
 
-    public record Results(int TotalTerms, int TotalTranslations,string LanguageName, IEnumerable<Result> Translations);
-    
+    public record Results(int TotalTerms, int TotalTranslations, string LanguageName, string LanguageCode, IEnumerable<Result> Translations);
+
     public record Result(Guid? TranslationId, Guid TermId, string TermName, string? TranslationText);
-    
+
+    public class Validator : AbstractValidator<Query>
+    {
+        public Validator()
+        {
+            RuleFor(m => m.LanguageId).NotEmpty();
+        }
+    }
+
     private class Handler(ConnectionFactory connections, IProjectExecutionContext context) : IRequestHandler<Query, Results>
     {
         public async Task<Results> Handle(Query query, CancellationToken token)
@@ -23,9 +30,9 @@ public static class ListTranslations
             var totalTerms = await CountTerms(projectId, token);
             var totalTranslations = await CountTranslations(projectId, languageId, token);
             var translations = await ListTranslations(projectId, languageId, token);
-            return new Results(totalTerms, totalTranslations, language.Name, translations);
+            return new Results(totalTerms, totalTranslations, language.Name, language.Code, translations);
         }
-        
+
         private async Task<LanguageCode> GetLanguage(LanguageId id, CancellationToken token)
         {
             const string sql = $"SELECT {CodeColumn} FROM {LanguagesTable} WHERE id = @Id";
@@ -56,7 +63,7 @@ public static class ListTranslations
             using var con = connections.CreateConnection();
             return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new
             {
-                ProjectId = projectId, 
+                ProjectId = projectId,
                 LanguageId = languageId
             }, cancellationToken: token));
         }
@@ -71,10 +78,10 @@ public static class ListTranslations
             using var con = connections.CreateConnection();
             var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new
             {
-                ProjectId = projectId, 
+                ProjectId = projectId,
                 LanguageId = languageId
             }, cancellationToken: token));
-            
+
             var result = new List<Result>();
             while (reader.Read())
             {
