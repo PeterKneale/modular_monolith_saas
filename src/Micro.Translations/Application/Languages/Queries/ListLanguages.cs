@@ -10,9 +10,6 @@ public static class ListLanguages
 
     public class Validator : AbstractValidator<Query>
     {
-        public Validator()
-        {
-        }
     }
 
     public class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
@@ -24,7 +21,7 @@ public static class ListLanguages
             var languages = await db.Languages
                 .Where(x => x.ProjectId == projectId)
                 .AsNoTracking()
-                .ToListAsync(cancellationToken: token);
+                .ToListAsync(token);
 
             return languages.Select(x => new Result(x.Id.Value, x.LanguageCode.Name, x.LanguageCode.Code));
         }

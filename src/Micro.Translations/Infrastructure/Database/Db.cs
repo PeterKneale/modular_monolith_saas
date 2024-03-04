@@ -1,7 +1,7 @@
 ﻿using Micro.Translations.Domain.Languages;
 using Micro.Translations.Domain.Terms;
 using Micro.Translations.Domain.Translations;
-using static Micro.Translations.Constants;
+using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
 

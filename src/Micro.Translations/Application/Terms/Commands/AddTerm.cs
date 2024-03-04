@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Domain;
-using Micro.Translations.Domain.Terms;
+﻿using Micro.Translations.Domain.Terms;
 
 namespace Micro.Translations.Application.Terms.Commands;
 
@@ -24,16 +23,10 @@ public static class AddTerm
             var projectId = context.ProjectId;
 
             var termId = new TermId(command.TermId);
-            if (await terms.GetAsync(termId, token) != null)
-            {
-                throw new AlreadyExistsException(termId);
-            }
+            if (await terms.GetAsync(termId, token) != null) throw new AlreadyExistsException(termId);
 
             var name = new TermName(command.Name);
-            if (await terms.GetAsync(projectId, name, token) != null)
-            {
-                throw new AlreadyInUseException(name);
-            }
+            if (await terms.GetAsync(projectId, name, token) != null) throw new AlreadyInUseException(name);
 
             var term = new Term(termId, projectId, name);
             await terms.CreateAsync(term, token);

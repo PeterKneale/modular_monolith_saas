@@ -27,13 +27,13 @@ public static class GetTranslationStatistics
             // Retrieve all languages associated with the project
             var allLanguages = await db.Languages
                 .Where(l => l.ProjectId == projectId)
-                .ToListAsync(cancellationToken: token);
+                .ToListAsync(token);
 
             // Retrieve all translations grouped by language for the project
             var translationsByLanguage = await db.Translations
                 .Where(x => x.Term.ProjectId == projectId)
                 .GroupBy(x => x.LanguageId)
-                .ToDictionaryAsync(x => x.Key, x => x.Count(), cancellationToken: token);
+                .ToDictionaryAsync(x => x.Key, x => x.Count(), token);
 
             var list = new List<LanguageStatistic>();
 
@@ -67,7 +67,7 @@ public static class GetTranslationStatistics
             return await db.Terms
                 .Where(x => x.ProjectId == projectId)
                 .AsNoTracking()
-                .CountAsync(cancellationToken: token);
+                .CountAsync(token);
         }
     }
 }

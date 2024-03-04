@@ -1,5 +1,4 @@
 ﻿using Micro.Translations.Application;
-using Micro.Translations.Domain;
 using Micro.Translations.Domain.Terms;
 using Micro.Translations.Infrastructure.Database;
 
@@ -10,8 +9,6 @@ internal class TermRepository(Db db) : ITermRepository
     public async Task CreateAsync(Term term, CancellationToken token)
     {
         await db.AddAsync(term, token);
-        // TODO REMOVE
-        await db.SaveChangesAsync(token);
     }
 
     public void Update(Term term)
@@ -26,7 +23,7 @@ internal class TermRepository(Db db) : ITermRepository
 
     public async Task<IEnumerable<Term>> ListAsync(ProjectId projectId, CancellationToken token)
     {
-        return await db.Terms.Where(x => x.ProjectId == projectId).ToListAsync(cancellationToken: token);
+        return await db.Terms.Where(x => x.ProjectId == projectId).ToListAsync(token);
     }
 
     public Task<Term?> GetAsync(ProjectId projectId, TermName name, CancellationToken cancellationToken)

@@ -22,16 +22,10 @@ public static class AddLanguage
             var projectId = context.ProjectId;
 
             var languageId = new LanguageId(command.LanguageId);
-            if (await languages.GetAsync(languageId, token) != null)
-            {
-                throw new AlreadyExistsException(languageId);
-            }
+            if (await languages.GetAsync(languageId, token) != null) throw new AlreadyExistsException(languageId);
 
             var languageCode = LanguageCode.FromIsoCode(command.LanguageCode);
-            if (await languages.GetAsync(projectId, languageCode, token) != null)
-            {
-                throw new AlreadyInUseException(languageCode);
-            }
+            if (await languages.GetAsync(projectId, languageCode, token) != null) throw new AlreadyInUseException(languageCode);
 
             var language = new Language(languageId, projectId, languageCode);
 

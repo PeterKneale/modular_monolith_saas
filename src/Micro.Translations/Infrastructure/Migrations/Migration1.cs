@@ -1,5 +1,5 @@
 ﻿using FluentMigrator;
-using static Micro.Translations.Constants;
+using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Migrations;
 

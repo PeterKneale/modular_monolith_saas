@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Domain;
-using Micro.Translations.Domain.Languages;
+﻿using Micro.Translations.Domain.Languages;
 using Micro.Translations.Domain.Terms;
 using Micro.Translations.Domain.Translations;
 
@@ -25,17 +24,11 @@ public static class AddTranslation
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var translationId = new TranslationId(command.Id);
-            if (await repo.GetAsync(translationId, token) != null)
-            {
-                throw new AlreadyExistsException(translationId);
-            }
+            if (await repo.GetAsync(translationId, token) != null) throw new AlreadyExistsException(translationId);
 
             var termId = new TermId(command.TermId);
             var languageId = new LanguageId(command.LanguageId);
-            if (await repo.GetAsync(termId, languageId, token) != null)
-            {
-                throw new AlreadyExistsException(translationId);
-            }
+            if (await repo.GetAsync(termId, languageId, token) != null) throw new AlreadyExistsException(translationId);
 
             var text = new TranslationText(command.Text);
             var translation = new Translation(translationId, termId, languageId, text);

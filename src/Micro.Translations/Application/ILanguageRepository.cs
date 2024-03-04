@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Domain;
-using Micro.Translations.Domain.Languages;
+﻿using Micro.Translations.Domain.Languages;
 
 namespace Micro.Translations.Application;
 

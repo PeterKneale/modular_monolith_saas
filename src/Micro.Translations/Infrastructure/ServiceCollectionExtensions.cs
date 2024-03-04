@@ -14,23 +14,17 @@ internal static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetDbConnectionString();
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            throw new Exception("Connection string missing");
-        }
+        if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
         // application
         var assembly = Assembly.GetExecutingAssembly();
         services.AddMediatR(assembly);
         services.AddValidatorsFromAssembly(assembly);
 
-        // Connections
-        services.AddSingleton<ConnectionFactory>(_ => new ConnectionFactory(connectionString));
-
         // Repositories
-        services.AddSingleton<ITermRepository, TermRepository>();
-        services.AddSingleton<ITranslationRepository, TranslationRepository>();
-        services.AddSingleton<ILanguageRepository, LanguageRepository>();
+        services.AddScoped<ITermRepository, TermRepository>();
+        services.AddScoped<ITranslationRepository, TranslationRepository>();
+        services.AddScoped<ILanguageRepository, LanguageRepository>();
 
         // Database Migrations
         services
@@ -43,14 +37,7 @@ internal static class ServiceCollectionExtensions
 
         services.AddDbContext<Db>(options => { options.UseNpgsql(connectionString); });
 
-        // Infrastructure
-        // SqlMapper.AddTypeHandler(LanguageIdTypeHandler.Default);
-        // SqlMapper.AddTypeHandler(LanguageCodeTypeHandler.Default);
-        // SqlMapper.AddTypeHandler(TermIdTypeHandler.Default);
-        // SqlMapper.AddTypeHandler(TermNameTypeHandler.Default);
-        // SqlMapper.AddTypeHandler(TranslationIdTypeHandler.Default);
-        // SqlMapper.AddTypeHandler(TranslationTextTypeHandler.Default);
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionalBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
         return services;
     }
 }

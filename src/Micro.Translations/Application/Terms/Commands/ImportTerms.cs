@@ -26,10 +26,7 @@ public static class ImportTerms
             var existing = await repository.ListAsync(projectId, token);
             var remaining = list.Except(existing);
 
-            foreach (var term in remaining)
-            {
-                await repository.CreateAsync(term, token);
-            }
+            foreach (var term in remaining) await repository.CreateAsync(term, token);
 
             return Unit.Value;
         }

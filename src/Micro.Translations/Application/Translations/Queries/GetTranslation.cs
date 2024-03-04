@@ -1,6 +1,5 @@
 ﻿using Micro.Translations.Domain.Translations;
 using Micro.Translations.Infrastructure.Database;
-using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Application.Translations.Queries;
 
@@ -26,12 +25,9 @@ public static class GetTranslation
 
             var translation = await db.Translations
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == translationId, cancellationToken: token);
+                .SingleOrDefaultAsync(x => x.Id == translationId, token);
 
-            if (translation == null)
-            {
-                throw new NotFoundException(translationId);
-            }
+            if (translation == null) throw new NotFoundException(translationId);
 
             return new Result(translation.Text.Value);
         }

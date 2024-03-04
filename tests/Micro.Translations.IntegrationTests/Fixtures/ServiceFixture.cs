@@ -2,6 +2,8 @@
 using MediatR;
 using Micro.Common;
 using Micro.Common.Domain;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Micro.Translations.IntegrationTests.Fixtures;
 
@@ -16,11 +18,15 @@ public class ServiceFixture : ITestOutputHelperAccessor
             .AddJsonFile("appsettings.json", optional: false)
             .AddEnvironmentVariables()
             .Build();
+        var services = new ServiceCollection()
+            .AddLogging(x => x.AddXUnit(this))
+            .BuildServiceProvider();
+        var logs = services.GetRequiredService<ILoggerProvider>();
 
         _accessor = new TestContextAccessor();
         _module = new TranslationModule();
 
-        TranslationModuleStartup.Start(_accessor, configuration, true);
+        TranslationModuleStartup.Start(_accessor, configuration, logs, true);
     }
 
     public ITestOutputHelper? OutputHelper { get; set; }

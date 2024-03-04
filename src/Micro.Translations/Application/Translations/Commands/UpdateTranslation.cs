@@ -22,10 +22,7 @@ public static class UpdateTranslation
             var translationId = new TranslationId(command.Id);
 
             var translation = await translations.GetAsync(translationId, token);
-            if (translation == null)
-            {
-                throw new NotFoundException(translationId);
-            }
+            if (translation == null) throw new NotFoundException(translationId);
 
             var text = new TranslationText(command.Text);
             translation.UpdateText(text);

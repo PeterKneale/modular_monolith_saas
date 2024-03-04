@@ -25,7 +25,7 @@ public static class CountLanguageTranslations
             return await db.Translations
                 .Where(x => x.LanguageId == languageId && x.Term.ProjectId == projectId)
                 .AsNoTracking()
-                .CountAsync(cancellationToken: token);
+                .CountAsync(token);
         }
     }
 }

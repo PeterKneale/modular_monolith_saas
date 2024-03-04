@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations;
+﻿namespace Micro.Translations.Infrastructure.Database;
 
 public static class Constants
 {

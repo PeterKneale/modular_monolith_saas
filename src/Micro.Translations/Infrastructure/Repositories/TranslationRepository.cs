@@ -1,10 +1,8 @@
 ﻿using Micro.Translations.Application;
-using Micro.Translations.Domain;
 using Micro.Translations.Domain.Languages;
 using Micro.Translations.Domain.Terms;
 using Micro.Translations.Domain.Translations;
 using Micro.Translations.Infrastructure.Database;
-using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Infrastructure.Repositories;
 
@@ -13,8 +11,6 @@ internal class TranslationRepository(Db db) : ITranslationRepository
     public async Task CreateAsync(Translation translation, CancellationToken token)
     {
         await db.Translations.AddAsync(translation, token);
-        // todo remove
-        await db.SaveChangesAsync(token);
     }
 
     public void Update(Translation translation)
@@ -38,6 +34,6 @@ internal class TranslationRepository(Db db) : ITranslationRepository
     {
         return await db.Translations
             .Where(x => x.Term.ProjectId == projectId && x.LanguageId == languageId)
-            .ToListAsync(cancellationToken: token);
+            .ToListAsync(token);
     }
 }

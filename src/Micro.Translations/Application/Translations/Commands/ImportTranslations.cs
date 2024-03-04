@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Domain;
-using Micro.Translations.Domain.Languages;
+﻿using Micro.Translations.Domain.Languages;
 using Micro.Translations.Domain.Terms;
 using Micro.Translations.Domain.Translations;
 
@@ -27,18 +26,28 @@ public static class ImportTranslations
 
             var languageId = await GetOrCreateLanguage(command.LanguageCode, token);
 
-            await CreateAllTerms(command, token, projectId);
+            var termNames = command.Translations.Select(x => x.Key);
 
-            var terms = (await termRepo.ListAsync(projectId, token)).ToList();
+            var termsToImport = termNames.Select(x => Term.Create(x, projectId)).ToList();
+            var termsThatExist = (await termRepo.ListAsync(projectId, token)).ToList();
+            var termsToCreate = (termsToImport.Except(termsThatExist)).ToList();
+
+            foreach (var term in termsToCreate)
+                await termRepo.CreateAsync(term, token);
+
             foreach (var item in command.Translations)
             {
                 var text = new TranslationText(item.Value);
 
-                // Get term by name
-                var term = terms.SingleOrDefault(x => x.Name.Value == item.Key);
+                // Get term by name (needs to use the term id as i think the unsaved term name canot be found)
+                var term = termsThatExist.SingleOrDefault(x => x.Name.Value == item.Key);
                 if (term == null)
                 {
-                    throw new InvalidOperationException($"Term '{item.Key}' not found");
+                    term = termsToCreate.SingleOrDefault(x => x.Name.Value == item.Key);
+                    if (term == null)
+                    {
+                        throw new InvalidOperationException($"Term '{item.Key}' not found");
+                    }
                 }
 
                 // Check for a translation
@@ -58,30 +67,13 @@ public static class ImportTranslations
             return Unit.Value;
         }
 
-        private async Task CreateAllTerms(Command command, CancellationToken token, ProjectId projectId)
-        {
-            var termNames = command.Translations.Select(x => x.Key);
-
-            var termsToImport = termNames.Select(x => Term.Create(x, projectId)).ToList();
-            var termsThatExist = await termRepo.ListAsync(projectId, token);
-            var termsToCreate = termsToImport.Except(termsThatExist);
-
-            foreach (var term in termsToCreate)
-            {
-                await termRepo.CreateAsync(term, token);
-            }
-        }
-
         private async Task<LanguageId> GetOrCreateLanguage(string languageCode, CancellationToken token)
         {
             var projectId = context.ProjectId;
 
             var code = LanguageCode.FromIsoCode(languageCode);
             var language = await languageRepo.GetAsync(projectId, code, token);
-            if (language != null)
-            {
-                return language.Id;
-            }
+            if (language != null) return language.Id;
 
             var languageId = new LanguageId(Guid.NewGuid());
             language = new Language(languageId, projectId, code);

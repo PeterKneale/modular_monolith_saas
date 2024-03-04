@@ -1,1 +1,3 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Micro.Translations.IntegrationTests")]
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Micro.Translations.IntegrationTests")]
