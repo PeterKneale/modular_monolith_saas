@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Micro.Translations.Domain;
+namespace Micro.Translations.Domain.Languages;
 
 public record LanguageCode(string Name, string Code)
 {

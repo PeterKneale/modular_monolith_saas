@@ -113,3 +113,10 @@
 - Endpoint
   - Endpoint provides a context accessor for modules to retreive the context of a command or query
   - Context is retrieved via route parameters and authentication details
+
+```shell
+dotnet ef dbcontext scaffold "Username=admin;Password=password;Database=db;Host=localhost;Port=5432;Search Path=tenants,translate;Include Error Detail=true;Log Parameters=true" \
+  Npgsql.EntityFrameworkCore.PostgreSQL \
+  -o Infrastructure/Database \
+  -c "Db"
+```

@@ -19,18 +19,18 @@ public static class UpdateTranslation
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
-            var id = new TranslationId(command.Id);
+            var translationId = new TranslationId(command.Id);
 
-            var translation = await translations.GetAsync(id, token);
+            var translation = await translations.GetAsync(translationId, token);
             if (translation == null)
             {
-                throw new Exception("Not found");
+                throw new NotFoundException(translationId);
             }
 
             var text = new TranslationText(command.Text);
             translation.UpdateText(text);
 
-            await translations.UpdateAsync(translation, token);
+            translations.Update(translation);
             return Unit.Value;
         }
     }

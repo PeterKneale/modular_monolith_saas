@@ -1,11 +1,13 @@
-﻿using static Micro.Translations.Constants;
+﻿using Micro.Translations.Domain.Translations;
+using Micro.Translations.Infrastructure.Database;
+using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Application.Translations.Queries;
 
 public static class GetTranslation
 {
     public record Query(Guid TranslationId) : IRequest<Result>;
-    
+
     public record Result(string Text);
 
     public class Validator : AbstractValidator<Query>
@@ -15,15 +17,23 @@ public static class GetTranslation
             RuleFor(m => m.TranslationId).NotEmpty();
         }
     }
-    
-    private class Handler(ConnectionFactory connections) : IRequestHandler<Query, Result>
+
+    private class Handler(Db db) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            const string sql = $"SELECT text FROM {TranslationsTable} WHERE id = @Id";
-            using var con = connections.CreateConnection();
-            var text = await con.ExecuteScalarAsync<string>(new CommandDefinition(sql, new { Id = query.TranslationId }, cancellationToken: token));
-            return new Result(text!);
+            var translationId = new TranslationId(query.TranslationId);
+
+            var translation = await db.Translations
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == translationId, cancellationToken: token);
+
+            if (translation == null)
+            {
+                throw new NotFoundException(translationId);
+            }
+
+            return new Result(translation.Text.Value);
         }
     }
 }

@@ -1,59 +1,43 @@
 ﻿using Micro.Translations.Application;
 using Micro.Translations.Domain;
+using Micro.Translations.Domain.Languages;
+using Micro.Translations.Domain.Terms;
 using Micro.Translations.Domain.Translations;
+using Micro.Translations.Infrastructure.Database;
 using static Micro.Translations.Constants;
 
 namespace Micro.Translations.Infrastructure.Repositories;
 
-internal class TranslationRepository(ConnectionFactory connections) : ITranslationRepository
+internal class TranslationRepository(Db db) : ITranslationRepository
 {
     public async Task CreateAsync(Translation translation, CancellationToken token)
     {
-        const string sql = $"INSERT INTO {Schema}.translations (id, term_id, language_id, text) VALUES (@Id, @TermId, @LanguageId, @TranslationText)";
-
-        var parameters = new
-        {
-            translation.Id,
-            translation.TermId,
-            translation.LanguageId,
-            translation.TranslationText
-        };
-
-        using var con = connections.CreateConnection();
-        await con.ExecuteAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
+        await db.Translations.AddAsync(translation, token);
+        // todo remove
+        await db.SaveChangesAsync(token);
     }
 
-    public async Task UpdateAsync(Translation translation, CancellationToken token)
+    public void Update(Translation translation)
     {
-        const string sql = $"UPDATE {Schema}.translations SET text = @Text WHERE id = @Id";
-
-        var parameters = new
-        {
-            Id = translation.Id.Value,
-            Text = translation.TranslationText.Value
-        };
-
-        using var con = connections.CreateConnection();
-        await con.ExecuteAsync(sql, parameters);
+        db.Update(translation);
     }
 
     public async Task<Translation?> GetAsync(TranslationId id, CancellationToken token)
     {
-        const string sql = $"SELECT * FROM {Schema}.translations WHERE id = @Id";
+        return await db.Translations
+            .SingleOrDefaultAsync(x => x.Id == id, token);
+    }
 
-        var parameters = new { Id = id.Value };
+    public async Task<Translation?> GetAsync(TermId termId, LanguageId languageId, CancellationToken token)
+    {
+        return await db.Translations
+            .SingleOrDefaultAsync(x => x.TermId == termId && x.LanguageId == languageId, token);
+    }
 
-        using var con = connections.CreateConnection();
-        var result = await con.QuerySingleOrDefaultAsync(new CommandDefinition(sql, parameters, cancellationToken: token));
-        
-        if (result == null)
-        {
-            return null;
-        }
-        
-        var termId = new TermId(result.TermId);
-        var languageCode = LanguageCode.FromIsoCode(result.LanguageCode);
-        var text = new TranslationText(result.Text);
-        return new Translation(id, termId, languageCode, text);
+    public async Task<IEnumerable<Translation>> ListAsync(ProjectId projectId, LanguageId languageId, CancellationToken token)
+    {
+        return await db.Translations
+            .Where(x => x.Term.ProjectId == projectId && x.LanguageId == languageId)
+            .ToListAsync(cancellationToken: token);
     }
 }

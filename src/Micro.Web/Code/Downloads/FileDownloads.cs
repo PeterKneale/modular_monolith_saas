@@ -1,5 +1,4 @@
-﻿using System.Resources;
-using System.Resources.NetStandard;
+﻿using System.Resources.NetStandard;
 using System.Text;
 using Micro.Translations.Application.Translations.Queries;
 

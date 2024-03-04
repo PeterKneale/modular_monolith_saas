@@ -1,5 +1,5 @@
-﻿using Micro.Common.Application;
-using static Micro.Translations.Constants;
+﻿using Micro.Translations.Domain.Languages;
+using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Application.Translations.Queries;
 
@@ -7,51 +7,67 @@ public static class GetTranslationStatistics
 {
     public record Query : IRequest<Results>;
 
-    public record Results(int TotalTerms, IEnumerable<Statistic> Statistics);
+    public record Results(int TotalTerms, IEnumerable<LanguageStatistic> Statistics);
 
-    public record Statistic(Language Language, int Number, int Percentage);
-    
-    public record Language (Guid Id, string Code);
+    public record LanguageStatistic(Guid Id, string Code, int Number, int Percentage);
 
-    private class Handler(ConnectionFactory connections, IProjectExecutionContext context, ILogger<Handler> logs) : IRequestHandler<Query, Results>
+    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, Results>
     {
         public async Task<Results> Handle(Query query, CancellationToken token)
         {
             var projectId = context.ProjectId;
             var totalTerms = await CountTerms(projectId, token);
-            var translationsByLanguage = await CountTranslationsByLanguage(projectId, token);
-            var statistics = translationsByLanguage.Select(x => new Statistic(x.Key, x.Value, totalTerms == 0 ? 0 : x.Value * 100 / totalTerms));
-            return new Results(totalTerms, statistics);
+            var list = await CalculateStatistics(projectId, totalTerms, token);
+
+            return new Results(totalTerms, list);
+        }
+
+        private async Task<List<LanguageStatistic>> CalculateStatistics(ProjectId projectId, int totalTerms, CancellationToken token)
+        {
+            // Retrieve all languages associated with the project
+            var allLanguages = await db.Languages
+                .Where(l => l.ProjectId == projectId)
+                .ToListAsync(cancellationToken: token);
+
+            // Retrieve all translations grouped by language for the project
+            var translationsByLanguage = await db.Translations
+                .Where(x => x.Term.ProjectId == projectId)
+                .GroupBy(x => x.LanguageId)
+                .ToDictionaryAsync(x => x.Key, x => x.Count(), cancellationToken: token);
+
+            var list = new List<LanguageStatistic>();
+
+            // Iterate through all languages, not just those with translations
+            foreach (var language in allLanguages)
+            {
+                // Check if the language has any translations, otherwise set to 0
+                translationsByLanguage.TryGetValue(language.Id, out var count);
+
+                // Add the language statistic with the count (0 if no translations)
+                list.Add(await CalculateStatistic(language.Id, count, totalTerms, token));
+            }
+
+            return list;
+        }
+
+        private async Task<LanguageStatistic> CalculateStatistic(LanguageId languageId, int count, int total, CancellationToken token)
+        {
+            var language = await db.Languages
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == languageId, token);
+
+            var languageCode = language.LanguageCode;
+            var percentage = total == 0 ? 0 : count * 100 / total;
+            var statistic = new LanguageStatistic(languageId.Value, languageCode.Code, count, percentage);
+            return statistic;
         }
 
         private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
         {
-            var sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE {ProjectIdColumn} = @ProjectId";
-            using var con = connections.CreateConnection();
-            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new { ProjectId = projectId.Value }, cancellationToken: token));
-        }
-
-        private async Task<IDictionary<Language, int>> CountTranslationsByLanguage(ProjectId projectId, CancellationToken token)
-        {
-            var sql = $"SELECT {LanguagesTable}.{IdColumn}, {LanguagesTable}.{CodeColumn}, COUNT(DISTINCT {TranslationsTable}.{TermIdColumn}) " +
-                      $"FROM {LanguagesTable} " +
-                      $"LEFT JOIN {TranslationsTable} ON {LanguagesTable}.{IdColumn} = {TranslationsTable}.{LanguageIdColumn} " +
-                      $"WHERE {LanguagesTable}.{ProjectIdColumn} = @ProjectId " +
-                      $"GROUP BY {LanguagesTable}.{IdColumn}, {LanguagesTable}.{CodeColumn}";
-            
-            using var con = connections.CreateConnection();
-            var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { ProjectId = projectId.Value }, cancellationToken: token));
-            var result = new Dictionary<Language, int>();
-            while (reader.Read())
-            {
-                var id = reader.GetGuid(0);
-                var code = reader.GetString(1);
-                var count = reader.GetInt32(2);
-                var language = new Language(id, code);
-                result.Add(language, count);
-            }
-
-            return result;
+            return await db.Terms
+                .Where(x => x.ProjectId == projectId)
+                .AsNoTracking()
+                .CountAsync(cancellationToken: token);
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using Micro.Common.Application;
-using Micro.Translations.Domain;
-using static Micro.Translations.Constants;
+﻿using Micro.Translations.Domain.Languages;
+using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Application.Translations.Queries;
 
@@ -20,79 +19,52 @@ public static class ListTranslations
         }
     }
 
-    private class Handler(ConnectionFactory connections, IProjectExecutionContext context) : IRequestHandler<Query, Results>
+    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, Results>
     {
         public async Task<Results> Handle(Query query, CancellationToken token)
         {
             var projectId = context.ProjectId;
             var languageId = new LanguageId(query.LanguageId);
-            var language = await GetLanguage(languageId, token);
-            var totalTerms = await CountTerms(projectId, token);
-            var totalTranslations = await CountTranslations(projectId, languageId, token);
-            var translations = await ListTranslations(projectId, languageId, token);
-            return new Results(totalTerms, totalTranslations, language.Name, language.Code, translations);
+            var language = await GetLanguage(token, languageId);
+            var totalTerms = await CountTerms(token, projectId);
+            var totalTranslations = await CountTranslations(token, projectId, languageId);
+            var translations = await ListTranslations(projectId, languageId);
+            return new Results(totalTerms, totalTranslations, language.LanguageCode.Name, language.LanguageCode.Code, translations);
         }
 
-        private async Task<LanguageCode> GetLanguage(LanguageId id, CancellationToken token)
+        private async Task<IEnumerable<Result>> ListTranslations(ProjectId projectId, LanguageId languageId)
         {
-            const string sql = $"SELECT {CodeColumn} FROM {LanguagesTable} WHERE id = @Id";
-            using var con = connections.CreateConnection();
-            var code = await con.ExecuteScalarAsync<string>(new CommandDefinition(sql, new
-            {
-                id = id.Value
-            }, cancellationToken: token));
-            return LanguageCode.FromIsoCode(code!);
+            return await db.Terms.Where(term => term.ProjectId == projectId)
+                .GroupJoin(db.Translations,
+                    term => new { TermId = term.Id, LanguageId = languageId },
+                    translation => new { translation.TermId, translation.LanguageId },
+                    (term, termTranslations) => new { term, termTranslations })
+                .SelectMany(t => t.termTranslations.DefaultIfEmpty(), (t, subTranslation) => new Result(subTranslation != null ? subTranslation.Id.Value : null, t.term.Id.Value, t.term.Name.Value, subTranslation != null ? subTranslation.Text.Value : null))
+                .AsNoTracking()
+                .ToListAsync();
         }
 
-        private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
+        private async Task<int> CountTranslations(CancellationToken token, ProjectId projectId, LanguageId languageId)
         {
-            const string sql = $"SELECT COUNT(1) FROM {TermsTable} WHERE project_id = @ProjectId";
-            using var con = connections.CreateConnection();
-            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new
-            {
-                ProjectId = projectId.Value
-            }, cancellationToken: token));
+            return await db.Translations
+                .AsNoTracking()
+                .Where(x => x.Term.ProjectId == projectId && x.LanguageId == languageId)
+                .CountAsync(token);
         }
 
-        private async Task<int> CountTranslations(ProjectId projectId, LanguageId languageId, CancellationToken token)
+        private async Task<int> CountTerms(CancellationToken token, ProjectId projectId)
         {
-            const string sql = $"SELECT COUNT(1) FROM {TranslationsTable} " +
-                               $"JOIN {TermsTable} on {TermsTable}.{IdColumn} = {TranslationsTable}.{TermIdColumn} " +
-                               $"WHERE {ProjectIdColumn} = @ProjectId " +
-                               $"AND {TranslationsTable}.{LanguageIdColumn} = @LanguageId";
-            using var con = connections.CreateConnection();
-            return await con.ExecuteScalarAsync<int>(new CommandDefinition(sql, new
-            {
-                ProjectId = projectId,
-                LanguageId = languageId
-            }, cancellationToken: token));
+            return await db.Terms
+                .AsNoTracking()
+                .Where(x => x.ProjectId == projectId)
+                .CountAsync(token);
         }
 
-        private async Task<IEnumerable<Result>> ListTranslations(ProjectId projectId, LanguageId languageId, CancellationToken token)
+        private async Task<Language> GetLanguage(CancellationToken token, LanguageId languageId)
         {
-            const string sql = $"SELECT tr.id, t.id, t.name, tr.text " +
-                               $"FROM {TermsTable} t " +
-                               $"LEFT JOIN {TranslationsTable} tr ON t.id = tr.term_id AND tr.language_id = @LanguageId " +
-                               $"WHERE t.project_id = @ProjectId";
-
-            using var con = connections.CreateConnection();
-            var reader = await con.ExecuteReaderAsync(new CommandDefinition(sql, new
-            {
-                ProjectId = projectId,
-                LanguageId = languageId
-            }, cancellationToken: token));
-
-            var result = new List<Result>();
-            while (reader.Read())
-            {
-                Guid? translationId = reader.IsDBNull(0) ? null : reader.GetGuid(0);
-                var termId = reader.GetGuid(1);
-                var termName = reader.GetString(2);
-                var translationText = reader.IsDBNull(3) ? null : reader.GetString(3);
-                result.Add(new Result(translationId, termId, termName, translationText));
-            }
-
-            return result;
+            return await db.Languages
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == languageId, token);
         }
     }
 }

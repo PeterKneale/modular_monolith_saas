@@ -28,16 +28,14 @@ public class LanguageTests
         await _service.Command(new AddLanguage.Command(languageId2, TestLanguageCode2), projectId: projectId2);
 
         // assert
-        var results1 = await _service.Query(new ListLanguages.Query(projectId1), projectId: projectId1);
-        results1.Should().BeEquivalentTo(new List<ListLanguages.Result>
-        {
-            new(TestLanguageName1, TestLanguageCode1)
-        });
+        var results1 = await _service.Query(new ListLanguages.Query(), projectId: projectId1);
+        results1.Select(x => x.Name).Should().BeEquivalentTo([
+            TestLanguageName1
+        ]);
 
-        var results2 = await _service.Query(new ListLanguages.Query(projectId2), projectId: projectId2);
-        results2.Should().BeEquivalentTo(new List<ListLanguages.Result>
-        {
-            new(TestLanguageName2, TestLanguageCode2)
-        });
+        var results2 = await _service.Query(new ListLanguages.Query(), projectId: projectId2);
+        results2.Select(x => x.Name).Should().BeEquivalentTo([
+            TestLanguageName2
+        ]);
     }
 }

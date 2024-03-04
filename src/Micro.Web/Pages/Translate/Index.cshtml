@@ -20,8 +20,14 @@
                 <a asp-page="AddTerm"
                    asp-route-org="@Model.RouteOrg"
                    asp-route-project="@Model.RouteProject"
-                   class="btn btn-primary float-end">
+                   class="btn btn-primary ms-2 float-end">
                     Add Term
+                </a>
+                <a asp-page="ImportTerms"
+                   asp-route-org="@Model.RouteOrg"
+                   asp-route-project="@Model.RouteProject"
+                   class="btn btn-primary float-end">
+                    Import Terms
                 </a>
             </div>
         </div>
@@ -47,10 +53,10 @@
                     <h5 class="card-title">
                         @if (item.Number > 0)
                         {
-                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageId="@item.Language.Id">Download CSV</a>
-                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageId="@item.Language.Id">Download RESX</a>
+                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageId="@item.Id">Download CSV</a>
+                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageId="@item.Id">Download RESX</a>
                         }
-                        @item.Language.Code @item.Percentage%
+                        @item.Code @item.Percentage%
                     </h5>
                     <p class="card-text">
                         <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -62,7 +68,7 @@
                     <a class="card-link" asp-page="Translations"
                        asp-route-org="@Model.RouteOrg"
                        asp-route-project="@Model.RouteProject"
-                       asp-route-languageId="@item.Language.Id">
+                       asp-route-languageId="@item.Id">
                         View Translations
                     </a>
                 </div>

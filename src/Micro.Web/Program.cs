@@ -1,4 +1,5 @@
 using Micro.Common.Infrastructure.Context;
+using Micro.Common.Infrastructure.Database;
 using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
@@ -79,4 +80,6 @@ app.MapGet("/test/auth/impersonate/", async ctx =>
     await login.Impersonate(userId);
     ctx.Response.Redirect("/");
 });
+var c = configuration.GetDbConnectionString();
+Console.WriteLine(c);
 app.Run();

@@ -1,16 +1,36 @@
 ﻿using Micro.Translations.Domain.Languages;
+using Micro.Translations.Domain.Terms;
 
 namespace Micro.Translations.Domain.Translations;
 
-public class Translation(TranslationId id, TermId termId, LanguageId languageIdId, TranslationText translationText)
+public class Translation
 {
-    public TranslationId Id { get; } = id;
-    public TermId TermId { get; } = termId;
-    public LanguageId LanguageId { get; } = languageIdId;
-    public TranslationText TranslationText { get; private set; } = translationText;
+    private Translation()
+    {
+    }
+
+    public Translation(TranslationId id, TermId termId, LanguageId languageId, TranslationText text)
+    {
+        Id = id;
+        TermId = termId;
+        LanguageId = languageId;
+        Text = text;
+    }
+
+    public TranslationId Id { get; private init; }
+
+    public TermId TermId { get; private init; }
+
+    public LanguageId LanguageId { get; private init; }
+
+    public TranslationText Text { get; private set; }
+
+    public virtual Language Language { get; private init; } = null!;
+
+    public virtual Term Term { get; private set; } = null!;
 
     public void UpdateText(TranslationText translationText)
     {
-        TranslationText = translationText;
+        Text = translationText;
     }
 }

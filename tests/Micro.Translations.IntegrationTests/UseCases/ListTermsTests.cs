@@ -1,4 +1,3 @@
-using Micro.Translations.Application.Terms;
 using Micro.Translations.Application.Terms.Commands;
 using Micro.Translations.Application.Terms.Queries;
 

@@ -1,48 +1,36 @@
 ﻿using Micro.Translations.Application;
 using Micro.Translations.Domain;
 using Micro.Translations.Domain.Terms;
-using static Micro.Translations.Constants;
+using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Infrastructure.Repositories;
 
-internal class TermRepository(ConnectionFactory connections) : ITermRepository
+internal class TermRepository(Db db) : ITermRepository
 {
     public async Task CreateAsync(Term term, CancellationToken token)
     {
-        const string sql = $"INSERT INTO {TermsTable} ({IdColumn},{ProjectIdColumn},{NameColumn}) VALUES (@Id, @ProjectId, @Name)";
-        using var con = connections.CreateConnection();
-        await con.ExecuteAsync(new CommandDefinition(sql, new
-        {
-            term.Id,
-            term.ProjectId,
-            term.Name
-        }, cancellationToken: token));
+        await db.AddAsync(term, token);
+        // TODO REMOVE
+        await db.SaveChangesAsync(token);
     }
 
-    public async Task UpdateAsync(Term term, CancellationToken token)
+    public void Update(Term term)
     {
-        const string sql = $"UPDATE {TermsTable} SET {NameColumn} = @Name WHERE {IdColumn} = @Id";
-        using var con = connections.CreateConnection();
-        await con.ExecuteAsync(new CommandDefinition(sql, new
-        {
-            term.Id,
-            term.Name
-        }, cancellationToken: token));
+        db.Update(term);
     }
 
     public async Task<Term?> GetAsync(TermId id, CancellationToken token)
     {
-        const string sql = $"SELECT {IdColumn},{ProjectIdColumn},{NameColumn} FROM {TermsTable} WHERE {IdColumn} = @Id";
-        using var con = connections.CreateConnection();
-        var row = await con.ExecuteReaderAsync(new CommandDefinition(sql, new { id }, cancellationToken: token));
-        return row.Read() ? Map(row) : null;
+        return await db.Terms.SingleOrDefaultAsync(x => x.Id == id, token);
     }
 
-    private static Term Map(IDataRecord record)
+    public async Task<IEnumerable<Term>> ListAsync(ProjectId projectId, CancellationToken token)
     {
-        var id = new TermId(record.GetGuid(0));
-        var projectId = new ProjectId(record.GetGuid(1));
-        var name = new TermName(record.GetString(2));
-        return new Term(id, projectId, name);
+        return await db.Terms.Where(x => x.ProjectId == projectId).ToListAsync(cancellationToken: token);
+    }
+
+    public Task<Term?> GetAsync(ProjectId projectId, TermName name, CancellationToken cancellationToken)
+    {
+        return db.Terms.SingleOrDefaultAsync(x => x.ProjectId == projectId && x.Name == name, cancellationToken);
     }
 }

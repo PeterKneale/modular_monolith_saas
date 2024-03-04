@@ -1,8 +1,22 @@
 ﻿namespace Micro.Translations.Domain.Languages;
 
-public class Language(LanguageId id, ProjectId projectId, LanguageCode languageCode)
+public class Language
 {
-    public LanguageId Id { get; } = id;
-    public ProjectId ProjectId { get; } = projectId;
-    public LanguageCode LanguageCode { get; } = languageCode;
+    private Language()
+    {
+        // ef core
+    }
+
+    public Language(LanguageId id, ProjectId projectId, LanguageCode languageLanguageCode)
+    {
+        Id = id;
+        ProjectId = projectId;
+        LanguageCode = languageLanguageCode;
+    }
+
+    public LanguageId Id { get; private set; } = null!;
+
+    public ProjectId ProjectId { get; private set; } = null!;
+
+    public LanguageCode LanguageCode { get; private set; } = null!;
 }

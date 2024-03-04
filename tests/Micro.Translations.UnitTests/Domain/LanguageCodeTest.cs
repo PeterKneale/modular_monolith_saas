@@ -1,4 +1,5 @@
 ﻿using Micro.Translations.Domain;
+using Micro.Translations.Domain.Languages;
 
 namespace Micro.Translations.UnitTests.Domain;
 
