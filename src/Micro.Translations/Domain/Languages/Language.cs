@@ -7,11 +7,11 @@ public class Language
         // ef core
     }
 
-    public Language(LanguageId id, ProjectId projectId, LanguageCode languageLanguageCode)
+    public Language(LanguageId id, ProjectId projectId, LanguageCode code)
     {
         Id = id;
         ProjectId = projectId;
-        LanguageCode = languageLanguageCode;
+        LanguageCode = code;
     }
 
     public LanguageId Id { get; private set; } = null!;

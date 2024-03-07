@@ -59,10 +59,21 @@ public partial class Db : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
+            
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .HasColumnName(NameColumn);
-            entity.Property(e => e.ProjectId).HasColumnName(ProjectIdColumn);
+            
+            entity.Property(e => e.ProjectId)
+                .HasColumnName(ProjectIdColumn);
+            
+            // EF access the Translations collection property through its backing field
+            // https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core
+            entity.Metadata
+                .FindNavigation(nameof(Term.Translations))!
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            
+            entity.Ignore(x => x.DomainEvents);
         });
 
         modelBuilder.Entity<Translation>(entity =>

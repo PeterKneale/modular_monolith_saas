@@ -3,8 +3,10 @@ using Micro.Translations.Domain.Translations;
 
 namespace Micro.Translations.Domain.Terms;
 
-public class Term
+public class Term : BaseEntity
 {
+    private readonly List<Translation> _translations;
+
     private Term()
     {
         // EF Core   
@@ -15,6 +17,7 @@ public class Term
         Id = termId;
         ProjectId = projectId;
         Name = termName;
+        _translations = new List<Translation>();
     }
 
     public TermId Id { get; private set; }
@@ -23,7 +26,7 @@ public class Term
 
     public TermName Name { get; private set; }
 
-    public virtual ICollection<Translation> Translations { get; set; } = new List<Translation>();
+    public IReadOnlyCollection<Translation> Translations => _translations;
 
     public static Term Create(string name, ProjectId projectId)
     {
@@ -32,9 +35,21 @@ public class Term
         return new Term(termId, projectId, termName);
     }
 
-    public Translation CreateTranslation(LanguageId languageId, TranslationText text)
+    public void AddTranslation(LanguageId languageId, TranslationText text)
     {
-        var translationId = new TranslationId(Guid.NewGuid());
-        return new Translation(translationId, Id, languageId, text);
+        var translationId = TranslationId.Create();
+        var translation = new Translation(translationId, Id, languageId, text);
+        _translations.Add(translation);
+    }
+    
+    public void UpdateTranslation(LanguageId languageId, TranslationText text)
+    {
+        var translation = _translations.Single(x=>x.LanguageId == languageId);
+        translation.UpdateText(text);
+    }
+
+    public bool HasTranslationFor(LanguageId languageId)
+    {
+        return _translations.Any(x => x.LanguageId == languageId);
     }
 }

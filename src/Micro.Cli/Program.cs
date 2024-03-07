@@ -9,6 +9,7 @@ using Micro.Translations.Application.Terms;
 using Micro.Translations.Application.Terms.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 var organisationId = Guid.NewGuid();
 var userId = Guid.NewGuid();
@@ -27,9 +28,10 @@ var services = new ServiceCollection()
     .AddSingleton<ITenantsModule, TenantsModule>()
     .AddSingleton<ITranslationModule, TranslationModule>()
     .BuildServiceProvider();
+var logs = services.GetRequiredService<ILoggerProvider>();
 
 TenantsModuleStartup.Start(accessor, configuration, true);
-TranslationModuleStartup.Start(accessor, configuration, true);
+TranslationModuleStartup.Start(accessor, configuration, logs, true);
 
 await services.GetRequiredService<ITranslationModule>()
     .SendCommand(new AddTerm.Command(Guid.NewGuid(), "x"));

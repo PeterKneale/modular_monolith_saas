@@ -18,16 +18,20 @@ internal class TermRepository(Db db) : ITermRepository
 
     public async Task<Term?> GetAsync(TermId id, CancellationToken token)
     {
-        return await db.Terms.SingleOrDefaultAsync(x => x.Id == id, token);
+        return await db.Terms
+            .Include(x=>x.Translations)
+            .SingleOrDefaultAsync(x => x.Id == id, token);
+    }
+
+    public Task<Term?> GetAsync(ProjectId projectId, TermName name, CancellationToken cancellationToken)
+    {
+        return db.Terms
+            .Include(x=>x.Translations)
+            .SingleOrDefaultAsync(x => x.ProjectId == projectId && x.Name == name, cancellationToken);
     }
 
     public async Task<IEnumerable<Term>> ListAsync(ProjectId projectId, CancellationToken token)
     {
         return await db.Terms.Where(x => x.ProjectId == projectId).ToListAsync(token);
-    }
-
-    public Task<Term?> GetAsync(ProjectId projectId, TermName name, CancellationToken cancellationToken)
-    {
-        return db.Terms.SingleOrDefaultAsync(x => x.ProjectId == projectId && x.Name == name, cancellationToken);
     }
 }

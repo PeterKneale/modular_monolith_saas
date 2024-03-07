@@ -26,9 +26,6 @@ public class GetTranslationStatisticsTests
         var termId1 = Guid.NewGuid();
         var termId2 = Guid.NewGuid();
         var termId3 = Guid.NewGuid();
-        var translationId1 = Guid.NewGuid();
-        var translationId2 = Guid.NewGuid();
-        var translationId3 = Guid.NewGuid();
 
         const string term1 = "APP_REGISTER";
         const string term2 = "APP_LOGIN";
@@ -50,11 +47,11 @@ public class GetTranslationStatisticsTests
             await ctx.SendCommand(new AddTerm.Command(termId3, term3));
 
             // lang 1 is 66% translated en-AU
-            await ctx.SendCommand(new AddTranslation.Command(translationId1, termId1, languageId1, text1));
-            await ctx.SendCommand(new AddTranslation.Command(translationId2, termId2, languageId1, text2));
+            await ctx.SendCommand(new AddTranslation.Command(termId1, languageId1, text1));
+            await ctx.SendCommand(new AddTranslation.Command(termId2, languageId1, text2));
 
             // lang 2 is 33% translated en-UK
-            await ctx.SendCommand(new AddTranslation.Command(translationId3, termId1, languageId2, text3));
+            await ctx.SendCommand(new AddTranslation.Command( termId1, languageId2, text3));
 
             var summary = await ctx.SendQuery(new GetTranslationStatistics.Query());
             summary.TotalTerms.Should().Be(3);

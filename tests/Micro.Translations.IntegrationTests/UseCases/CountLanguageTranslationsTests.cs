@@ -40,11 +40,11 @@ public class CountLanguageTranslationsTests
             await ctx.SendCommand(new AddTerm.Command(termId3, TestTerm3));
 
             // lang 1
-            await ctx.SendCommand(new AddTranslation.Command(Guid.NewGuid(), termId1, languageId1, TestText1));
-            await ctx.SendCommand(new AddTranslation.Command(Guid.NewGuid(), termId2, languageId1, TestText2));
+            await ctx.SendCommand(new AddTranslation.Command(termId1, languageId1, TestText1));
+            await ctx.SendCommand(new AddTranslation.Command(termId2, languageId1, TestText2));
 
             // lang 2
-            await ctx.SendCommand(new AddTranslation.Command(Guid.NewGuid(), termId1, languageId2, TestText3));
+            await ctx.SendCommand(new AddTranslation.Command(termId1, languageId2, TestText3));
 
             // assert
             var count1 = await ctx.SendQuery(new CountLanguageTranslations.Query(languageId1));

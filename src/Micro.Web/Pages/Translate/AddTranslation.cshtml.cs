@@ -14,7 +14,7 @@ public class AddTranslationPage(ITranslationModule module, IPageContextAccessor 
 
         try
         {
-            await module.SendCommand(new AddTranslation.Command(Guid.NewGuid(), TermId, LanguageId, Text));
+            await module.SendCommand(new AddTranslation.Command(TermId, LanguageId, Text));
             TempData.SetAlert(Alert.Success("You have added a translation"));
             
             return RedirectToPage(nameof(Translations), new

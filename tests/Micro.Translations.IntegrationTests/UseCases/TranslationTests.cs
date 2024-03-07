@@ -2,6 +2,7 @@
 using Micro.Translations.Application.Terms.Commands;
 using Micro.Translations.Application.Translations.Commands;
 using Micro.Translations.Application.Translations.Queries;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Micro.Translations.IntegrationTests.UseCases;
 
@@ -26,9 +27,6 @@ public class TranslationTests
         var termId1 = Guid.NewGuid();
         var termId2 = Guid.NewGuid();
         var termId3 = Guid.NewGuid();
-        var translationId1 = Guid.NewGuid();
-        var translationId2 = Guid.NewGuid();
-        var translationId3 = Guid.NewGuid();
 
         // act
         await _service.Execute(async ctx =>
@@ -43,27 +41,37 @@ public class TranslationTests
             await ctx.SendCommand(new AddTerm.Command(termId3, TestTerm3));
 
             // lang 1 is 66% translated en-AU
-            await ctx.SendCommand(new AddTranslation.Command(translationId1, termId1, languageId1, TestText1));
-            await ctx.SendCommand(new AddTranslation.Command(translationId2, termId2, languageId1, TestText2));
+            await ctx.SendCommand(new AddTranslation.Command(termId1, languageId1, TestText1));
+            await ctx.SendCommand(new AddTranslation.Command(termId2, languageId1, TestText2));
 
             // lang 2 is 33% translated en-UK
-            await ctx.SendCommand(new AddTranslation.Command(translationId3, termId1, languageId2, TestText3));
+            await ctx.SendCommand(new AddTranslation.Command(termId1, languageId2, TestText3));
 
             var list1 = await ctx.SendQuery(new ListTranslations.Query(languageId1));
-            list1.Should().BeEquivalentTo(new ListTranslations.Results(3, 2, TestLanguageName1, TestLanguageCode1,new ListTranslations.Result[]
+            list1.Translations.Select(x => new ValueTuple<Guid, string, string>
             {
-                new(translationId1, termId1, TestTerm1, TestText1),
-                new(translationId2, termId2, TestTerm2, TestText2),
-                new(null, termId3, TestTerm3, null)
-            }));
+                Item1 = x.TermId,
+                Item2 = x.TermName,
+                Item3 = x.TranslationText
+            }).Should().BeEquivalentTo(new (Guid, string, string)[]
+            {
+                new(termId1, TestTerm1, TestText1),
+                new(termId2, TestTerm2, TestText2),
+                new(termId3, TestTerm3, null)
+            });
 
             var list2 = await ctx.SendQuery(new ListTranslations.Query(languageId2));
-            list2.Should().BeEquivalentTo(new ListTranslations.Results(3, 1, TestLanguageName2, TestLanguageCode2, new ListTranslations.Result[]
+            list2.Translations.Select(x => new ValueTuple<Guid, string, string>
             {
-                new(translationId3, termId1, TestTerm1, TestText3),
-                new(null, termId2, TestTerm2, null),
-                new(null, termId3, TestTerm3, null)
-            }));
+                Item1 = x.TermId,
+                Item2 = x.TermName,
+                Item3 = x.TranslationText
+            }).Should().BeEquivalentTo(new (Guid, string, string)[]
+            {
+                new(termId1, TestTerm1, TestText3),
+                new(termId2, TestTerm2, null),
+                new(termId3, TestTerm3, null)
+            });
         }, projectId: projectId);
     }
 }

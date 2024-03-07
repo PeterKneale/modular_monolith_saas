@@ -54,8 +54,9 @@ builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageC
 
 var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();
+var logs = app.Services.GetRequiredService<ILoggerProvider>();
 TenantsModuleStartup.Start(accessor, configuration);
-TranslationModuleStartup.Start(accessor, configuration);
+TranslationModuleStartup.Start(accessor, configuration, logs);
 
 if (!app.Environment.IsDevelopment())
 {

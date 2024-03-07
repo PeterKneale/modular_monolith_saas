@@ -18,52 +18,30 @@ public static class ImportTranslations
         }
     }
 
-    public class Handler(ILanguageRepository languageRepo, ITermRepository termRepo, ITranslationRepository translationRepo, IProjectExecutionContext context) : IRequestHandler<Command>
+    public class Handler(ILanguageRepository languageRepo, ITermRepository termRepo, IProjectExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var projectId = context.ProjectId;
 
             var languageId = await GetOrCreateLanguage(command.LanguageCode, token);
-
-            var termNames = command.Translations.Select(x => x.Key);
-
-            var termsToImport = termNames.Select(x => Term.Create(x, projectId)).ToList();
             var termsThatExist = (await termRepo.ListAsync(projectId, token)).ToList();
-            var termsToCreate = (termsToImport.Except(termsThatExist)).ToList();
-
-            foreach (var term in termsToCreate)
-                await termRepo.CreateAsync(term, token);
-
             foreach (var item in command.Translations)
             {
-                var text = new TranslationText(item.Value);
-
-                // Get term by name (needs to use the term id as i think the unsaved term name canot be found)
                 var term = termsThatExist.SingleOrDefault(x => x.Name.Value == item.Key);
+                var text = new TranslationText(item.Value);
+                
                 if (term == null)
                 {
-                    term = termsToCreate.SingleOrDefault(x => x.Name.Value == item.Key);
-                    if (term == null)
-                    {
-                        throw new InvalidOperationException($"Term '{item.Key}' not found");
-                    }
-                }
-
-                // Check for a translation
-                var existing = await translationRepo.GetAsync(term.Id, languageId, token);
-                if (existing != null)
-                {
-                    existing.UpdateText(text);
-                    translationRepo.Update(existing);
+                    term = Term.Create(item.Key, projectId);
+                    term.AddTranslation(languageId, text);
+                    await termRepo.CreateAsync(term, token);
                 }
                 else
                 {
-                    var translation = term.CreateTranslation(languageId, text);
-                    await translationRepo.CreateAsync(translation, token);
+                    term.UpdateTranslation(languageId,text);
                 }
             }
-
             return Unit.Value;
         }
 
