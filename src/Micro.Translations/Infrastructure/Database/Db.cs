@@ -93,7 +93,6 @@ public partial class Db : DbContext
 
             entity.HasOne(d => d.Term).WithMany(p => p.Translations)
                 .HasForeignKey(d => d.TermId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_translations_terms");
         });
 

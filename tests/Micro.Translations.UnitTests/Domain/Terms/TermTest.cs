@@ -11,17 +11,34 @@ namespace Micro.Translations.UnitTests.Domain.Terms;
 public class TermTest
 {
     [Fact]
-    public void Can_add_translation_to_term()
+    public void Can_add_translation()
     {
         // arrange
         var term = CreateTerm();
         var languageId = LanguageId.Create();
-        
+
         // act
         term.AddTranslation(languageId, new TranslationText("text"));
-        
+
         // assert
         term.HasTranslationFor(languageId).Should().BeTrue();
+    }
+
+    [Fact]
+    public void Can_update_translation()
+    {
+        // arrange
+        var term = CreateTerm();
+        var languageId = LanguageId.Create();
+        var textOriginal = new TranslationText("text");
+        var textUpdated = new TranslationText("text2");
+        term.AddTranslation(languageId, textOriginal);
+
+        // act
+        term.UpdateTranslation(languageId, textUpdated);
+
+        // assert
+        term.GetTranslation(languageId).Text.Should().BeEquivalentTo(textUpdated);
     }
 
     [Fact]
@@ -31,15 +48,15 @@ public class TermTest
         var term = CreateTerm();
         var languageId = LanguageId.Create();
         term.AddTranslation(languageId, new TranslationText("text"));
-        
+
         // act
-        var action = ()=> term.AddTranslation(languageId, new TranslationText("text"));
-        
+        var action = () => term.AddTranslation(languageId, new TranslationText("text"));
+
         // assert
         action.Should().Throw<BusinessRuleBrokenException>()
             .WithMessage("*already exists*");
     }
-    
+
     [Fact]
     public void Can_add_translation_to_term_if_one_exists_for_a_different_language()
     {
@@ -48,10 +65,10 @@ public class TermTest
         var languageId1 = LanguageId.Create();
         var languageId2 = LanguageId.Create();
         term.AddTranslation(languageId1, new TranslationText("text"));
-        
+
         // act
         term.AddTranslation(languageId2, new TranslationText("text"));
-        
+
         // assert
         term.HasTranslationFor(languageId1).Should().BeTrue();
         term.HasTranslationFor(languageId2).Should().BeTrue();

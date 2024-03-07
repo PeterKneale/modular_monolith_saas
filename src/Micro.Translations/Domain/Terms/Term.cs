@@ -50,9 +50,22 @@ public class Term : BaseEntity
         var translation = _translations.Single(x => x.LanguageId == languageId);
         translation.UpdateText(text);
     }
+    
+    public void RemoveTranslation(LanguageId languageId)
+    {
+        CheckRule(new MustHaveTranslationForALanguage(this, languageId));
+        var translation = _translations.Single(x => x.LanguageId == languageId);
+        _translations.Remove(translation);
+    }
 
     public bool HasTranslationFor(LanguageId languageId)
     {
         return _translations.Any(x => x.LanguageId == languageId);
+    }
+
+    public Translation GetTranslation(LanguageId languageId)
+    {
+        CheckRule(new MustHaveTranslationForALanguage(this, languageId));
+        return _translations.Single(x => x.LanguageId.Equals(languageId));
     }
 }

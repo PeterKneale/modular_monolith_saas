@@ -20,9 +20,18 @@
                             <a asp-page="UpdateTranslation"
                                asp-route-org="@Model.RouteOrg"
                                asp-route-project="@Model.RouteProject"
-                               asp-route-id="@item.TranslationId"
+                               asp-route-termId="@item.TermId"
+                               asp-route-languageId="@Model.Results.LanguageId"
                                class="btn btn-secondary float-end">
                                 Update Translation
+                            </a>
+                            <a asp-page-handler="RemoveTranslation"
+                               asp-route-org="@Model.RouteOrg"
+                               asp-route-project="@Model.RouteProject"
+                               asp-route-termId="@item.TermId"
+                               asp-route-languageId="@Model.Results.LanguageId"
+                               class="btn btn-secondary btn-danger float-end me-2">
+                                Remove Translation
                             </a>
                         }
                         else

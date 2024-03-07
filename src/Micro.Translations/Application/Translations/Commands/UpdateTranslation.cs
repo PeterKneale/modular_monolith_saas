@@ -1,33 +1,38 @@
-﻿using Micro.Translations.Domain.Translations;
+﻿using Micro.Translations.Domain.Languages;
+using Micro.Translations.Domain.Terms;
+using Micro.Translations.Domain.Translations;
 
 namespace Micro.Translations.Application.Translations.Commands;
 
 public static class UpdateTranslation
 {
-    public record Command(Guid Id, string Text) : IRequest;
+    public record Command(Guid TermId, Guid LanguageId, string Text) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
-            RuleFor(m => m.Id).NotEmpty();
+            RuleFor(m => m.TermId).NotEmpty();
+            RuleFor(m => m.LanguageId).NotEmpty();
             RuleFor(m => m.Text).NotEmpty().MaximumLength(100);
         }
     }
 
-    public class Handler(ITranslationRepository translations) : IRequestHandler<Command>
+    public class Handler(ITermRepository terms) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
-            var translationId = new TranslationId(command.Id);
+            var termId = new TermId(command.TermId);
+            var languageId = new LanguageId(command.LanguageId);
 
-            var translation = await translations.GetAsync(translationId, token);
-            if (translation == null) throw new NotFoundException(translationId);
+            var term = await terms.GetAsync(termId, token);
+            if (term == null) throw new NotFoundException(termId);
 
             var text = new TranslationText(command.Text);
-            translation.UpdateText(text);
 
-            translations.Update(translation);
+            term.UpdateTranslation(languageId, text);
+
+            terms.Update(term);
             return Unit.Value;
         }
     }

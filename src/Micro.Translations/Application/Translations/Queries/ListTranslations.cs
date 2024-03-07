@@ -7,7 +7,7 @@ public static class ListTranslations
 {
     public record Query(Guid LanguageId) : IRequest<Results>;
 
-    public record Results(int TotalTerms, int TotalTranslations, string LanguageName, string LanguageCode, IEnumerable<Result> Translations);
+    public record Results(int TotalTerms, int TotalTranslations, Guid LanguageId, string LanguageName, string LanguageCode, IEnumerable<Result> Translations);
 
     public record Result(Guid? TranslationId, Guid TermId, string TermName, string? TranslationText);
 
@@ -29,7 +29,7 @@ public static class ListTranslations
             var totalTerms = await CountTerms(token, projectId);
             var totalTranslations = await CountTranslations(token, projectId, languageId);
             var translations = await ListTranslations(projectId, languageId);
-            return new Results(totalTerms, totalTranslations, language.LanguageCode.Name, language.LanguageCode.Code, translations);
+            return new Results(totalTerms, totalTranslations, language.Id.Value, language.LanguageCode.Name, language.LanguageCode.Code, translations);
         }
 
         private async Task<IEnumerable<Result>> ListTranslations(ProjectId projectId, LanguageId languageId)
