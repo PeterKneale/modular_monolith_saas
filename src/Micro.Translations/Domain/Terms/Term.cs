@@ -1,4 +1,5 @@
 ﻿using Micro.Translations.Domain.Languages;
+using Micro.Translations.Domain.Terms.Rules;
 using Micro.Translations.Domain.Translations;
 
 namespace Micro.Translations.Domain.Terms;
@@ -37,14 +38,16 @@ public class Term : BaseEntity
 
     public void AddTranslation(LanguageId languageId, TranslationText text)
     {
+        CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, languageId));
         var translationId = TranslationId.Create();
         var translation = new Translation(translationId, Id, languageId, text);
         _translations.Add(translation);
     }
-    
+
     public void UpdateTranslation(LanguageId languageId, TranslationText text)
     {
-        var translation = _translations.Single(x=>x.LanguageId == languageId);
+        CheckRule(new MustHaveTranslationForALanguage(this, languageId));
+        var translation = _translations.Single(x => x.LanguageId == languageId);
         translation.UpdateText(text);
     }
 
