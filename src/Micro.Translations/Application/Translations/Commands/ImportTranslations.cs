@@ -18,14 +18,13 @@ public static class ImportTranslations
         }
     }
 
-    public class Handler(ILanguageRepository languageRepo, ITermRepository termRepo, IProjectExecutionContext context) : IRequestHandler<Command>
+    public class Handler(ITermRepository repository, IProjectExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var projectId = context.ProjectId;
-
-            var languageId = await GetOrCreateLanguage(command.LanguageCode, token);
-            var termsThatExist = (await termRepo.ListAsync(projectId, token)).ToList();
+            var language = Language.FromIsoCode(command.LanguageCode);
+            var termsThatExist = (await repository.ListAsync(projectId, token)).ToList();
             foreach (var item in command.Translations)
             {
                 var term = termsThatExist.SingleOrDefault(x => x.Name.Value == item.Key);
@@ -34,29 +33,15 @@ public static class ImportTranslations
                 if (term == null)
                 {
                     term = Term.Create(item.Key, projectId);
-                    term.AddTranslation(languageId, text);
-                    await termRepo.CreateAsync(term, token);
+                    term.AddTranslation(language, text);
+                    await repository.CreateAsync(term, token);
                 }
                 else
                 {
-                    term.UpdateTranslation(languageId,text);
+                    term.UpdateTranslation(language,text);
                 }
             }
             return Unit.Value;
-        }
-
-        private async Task<LanguageId> GetOrCreateLanguage(string languageCode, CancellationToken token)
-        {
-            var projectId = context.ProjectId;
-
-            var code = LanguageCode.FromIsoCode(languageCode);
-            var language = await languageRepo.GetAsync(projectId, code, token);
-            if (language != null) return language.Id;
-
-            var languageId = new LanguageId(Guid.NewGuid());
-            language = new Language(languageId, projectId, code);
-            await languageRepo.CreateAsync(language, token);
-            return languageId;
         }
     }
 }

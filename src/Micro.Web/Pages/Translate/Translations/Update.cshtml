@@ -1,5 +1,5 @@
 ﻿@page "/org/{org}/projects/{project}/translate/translations/update"
-@model Micro.Web.Pages.Translate.UpdateTranslationPage
+@model UpdatePage
 
 <partial name="_ValidationSummary"/>
 
@@ -7,7 +7,7 @@
     <div class="card-body">
         @Html.EditorFor(x => x.Text, null, new { autofocus = "autofocus" })
         @Html.HiddenFor(x => x.TermId)
-        @Html.HiddenFor(x => x.LanguageId)
+        @Html.HiddenFor(x => x.LanguageCode)
     </div>
     <div class="card-footer">
         <input type="submit" value="Update" class="btn btn-primary ms-auto" data-testid="Update"/>

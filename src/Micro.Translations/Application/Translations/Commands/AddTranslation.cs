@@ -6,14 +6,14 @@ namespace Micro.Translations.Application.Translations.Commands;
 
 public static class AddTranslation
 {
-    public record Command(Guid TermId, Guid LanguageId, string Text) : IRequest;
+    public record Command(Guid TermId, string LanguageCode, string Text) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
             RuleFor(m => m.TermId).NotEmpty();
-            RuleFor(m => m.LanguageId).NotEmpty();
+            RuleFor(m => m.LanguageCode).NotEmpty();
             RuleFor(m => m.Text).NotEmpty().MaximumLength(100);
         }
     }
@@ -31,8 +31,8 @@ public static class AddTranslation
             }
             
             var text = new TranslationText(command.Text);
-            var languageId = new LanguageId(command.LanguageId);
-            term.AddTranslation(languageId, text);
+            var language = Language.FromIsoCode(command.LanguageCode);
+            term.AddTranslation(language, text);
             
             terms.Update(term);
             return Unit.Value;

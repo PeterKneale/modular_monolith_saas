@@ -9,11 +9,11 @@ public class Translation
     {
     }
 
-    public Translation(TranslationId id, TermId termId, LanguageId languageId, TranslationText text)
+    public Translation(TranslationId id, TermId termId, Language langauge, TranslationText text)
     {
         Id = id;
         TermId = termId;
-        LanguageId = languageId;
+        Langauge = langauge;
         Text = text;
     }
 
@@ -21,11 +21,9 @@ public class Translation
 
     public TermId TermId { get; private init; }
 
-    public LanguageId LanguageId { get; private init; }
+    public virtual Language Langauge { get; private init; } = null!;
 
     public TranslationText Text { get; private set; }
-
-    public virtual Language Language { get; private init; } = null!;
 
     public virtual Term Term { get; private set; } = null!;
 

@@ -22,8 +22,6 @@ public class ImportTranslationsTests
     {
         // arrange
         var projectId = Guid.NewGuid();
-        var languageId = Guid.NewGuid();
-        var languageCode = TestLanguageCode1;
         var translations = new Dictionary<string, string>
         {
             { TestTerm1, "translation1" },
@@ -33,14 +31,14 @@ public class ImportTranslationsTests
         await _service.Execute(async ctx =>
         {
             // act
-            
-            await ctx.SendCommand(new ImportTranslations.Command(languageCode, translations));
+            await ctx.SendCommand(new ImportTranslations.Command(TestLanguageCode1, translations));
 
             // assert langauge created
             var languages = await ctx.SendQuery(new ListLanguages.Query());
-            languages.ToList().Select(x => x.Code)
-                .Should()
-                .BeEquivalentTo([languageCode]);
+            languages.Should().BeEquivalentTo(new ListLanguages.Result[]
+            {
+                new(TestLanguageCode1, TestLanguageName1)
+            });
 
             // assert terms are created
             var terms = await ctx.SendQuery(new ListTerms.Query());
@@ -50,8 +48,7 @@ public class ImportTranslationsTests
                 .BeEquivalentTo(translations.Keys);
 
             // assert translations are created
-            var languageId = languages.Single(x => x.Code == languageCode).Id;
-            var results = await ctx.SendQuery(new ListTranslations.Query(languageId));
+            var results = await ctx.SendQuery(new ListTranslations.Query(TestLanguageCode1));
             results.Translations.ToDictionary(x => x.TermName, x => x.TranslationText)
                 .Should()
                 .BeEquivalentTo(translations);

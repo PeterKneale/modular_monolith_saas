@@ -1,22 +1,17 @@
-﻿namespace Micro.Translations.Domain.Languages;
+﻿using System.Globalization;
 
-public class Language
+namespace Micro.Translations.Domain.Languages;
+
+public record Language(string Name, string Code)
 {
-    private Language()
+    public static Language FromIsoCode(string isoCode)
     {
-        // ef core
+        var culture = CultureInfo.GetCultureInfo(isoCode);
+        var name = culture.DisplayName;
+        var code = culture.Name;
+        return new Language(name, code);
     }
 
-    public Language(LanguageId id, ProjectId projectId, LanguageCode code)
-    {
-        Id = id;
-        ProjectId = projectId;
-        LanguageCode = code;
-    }
-
-    public LanguageId Id { get; private set; } = null!;
-
-    public ProjectId ProjectId { get; private set; } = null!;
-
-    public LanguageCode LanguageCode { get; private set; } = null!;
+    public static Language EnglishAustralian() => FromIsoCode("en-AU");
+    public static Language EnglishUnitedKingdom() => FromIsoCode("en-UK");
 }

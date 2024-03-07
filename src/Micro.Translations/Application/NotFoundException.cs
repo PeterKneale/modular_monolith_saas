@@ -7,10 +7,6 @@ namespace Micro.Translations.Application;
 [ExcludeFromCodeCoverage]
 public class NotFoundException : PlatformException
 {
-    public NotFoundException(LanguageId id) : base($"{nameof(LanguageId)} not found {id}")
-    {
-    }
-
     public NotFoundException(TermId id) : base($"{nameof(TermId)} not found {id}")
     {
     }

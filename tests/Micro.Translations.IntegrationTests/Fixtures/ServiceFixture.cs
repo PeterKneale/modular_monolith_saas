@@ -21,12 +21,12 @@ public class ServiceFixture : ITestOutputHelperAccessor
         var services = new ServiceCollection()
             .AddLogging(x => x.AddXUnit(this))
             .BuildServiceProvider();
-        var logs = services.GetRequiredService<ILoggerProvider>();
+        var logFactory = services.GetRequiredService<ILoggerFactory>();
 
         _accessor = new TestContextAccessor();
         _module = new TranslationModule();
 
-        TranslationModuleStartup.Start(_accessor, configuration, logs, true);
+        TranslationModuleStartup.Start(_accessor, configuration, logFactory, true);
     }
 
     public ITestOutputHelper? OutputHelper { get; set; }
@@ -39,7 +39,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
         await action(_module);
         ClearContext();
     }
-    
+
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         SetUserContext(userId);
@@ -48,7 +48,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
         await _module.SendCommand(command);
         ClearContext();
     }
-    
+
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         SetUserContext(userId);

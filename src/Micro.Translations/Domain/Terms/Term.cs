@@ -36,7 +36,7 @@ public class Term : BaseEntity
         return new Term(termId, projectId, termName);
     }
 
-    public void AddTranslation(LanguageId languageId, TranslationText text)
+    public void AddTranslation(Language languageId, TranslationText text)
     {
         CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, languageId));
         var translationId = TranslationId.Create();
@@ -44,28 +44,28 @@ public class Term : BaseEntity
         _translations.Add(translation);
     }
 
-    public void UpdateTranslation(LanguageId languageId, TranslationText text)
+    public void UpdateTranslation(Language language, TranslationText text)
     {
-        CheckRule(new MustHaveTranslationForALanguage(this, languageId));
-        var translation = _translations.Single(x => x.LanguageId == languageId);
+        CheckRule(new MustHaveTranslationForALanguage(this, language));
+        var translation = _translations.Single(x => x.Langauge == language);
         translation.UpdateText(text);
     }
     
-    public void RemoveTranslation(LanguageId languageId)
+    public void RemoveTranslation(Language language)
     {
-        CheckRule(new MustHaveTranslationForALanguage(this, languageId));
-        var translation = _translations.Single(x => x.LanguageId == languageId);
+        CheckRule(new MustHaveTranslationForALanguage(this, language));
+        var translation = _translations.Single(x => x.Langauge == language);
         _translations.Remove(translation);
     }
 
-    public bool HasTranslationFor(LanguageId languageId)
+    public bool HasTranslationFor(Language languageId)
     {
-        return _translations.Any(x => x.LanguageId == languageId);
+        return _translations.Any(x => x.Langauge == languageId);
     }
 
-    public Translation GetTranslation(LanguageId languageId)
+    public Translation GetTranslation(Language languageId)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, languageId));
-        return _translations.Single(x => x.LanguageId.Equals(languageId));
+        return _translations.Single(x => x.Langauge.Equals(languageId));
     }
 }

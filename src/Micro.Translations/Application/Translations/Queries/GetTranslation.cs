@@ -6,7 +6,7 @@ namespace Micro.Translations.Application.Translations.Queries;
 
 public static class GetTranslation
 {
-    public record Query(Guid TermId, Guid LanguageId) : IRequest<Result>;
+    public record Query(Guid TermId, string LanguageCode) : IRequest<Result>;
 
     public record Result(string Text);
 
@@ -15,7 +15,7 @@ public static class GetTranslation
         public Validator()
         {
             RuleFor(m => m.TermId).NotEmpty();
-            RuleFor(m => m.LanguageId).NotEmpty();
+            RuleFor(m => m.LanguageCode).NotEmpty();
         }
     }
 
@@ -24,7 +24,7 @@ public static class GetTranslation
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
             var termId = new TermId(query.TermId);
-            var languageId = new LanguageId(query.LanguageId);
+            var language = Language.FromIsoCode(query.LanguageCode);
 
             var term = await db.Terms
                 .AsNoTracking()
@@ -32,7 +32,7 @@ public static class GetTranslation
                 .SingleOrDefaultAsync(x => x.Id == termId, token);
 
             if (term == null) throw new NotFoundException(termId);
-            var translation = term.GetTranslation(languageId);
+            var translation = term.GetTranslation(language);
 
             return new Result(translation.Text.Value);
         }

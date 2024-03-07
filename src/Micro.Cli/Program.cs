@@ -28,7 +28,7 @@ var services = new ServiceCollection()
     .AddSingleton<ITenantsModule, TenantsModule>()
     .AddSingleton<ITranslationModule, TranslationModule>()
     .BuildServiceProvider();
-var logs = services.GetRequiredService<ILoggerProvider>();
+var logs = services.GetRequiredService<ILoggerFactory>();
 
 TenantsModuleStartup.Start(accessor, configuration, true);
 TranslationModuleStartup.Start(accessor, configuration, logs, true);

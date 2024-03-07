@@ -11,9 +11,9 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
         Results = await module.SendQuery(new GetTranslationStatistics.Query());
     }
 
-    public async Task<FileStreamResult> OnGetDownloadCsv(Guid languageId, CancellationToken token)
+    public async Task<FileStreamResult> OnGetDownloadCsv(string languageCode, CancellationToken token)
     {
-        var results = await module.SendQuery(new ListTranslations.Query(languageId));
+        var results = await module.SendQuery(new ListTranslations.Query(languageCode));
         var stream = await FileDownloads.ToCsvMemoryStream(results, token);
         var name = $"{RouteOrg}-{RouteProject}-{results.LanguageCode}.{FileDownloads.CsvExtension}";
         return new FileStreamResult(stream, FileDownloads.CsvContentType)
@@ -22,9 +22,9 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
         };
     }
     
-    public async Task<FileStreamResult> OnGetDownloadResx(Guid languageId, CancellationToken token)
+    public async Task<FileStreamResult> OnGetDownloadResx(string languageCode, CancellationToken token)
     {
-        var results = await module.SendQuery(new ListTranslations.Query(languageId));
+        var results = await module.SendQuery(new ListTranslations.Query(languageCode));
         var stream = FileDownloads.ToResXMemoryStream(results, token);
         var name = $"{RouteOrg}-{RouteProject}-{results.LanguageCode}.{FileDownloads.ResxExtension}";
         return new FileStreamResult(stream, FileDownloads.TextContentType)

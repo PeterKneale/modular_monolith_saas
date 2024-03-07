@@ -1,5 +1,5 @@
-﻿@page "/org/{org}/projects/{project}/translate/languages/add"
-@model Micro.Web.Pages.Translate.AddLanguagePage
+﻿@page "/org/{org}/projects/{project}/translate/terms/add"
+@model AddPage
 
 <div class="card mb-2">
     <div class="card-header">
@@ -9,7 +9,7 @@
         <partial name="_ValidationSummary"/>
         <form method="post" class="card">
             <div class="card-body">
-                @Html.DropDownListFor(x => x.Selected, Model.Language, null, new { autofocus = "autofocus", @class="form-select" })
+                @Html.EditorFor(x => x.Term, null, new { autofocus = "autofocus" })
             </div>
             <div class="card-footer">
                 <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>

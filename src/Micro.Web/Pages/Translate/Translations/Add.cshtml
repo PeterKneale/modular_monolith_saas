@@ -1,5 +1,5 @@
 ﻿@page "/org/{org}/projects/{project}/translate/translations/add"
-@model Micro.Web.Pages.Translate.AddTranslationPage
+@model AddPage
 
 <div class="card mb-2">
     <div class="card-header">
@@ -11,7 +11,7 @@
             <div class="card-body">
                 @Html.EditorFor(x => x.Text, null, new { autofocus = "autofocus" })
                 @Html.HiddenFor(x => x.TermId)
-                @Html.HiddenFor(x => x.LanguageId)
+                @Html.HiddenFor(x => x.LanguageCode)
             </div>
             <div class="card-footer">
                 <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>

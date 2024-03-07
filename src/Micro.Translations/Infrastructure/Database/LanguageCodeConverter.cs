@@ -3,4 +3,4 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Micro.Translations.Infrastructure.Database;
 
-public class LanguageCodeConverter() : ValueConverter<LanguageCode, string>(v => v.Code, v => LanguageCode.FromIsoCode(v));
+public class LanguageCodeConverter() : ValueConverter<Language, string>(v => v.Code, v => Language.FromIsoCode(v));

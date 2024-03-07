@@ -2,9 +2,9 @@
 using Micro.Translations.Application.Terms.Queries;
 using static Micro.Translations.Application.Terms.Queries.ListTerms;
 
-namespace Micro.Web.Pages.Translate;
+namespace Micro.Web.Pages.Translate.Terms;
 
-public class Terms(ITranslationModule module) : PageModel
+public class IndexPage(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     public async Task OnGet()
     {

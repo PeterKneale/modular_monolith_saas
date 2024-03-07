@@ -10,7 +10,7 @@ public class AlreadyInUseException : PlatformException
     {
     }
 
-    public AlreadyInUseException(LanguageCode languageCode) : base($"Language code {languageCode} is already in use")
+    public AlreadyInUseException(Language language) : base($"Language code {language} is already in use")
     {
     }
 }

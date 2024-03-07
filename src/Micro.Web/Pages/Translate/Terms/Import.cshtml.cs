@@ -1,10 +1,9 @@
 ﻿using Micro.Translations;
-using Micro.Translations.Application.Terms;
 using Micro.Translations.Application.Terms.Commands;
 
-namespace Micro.Web.Pages.Translate;
+namespace Micro.Web.Pages.Translate.Terms;
 
-public class ImportTermsPage(ITranslationModule module, IPageContextAccessor context, ILogger<AddTermPage> logs) : PageModel
+public class ImportPage(ITranslationModule module, IPageContextAccessor context, ILogger<ImportPage> logs) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {

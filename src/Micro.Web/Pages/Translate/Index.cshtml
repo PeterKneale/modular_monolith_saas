@@ -11,19 +11,19 @@
     <div class="card-body">
         <div class="card mb-2">
             <div class="card-body">
-                <a asp-page="Terms"
+                <a asp-page="Terms/Index"
                    asp-route-org="@Model.RouteOrg"
                    asp-route-project="@Model.RouteProject"
                    class="card-link">
                     View Terms
                 </a>
-                <a asp-page="AddTerm"
+                <a asp-page="Terms/Add"
                    asp-route-org="@Model.RouteOrg"
                    asp-route-project="@Model.RouteProject"
                    class="btn btn-primary ms-2 float-end">
                     Add Term
                 </a>
-                <a asp-page="ImportTerms"
+                <a asp-page="Terms/Import"
                    asp-route-org="@Model.RouteOrg"
                    asp-route-project="@Model.RouteProject"
                    class="btn btn-primary float-end">
@@ -35,14 +35,6 @@
 </div>
 <div class="card mb-2">
     <div class="card-header">
-        <span class="float-end">
-            <a asp-page="AddLanguage"
-               asp-route-org="@Model.RouteOrg"
-               asp-route-project="@Model.RouteProject"
-               class="btn btn-primary">
-                Add Language
-            </a>
-        </span>
         <h5>Translations</h5>
     </div>
     <div class="card-body">
@@ -53,8 +45,8 @@
                     <h5 class="card-title">
                         @if (item.Number > 0)
                         {
-                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageId="@item.Id">Download CSV</a>
-                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageId="@item.Id">Download RESX</a>
+                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageCode="@item.Code">Download CSV</a>
+                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageCode="@item.Code">Download RESX</a>
                         }
                         @item.Code @item.Percentage%
                     </h5>
@@ -65,10 +57,10 @@
                     </p>
                 </div>
                 <div class="card-body">
-                    <a class="card-link" asp-page="Translations"
+                    <a class="card-link" asp-page="Translations/Index"
                        asp-route-org="@Model.RouteOrg"
                        asp-route-project="@Model.RouteProject"
-                       asp-route-languageId="@item.Id">
+                       asp-route-languageCode="@item.Code">
                         View Translations
                     </a>
                 </div>

@@ -23,7 +23,6 @@ internal static class ServiceCollectionExtensions
 
         // Repositories
         services.AddScoped<ITermRepository, TermRepository>();
-        services.AddScoped<ILanguageRepository, LanguageRepository>();
 
         // Database Migrations
         services
@@ -34,10 +33,12 @@ internal static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
-        services.AddDbContext<Db>((c,options) =>
+        services.AddDbContext<Db>((ctx, options) =>
         {
             options.UseNpgsql(connectionString);
-            options.UseLoggerFactory(c.GetRequiredService<ILoggerFactory>());
+            options.UseLoggerFactory(ctx.GetRequiredService<ILoggerFactory>());
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
         });
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));

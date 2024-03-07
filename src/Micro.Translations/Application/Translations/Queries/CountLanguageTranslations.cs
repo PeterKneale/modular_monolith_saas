@@ -5,13 +5,13 @@ namespace Micro.Translations.Application.Translations.Queries;
 
 public static class CountLanguageTranslations
 {
-    public record Query(Guid LanguageId) : IRequest<int>;
+    public record Query(string LanguageCode) : IRequest<int>;
 
     public class Validator : AbstractValidator<Query>
     {
         public Validator()
         {
-            RuleFor(m => m.LanguageId).NotEmpty();
+            RuleFor(m => m.LanguageCode).NotEmpty();
         }
     }
 
@@ -20,10 +20,10 @@ public static class CountLanguageTranslations
         public async Task<int> Handle(Query query, CancellationToken token)
         {
             var projectId = context.ProjectId;
-            var languageId = new LanguageId(query.LanguageId);
+            var language = Language.FromIsoCode(query.LanguageCode);
 
             return await db.Translations
-                .Where(x => x.LanguageId == languageId && x.Term.ProjectId == projectId)
+                .Where(x => x.Langauge == language && x.Term.ProjectId == projectId)
                 .AsNoTracking()
                 .CountAsync(token);
         }

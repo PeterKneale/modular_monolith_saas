@@ -9,12 +9,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="..\..\.dockerignore">
-            <Link>.dockerignore</Link>
+        <Content Update="appsettings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="appsettings.Development.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
-
-
+    
     <ItemGroup>
         <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
         <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj"/>

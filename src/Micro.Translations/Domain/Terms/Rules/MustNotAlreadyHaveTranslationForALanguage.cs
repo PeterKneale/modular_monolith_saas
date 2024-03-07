@@ -2,7 +2,7 @@
 
 namespace Micro.Translations.Domain.Terms.Rules;
 
-internal class MustNotAlreadyHaveTranslationForALanguage(Term term, LanguageId languageId) : IBusinessRule
+internal class MustNotAlreadyHaveTranslationForALanguage(Term term, Language languageId) : IBusinessRule
 {
     public string Message => "A translation already exists for this language";
 

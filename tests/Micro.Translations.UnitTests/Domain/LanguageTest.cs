@@ -3,13 +3,13 @@ using Micro.Translations.Domain.Languages;
 
 namespace Micro.Translations.UnitTests.Domain;
 
-public class LanguageCodeTest
+public class LanguageTest
 {
     [Fact]
     public void Name_is_correct() => 
-        Assert.Equal("English (Australia)", LanguageCode.FromIsoCode("en-AU").Name);
+        Assert.Equal("English (Australia)", Language.FromIsoCode("en-AU").Name);
     
     [Fact]
     public void Code_is_correct() => 
-        Assert.Equal("en-AU", LanguageCode.FromIsoCode("en-AU").Code);
+        Assert.Equal("en-AU", Language.FromIsoCode("en-AU").Code);
 }

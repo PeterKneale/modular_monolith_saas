@@ -6,7 +6,7 @@ public static class ListLanguages
 {
     public record Query : IRequest<IEnumerable<Result>>;
 
-    public record Result(Guid Id, string Name, string Code);
+    public record Result(string Code, string Name);
 
     public class Validator : AbstractValidator<Query>
     {
@@ -18,12 +18,14 @@ public static class ListLanguages
         {
             var projectId = context.ProjectId;
 
-            var languages = await db.Languages
-                .Where(x => x.ProjectId == projectId)
+            var languages = await db.Translations
+                .Where(x => x.Term.ProjectId == projectId)
+                .Select(x => x.Langauge)
+                .Distinct()
                 .AsNoTracking()
                 .ToListAsync(token);
 
-            return languages.Select(x => new Result(x.Id.Value, x.LanguageCode.Name, x.LanguageCode.Code));
+            return languages.Select(x => new Result(x.Code, x.Name));
         }
     }
 }

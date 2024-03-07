@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); });
 builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
 builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
 builder.Services.AddSingleton<IContextAccessor, ContextAccessor>();
 
-builder.Services.AddHttpContextAccessor();
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
@@ -54,7 +54,8 @@ builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageC
 
 var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();
-var logs = app.Services.GetRequiredService<ILoggerProvider>();
+var logs = app.Services.GetRequiredService<ILoggerFactory>();
+
 TenantsModuleStartup.Start(accessor, configuration);
 TranslationModuleStartup.Start(accessor, configuration, logs);
 

@@ -15,13 +15,13 @@ public class TermTest
     {
         // arrange
         var term = CreateTerm();
-        var languageId = LanguageId.Create();
+        var language = Language.EnglishAustralian();
 
         // act
-        term.AddTranslation(languageId, new TranslationText("text"));
+        term.AddTranslation(language, new TranslationText("text"));
 
         // assert
-        term.HasTranslationFor(languageId).Should().BeTrue();
+        term.HasTranslationFor(language).Should().BeTrue();
     }
 
     [Fact]
@@ -29,16 +29,16 @@ public class TermTest
     {
         // arrange
         var term = CreateTerm();
-        var languageId = LanguageId.Create();
+        var language = Language.EnglishAustralian();
         var textOriginal = new TranslationText("text");
         var textUpdated = new TranslationText("text2");
-        term.AddTranslation(languageId, textOriginal);
+        term.AddTranslation(language, textOriginal);
 
         // act
-        term.UpdateTranslation(languageId, textUpdated);
+        term.UpdateTranslation(language, textUpdated);
 
         // assert
-        term.GetTranslation(languageId).Text.Should().BeEquivalentTo(textUpdated);
+        term.GetTranslation(language).Text.Should().BeEquivalentTo(textUpdated);
     }
 
     [Fact]
@@ -46,11 +46,11 @@ public class TermTest
     {
         // arrange
         var term = CreateTerm();
-        var languageId = LanguageId.Create();
-        term.AddTranslation(languageId, new TranslationText("text"));
+        var language = Language.EnglishAustralian();
+        term.AddTranslation(language, new TranslationText("text"));
 
         // act
-        var action = () => term.AddTranslation(languageId, new TranslationText("text"));
+        var action = () => term.AddTranslation(language, new TranslationText("text"));
 
         // assert
         action.Should().Throw<BusinessRuleBrokenException>()
@@ -62,16 +62,16 @@ public class TermTest
     {
         // arrange
         var term = CreateTerm();
-        var languageId1 = LanguageId.Create();
-        var languageId2 = LanguageId.Create();
-        term.AddTranslation(languageId1, new TranslationText("text"));
+        var language1 = Language.EnglishAustralian();
+        var language2 = Language.EnglishUnitedKingdom();
 
         // act
-        term.AddTranslation(languageId2, new TranslationText("text"));
+        term.AddTranslation(language1, new TranslationText("text"));
+        term.AddTranslation(language2, new TranslationText("text"));
 
         // assert
-        term.HasTranslationFor(languageId1).Should().BeTrue();
-        term.HasTranslationFor(languageId2).Should().BeTrue();
+        term.HasTranslationFor(language1).Should().BeTrue();
+        term.HasTranslationFor(language2).Should().BeTrue();
     }
 
     private static Term CreateTerm() => new(TermId.Create(), ProjectId.Create(), new TermName("name"));
