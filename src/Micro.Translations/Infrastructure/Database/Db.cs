@@ -61,7 +61,7 @@ public partial class Db : DbContext
         {
             entity.ToTable(TranslationsTable, SchemaName);
 
-            entity.HasIndex(e => new { e.TermId, Language = e.LanguageCode }, "unique_translations_term_id_language").IsUnique();
+            entity.HasIndex(e => new { e.TermId, Language = e.Language }, "unique_translations_term_id_language").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
@@ -70,7 +70,7 @@ public partial class Db : DbContext
                 .HasColumnName(TermIdColumn);
             
             entity
-                .Property(e => e.LanguageCode)
+                .Property(e => e.Language)
                 .HasMaxLength(10)
                 .HasColumnName(LanguageCodeColumn);
             
@@ -81,6 +81,8 @@ public partial class Db : DbContext
             entity.HasOne(d => d.Term).WithMany(p => p.Translations)
                 .HasForeignKey(d => d.TermId)
                 .HasConstraintName("fk_translations_terms");
+            
+            entity.Ignore(x => x.DomainEvents);
         });
 
         OnModelCreatingPartial(modelBuilder);

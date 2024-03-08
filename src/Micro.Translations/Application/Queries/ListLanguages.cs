@@ -20,7 +20,7 @@ public static class ListLanguages
 
             var languages = await db.Translations
                 .Where(x => x.Term.ProjectId == projectId)
-                .Select(x => x.LanguageCode)
+                .Select(x => x.Language)
                 .Distinct()
                 .AsNoTracking()
                 .ToListAsync(token);

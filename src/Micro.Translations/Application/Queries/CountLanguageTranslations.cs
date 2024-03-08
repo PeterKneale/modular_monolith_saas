@@ -23,7 +23,7 @@ public static class CountLanguageTranslations
             var language = Language.FromIsoCode(query.LanguageCode);
 
             return await db.Translations
-                .Where(x => x.LanguageCode == language && x.Term.ProjectId == projectId)
+                .Where(x => x.Language == language && x.Term.ProjectId == projectId)
                 .AsNoTracking()
                 .CountAsync(token);
         }

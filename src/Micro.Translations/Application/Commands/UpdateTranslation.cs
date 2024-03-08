@@ -20,8 +20,8 @@ public static class UpdateTranslation
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
-            var termId = new TermId(command.TermId);
-            var text = new TranslationText(command.Text);
+            var termId = TermId.Create(command.TermId);
+            var text = TranslationText.Create(command.Text);
             var language = Language.FromIsoCode(command.LanguageCode);
 
             var term = await terms.GetAsync(termId, token);

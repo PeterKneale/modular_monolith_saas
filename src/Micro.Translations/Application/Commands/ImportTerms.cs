@@ -1,4 +1,5 @@
 ﻿using Micro.Translations.Domain.TermAggregate;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Micro.Translations.Application.Commands;
 
@@ -21,14 +22,21 @@ public static class ImportTerms
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var projectId = context.ProjectId;
-
-            var list = command.Names
-                .Select(name => Term.Create(name, projectId))
+            var names = command.Names
+                .Select(TermName.Create)
                 .ToList();
-            var existing = await repository.ListAsync(projectId, token);
-            var remaining = list.Except(existing);
 
-            foreach (var term in remaining) await repository.CreateAsync(term, token);
+            var existing = (await repository.ListAsync(projectId, token)).ToList();
+
+            foreach (var name in names)
+            {
+                if (existing.SingleOrDefault(x => x.Name.Equals(name)) != null)
+                {
+                    continue;
+                }
+                var term = Term.Create(projectId, name);
+                await repository.CreateAsync(term, token);
+            }
 
             return Unit.Value;
         }

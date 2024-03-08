@@ -33,6 +33,7 @@ internal class TermRepository(Db db) : ITermRepository
     public async Task<IEnumerable<Term>> ListAsync(ProjectId projectId, CancellationToken token)
     {
         return await db.Terms
+            .Include(x => x.Translations)
             .Where(x => x.ProjectId == projectId)
             .OrderBy(x => x.Name)
             .ToListAsync(token);

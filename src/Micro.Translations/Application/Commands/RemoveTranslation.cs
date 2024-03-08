@@ -19,7 +19,7 @@ public static class RemoveTranslation
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
-            var termId = new TermId(command.TermId);
+            var termId = TermId.Create(command.TermId);
             var language = Language.FromIsoCode(command.LanguageCode);
 
             var term = await terms.GetAsync(termId, token);

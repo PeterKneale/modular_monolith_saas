@@ -20,7 +20,7 @@ public static class AddTranslation
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
-            var termId = new TermId(command.TermId);
+            var termId = TermId.Create(command.TermId);
             
             var term = await terms.GetAsync(termId, token);
             if (term == null)
@@ -28,7 +28,7 @@ public static class AddTranslation
                 throw new NotFoundException(termId);
             }
             
-            var text = new TranslationText(command.Text);
+            var text = TranslationText.Create(command.Text);
             var language = Language.FromIsoCode(command.LanguageCode);
             term.AddTranslation(language, text);
             

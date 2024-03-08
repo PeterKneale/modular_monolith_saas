@@ -21,13 +21,13 @@ public static class AddTerm
         {
             var projectId = context.ProjectId;
 
-            var termId = new TermId(command.TermId);
+            var termId = TermId.Create(command.TermId);
             if (await terms.GetAsync(termId, token) != null) throw new AlreadyExistsException(termId);
 
-            var name = new TermName(command.Name);
+            var name = TermName.Create(command.Name);
             if (await terms.GetAsync(projectId, name, token) != null) throw new AlreadyInUseException(name);
 
-            var term = new Term(termId, projectId, name);
+            var term = Term.Create(termId, projectId, name);
             await terms.CreateAsync(term, token);
 
             return Unit.Value;

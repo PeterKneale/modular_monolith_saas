@@ -11,7 +11,7 @@ public class Term : BaseEntity
         // EF Core   
     }
 
-    public Term(TermId termId, ProjectId projectId, TermName termName)
+    private Term(TermId termId, ProjectId projectId, TermName termName)
     {
         Id = termId;
         ProjectId = projectId;
@@ -27,43 +27,44 @@ public class Term : BaseEntity
 
     public IReadOnlyCollection<Translation> Translations => _translations;
 
-    public static Term Create(string name, ProjectId projectId)
-    {
-        var termId = new TermId(Guid.NewGuid());
-        var termName = new TermName(name);
-        return new Term(termId, projectId, termName);
-    }
+    public static Term Create(TermId termId, ProjectId projectId, TermName name) =>
+        new(termId, projectId, name);
+
+    public static Term Create(ProjectId projectId, TermName name) =>
+        Create(TermId.Create(), projectId, name);
 
     public void AddTranslation(Language language, TranslationText text)
     {
         CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, language));
         var translationId = TranslationId.Create();
-        var translation = new Translation(translationId, Id, language, text);
+        var translation = Translation.Create(translationId, Id, language, text);
         _translations.Add(translation);
     }
 
     public void UpdateTranslation(Language language, TranslationText text)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, language));
-        var translation = _translations.Single(x => x.LanguageCode == language);
+        var translation = _translations.Single(x => x.Language == language);
         translation.UpdateText(text);
     }
-    
+
     public void RemoveTranslation(Language language)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, language));
-        var translation = _translations.Single(x => x.LanguageCode == language);
+        var translation = _translations.Single(x => x.Language == language);
         _translations.Remove(translation);
     }
 
     public bool HasTranslationFor(Language language)
     {
-        return _translations.Any(x => x.LanguageCode == language);
+        return _translations.Any(x => x.Language == language);
     }
 
     public Translation GetTranslation(Language language)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, language));
-        return _translations.Single(x => x.LanguageCode.Equals(language));
+        return _translations.Single(x => x.Language.Equals(language));
     }
+
+    public override string ToString() => $"{Name}";
 }

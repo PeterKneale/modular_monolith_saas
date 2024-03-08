@@ -1,25 +1,30 @@
 ﻿namespace Micro.Translations.Domain.TermAggregate;
 
-public class Translation
+public class Translation : BaseEntity
 {
     private Translation()
     {
         // ef core
     }
 
-    public Translation(TranslationId id, TermId termId, Language languageCode, TranslationText text)
+    private Translation(TranslationId id, TermId termId, Language language, TranslationText text)
     {
         Id = id;
         TermId = termId;
-        LanguageCode = languageCode;
+        Language = language;
         Text = text;
+    }
+
+    public static Translation Create(TranslationId id, TermId termId, Language language, TranslationText text)
+    {
+        return new Translation(id, termId, language, text);
     }
 
     public TranslationId Id { get; private init; }
 
     public TermId TermId { get; private init; }
 
-    public virtual Language LanguageCode { get; private init; } = null!;
+    public virtual Language Language { get; private init; } = null!;
 
     public TranslationText Text { get; private set; }
 
@@ -29,4 +34,6 @@ public class Translation
     {
         Text = translationText;
     }
+
+    public override string ToString() => $"{Language}: {Text}";
 }

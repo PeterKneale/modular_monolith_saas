@@ -26,14 +26,14 @@ public static class GetTranslationStatistics
             // Retrieve all languages associated with the project
             var allLanguages = await db.Translations
                 .Where(l => l.Term.ProjectId == projectId)
-                .Select(x => x.LanguageCode)
+                .Select(x => x.Language)
                 .Distinct()
                 .ToListAsync(token);
 
             // Retrieve all translations grouped by language for the project
             var translationsByLanguage = await db.Translations
                 .Where(x => x.Term.ProjectId == projectId)
-                .GroupBy(x => x.LanguageCode)
+                .GroupBy(x => x.Language)
                 .ToDictionaryAsync(x => x.Key.Code, x => x.Count(), token);
 
             var list = new List<LanguageStatistic>();

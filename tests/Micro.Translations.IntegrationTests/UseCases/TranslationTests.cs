@@ -67,6 +67,37 @@ public class TranslationTests
     }
     
     [Fact]
+    public async Task Can_update_translation()
+    {
+        // arrange
+        var projectId = Guid.NewGuid();
+        var termId = Guid.NewGuid();
+
+        // act
+        await _service.Execute(async ctx =>
+        {
+            // Add terms
+            await ctx.SendCommand(new AddTerm.Command(termId, TestTerm1));
+
+            // Add translation
+            await ctx.SendCommand(new AddTranslation.Command(termId, TestLanguageCode1, TestText1));
+
+            // Remove translation
+            await ctx.SendCommand(new UpdateTranslation.Command(termId, TestLanguageCode1, TestText2));
+
+            var results = await ctx.SendQuery(new ListTranslations.Query(TestLanguageCode1));
+            results.TotalTranslations.Should().Be(1);
+            results.Translations.Should().HaveCount(1);
+            var result = results.Translations.Single();
+            result.TermId.Should().Be(termId);
+            result.TermName.Should().Be(TestTerm1);
+            result.TranslationId.Should().NotBeNull();
+            result.TranslationText.Should().Be(TestText2);
+
+        }, projectId: projectId);
+    }
+    
+    [Fact]
     public async Task Can_remove_translation()
     {
         // arrange

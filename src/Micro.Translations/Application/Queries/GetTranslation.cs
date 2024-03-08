@@ -22,7 +22,7 @@ public static class GetTranslation
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var termId = new TermId(query.TermId);
+            var termId = TermId.Create(query.TermId);
             var language = Language.FromIsoCode(query.LanguageCode);
 
             var term = await db.Terms

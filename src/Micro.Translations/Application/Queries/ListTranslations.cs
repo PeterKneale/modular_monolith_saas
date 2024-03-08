@@ -36,7 +36,7 @@ public static class ListTranslations
             return await db.Terms.Where(term => term.ProjectId == projectId)
                 .GroupJoin(db.Translations,
                     term => new { TermId = term.Id, Language = language },
-                    translation => new { translation.TermId, Language = translation.LanguageCode },
+                    translation => new { translation.TermId, Language = translation.Language },
                     (term, termTranslations) => new { term, termTranslations })
                 .SelectMany(t => t.termTranslations.DefaultIfEmpty(), (t, subTranslation) => new Result(subTranslation != null ? subTranslation.Id.Value : null, t.term.Id.Value, t.term.Name.Value, subTranslation != null ? subTranslation.Text.Value : null))
                 .AsNoTracking()
@@ -47,7 +47,7 @@ public static class ListTranslations
         {
             return await db.Translations
                 .AsNoTracking()
-                .Where(x => x.Term.ProjectId == projectId && x.LanguageCode == language)
+                .Where(x => x.Term.ProjectId == projectId && x.Language == language)
                 .CountAsync(token);
         }
 

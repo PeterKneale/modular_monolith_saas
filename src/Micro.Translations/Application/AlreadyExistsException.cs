@@ -3,13 +3,4 @@
 namespace Micro.Translations.Application;
 
 [ExcludeFromCodeCoverage]
-public class AlreadyExistsException : PlatformException
-{
-    public AlreadyExistsException(TermId id) : base($"{nameof(TermId)} already exists {id}")
-    {
-    }
-
-    public AlreadyExistsException(TranslationId id) : base($"{nameof(TranslationId)} already exists {id}")
-    {
-    }
-}
+public class AlreadyExistsException(TermId id) : PlatformException($"{nameof(TermId)} already exists {id}");

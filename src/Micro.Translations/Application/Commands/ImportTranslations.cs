@@ -26,19 +26,21 @@ public static class ImportTranslations
             foreach (var item in command.Translations)
             {
                 var term = termsThatExist.SingleOrDefault(x => x.Name.Value == item.Key);
-                var text = new TranslationText(item.Value);
-                
+                var text = TranslationText.Create(item.Value);
+
                 if (term == null)
                 {
-                    term = Term.Create(item.Key, projectId);
+                    var name = TermName.Create(item.Key);
+                    term = Term.Create(TermId.Create(Guid.NewGuid()), projectId, name);
                     term.AddTranslation(language, text);
                     await repository.CreateAsync(term, token);
                 }
                 else
                 {
-                    term.UpdateTranslation(language,text);
+                    term.UpdateTranslation(language, text);
                 }
             }
+
             return Unit.Value;
         }
     }

@@ -16,7 +16,7 @@ public class TermTest
         var language = Language.EnglishAustralian();
 
         // act
-        term.AddTranslation(language, new TranslationText("text"));
+        term.AddTranslation(language, TranslationText.Create("text"));
 
         // assert
         term.HasTranslationFor(language).Should().BeTrue();
@@ -28,8 +28,8 @@ public class TermTest
         // arrange
         var term = CreateTerm();
         var language = Language.EnglishAustralian();
-        var textOriginal = new TranslationText("text");
-        var textUpdated = new TranslationText("text2");
+        var textOriginal = TranslationText.Create("text");
+        var textUpdated = TranslationText.Create("text2");
         term.AddTranslation(language, textOriginal);
 
         // act
@@ -45,10 +45,10 @@ public class TermTest
         // arrange
         var term = CreateTerm();
         var language = Language.EnglishAustralian();
-        term.AddTranslation(language, new TranslationText("text"));
+        term.AddTranslation(language, TranslationText.Create("text"));
 
         // act
-        var action = () => term.AddTranslation(language, new TranslationText("text"));
+        var action = () => term.AddTranslation(language, TranslationText.Create("text"));
 
         // assert
         action.Should().Throw<BusinessRuleBrokenException>()
@@ -64,13 +64,13 @@ public class TermTest
         var language2 = Language.EnglishUnitedKingdom();
 
         // act
-        term.AddTranslation(language1, new TranslationText("text"));
-        term.AddTranslation(language2, new TranslationText("text"));
+        term.AddTranslation(language1, TranslationText.Create("text"));
+        term.AddTranslation(language2, TranslationText.Create("text"));
 
         // assert
         term.HasTranslationFor(language1).Should().BeTrue();
         term.HasTranslationFor(language2).Should().BeTrue();
     }
 
-    private static Term CreateTerm() => new(TermId.Create(), ProjectId.Create(), new TermName("name"));
+    private static Term CreateTerm() => Term.Create(TermId.Create(), ProjectId.Create(), TermName.Create("name"));
 }
