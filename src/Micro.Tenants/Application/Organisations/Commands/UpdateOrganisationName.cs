@@ -27,7 +27,7 @@ public static class UpdateOrganisationName
                 throw new OrganisationNotFoundException(organisationId);
             }
 
-            var name = new OrganisationName(command.Name);
+            var name = OrganisationName.Create(command.Name);
             if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token))
             {
                 throw new OrganisationNameInUseException(name);

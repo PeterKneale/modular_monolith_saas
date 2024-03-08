@@ -29,17 +29,17 @@ public static class CreateOrganisation
                 throw new OrganisationAlreadyExistsException(organisationId);
             }
 
-            var name = new OrganisationName(command.Name);
+            var name = OrganisationName.Create(command.Name);
             if (await check.AnyOrganisationUsesNameAsync(name, token))
             {
                 throw new OrganisationNameInUseException(name);
             }
 
-            var organisation = new Organisation(organisationId, name);
+            var organisation = Organisation.Create(organisationId, name);
             await organisations.CreateAsync(organisation, token);
 
             var membershipId = new MembershipId(Guid.NewGuid());
-            var membership = new Membership(membershipId, organisationId, executionContext.UserId, MembershipRole.Owner);
+            var membership = Membership.CreateInstance(membershipId, organisationId, executionContext.UserId, MembershipRole.Owner);
             await memberships.CreateAsync(membership, token);
 
             return Unit.Value;

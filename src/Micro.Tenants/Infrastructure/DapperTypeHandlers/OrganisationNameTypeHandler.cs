@@ -16,7 +16,7 @@ public class OrganisationNameTypeHandler : SqlMapper.TypeHandler<OrganisationNam
     {
         if (value is string name)
         {
-            return new OrganisationName(name);
+            return OrganisationName.Create(name);
         }
 
         throw new FormatException($"Invalid conversion to {nameof(OrganisationName)}");

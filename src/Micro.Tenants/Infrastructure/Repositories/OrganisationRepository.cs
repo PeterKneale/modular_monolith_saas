@@ -54,7 +54,7 @@ internal class OrganisationRepository(ConnectionFactory connections) : IOrganisa
 
     private static Organisation? Map(Row? row) => 
         row != null 
-            ? new Organisation(row.Id, row.Name) 
+            ? Organisation.Create(row.Id, row.Name) 
             : null;
 
     private class Row

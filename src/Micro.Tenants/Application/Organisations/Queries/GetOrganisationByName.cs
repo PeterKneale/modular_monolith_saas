@@ -20,7 +20,7 @@ public static class GetOrganisationByName
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var name = new OrganisationName(query.Name);
+            var name = OrganisationName.Create(query.Name);
             var organisation = await organisations.GetAsync(name, token);
             if (organisation == null)
             {

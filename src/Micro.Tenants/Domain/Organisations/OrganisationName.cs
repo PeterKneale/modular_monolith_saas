@@ -1,17 +1,22 @@
 ﻿namespace Micro.Tenants.Domain.Organisations;
 
-public record OrganisationName
+public class OrganisationName
 {
-    public OrganisationName(string value)
+    private OrganisationName(string value)
+    {
+        Value = value;
+    }
+
+    public static OrganisationName Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException("Organisation Name must not be empty", nameof(value));
         }
-        
-        Value = value;
+
+        return new OrganisationName(value);
     }
-    
+
     public override string ToString() => $"{Value}";
 
     public string Value { get; init; }

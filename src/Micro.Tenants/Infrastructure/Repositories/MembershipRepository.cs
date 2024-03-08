@@ -18,7 +18,7 @@ internal class MembershipRepository(ConnectionFactory connections) : IMembership
             Id = membership.Id,
             OrganisationId = membership.OrganisationId,
             UserId = membership.UserId,
-            Role = membership.MembershipRole
+            Role = membership.Role
         }, cancellationToken: token));
     }
 
@@ -47,7 +47,7 @@ internal class MembershipRepository(ConnectionFactory connections) : IMembership
     }
 
     private static Membership Map(Row row) =>
-        new(row.Id, row.OrganisationId, row.UserId, row.Role);
+        Membership.CreateInstance(row.Id, row.OrganisationId, row.UserId, row.Role);
 
     public class Row
     {

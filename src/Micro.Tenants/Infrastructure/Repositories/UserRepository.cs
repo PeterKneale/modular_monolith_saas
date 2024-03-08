@@ -51,7 +51,7 @@ internal class UserRepository(ConnectionFactory connections) : IUserRepository
 
     private static User? Map(Row? row) =>
         row != null
-            ? new User(row.Id, new UserName(row.FirstName, row.LastName), new UserCredentials(row.Email, row.Password))
+            ? User.CreateInstance(row.Id, new UserName(row.FirstName, row.LastName), new UserCredentials(row.Email, row.Password))
             : null;
 
     public class Row

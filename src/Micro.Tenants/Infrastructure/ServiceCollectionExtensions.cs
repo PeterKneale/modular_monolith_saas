@@ -8,9 +8,12 @@ using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
 using Micro.Tenants.Application.Users;
+using Micro.Tenants.Infrastructure.Behaviours;
 using Micro.Tenants.Infrastructure.DapperTypeHandlers;
+using Micro.Tenants.Infrastructure.Ef;
 using Micro.Tenants.Infrastructure.Repositories;
 using Micro.Tenants.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -56,6 +59,16 @@ internal static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
+        services.AddDbContext<Db>((ctx, options) =>
+        {
+            options.UseNpgsql(connectionString);
+            options.UseLoggerFactory(ctx.GetRequiredService<ILoggerFactory>());
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        });
+
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
+        
         // Infrastructure
         Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         SqlMapper.AddTypeHandler(UserApiKeyIdTypeHandler.Default);

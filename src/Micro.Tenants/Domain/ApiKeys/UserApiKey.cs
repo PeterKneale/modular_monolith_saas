@@ -1,9 +1,14 @@
 ﻿using Micro.Tenants.Application.Users;
+using Micro.Tenants.Domain.Users;
 
 namespace Micro.Tenants.Domain.ApiKeys;
 
 public class UserApiKey
 {
+    private UserApiKey()
+    {
+        // ef core
+    }
     private UserApiKey(UserApiKeyId id, UserId userId, ApiKey apiKey)
     {
         Id = id;
@@ -11,12 +16,14 @@ public class UserApiKey
         ApiKey = apiKey;
     }
 
-    public UserApiKeyId Id { get; }
+    public UserApiKeyId Id { get; private init; }
     
-    public UserId UserId { get; }
+    public UserId UserId { get;private init; }
 
-    public ApiKey ApiKey { get; }
-
+    public ApiKey ApiKey { get;private init; }
+    
+    public virtual User User { get; set; } = null!;
+    
     public override string ToString() => $"{Id} - {UserId} - {ApiKey}";
     
     public static UserApiKey CreateNew(UserApiKeyId id, UserId userId, ApiKeyName name, IApiKeyService service) =>

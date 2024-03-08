@@ -32,7 +32,7 @@ public static class RegisterUser
             var userEmail = new EmailAddress(command.Email);
             var userPassword = new Password(command.Password);
             var userCredentials = new UserCredentials(userEmail, userPassword);
-            var user = new User(userId, userName, userCredentials);
+            var user = User.CreateInstance(userId, userName, userCredentials);
             await users.CreateAsync(user, token);
 
             return Unit.Value;
