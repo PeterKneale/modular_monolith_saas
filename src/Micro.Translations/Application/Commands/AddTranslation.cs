@@ -1,10 +1,8 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms;
-using Micro.Translations.Domain.Translations;
+﻿using Micro.Translations.Domain.TermAggregate;
 
-namespace Micro.Translations.Application.Translations.Commands;
+namespace Micro.Translations.Application.Commands;
 
-public static class UpdateTranslation
+public static class AddTranslation
 {
     public record Command(Guid TermId, string LanguageCode, string Text) : IRequest;
 
@@ -23,14 +21,17 @@ public static class UpdateTranslation
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var termId = new TermId(command.TermId);
+            
+            var term = await terms.GetAsync(termId, token);
+            if (term == null)
+            {
+                throw new NotFoundException(termId);
+            }
+            
             var text = new TranslationText(command.Text);
             var language = Language.FromIsoCode(command.LanguageCode);
-
-            var term = await terms.GetAsync(termId, token);
-            if (term == null) throw new NotFoundException(termId);
-
-            term.UpdateTranslation(language, text);
-
+            term.AddTranslation(language, text);
+            
             terms.Update(term);
             return Unit.Value;
         }

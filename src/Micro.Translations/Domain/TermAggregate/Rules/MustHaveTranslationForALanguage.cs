@@ -1,6 +1,4 @@
-﻿using Micro.Translations.Domain.Languages;
-
-namespace Micro.Translations.Domain.Terms.Rules;
+﻿namespace Micro.Translations.Domain.TermAggregate.Rules;
 
 internal class MustHaveTranslationForALanguage(Term term, Language language) : IBusinessRule
 {

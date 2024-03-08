@@ -1,5 +1,5 @@
 ﻿using Micro.Translations;
-using Micro.Translations.Application.Translations.Queries;
+using Micro.Translations.Application.Queries;
 using Micro.Web.Code.Downloads;
 
 namespace Micro.Web.Pages.Translate;

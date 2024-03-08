@@ -1,8 +1,8 @@
 ﻿using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Translations.Queries;
+namespace Micro.Translations.Application.Queries;
 
-public static class CountProjectTranslations
+public static class CountTerms
 {
     public record Query : IRequest<int>;
 
@@ -12,10 +12,9 @@ public static class CountProjectTranslations
         {
             var projectId = context.ProjectId;
 
-            return await db.Translations
-                .Where(x => x.Term.ProjectId == projectId)
+            return await db.Terms
                 .AsNoTracking()
-                .CountAsync(token);
+                .CountAsync(x => x.ProjectId == projectId, token);
         }
     }
 }

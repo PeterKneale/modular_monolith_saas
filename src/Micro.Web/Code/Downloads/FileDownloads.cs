@@ -1,6 +1,6 @@
 ﻿using System.Resources.NetStandard;
 using System.Text;
-using Micro.Translations.Application.Translations.Queries;
+using Micro.Translations.Application.Queries;
 
 namespace Micro.Web.Code.Downloads;
 

@@ -1,7 +1,7 @@
-﻿using Micro.Translations.Domain.Languages;
+﻿using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Translations.Queries;
+namespace Micro.Translations.Application.Queries;
 
 public static class ListTranslations
 {
@@ -35,8 +35,8 @@ public static class ListTranslations
         {
             return await db.Terms.Where(term => term.ProjectId == projectId)
                 .GroupJoin(db.Translations,
-                    term => new { TermId = term.Id, LanguageId = language },
-                    translation => new { translation.TermId, LanguageId = translation.Langauge },
+                    term => new { TermId = term.Id, Language = language },
+                    translation => new { translation.TermId, Language = translation.LanguageCode },
                     (term, termTranslations) => new { term, termTranslations })
                 .SelectMany(t => t.termTranslations.DefaultIfEmpty(), (t, subTranslation) => new Result(subTranslation != null ? subTranslation.Id.Value : null, t.term.Id.Value, t.term.Name.Value, subTranslation != null ? subTranslation.Text.Value : null))
                 .AsNoTracking()
@@ -47,7 +47,7 @@ public static class ListTranslations
         {
             return await db.Translations
                 .AsNoTracking()
-                .Where(x => x.Term.ProjectId == projectId && x.Langauge == language)
+                .Where(x => x.Term.ProjectId == projectId && x.LanguageCode == language)
                 .CountAsync(token);
         }
 

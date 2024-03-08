@@ -1,5 +1,5 @@
 ﻿using Micro.Translations;
-using Micro.Translations.Application.Terms.Commands;
+using Micro.Translations.Application.Commands;
 
 namespace Micro.Web.Pages.Translate.Terms;
 

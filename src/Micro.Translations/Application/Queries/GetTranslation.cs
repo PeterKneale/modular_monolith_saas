@@ -1,8 +1,7 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms;
+﻿using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Translations.Queries;
+namespace Micro.Translations.Application.Queries;
 
 public static class GetTranslation
 {

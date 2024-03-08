@@ -1,4 +1,4 @@
-﻿using Micro.Translations.Domain.Terms;
+﻿using Micro.Translations.Domain.TermAggregate;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Micro.Translations.Infrastructure.Database;

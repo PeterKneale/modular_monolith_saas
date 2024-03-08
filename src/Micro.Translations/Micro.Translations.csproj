@@ -20,6 +20,12 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2"/>
         <PackageReference Include="Polly" Version="8.3.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0"/>
     </ItemGroup>
 
     <ItemGroup>

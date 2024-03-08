@@ -1,7 +1,6 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Infrastructure.Database;
+﻿using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Translations.Queries;
+namespace Micro.Translations.Application.Queries;
 
 public static class GetTranslationStatistics
 {
@@ -27,14 +26,14 @@ public static class GetTranslationStatistics
             // Retrieve all languages associated with the project
             var allLanguages = await db.Translations
                 .Where(l => l.Term.ProjectId == projectId)
-                .Select(x => x.Langauge)
+                .Select(x => x.LanguageCode)
                 .Distinct()
                 .ToListAsync(token);
 
             // Retrieve all translations grouped by language for the project
             var translationsByLanguage = await db.Translations
                 .Where(x => x.Term.ProjectId == projectId)
-                .GroupBy(x => x.Langauge)
+                .GroupBy(x => x.LanguageCode)
                 .ToDictionaryAsync(x => x.Key.Code, x => x.Count(), token);
 
             var list = new List<LanguageStatistic>();

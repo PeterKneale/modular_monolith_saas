@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
 using JetBrains.Annotations;
 using Micro.Common.Domain;
-using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms;
-using Micro.Translations.Domain.Translations;
+using Micro.Translations.Domain.TermAggregate;
 
 namespace Micro.Translations.UnitTests.Domain.Terms;
 

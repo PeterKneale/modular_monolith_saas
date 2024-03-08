@@ -1,19 +1,17 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms;
-
-namespace Micro.Translations.Domain.Translations;
+﻿namespace Micro.Translations.Domain.TermAggregate;
 
 public class Translation
 {
     private Translation()
     {
+        // ef core
     }
 
-    public Translation(TranslationId id, TermId termId, Language langauge, TranslationText text)
+    public Translation(TranslationId id, TermId termId, Language languageCode, TranslationText text)
     {
         Id = id;
         TermId = termId;
-        Langauge = langauge;
+        LanguageCode = languageCode;
         Text = text;
     }
 
@@ -21,7 +19,7 @@ public class Translation
 
     public TermId TermId { get; private init; }
 
-    public virtual Language Langauge { get; private init; } = null!;
+    public virtual Language LanguageCode { get; private init; } = null!;
 
     public TranslationText Text { get; private set; }
 

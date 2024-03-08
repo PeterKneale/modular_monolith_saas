@@ -1,6 +1,6 @@
-﻿using Micro.Translations.Domain.Terms;
+﻿using Micro.Translations.Domain.TermAggregate;
 
-namespace Micro.Translations.Application.Terms.Commands;
+namespace Micro.Translations.Application.Commands;
 
 public static class ImportTerms
 {
@@ -22,7 +22,9 @@ public static class ImportTerms
         {
             var projectId = context.ProjectId;
 
-            var list = command.Names.Select(name => Term.Create(name, projectId)).ToList();
+            var list = command.Names
+                .Select(name => Term.Create(name, projectId))
+                .ToList();
             var existing = await repository.ListAsync(projectId, token);
             var remaining = list.Except(existing);
 

@@ -1,6 +1,6 @@
 ﻿using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Languages.Queries;
+namespace Micro.Translations.Application.Queries;
 
 public static class ListLanguages
 {
@@ -20,7 +20,7 @@ public static class ListLanguages
 
             var languages = await db.Translations
                 .Where(x => x.Term.ProjectId == projectId)
-                .Select(x => x.Langauge)
+                .Select(x => x.LanguageCode)
                 .Distinct()
                 .AsNoTracking()
                 .ToListAsync(token);

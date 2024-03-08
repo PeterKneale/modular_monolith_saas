@@ -1,6 +1,4 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms;
-using Micro.Translations.Domain.Translations;
+﻿using Micro.Translations.Domain.TermAggregate;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
@@ -63,7 +61,7 @@ public partial class Db : DbContext
         {
             entity.ToTable(TranslationsTable, SchemaName);
 
-            entity.HasIndex(e => new { e.TermId, LanguageId = e.Langauge }, "unique_translations_term_id_language_id").IsUnique();
+            entity.HasIndex(e => new { e.TermId, Language = e.LanguageCode }, "unique_translations_term_id_language").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
@@ -72,7 +70,7 @@ public partial class Db : DbContext
                 .HasColumnName(TermIdColumn);
             
             entity
-                .Property(e => e.Langauge)
+                .Property(e => e.LanguageCode)
                 .HasMaxLength(10)
                 .HasColumnName(LanguageCodeColumn);
             

@@ -1,6 +1,6 @@
 ﻿using Micro.Translations;
-using Micro.Translations.Application.Translations.Commands;
-using Micro.Translations.Application.Translations.Queries;
+using Micro.Translations.Application.Commands;
+using Micro.Translations.Application.Queries;
 
 namespace Micro.Web.Pages.Translate.Translations;
 

@@ -1,6 +1,6 @@
 ﻿using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Terms.Queries;
+namespace Micro.Translations.Application.Queries;
 
 public static class ListTerms
 {

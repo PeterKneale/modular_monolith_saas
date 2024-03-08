@@ -1,5 +1,5 @@
 ﻿using Micro.Translations.Domain;
-using Micro.Translations.Domain.Languages;
+using Micro.Translations.Domain.TermAggregate;
 
 namespace Micro.Translations.UnitTests.Domain;
 

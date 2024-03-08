@@ -1,8 +1,6 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms;
-using Micro.Translations.Domain.Translations;
+﻿using Micro.Translations.Domain.TermAggregate;
 
-namespace Micro.Translations.Application.Translations.Commands;
+namespace Micro.Translations.Application.Commands;
 
 public static class RemoveTranslation
 {

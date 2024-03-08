@@ -1,8 +1,6 @@
-﻿using Micro.Translations.Domain.Languages;
-using Micro.Translations.Domain.Terms.Rules;
-using Micro.Translations.Domain.Translations;
+﻿using Micro.Translations.Domain.TermAggregate.Rules;
 
-namespace Micro.Translations.Domain.Terms;
+namespace Micro.Translations.Domain.TermAggregate;
 
 public class Term : BaseEntity
 {
@@ -36,36 +34,36 @@ public class Term : BaseEntity
         return new Term(termId, projectId, termName);
     }
 
-    public void AddTranslation(Language languageId, TranslationText text)
+    public void AddTranslation(Language language, TranslationText text)
     {
-        CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, languageId));
+        CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, language));
         var translationId = TranslationId.Create();
-        var translation = new Translation(translationId, Id, languageId, text);
+        var translation = new Translation(translationId, Id, language, text);
         _translations.Add(translation);
     }
 
     public void UpdateTranslation(Language language, TranslationText text)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, language));
-        var translation = _translations.Single(x => x.Langauge == language);
+        var translation = _translations.Single(x => x.LanguageCode == language);
         translation.UpdateText(text);
     }
     
     public void RemoveTranslation(Language language)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, language));
-        var translation = _translations.Single(x => x.Langauge == language);
+        var translation = _translations.Single(x => x.LanguageCode == language);
         _translations.Remove(translation);
     }
 
-    public bool HasTranslationFor(Language languageId)
+    public bool HasTranslationFor(Language language)
     {
-        return _translations.Any(x => x.Langauge == languageId);
+        return _translations.Any(x => x.LanguageCode == language);
     }
 
-    public Translation GetTranslation(Language languageId)
+    public Translation GetTranslation(Language language)
     {
-        CheckRule(new MustHaveTranslationForALanguage(this, languageId));
-        return _translations.Single(x => x.Langauge.Equals(languageId));
+        CheckRule(new MustHaveTranslationForALanguage(this, language));
+        return _translations.Single(x => x.LanguageCode.Equals(language));
     }
 }

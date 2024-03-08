@@ -1,6 +1,6 @@
-﻿using Micro.Translations.Domain.Terms;
+﻿using Micro.Translations.Domain.TermAggregate;
 
-namespace Micro.Translations.Application.Terms.Commands;
+namespace Micro.Translations.Application.Commands;
 
 public static class AddTerm
 {
@@ -10,7 +10,6 @@ public static class AddTerm
     {
         public Validator()
         {
-            RuleFor(m => m.TermId).NotEmpty();
             RuleFor(m => m.TermId).NotEmpty();
             RuleFor(m => m.Name).NotEmpty().MaximumLength(100);
         }

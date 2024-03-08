@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations.Domain.Terms;
+﻿namespace Micro.Translations.Domain.TermAggregate;
 
 public class TermName(string value)
 {

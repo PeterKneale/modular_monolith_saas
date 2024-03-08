@@ -1,5 +1,5 @@
 ﻿using Micro.Translations.Application;
-using Micro.Translations.Domain.Terms;
+using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Infrastructure.Repositories;
@@ -19,19 +19,22 @@ internal class TermRepository(Db db) : ITermRepository
     public async Task<Term?> GetAsync(TermId id, CancellationToken token)
     {
         return await db.Terms
-            .Include(x=>x.Translations)
+            .Include(x => x.Translations)
             .SingleOrDefaultAsync(x => x.Id == id, token);
     }
 
     public Task<Term?> GetAsync(ProjectId projectId, TermName name, CancellationToken cancellationToken)
     {
         return db.Terms
-            .Include(x=>x.Translations)
+            .Include(x => x.Translations)
             .SingleOrDefaultAsync(x => x.ProjectId == projectId && x.Name == name, cancellationToken);
     }
 
     public async Task<IEnumerable<Term>> ListAsync(ProjectId projectId, CancellationToken token)
     {
-        return await db.Terms.Where(x => x.ProjectId == projectId).ToListAsync(token);
+        return await db.Terms
+            .Where(x => x.ProjectId == projectId)
+            .OrderBy(x => x.Name)
+            .ToListAsync(token);
     }
 }

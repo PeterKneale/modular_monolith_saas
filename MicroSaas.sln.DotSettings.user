@@ -9,6 +9,7 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;xUnit::2137843E-DE15-468B-8126-01C8DA8651C1::net8.0::Micro.Translations.IntegrationTests.UseCases.TranslationTests.Can_create_term_with_multiple_translations&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;translations&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Miscellaneous_0020Files_002FApple_002DVisionPro_002Den_002DAU_0020_00283_0029/@EntryIndexedValue">True</s:Boolean>

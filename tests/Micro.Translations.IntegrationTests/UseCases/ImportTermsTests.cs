@@ -1,5 +1,5 @@
-using Micro.Translations.Application.Terms.Commands;
-using Micro.Translations.Application.Terms.Queries;
+using Micro.Translations.Application.Commands;
+using Micro.Translations.Application.Queries;
 
 namespace Micro.Translations.IntegrationTests.UseCases;
 

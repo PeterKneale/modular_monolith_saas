@@ -1,7 +1,7 @@
-﻿using Micro.Translations.Domain.Languages;
+﻿using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Translations.Application.Translations.Queries;
+namespace Micro.Translations.Application.Queries;
 
 public static class CountLanguageTranslations
 {
@@ -23,7 +23,7 @@ public static class CountLanguageTranslations
             var language = Language.FromIsoCode(query.LanguageCode);
 
             return await db.Translations
-                .Where(x => x.Langauge == language && x.Term.ProjectId == projectId)
+                .Where(x => x.LanguageCode == language && x.Term.ProjectId == projectId)
                 .AsNoTracking()
                 .CountAsync(token);
         }
