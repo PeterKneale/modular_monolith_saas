@@ -4,11 +4,11 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class CountLanguageTranslationsTests
+public class CountingTranslations
 {
     private readonly ServiceFixture _service;
 
-    public CountLanguageTranslationsTests(ServiceFixture service, ITestOutputHelper outputHelper)
+    public CountingTranslations(ServiceFixture service, ITestOutputHelper outputHelper)
     {
         service.OutputHelper = outputHelper;
         _service = service;

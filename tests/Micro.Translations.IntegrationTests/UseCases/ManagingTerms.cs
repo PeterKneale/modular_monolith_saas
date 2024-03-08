@@ -4,11 +4,11 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ListTermsTests
+public class ManagingTerms
 {
     private readonly ServiceFixture _service;
 
-    public ListTermsTests(ServiceFixture service, ITestOutputHelper outputHelper)
+    public ManagingTerms(ServiceFixture service, ITestOutputHelper outputHelper)
     {
         service.OutputHelper = outputHelper;
         _service = service;

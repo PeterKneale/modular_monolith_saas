@@ -5,11 +5,11 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ImportTranslationsTests
+public class ImportingTranslations
 {
     private readonly ServiceFixture _service;
 
-    public ImportTranslationsTests(ServiceFixture service, ITestOutputHelper outputHelper)
+    public ImportingTranslations(ServiceFixture service, ITestOutputHelper outputHelper)
     {
         service.OutputHelper = outputHelper;
         _service = service;
