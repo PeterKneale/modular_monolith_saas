@@ -1,12 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Micro.Cli;
-using Micro.Common.Domain;
-using Micro.Common.Infrastructure.Context;
-using Micro.Tenants;
-using Micro.Translations;
 using Micro.Translations.Application.Commands;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -24,13 +18,16 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var services = new ServiceCollection()
+    .AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); })
     .AddSingleton<ITenantsModule, TenantsModule>()
     .AddSingleton<ITranslationModule, TranslationModule>()
     .BuildServiceProvider();
+
 var logs = services.GetRequiredService<ILoggerFactory>();
 
-TenantsModuleStartup.Start(accessor, configuration, true);
+TenantsModuleStartup.Start(accessor, configuration, logs, true);
 TranslationModuleStartup.Start(accessor, configuration, logs, true);
 
-await services.GetRequiredService<ITranslationModule>()
+await services
+    .GetRequiredService<ITranslationModule>()
     .SendCommand(new AddTerm.Command(Guid.NewGuid(), "x"));
