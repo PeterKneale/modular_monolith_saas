@@ -7,16 +7,16 @@ public class TranslationId : ValueObject
         Value = value;
     }
 
+    public Guid Value { get; init; }
+
     public static TranslationId Create() => new(Guid.NewGuid());
 
     public static TranslationId Create(Guid id) => new(id);
 
-    public Guid Value { get; init; }
-    
     public override string ToString() => Value.ToString();
-    
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
     }
-};
+}

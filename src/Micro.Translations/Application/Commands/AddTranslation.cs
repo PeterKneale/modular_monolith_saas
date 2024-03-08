@@ -21,17 +21,14 @@ public static class AddTranslation
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var termId = TermId.Create(command.TermId);
-            
+
             var term = await terms.GetAsync(termId, token);
-            if (term == null)
-            {
-                throw new NotFoundException(termId);
-            }
-            
+            if (term == null) throw new NotFoundException(termId);
+
             var text = TranslationText.Create(command.Text);
             var language = Language.FromIsoCode(command.LanguageCode);
             term.AddTranslation(language, text);
-            
+
             terms.Update(term);
             return Unit.Value;
         }

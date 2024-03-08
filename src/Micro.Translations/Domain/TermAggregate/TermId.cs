@@ -7,11 +7,11 @@ public class TermId : ValueObject
         Value = value;
     }
 
+    public Guid Value { get; init; }
+
     public static TermId Create() => new(Guid.NewGuid());
 
     public static TermId Create(Guid id) => new(id);
-
-    public Guid Value { get; init; }
 
     public override string ToString() => Value.ToString();
 
@@ -19,4 +19,4 @@ public class TermId : ValueObject
     {
         yield return Value;
     }
-};
+}

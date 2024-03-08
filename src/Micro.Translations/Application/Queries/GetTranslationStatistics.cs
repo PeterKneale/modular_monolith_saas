@@ -52,7 +52,7 @@ public static class GetTranslationStatistics
 
             return list;
         }
-        
+
         private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
         {
             return await db.Terms

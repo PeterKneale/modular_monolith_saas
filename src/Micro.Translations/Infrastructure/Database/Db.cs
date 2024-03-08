@@ -39,21 +39,21 @@ public partial class Db : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
-            
+
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .HasColumnName(NameColumn);
-            
+
             entity.Property(e => e.ProjectId)
                 .HasColumnName(ProjectIdColumn);
-            
-            
+
+
             // EF access the Translations collection property through its backing field
             // https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core
             entity.Metadata
                 .FindNavigation(nameof(Term.Translations))!
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
-            
+
             entity.Ignore(x => x.DomainEvents);
         });
 
@@ -61,19 +61,19 @@ public partial class Db : DbContext
         {
             entity.ToTable(TranslationsTable, SchemaName);
 
-            entity.HasIndex(e => new { e.TermId, Language = e.Language }, "unique_translations_term_id_language").IsUnique();
+            entity.HasIndex(e => new { e.TermId, e.Language }, "unique_translations_term_id_language").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
             entity.Property(e => e.TermId)
                 .HasColumnName(TermIdColumn);
-            
+
             entity
                 .Property(e => e.Language)
                 .HasMaxLength(10)
                 .HasColumnName(LanguageCodeColumn);
-            
+
             entity.Property(e => e.Text)
                 .HasMaxLength(100)
                 .HasColumnName(TextColumn);
@@ -81,7 +81,7 @@ public partial class Db : DbContext
             entity.HasOne(d => d.Term).WithMany(p => p.Translations)
                 .HasForeignKey(d => d.TermId)
                 .HasConstraintName("fk_translations_terms");
-            
+
             entity.Ignore(x => x.DomainEvents);
         });
 

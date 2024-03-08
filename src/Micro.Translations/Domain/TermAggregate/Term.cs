@@ -19,11 +19,11 @@ public class Term : BaseEntity
         _translations = new List<Translation>();
     }
 
-    public TermId Id { get; private set; }
+    public TermId Id { get; }
 
     public ProjectId ProjectId { get; private set; }
 
-    public TermName Name { get; private set; }
+    public TermName Name { get; }
 
     public IReadOnlyCollection<Translation> Translations => _translations;
 

@@ -15,20 +15,17 @@ public class Translation : BaseEntity
         Text = text;
     }
 
-    public static Translation Create(TranslationId id, TermId termId, Language language, TranslationText text)
-    {
-        return new Translation(id, termId, language, text);
-    }
-
     public TranslationId Id { get; private init; }
 
     public TermId TermId { get; private init; }
 
-    public virtual Language Language { get; private init; } = null!;
+    public virtual Language Language { get; } = null!;
 
     public TranslationText Text { get; private set; }
 
     public virtual Term Term { get; private set; } = null!;
+
+    public static Translation Create(TranslationId id, TermId termId, Language language, TranslationText text) => new(id, termId, language, text);
 
     public void UpdateText(TranslationText translationText)
     {

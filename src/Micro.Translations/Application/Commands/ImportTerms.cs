@@ -1,5 +1,4 @@
 ﻿using Micro.Translations.Domain.TermAggregate;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Micro.Translations.Application.Commands;
 
@@ -30,10 +29,7 @@ public static class ImportTerms
 
             foreach (var name in names)
             {
-                if (existing.SingleOrDefault(x => x.Name.Equals(name)) != null)
-                {
-                    continue;
-                }
+                if (existing.SingleOrDefault(x => x.Name.Equals(name)) != null) continue;
                 var term = Term.Create(projectId, name);
                 await repository.CreateAsync(term, token);
             }

@@ -7,7 +7,7 @@ public static class ListTranslations
 {
     public record Query(string LanguageCode) : IRequest<Results>;
 
-    public record Results(int TotalTerms, int TotalTranslations,string LanguageName, string LanguageCode, IEnumerable<Result> Translations);
+    public record Results(int TotalTerms, int TotalTranslations, string LanguageName, string LanguageCode, IEnumerable<Result> Translations);
 
     public record Result(Guid? TranslationId, Guid TermId, string TermName, string? TranslationText);
 
@@ -28,7 +28,7 @@ public static class ListTranslations
             var totalTerms = await CountTerms(token, projectId);
             var totalTranslations = await CountTranslations(token, projectId, language);
             var translations = await ListTranslations(projectId, language);
-            return new Results(totalTerms, totalTranslations,  language.Name, language.Code, translations);
+            return new Results(totalTerms, totalTranslations, language.Name, language.Code, translations);
         }
 
         private async Task<IEnumerable<Result>> ListTranslations(ProjectId projectId, Language language)
@@ -36,7 +36,7 @@ public static class ListTranslations
             return await db.Terms.Where(term => term.ProjectId == projectId)
                 .GroupJoin(db.Translations,
                     term => new { TermId = term.Id, Language = language },
-                    translation => new { translation.TermId, Language = translation.Language },
+                    translation => new { translation.TermId, translation.Language },
                     (term, termTranslations) => new { term, termTranslations })
                 .SelectMany(t => t.termTranslations.DefaultIfEmpty(), (t, subTranslation) => new Result(subTranslation != null ? subTranslation.Id.Value : null, t.term.Id.Value, t.term.Name.Value, subTranslation != null ? subTranslation.Text.Value : null))
                 .AsNoTracking()

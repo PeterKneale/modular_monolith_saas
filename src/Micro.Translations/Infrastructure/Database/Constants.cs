@@ -4,7 +4,7 @@ public static class Constants
 {
     // Schema
     public const string SchemaName = "translate";
-    
+
     // tables
     public const string TermsTable = "terms";
     public const string TranslationsTable = "translations";
