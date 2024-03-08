@@ -56,7 +56,7 @@ var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();
 var logs = app.Services.GetRequiredService<ILoggerFactory>();
 
-TenantsModuleStartup.Start(accessor, configuration);
+TenantsModuleStartup.Start(accessor, configuration, logs);
 TranslationModuleStartup.Start(accessor, configuration, logs);
 
 if (!app.Environment.IsDevelopment())

@@ -1,7 +1,7 @@
 ﻿using FluentMigrator;
 using static Micro.Tenants.Constants;
 
-namespace Micro.Tenants.Infrastructure.Database;
+namespace Micro.Tenants.Infrastructure.Database.Migrations;
 
 [Migration(1)]
 public class Migration1 : Migration

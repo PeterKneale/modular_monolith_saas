@@ -15,6 +15,7 @@ public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : 
 
         log.LogInformation($"Begin command {request.GetType().FullName}");
         var response = await next();
+        log.LogInformation("Saving changes");
         await db.SaveChangesAsync(cancellationToken);
         return response;
     }

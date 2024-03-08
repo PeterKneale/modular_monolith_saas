@@ -34,7 +34,7 @@ public static class UpdateOrganisationName
             }
 
             organisation.ChangeName(name);
-            await organisations.UpdateAsync(organisation, token);
+            organisations.Update(organisation);
             return Unit.Value;
         }
     }

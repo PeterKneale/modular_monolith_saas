@@ -8,10 +8,8 @@ using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
 using Micro.Tenants.Application.Users;
-using Micro.Tenants.Infrastructure.Behaviours;
-using Micro.Tenants.Infrastructure.DapperTypeHandlers;
-using Micro.Tenants.Infrastructure.Ef;
-using Micro.Tenants.Infrastructure.Repositories;
+using Micro.Tenants.Infrastructure.Database;
+using Micro.Tenants.Infrastructure.Database.Repositories;
 using Micro.Tenants.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -43,11 +41,11 @@ internal static class ServiceCollectionExtensions
         services.AddSingleton<IApiKeyService, ApiKeyService>();
 
         // Repositories
-        services.AddSingleton<IOrganisationRepository, OrganisationRepository>();
-        services.AddSingleton<IUserRepository, UserRepository>();
-        services.AddSingleton<IApiKeyRepository, ApiKeyRepository>();
-        services.AddSingleton<IMembershipRepository, MembershipRepository>();
-        services.AddSingleton<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IOrganisationRepository, OrganisationRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
+        services.AddScoped<IMembershipRepository, MembershipRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
 
         // Database Migrations
 
@@ -69,15 +67,8 @@ internal static class ServiceCollectionExtensions
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
         
-        // Infrastructure
         Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-        SqlMapper.AddTypeHandler(UserApiKeyIdTypeHandler.Default);
-        SqlMapper.AddTypeHandler(ApiKeyNameTypeHandler.Default);
-        SqlMapper.AddTypeHandler(ApiKeyValueTypeHandler.Default);
-        SqlMapper.AddTypeHandler(OrganisationNameTypeHandler.Default);
-        SqlMapper.AddTypeHandler(ProjectNameTypeHandler.Default);
-        SqlMapper.AddTypeHandler(MembershipIdTypeHandler.Default);
-        SqlMapper.AddTypeHandler(MembershipRoleTypeHandler.Default);
+
         return services;
     }
 }

@@ -19,13 +19,15 @@ public static class DeleteUserApiKey
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var id = new UserApiKeyId(command.Id);
+
+            var key = await keys.GetById(id, token);
             
-            if (await keys.GetById(id, token) == null)
+            if (key == null)
             {
                 throw new ApiKeyNotFoundException(id);
             }
 
-            await keys.DeleteAsync(id, token);
+            keys.Delete(key);
             
             return Unit.Value;
         }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Micro.Common.Infrastructure.Database;
+﻿using Micro.Common.Infrastructure.Database;
 using Micro.Tenants.Domain.ApiKeys;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.Domain.Projects;
 using Micro.Tenants.Domain.Users;
+using Micro.Tenants.Infrastructure.Database.Converters;
 using Microsoft.EntityFrameworkCore;
 
-namespace Micro.Tenants.Infrastructure.Ef;
+namespace Micro.Tenants.Infrastructure.Database;
 
 public partial class Db : DbContext
 {

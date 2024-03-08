@@ -3,6 +3,8 @@ using MediatR;
 using Micro.Common;
 using Micro.Common.Domain;
 using Micro.Tenants.Application.Users;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
 
@@ -17,11 +19,15 @@ public class ServiceFixture : ITestOutputHelperAccessor
             .AddJsonFile("appsettings.json", optional: false)
             .AddEnvironmentVariables()
             .Build();
+        var services = new ServiceCollection()
+            .AddLogging(x => x.AddXUnit(this))
+            .BuildServiceProvider();
+        var logFactory = services.GetRequiredService<ILoggerFactory>();
 
         _accessor = new TestContextAccessor();
         _module = new TenantsModule();
 
-        TenantsModuleStartup.Start(_accessor, configuration, true);
+        TenantsModuleStartup.Start(_accessor, configuration, logFactory, true);
     }
 
     public ITestOutputHelper? OutputHelper { get; set; }
@@ -34,7 +40,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
         await action(_module);
         ClearContext();
     }
-    
+
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         SetUserContext(userId);
@@ -43,7 +49,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
         await _module.SendCommand(command);
         ClearContext();
     }
-    
+
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         SetUserContext(userId);

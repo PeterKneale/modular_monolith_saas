@@ -1,6 +1,4 @@
-﻿using Micro.Tenants.Infrastructure.Ef;
-
-namespace Micro.Tenants.Infrastructure.Behaviours;
+﻿namespace Micro.Tenants.Infrastructure.Database;
 
 public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
@@ -15,6 +13,7 @@ public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : 
 
         log.LogInformation($"Begin command {request.GetType().FullName}");
         var response = await next();
+        log.LogInformation("Saving changes");
         await db.SaveChangesAsync(cancellationToken);
         return response;
     }

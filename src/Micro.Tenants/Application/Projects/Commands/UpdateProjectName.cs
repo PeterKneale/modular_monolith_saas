@@ -34,7 +34,7 @@ public static class UpdateProjectName
             }
 
             project.ChangeName(name);
-            await projects.UpdateAsync(project, token);
+            projects.Update(project);
             return Unit.Value;
         }
     }

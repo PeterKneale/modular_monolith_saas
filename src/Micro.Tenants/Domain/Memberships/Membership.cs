@@ -5,7 +5,7 @@ namespace Micro.Tenants.Domain.Memberships;
 
 public class Membership : BaseEntity
 {
-    public Membership()
+    private Membership()
     {
         // ef core
     }
