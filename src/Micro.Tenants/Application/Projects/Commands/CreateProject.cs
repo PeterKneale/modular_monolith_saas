@@ -1,5 +1,4 @@
-﻿using Micro.Common.Application;
-using Micro.Tenants.Domain.Projects;
+﻿using Micro.Tenants.Domain.Projects;
 
 namespace Micro.Tenants.Application.Projects.Commands;
 
@@ -24,13 +23,13 @@ public static class CreateProject
 
             if (await projects.GetAsync(projectId, token) != null)
             {
-                throw new Exception("Project already exists");
+                throw new AlreadyExistsException(nameof(Project), projectId.Value);
             }
 
             var name = new ProjectName(command.Name);
             if (await check.AnyProjectUsesNameAsync(name, token))
             {
-                throw new ProjectNameInUseException(name);
+                throw new AlreadyInUseException(nameof(ProjectName), name.Value);
             }
 
             var project = new Project(projectId, executionContext.OrganisationId, name);

@@ -1,5 +1,4 @@
-﻿using Micro.Common.Application;
-using Micro.Tenants.Application.Users;
+﻿using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.ApiKeys;
 
 namespace Micro.Tenants.Application.ApiKeys.Commands;
@@ -27,12 +26,12 @@ public static class CreateUserApiKey
 
             if (await keys.GetById(id, token) != null)
             {
-                throw new ApiKeyAlreadyExistsException(id);
+                throw new AlreadyExistsException(nameof(UserApiKey), id.Value);
             }
 
             if (await keys.GetByName(userId, name, token) != null)
             {
-                throw new ApiKeyNameInUseException(name);
+                throw new AlreadyInUseException(nameof(UserApiKey), name.Value);
             }
 
             var key = UserApiKey.CreateNew(id, userId, name, service);

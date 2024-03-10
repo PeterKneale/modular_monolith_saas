@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Micro.Common.Application;
 using Micro.Common.Infrastructure.Database;
 using static Micro.Tenants.Constants;
 

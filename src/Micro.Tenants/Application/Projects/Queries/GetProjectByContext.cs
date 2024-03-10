@@ -1,6 +1,4 @@
 ﻿
-using Micro.Common.Application;
-
 namespace Micro.Tenants.Application.Projects.Queries;
 
 public static class GetProjectByContext

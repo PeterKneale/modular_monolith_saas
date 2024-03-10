@@ -22,10 +22,10 @@ public static class AddTerm
             var projectId = context.ProjectId;
 
             var termId = TermId.Create(command.TermId);
-            if (await terms.GetAsync(termId, token) != null) throw new AlreadyExistsException(termId);
+            if (await terms.GetAsync(termId, token) != null) throw new AlreadyExistsException(nameof(Term), termId.Value);
 
             var name = TermName.Create(command.Name);
-            if (await terms.GetAsync(projectId, name, token) != null) throw new AlreadyInUseException(name);
+            if (await terms.GetAsync(projectId, name, token) != null) throw new AlreadyInUseException(nameof(TermName), name.Value);
 
             var term = Term.Create(termId, projectId, name);
             await terms.CreateAsync(term, token);

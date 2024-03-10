@@ -1,4 +1,4 @@
-﻿using Micro.Common.Application;
+﻿using Micro.Tenants.Domain.Organisations;
 
 namespace Micro.Tenants.Application.Organisations.Queries;
 
@@ -22,7 +22,7 @@ public static class GetOrganisation
             var organisation = await organisations.GetAsync(organisationId, token);
             if (organisation == null)
             {
-                throw new OrganisationNotFoundException(organisationId);
+                throw new NotFoundException(nameof(Organisation), organisationId.Value);
             }
 
             return new Result(organisation.Id.Value, organisation.Name.Value);

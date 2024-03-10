@@ -24,7 +24,7 @@ public static class GetOrganisationByName
             var organisation = await organisations.GetAsync(name, token);
             if (organisation == null)
             {
-                throw new OrganisationNotFoundException(name);
+                throw new NotFoundException(nameof(Organisation), name.Value);
             }
 
             return new Result(organisation.Id.Value, organisation.Name.Value);

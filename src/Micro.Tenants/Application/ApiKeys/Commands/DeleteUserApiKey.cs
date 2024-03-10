@@ -24,7 +24,7 @@ public static class DeleteUserApiKey
             
             if (key == null)
             {
-                throw new ApiKeyNotFoundException(id);
+                throw new NotFoundException(nameof(UserApiKey), id.Value);
             }
 
             keys.Delete(key);

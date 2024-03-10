@@ -1,6 +1,6 @@
 ﻿namespace Micro.Tenants.Domain.ApiKeys;
 
-public record ApiKeyName(string Name)
+public record ApiKeyName(string Value)
 {
-    public override string ToString() => $"{Name}";
+    public override string ToString() => $"{Value}";
 }

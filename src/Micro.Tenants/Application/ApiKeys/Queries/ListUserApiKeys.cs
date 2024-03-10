@@ -1,6 +1,4 @@
-﻿using Micro.Common.Application;
-
-namespace Micro.Tenants.Application.ApiKeys.Queries;
+﻿namespace Micro.Tenants.Application.ApiKeys.Queries;
 
 public static class ListUserApiKeys
 {
@@ -20,7 +18,7 @@ public static class ListUserApiKeys
 
             var items = await keys.ListAsync(userId, token);
 
-            return items.Select(x => new Result(x.Id.Value, x.ApiKey.Name.Name));
+            return items.Select(x => new Result(x.Id.Value, x.ApiKey.Name.Value));
         }
     }
 }

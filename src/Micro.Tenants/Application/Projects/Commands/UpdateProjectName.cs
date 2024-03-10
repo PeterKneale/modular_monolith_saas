@@ -1,5 +1,4 @@
-﻿using Micro.Common.Application;
-using Micro.Tenants.Domain.Projects;
+﻿using Micro.Tenants.Domain.Projects;
 
 namespace Micro.Tenants.Application.Projects.Commands;
 
@@ -24,13 +23,13 @@ public static class UpdateProjectName
             var project = await projects.GetAsync(projectId, token);
             if (project == null)
             {
-                throw new Exception("Project not found");
+                throw new NotFoundException(nameof(Project), projectId.Value);
             }
 
             var name = new ProjectName(command.Name);
             if (await check.AnyOtherProjectUsesNameAsync(projectId, name, token))
             {
-                throw new Exception("Name already in use");
+                throw new AlreadyInUseException(nameof(ProjectName), name.Value);
             }
 
             project.ChangeName(name);

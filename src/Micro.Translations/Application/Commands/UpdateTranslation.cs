@@ -25,7 +25,7 @@ public static class UpdateTranslation
             var language = Language.FromIsoCode(command.LanguageCode);
 
             var term = await terms.GetAsync(termId, token);
-            if (term == null) throw new NotFoundException(termId);
+            if (term == null) throw new NotFoundException(nameof(Term), termId.Value);
 
             term.UpdateTranslation(language, text);
 

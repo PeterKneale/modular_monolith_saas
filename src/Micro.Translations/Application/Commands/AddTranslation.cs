@@ -23,7 +23,7 @@ public static class AddTranslation
             var termId = TermId.Create(command.TermId);
 
             var term = await terms.GetAsync(termId, token);
-            if (term == null) throw new NotFoundException(termId);
+            if (term == null) throw new NotFoundException(nameof(term), termId.Value);
 
             var text = TranslationText.Create(command.Text);
             var language = Language.FromIsoCode(command.LanguageCode);

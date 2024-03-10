@@ -23,7 +23,7 @@ public static class RemoveTranslation
             var language = Language.FromIsoCode(command.LanguageCode);
 
             var term = await terms.GetAsync(termId, token);
-            if (term == null) throw new NotFoundException(termId);
+            if (term == null) throw new NotFoundException(nameof(term), termId.Value);
 
             term.RemoveTranslation(language);
 

@@ -1,5 +1,4 @@
-﻿using Micro.Common.Application;
-using Micro.Tenants.Domain.ApiKeys;
+﻿using Micro.Tenants.Domain.ApiKeys;
 
 namespace Micro.Tenants.Application.ApiKeys.Queries;
 
@@ -24,7 +23,7 @@ public static class GetUserApiKeyById
             var item = await keys.GetById(id, token);
             if (item == null)
             {
-                throw new ApiKeyNotFoundException(id);
+                throw new NotFoundException(nameof(UserApiKey), id.Value);
             }
 
             return item.ApiKey.Key.Value;

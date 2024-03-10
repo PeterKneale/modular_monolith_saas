@@ -1,4 +1,6 @@
-﻿namespace Micro.Tenants.Application.Organisations.Queries;
+﻿using Micro.Tenants.Domain.Organisations;
+
+namespace Micro.Tenants.Application.Organisations.Queries;
 
 public static class GetOrganisationById
 {
@@ -22,7 +24,7 @@ public static class GetOrganisationById
             var organisation = await organisations.GetAsync(id, token);
             if (organisation == null)
             {
-                throw new OrganisationNotFoundException(id);
+                throw new NotFoundException(nameof(Organisation), id.Value);
             }
 
             return new Result(organisation.Id.Value, organisation.Name.Value);

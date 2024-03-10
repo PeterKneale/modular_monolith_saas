@@ -1,5 +1,4 @@
-﻿using Micro.Common.Application;
-using Micro.Tenants.Domain.Organisations;
+﻿using Micro.Tenants.Domain.Organisations;
 
 namespace Micro.Tenants.Application.Organisations.Commands;
 
@@ -24,13 +23,13 @@ public static class UpdateOrganisationName
             var organisation = await organisations.GetAsync(organisationId, token);
             if (organisation == null)
             {
-                throw new OrganisationNotFoundException(organisationId);
+                throw new NotFoundException(nameof(Organisation), organisationId.Value);
             }
 
             var name = OrganisationName.Create(command.Name);
             if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token))
             {
-                throw new OrganisationNameInUseException(name);
+                throw new AlreadyInUseException(nameof(OrganisationName), name.Value);
             }
 
             organisation.ChangeName(name);

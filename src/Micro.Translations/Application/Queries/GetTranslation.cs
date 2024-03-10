@@ -30,7 +30,7 @@ public static class GetTranslation
                 .Include(x => x.Translations)
                 .SingleOrDefaultAsync(x => x.Id == termId, token);
 
-            if (term == null) throw new NotFoundException(termId);
+            if (term == null) throw new NotFoundException(nameof(Term), termId.Value);
             var translation = term.GetTranslation(language);
 
             return new Result(translation.Text.Value);

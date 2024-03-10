@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Micro.Common.Exceptions;
 using Micro.Tenants.Application;
 using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Organisations.Queries;
@@ -58,7 +59,7 @@ public class OrganisationTests
         Func<Task> action = async () => await _service.Command(create2, userId1);
 
         // assert
-        await action.Should().ThrowAsync<OrganisationNameInUseException>();
+        await action.Should().ThrowAsync<AlreadyInUseException>();
     }
 
     [Fact]
@@ -84,6 +85,6 @@ public class OrganisationTests
         Func<Task> action = async () => await _service.Command(update, userId1, organisationId1);
 
         // assert
-        await action.Should().ThrowAsync<OrganisationNameInUseException>();
+        await action.Should().ThrowAsync<AlreadyInUseException>();
     }
 }
