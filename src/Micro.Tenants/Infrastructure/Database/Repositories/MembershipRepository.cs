@@ -11,7 +11,19 @@ internal class MembershipRepository(Db db) : IMembershipRepository
         await db.Memberships.AddAsync(membership, token);
     }
 
-    public async Task<IEnumerable<Membership>> ListByUserAsync(UserId userId, CancellationToken token)
+    public void Update(Membership membership) => db.Memberships.Update(membership);
+
+    public void Delete(Membership membership) => db.Memberships.Remove(membership);
+
+    public async Task<Membership?> Get(OrganisationId organisationId, UserId userId, CancellationToken token)
+    {
+        return await db.Memberships
+            .Include(x => x.Organisation)
+            .Include(x => x.User)
+            .SingleOrDefaultAsync(x => x.OrganisationId == organisationId && x.UserId == userId, cancellationToken: token);
+    }
+
+    public async Task<IEnumerable<Membership>> ListAsync(UserId userId, CancellationToken token)
     {
         return await db.Memberships
             .Where(x => x.UserId == userId)

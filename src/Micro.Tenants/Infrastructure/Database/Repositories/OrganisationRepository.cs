@@ -11,6 +11,11 @@ internal class OrganisationRepository(Db db) : IOrganisationRepository
         await db.Organisations.AddAsync(organisation, token);
     }
 
+    public void Delete(Organisation organisation)
+    {
+        db.Organisations.Remove(organisation);
+    }
+
     public void Update(Organisation organisation)
     {
         db.Organisations.Update(organisation);

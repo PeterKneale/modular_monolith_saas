@@ -1,4 +1,6 @@
+global using FluentAssertions;
 global using Micro.Common.Application;
+global using Micro.Common.Exceptions;
 global using Micro.Common.Infrastructure.Context;
 global using Micro.Tenants.IntegrationTests.Fixtures;
 global using Microsoft.Extensions.Configuration;

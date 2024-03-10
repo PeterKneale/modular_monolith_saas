@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Micro.Tenants.Application.Users.Queries;
+﻿using Micro.Tenants.Application.Users.Queries;
 
 namespace Micro.Tenants.IntegrationTests.UseCases;
 

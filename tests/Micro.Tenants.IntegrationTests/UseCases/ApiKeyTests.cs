@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Micro.Tenants.Application.ApiKeys.Commands;
+﻿using Micro.Tenants.Application.ApiKeys.Commands;
 using Micro.Tenants.Application.ApiKeys.Queries;
 
 namespace Micro.Tenants.IntegrationTests.UseCases;

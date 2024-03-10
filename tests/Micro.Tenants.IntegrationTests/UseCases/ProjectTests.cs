@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Projects.Commands;
 using Micro.Tenants.Application.Projects.Queries;

@@ -36,4 +36,9 @@ public class Membership : BaseEntity
     public virtual Organisation Organisation { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
+
+    public void SetRole(MembershipRole role)
+    {
+        Role = role;
+    }
 }

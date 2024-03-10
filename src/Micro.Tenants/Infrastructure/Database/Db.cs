@@ -78,12 +78,12 @@ public partial class Db : DbContext
 
             entity.HasOne(d => d.Organisation).WithMany(p => p.Memberships)
                 .HasForeignKey(d => d.OrganisationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_memberships_organisations");
 
             entity.HasOne(d => d.User).WithMany(p => p.Memberships)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_memberships_users");
             
             entity.Ignore(x => x.DomainEvents);
