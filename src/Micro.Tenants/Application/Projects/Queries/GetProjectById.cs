@@ -20,10 +20,7 @@ public static class GetProjectById
         {
             var id = new ProjectId(query.Id);
             var project = await projects.GetAsync(id, token);
-            if (project == null)
-            {
-                throw new Exception("not found");
-            }
+            if (project == null) throw new Exception("not found");
 
             return new Result(project.Id.Value, project.Name.Value);
         }

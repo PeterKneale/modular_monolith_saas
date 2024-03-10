@@ -19,9 +19,6 @@ public abstract class BaseEntity
 
     protected static void CheckRule(IBusinessRule rule)
     {
-        if (rule.IsBroken())
-        {
-            throw new BusinessRuleBrokenException(rule.Message);
-        }
+        if (rule.IsBroken()) throw new BusinessRuleBrokenException(rule.Message);
     }
 }

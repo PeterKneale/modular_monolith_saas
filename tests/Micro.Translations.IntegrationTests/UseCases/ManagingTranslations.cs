@@ -65,7 +65,7 @@ public class ManagingTranslations
             });
         }, projectId: projectId);
     }
-    
+
     [Fact]
     public async Task Can_update_translation()
     {
@@ -93,10 +93,9 @@ public class ManagingTranslations
             result.TermName.Should().Be(TestTerm1);
             result.TranslationId.Should().NotBeNull();
             result.TranslationText.Should().Be(TestText2);
-
         }, projectId: projectId);
     }
-    
+
     [Fact]
     public async Task Can_remove_translation()
     {
@@ -124,7 +123,6 @@ public class ManagingTranslations
             result.TermName.Should().Be(TestTerm1);
             result.TranslationId.Should().BeNull();
             result.TranslationText.Should().BeNull();
-
         }, projectId: projectId);
     }
 }

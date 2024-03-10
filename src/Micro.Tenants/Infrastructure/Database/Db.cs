@@ -38,7 +38,7 @@ public partial class Db : DbContext
         configurationBuilder.Properties<MembershipRole>().HaveConversion<MembershipRoleConverter>();
         configurationBuilder.Properties<ProjectId>().HaveConversion<ProjectIdConverter>();
         configurationBuilder.Properties<ProjectName>().HaveConversion<ProjectNameConverter>();
-        configurationBuilder.Properties<UserId>().HaveConversion<UserIdConverter>();        
+        configurationBuilder.Properties<UserId>().HaveConversion<UserIdConverter>();
         configurationBuilder.Properties<UserApiKeyId>().HaveConversion<UserApiKeyIdConverter>();
         configurationBuilder.Properties<ApiKeyValue>().HaveConversion<ApiKeyValueConverter>();
         configurationBuilder.Properties<ApiKeyName>().HaveConversion<ApiKeyNameConverter>();
@@ -85,7 +85,7 @@ public partial class Db : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_memberships_users");
-            
+
             entity.Ignore(x => x.DomainEvents);
         });
 
@@ -105,7 +105,7 @@ public partial class Db : DbContext
                 .HasForeignKey(d => d.OrganisationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_projects_organisations");
-            
+
             entity.Ignore(x => x.DomainEvents);
         });
 
@@ -137,7 +137,7 @@ public partial class Db : DbContext
                     .HasMaxLength(100)
                     .HasColumnName("password");
             });
-            
+
             entity.Ignore(x => x.DomainEvents);
         });
 
@@ -160,7 +160,7 @@ public partial class Db : DbContext
                 x.Property(e => e.CreatedAt)
                     .HasColumnName("created_at");
             });
-            
+
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.UserApiKeys)

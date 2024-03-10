@@ -1,6 +1,5 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Queries;
-using static Micro.Translations.Application.Queries.ListTerms;
 
 namespace Micro.Web.Pages.Translate.Terms;
 
@@ -10,9 +9,13 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
     {
         Total = await module.SendQuery(new CountTerms.Query());
         Results = await module.SendQuery(new ListTerms.Query());
+        Languages = await module.SendQuery(new ListLanguagesTranslated.Query());
     }
+
 
     public int Total { get; set; }
 
-    public IEnumerable<Result> Results { get; set; }
+    public IEnumerable<ListTerms.Result> Results { get; set; }
+    
+    public IEnumerable<ListLanguagesTranslated.Result> Languages { get; set; }
 }

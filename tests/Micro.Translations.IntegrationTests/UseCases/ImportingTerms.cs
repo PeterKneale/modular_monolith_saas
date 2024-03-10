@@ -58,7 +58,7 @@ public class ImportingTerms
     {
         var results = await ctx.SendQuery(new ListTerms.Query());
         results.Select(x => x.Name).Should().BeEquivalentTo(terms);
-        
+
         var count = await ctx.SendQuery(new CountTerms.Query());
         count.Should().Be(terms.Length);
     }

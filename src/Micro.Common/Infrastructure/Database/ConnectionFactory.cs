@@ -5,8 +5,5 @@ namespace Micro.Common.Infrastructure.Database;
 
 public class ConnectionFactory(string connectionString)
 {
-    public IDbConnection CreateConnection()
-    {
-        return new NpgsqlConnection(connectionString);
-    }
+    public IDbConnection CreateConnection() => new NpgsqlConnection(connectionString);
 }

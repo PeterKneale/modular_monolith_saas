@@ -22,10 +22,7 @@ public static class GetOrganisationById
         {
             var id = new OrganisationId(query.Id);
             var organisation = await organisations.GetAsync(id, token);
-            if (organisation == null)
-            {
-                throw new NotFoundException(nameof(Organisation), id.Value);
-            }
+            if (organisation == null) throw new NotFoundException(nameof(Organisation), id.Value);
 
             return new Result(organisation.Id.Value, organisation.Name.Value);
         }

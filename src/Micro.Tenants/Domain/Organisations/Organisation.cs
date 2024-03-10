@@ -11,17 +11,14 @@ public class Organisation : BaseEntity
         Name = name;
     }
 
-    public static Organisation Create(OrganisationId id, OrganisationName name)
-    {
-        return new Organisation(id, name);
-    }
-
     public OrganisationId Id { get; private init; }
     public OrganisationName Name { get; private set; }
 
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 
     public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
+
+    public static Organisation Create(OrganisationId id, OrganisationName name) => new(id, name);
 
     public void ChangeName(OrganisationName name)
     {

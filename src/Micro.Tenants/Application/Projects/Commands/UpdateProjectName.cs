@@ -21,16 +21,10 @@ public static class UpdateProjectName
             var projectId = context.ProjectId;
 
             var project = await projects.GetAsync(projectId, token);
-            if (project == null)
-            {
-                throw new NotFoundException(nameof(Project), projectId.Value);
-            }
+            if (project == null) throw new NotFoundException(nameof(Project), projectId.Value);
 
-            var name = new ProjectName(command.Name);
-            if (await check.AnyOtherProjectUsesNameAsync(projectId, name, token))
-            {
-                throw new AlreadyInUseException(nameof(ProjectName), name.Value);
-            }
+            var name = ProjectName.CreateInstance(command.Name);
+            if (await check.AnyOtherProjectUsesNameAsync(projectId, name, token)) throw new AlreadyInUseException(nameof(ProjectName), name.Value);
 
             project.ChangeName(name);
             projects.Update(project);

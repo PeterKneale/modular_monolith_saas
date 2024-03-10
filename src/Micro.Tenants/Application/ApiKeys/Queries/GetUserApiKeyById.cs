@@ -19,12 +19,9 @@ public static class GetUserApiKeyById
         public async Task<string> Handle(Query query, CancellationToken token)
         {
             var id = new UserApiKeyId(query.Id);
-            
+
             var item = await keys.GetById(id, token);
-            if (item == null)
-            {
-                throw new NotFoundException(nameof(UserApiKey), id.Value);
-            }
+            if (item == null) throw new NotFoundException(nameof(UserApiKey), id.Value);
 
             return item.ApiKey.Key.Value;
         }

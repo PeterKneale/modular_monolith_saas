@@ -8,7 +8,7 @@ namespace Micro.Tenants;
 
 public static class TenantsModuleStartup
 {
-    public static void Start(IContextAccessor accessor, IConfiguration configuration,ILoggerFactory logs, bool resetDb = false)
+    public static void Start(IContextAccessor accessor, IConfiguration configuration, ILoggerFactory logs, bool resetDb = false)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)

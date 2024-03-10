@@ -23,10 +23,7 @@ public static class RegisterUser
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var userId = new UserId(command.UserId);
-            if (await users.GetAsync(userId, token) != null)
-            {
-                throw new Exception("User already exists");
-            }
+            if (await users.GetAsync(userId, token) != null) throw new Exception("User already exists");
 
             var userName = new UserName(command.FirstName, command.LastName);
             var userEmail = new EmailAddress(command.Email);

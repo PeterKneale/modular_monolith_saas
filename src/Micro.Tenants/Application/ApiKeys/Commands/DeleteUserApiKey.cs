@@ -21,14 +21,11 @@ public static class DeleteUserApiKey
             var id = new UserApiKeyId(command.Id);
 
             var key = await keys.GetById(id, token);
-            
-            if (key == null)
-            {
-                throw new NotFoundException(nameof(UserApiKey), id.Value);
-            }
+
+            if (key == null) throw new NotFoundException(nameof(UserApiKey), id.Value);
 
             keys.Delete(key);
-            
+
             return Unit.Value;
         }
     }

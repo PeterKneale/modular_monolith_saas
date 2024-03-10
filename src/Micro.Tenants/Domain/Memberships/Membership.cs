@@ -9,7 +9,7 @@ public class Membership : BaseEntity
     {
         // ef core
     }
-    
+
     private Membership(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole role)
     {
         Id = id;
@@ -18,24 +18,21 @@ public class Membership : BaseEntity
         Role = role;
     }
 
-    public static Membership CreateInstance(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole membershipRole)
-    {
-        return new Membership(id, organisationId, userId, membershipRole);
-    }
-
-    public MembershipId Id { get;private init; }
-    public OrganisationId OrganisationId { get;private init; }
+    public MembershipId Id { get; private init; }
+    public OrganisationId OrganisationId { get; private init; }
     public UserId UserId { get; private init; }
     public MembershipRole Role { get; private set; }
+
+    public virtual Organisation Organisation { get; set; } = null!;
+
+    public virtual User User { get; set; } = null!;
+
+    public static Membership CreateInstance(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole membershipRole) => new(id, organisationId, userId, membershipRole);
 
     public void ChangeRole(MembershipRole membershipRole)
     {
         Role = membershipRole;
     }
-    
-    public virtual Organisation Organisation { get; set; } = null!;
-
-    public virtual User User { get; set; } = null!;
 
     public void SetRole(MembershipRole role)
     {

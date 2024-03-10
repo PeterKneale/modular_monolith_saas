@@ -3,4 +3,4 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Micro.Tenants.Infrastructure.Database.Converters;
 
-public class ProjectNameConverter() : ValueConverter<ProjectName, string>(v => v.Value, v => new ProjectName(v));
+public class ProjectNameConverter() : ValueConverter<ProjectName, string>(v => v.Value, v => ProjectName.CreateInstance(v));

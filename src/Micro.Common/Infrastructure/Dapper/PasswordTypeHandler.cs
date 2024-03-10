@@ -6,18 +6,15 @@ namespace Micro.Common.Infrastructure.Dapper;
 
 public class PasswordTypeHandler : SqlMapper.TypeHandler<Password>
 {
+    public static readonly PasswordTypeHandler Default = new();
+
     private PasswordTypeHandler()
     {
     }
 
-    public static readonly PasswordTypeHandler Default = new();
-
     public override Password Parse(object? value)
     {
-        if (value is string password)
-        {
-            return new Password(password);
-        }
+        if (value is string password) return new Password(password);
 
         throw new FormatException($"Invalid conversion to {nameof(EmailAddress)}");
     }

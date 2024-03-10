@@ -9,6 +9,7 @@ public class UserApiKey
     {
         // ef core
     }
+
     private UserApiKey(UserApiKeyId id, UserId userId, ApiKey apiKey)
     {
         Id = id;
@@ -16,19 +17,17 @@ public class UserApiKey
         ApiKey = apiKey;
     }
 
-    public UserApiKeyId Id { get; private init; }
-    
-    public UserId UserId { get;private init; }
+    public UserApiKeyId Id { get; }
 
-    public ApiKey ApiKey { get;private init; }
-    
+    public UserId UserId { get; }
+
+    public ApiKey ApiKey { get; }
+
     public virtual User User { get; set; } = null!;
-    
-    public override string ToString() => $"{Id} - {UserId} - {ApiKey}";
-    
-    public static UserApiKey CreateNew(UserApiKeyId id, UserId userId, ApiKeyName name, IApiKeyService service) =>
-        new UserApiKey(id, userId, ApiKey.Create(name, service.GenerateApiKey()));
 
-    public static UserApiKey Create(UserApiKeyId id, UserId userId, ApiKey key) =>
-        new UserApiKey(id, userId, key);
+    public override string ToString() => $"{Id} - {UserId} - {ApiKey}";
+
+    public static UserApiKey CreateNew(UserApiKeyId id, UserId userId, ApiKeyName name, IApiKeyService service) => new(id, userId, ApiKey.Create(name, service.GenerateApiKey()));
+
+    public static UserApiKey Create(UserApiKeyId id, UserId userId, ApiKey key) => new(id, userId, key);
 }

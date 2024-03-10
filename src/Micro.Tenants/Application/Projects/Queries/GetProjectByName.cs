@@ -20,13 +20,10 @@ public static class GetProjectByName
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var name = new ProjectName(query.Name);
-            
+            var name = ProjectName.CreateInstance(query.Name);
+
             var project = await projects.GetAsync(name, token);
-            if (project == null)
-            {
-                throw new Exception("not found");
-            }
+            if (project == null) throw new Exception("not found");
 
             return new Result(project.Id.Value, project.Name.Value);
         }

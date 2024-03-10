@@ -22,15 +22,12 @@ public static class CreateMember
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var organisationId = context.OrganisationId;
-            
+
             var userId = new UserId(command.UserId);
             var role = command.Role;
 
             var organisation = await organisations.GetAsync(organisationId, token);
-            if (organisation == null)
-            {
-                throw new NotFoundException(nameof(Organisation), organisationId.Value);
-            }
+            if (organisation == null) throw new NotFoundException(nameof(Organisation), organisationId.Value);
 
             var membershipId = new MembershipId(Guid.NewGuid());
             var membership = Membership.CreateInstance(membershipId, organisationId, userId, MembershipRole.FromString(role));
@@ -59,19 +56,17 @@ public static class UpdateMember
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var organisationId = context.OrganisationId;
-            
+
             var userId = new UserId(command.UserId);
             var role = MembershipRole.FromString(command.Role);
 
 
             var membership = await memberships.Get(organisationId, userId, token);
             if (membership == null)
-            {
                 // TODO: its identified by two ids, which one to throw - is it an aggregate root?
                 throw new NotFoundException(nameof(Membership), organisationId.Value);
-            }
             membership.SetRole(role);
-            
+
             memberships.Update(membership);
 
             return Unit.Value;

@@ -23,9 +23,9 @@ public static class CanAuthenticateWithApiKey
             var value = new ApiKeyValue(query.ApiKeyValue);
 
             var userApiKey = await keys.GetByKey(value, token);
-            
-            return userApiKey != null 
-                ? new Result(true, userApiKey.UserId.Value) 
+
+            return userApiKey != null
+                ? new Result(true, userApiKey.UserId.Value)
                 : new Result(false);
         }
     }

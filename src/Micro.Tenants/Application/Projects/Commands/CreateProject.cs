@@ -21,16 +21,10 @@ public static class CreateProject
         {
             var projectId = new ProjectId(command.ProjectId);
 
-            if (await projects.GetAsync(projectId, token) != null)
-            {
-                throw new AlreadyExistsException(nameof(Project), projectId.Value);
-            }
+            if (await projects.GetAsync(projectId, token) != null) throw new AlreadyExistsException(nameof(Project), projectId.Value);
 
-            var name = new ProjectName(command.Name);
-            if (await check.AnyProjectUsesNameAsync(name, token))
-            {
-                throw new AlreadyInUseException(nameof(ProjectName), name.Value);
-            }
+            var name = ProjectName.CreateInstance(command.Name);
+            if (await check.AnyProjectUsesNameAsync(name, token)) throw new AlreadyInUseException(nameof(ProjectName), name.Value);
 
             var project = new Project(projectId, executionContext.OrganisationId, name);
             await projects.CreateAsync(project, token);

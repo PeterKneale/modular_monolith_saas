@@ -17,7 +17,7 @@ public class Migration1 : Migration
             .WithColumn(OrganisationIdColumn).AsGuid()
             .WithColumn(UserIdColumn).AsGuid()
             .WithColumn(RoleColumn).AsString(RoleMaxLength);
-        
+
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(FirstNameColumn).AsString(NameMaxLength)
@@ -40,15 +40,15 @@ public class Migration1 : Migration
         Create.ForeignKey($"fk_{MembershipsTable}_{OrganisationsTable}")
             .FromTable(MembershipsTable).ForeignColumn(OrganisationIdColumn)
             .ToTable(OrganisationsTable).PrimaryColumn(IdColumn);
-        
+
         Create.ForeignKey($"fk_{MembershipsTable}_{UsersTable}")
             .FromTable(MembershipsTable).ForeignColumn(UserIdColumn)
             .ToTable(UsersTable).PrimaryColumn(IdColumn);
-        
+
         Create.ForeignKey($"fk_{ProjectsTable}_{OrganisationsTable}")
             .FromTable(ProjectsTable).ForeignColumn(OrganisationIdColumn)
             .ToTable(OrganisationsTable).PrimaryColumn(IdColumn);
-        
+
         Create.ForeignKey($"fk_{UserApiKeysTable}_{UsersTable}")
             .FromTable(UserApiKeysTable).ForeignColumn(UserIdColumn)
             .ToTable(UsersTable).PrimaryColumn(IdColumn);

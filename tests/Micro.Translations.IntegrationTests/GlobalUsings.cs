@@ -8,4 +8,4 @@ global using Xunit.Abstractions;
 global using static Micro.Translations.IntegrationTests.Fixtures.TestData;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly:ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage]

@@ -19,7 +19,7 @@ public class ManagingTerms
     {
         // arrange
         var projectId = Guid.NewGuid();
-        
+
         var termId1 = Guid.NewGuid();
         var termId2 = Guid.NewGuid();
         var termId3 = Guid.NewGuid();
@@ -27,7 +27,7 @@ public class ManagingTerms
         const string term1 = "APP_REGISTER";
         const string term2 = "APP_LOGIN";
         const string term3 = "APP_LOGOUT";
-        
+
         await _service.Execute(async ctx =>
         {
             // act

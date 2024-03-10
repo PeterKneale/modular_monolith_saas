@@ -6,18 +6,15 @@ namespace Micro.Common.Infrastructure.Dapper;
 
 public class EmailAddressTypeHandler : SqlMapper.TypeHandler<EmailAddress>
 {
+    public static readonly EmailAddressTypeHandler Default = new();
+
     private EmailAddressTypeHandler()
     {
     }
 
-    public static readonly EmailAddressTypeHandler Default = new();
-
     public override EmailAddress Parse(object? value)
     {
-        if (value is string email)
-        {
-            return new EmailAddress(email);
-        }
+        if (value is string email) return new EmailAddress(email);
 
         throw new FormatException($"Invalid conversion to {nameof(EmailAddress)}");
     }

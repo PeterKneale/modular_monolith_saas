@@ -6,18 +6,15 @@ namespace Micro.Common.Infrastructure.Dapper;
 
 public class ProjectIdTypeHandler : SqlMapper.TypeHandler<ProjectId>
 {
+    public static readonly ProjectIdTypeHandler Default = new();
+
     private ProjectIdTypeHandler()
     {
     }
 
-    public static readonly ProjectIdTypeHandler Default = new();
-
     public override ProjectId Parse(object? value)
     {
-        if (value is Guid id)
-        {
-            return new ProjectId(id);
-        }
+        if (value is Guid id) return new ProjectId(id);
 
         throw new FormatException($"Invalid conversion to {nameof(ProjectId)}");
     }

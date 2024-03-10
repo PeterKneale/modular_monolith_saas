@@ -25,7 +25,7 @@ public class CountingTranslations
 
         // act
         await _service.Execute(async ctx =>
-        {  
+        {
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, TestTerm1));
             await ctx.SendCommand(new AddTerm.Command(termId2, TestTerm2));

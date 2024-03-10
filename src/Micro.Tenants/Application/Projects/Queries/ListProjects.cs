@@ -20,7 +20,7 @@ public static class ListProjects
             using var con = connections.CreateConnection();
             return await con.QueryAsync<Result>(new CommandDefinition(sql, new
             {
-                OrganisationId = executionContext.OrganisationId
+                executionContext.OrganisationId
             }, cancellationToken: token));
         }
     }

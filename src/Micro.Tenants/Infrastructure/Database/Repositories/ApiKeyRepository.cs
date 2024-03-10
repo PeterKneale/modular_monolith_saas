@@ -38,6 +38,6 @@ internal class ApiKeyRepository(Db db) : IApiKeyRepository
     {
         return await db.UserApiKeys
             .Where(x => x.UserId == userId)
-            .ToListAsync(cancellationToken: token);
+            .ToListAsync(token);
     }
 }

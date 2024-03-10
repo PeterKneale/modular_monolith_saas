@@ -20,7 +20,7 @@ internal class MembershipRepository(Db db) : IMembershipRepository
         return await db.Memberships
             .Include(x => x.Organisation)
             .Include(x => x.User)
-            .SingleOrDefaultAsync(x => x.OrganisationId == organisationId && x.UserId == userId, cancellationToken: token);
+            .SingleOrDefaultAsync(x => x.OrganisationId == organisationId && x.UserId == userId, token);
     }
 
     public async Task<IEnumerable<Membership>> ListAsync(UserId userId, CancellationToken token)
@@ -29,7 +29,7 @@ internal class MembershipRepository(Db db) : IMembershipRepository
             .Where(x => x.UserId == userId)
             .Include(x => x.Organisation)
             .Include(x => x.User)
-            .ToListAsync(cancellationToken: token);
+            .ToListAsync(token);
     }
 
     public async Task<IEnumerable<Membership>> ListAsync(OrganisationId organisationId, CancellationToken token)
@@ -38,6 +38,6 @@ internal class MembershipRepository(Db db) : IMembershipRepository
             .Where(x => x.OrganisationId == organisationId)
             .Include(x => x.Organisation)
             .Include(x => x.User)
-            .ToListAsync(cancellationToken: token);
+            .ToListAsync(token);
     }
 }

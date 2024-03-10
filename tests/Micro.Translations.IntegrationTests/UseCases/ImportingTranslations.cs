@@ -52,13 +52,13 @@ public class ImportingTranslations
             { TestTerm2, "translation2" }
         };
 
-    private static async Task Act(IModule ctx, IDictionary<string, string> translations) => 
+    private static async Task Act(IModule ctx, IDictionary<string, string> translations) =>
         await ctx.SendCommand(new ImportTranslations.Command(TestLanguageCode1, translations));
 
     private static async Task Assert(IModule ctx, Dictionary<string, string> translations)
     {
-        var languages = await ctx.SendQuery(new ListLanguages.Query());
-        languages.Should().BeEquivalentTo(new ListLanguages.Result[]
+        var languages = await ctx.SendQuery(new ListLanguagesTranslated.Query());
+        languages.Should().BeEquivalentTo(new ListLanguagesTranslated.Result[]
         {
             new(TestLanguageCode1, TestLanguageName1)
         });
@@ -75,7 +75,7 @@ public class ImportingTranslations
         list.Translations.ToDictionary(x => x.TermName, x => x.TranslationText)
             .Should()
             .BeEquivalentTo(translations);
-        
+
         // assert translations are created
         var count = await ctx.SendQuery(new CountProjectTranslations.Query());
         count.Should().Be(translations.Count);

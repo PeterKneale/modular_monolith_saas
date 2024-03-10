@@ -21,16 +21,10 @@ public static class UpdateOrganisationName
             var organisationId = context.OrganisationId;
 
             var organisation = await organisations.GetAsync(organisationId, token);
-            if (organisation == null)
-            {
-                throw new NotFoundException(nameof(Organisation), organisationId.Value);
-            }
+            if (organisation == null) throw new NotFoundException(nameof(Organisation), organisationId.Value);
 
             var name = OrganisationName.Create(command.Name);
-            if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token))
-            {
-                throw new AlreadyInUseException(nameof(OrganisationName), name.Value);
-            }
+            if (await check.AnyOtherOrganisationUsesNameAsync(organisationId, name, token)) throw new AlreadyInUseException(nameof(OrganisationName), name.Value);
 
             organisation.ChangeName(name);
             organisations.Update(organisation);

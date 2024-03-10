@@ -1,10 +1,27 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Commands;
+using Micro.Translations.Application.Queries;
 
 namespace Micro.Web.Pages.Translate.Translations;
 
 public class AddPage(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
+    public async Task OnGet()
+    {
+        var result = await module.SendQuery(new ListLanguages.Query());
+        Languages = result.Select(x => new SelectListItem(x.Name, x.Code));
+        if (LanguageCode != null)
+        {
+            foreach(var language in Languages)
+            {
+                if (language.Value == LanguageCode)
+                {
+                    language.Selected = true;
+                }
+            }
+        }
+    }
+    
     [Required] 
     [BindProperty] 
     public string Text { get; set; }
@@ -13,10 +30,11 @@ public class AddPage(ITranslationModule module, IPageContextAccessor context) : 
     [BindProperty(SupportsGet = true)]
     public Guid TermId { get; set; }
 
-    [Required]
     [BindProperty(SupportsGet = true)]
-    public string LanguageCode { get; set; }
-    
+    public string? LanguageCode { get; set; }
+
+    public IEnumerable<SelectListItem> Languages { get; set; }
+
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)

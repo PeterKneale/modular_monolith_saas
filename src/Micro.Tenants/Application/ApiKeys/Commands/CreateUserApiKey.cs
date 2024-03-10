@@ -24,15 +24,9 @@ public static class CreateUserApiKey
             var name = new ApiKeyName(command.Name);
             var userId = context.UserId;
 
-            if (await keys.GetById(id, token) != null)
-            {
-                throw new AlreadyExistsException(nameof(UserApiKey), id.Value);
-            }
+            if (await keys.GetById(id, token) != null) throw new AlreadyExistsException(nameof(UserApiKey), id.Value);
 
-            if (await keys.GetByName(userId, name, token) != null)
-            {
-                throw new AlreadyInUseException(nameof(UserApiKey), name.Value);
-            }
+            if (await keys.GetByName(userId, name, token) != null) throw new AlreadyInUseException(nameof(UserApiKey), name.Value);
 
             var key = UserApiKey.CreateNew(id, userId, name, service);
             await keys.CreateAsync(key, token);

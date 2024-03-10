@@ -22,10 +22,7 @@ internal static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetDbConnectionString();
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            throw new Exception("Connection string missing");
-        }
+        if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
         // application
         var assembly = Assembly.GetExecutingAssembly();
@@ -66,8 +63,8 @@ internal static class ServiceCollectionExtensions
         });
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
-        
-        Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
+        DefaultTypeMap.MatchNamesWithUnderscores = true;
 
         return services;
     }

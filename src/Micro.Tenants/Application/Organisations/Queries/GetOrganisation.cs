@@ -10,7 +10,6 @@ public static class GetOrganisation
 
     public class Validator : AbstractValidator<Query>
     {
-        
     }
 
     public class Handler(IOrganisationExecutionContext executionContext, IOrganisationRepository organisations) : IRequestHandler<Query, Result>
@@ -18,12 +17,9 @@ public static class GetOrganisation
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
             var organisationId = executionContext.OrganisationId;
-            
+
             var organisation = await organisations.GetAsync(organisationId, token);
-            if (organisation == null)
-            {
-                throw new NotFoundException(nameof(Organisation), organisationId.Value);
-            }
+            if (organisation == null) throw new NotFoundException(nameof(Organisation), organisationId.Value);
 
             return new Result(organisation.Id.Value, organisation.Name.Value);
         }

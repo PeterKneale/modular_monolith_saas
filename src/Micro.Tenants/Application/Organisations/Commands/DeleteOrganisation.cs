@@ -8,9 +8,6 @@ public static class DeleteOrganisation
 
     public class Validator : AbstractValidator<Command>
     {
-        public Validator()
-        {
-        }
     }
 
     public class Handler(IOrganisationExecutionContext context, IOrganisationRepository organisations) : IRequestHandler<Command>
@@ -20,11 +17,8 @@ public static class DeleteOrganisation
             var organisationId = context.OrganisationId;
 
             var organisation = await organisations.GetAsync(organisationId, token);
-            if (organisation == null)
-            {
-                throw new NotFoundException(nameof(Organisation), organisationId.Value);
-            }
-            
+            if (organisation == null) throw new NotFoundException(nameof(Organisation), organisationId.Value);
+
             organisations.Delete(organisation);
 
             return Unit.Value;

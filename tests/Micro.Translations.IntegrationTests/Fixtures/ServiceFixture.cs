@@ -15,7 +15,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
     public ServiceFixture()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
+            .AddJsonFile("appsettings.json", false)
             .AddEnvironmentVariables()
             .Build();
         var services = new ServiceCollection()

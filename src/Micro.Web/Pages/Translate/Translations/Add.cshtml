@@ -11,7 +11,15 @@
             <div class="card-body">
                 @Html.EditorFor(x => x.Text, null, new { autofocus = "autofocus" })
                 @Html.HiddenFor(x => x.TermId)
-                @Html.HiddenFor(x => x.LanguageCode)
+                @if (Model.LanguageCode == null)
+                {
+                    @Html.DropDownListFor(x => x.LanguageCode, Model.Languages, new { @class = "form-select" })    
+                }
+                else
+                {
+                    @Html.HiddenFor(x => x.LanguageCode)
+                }
+                
             </div>
             <div class="card-footer">
                 <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>

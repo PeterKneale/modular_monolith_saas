@@ -17,11 +17,6 @@ public class User : BaseEntity
         Credentials = credentials;
     }
 
-    public static User CreateInstance(UserId id, UserName name, UserCredentials credentials)
-    {
-        return new User(id, name, credentials);
-    }
-
     public UserId Id { get; private init; }
 
     public UserName Name { get; private set; }
@@ -31,4 +26,6 @@ public class User : BaseEntity
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 
     public virtual ICollection<UserApiKey> UserApiKeys { get; set; } = new List<UserApiKey>();
+
+    public static User CreateInstance(UserId id, UserName name, UserCredentials credentials) => new(id, name, credentials);
 }

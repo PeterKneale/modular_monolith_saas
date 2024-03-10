@@ -10,10 +10,7 @@ public static class GetEmail
         {
             var userId = new UserId(query.UserId);
             var user = await users.GetAsync(userId, token);
-            if (user == null)
-            {
-                throw new BusinessRuleBrokenException("User not found.");
-            }
+            if (user == null) throw new BusinessRuleBrokenException("User not found.");
             return user.Credentials.Email;
         }
     }

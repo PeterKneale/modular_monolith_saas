@@ -2,12 +2,12 @@
 
 public class MembershipRole
 {
-    public string Name { get; }
-
     private MembershipRole(string name)
     {
         Name = name;
     }
+
+    public string Name { get; }
 
     public static MembershipRole Owner => new("Owner");
     public static MembershipRole Member => new("Member");

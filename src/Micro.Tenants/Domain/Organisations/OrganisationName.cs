@@ -7,17 +7,17 @@ public class OrganisationName
         Value = value;
     }
 
+    public string Value { get; private init; }
+
     public static OrganisationName Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-        {
             throw new ArgumentException("Organisation Name must not be empty", nameof(value));
-        }
+
+        value = NameSanitizer.SanitizedValue(value);
 
         return new OrganisationName(value);
     }
 
     public override string ToString() => $"{Value}";
-
-    public string Value { get; init; }
 }

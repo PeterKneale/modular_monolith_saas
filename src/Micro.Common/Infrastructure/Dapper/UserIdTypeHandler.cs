@@ -6,18 +6,15 @@ namespace Micro.Common.Infrastructure.Dapper;
 
 public class UserIdTypeHandler : SqlMapper.TypeHandler<UserId>
 {
+    public static readonly UserIdTypeHandler Default = new();
+
     private UserIdTypeHandler()
     {
     }
 
-    public static readonly UserIdTypeHandler Default = new();
-
     public override UserId Parse(object? value)
     {
-        if (value is Guid id)
-        {
-            return new UserId(id);
-        }
+        if (value is Guid id) return new UserId(id);
 
         throw new FormatException($"Invalid conversion to {nameof(UserId)}");
     }

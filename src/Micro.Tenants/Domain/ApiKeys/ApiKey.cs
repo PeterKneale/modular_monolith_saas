@@ -15,10 +15,7 @@ public class ApiKey
 
     public DateTime CreatedAt { get; }
 
-    public bool Match(ApiKey apiKey)
-    {
-        return apiKey.Key == Key;
-    }
+    public bool Match(ApiKey apiKey) => apiKey.Key == Key;
 
     public override string ToString() => $"{Name}:{Key}";
 

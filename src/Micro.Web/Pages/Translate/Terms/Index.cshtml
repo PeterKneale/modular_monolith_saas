@@ -14,22 +14,47 @@
             <div class="card mb-2">
                 <div class="card-body">
                     <span class="float-end">
-                        <a asp-page="../Translations/Add"
-                           asp-route-org="@Model.RouteOrg"
-                           asp-route-project="@Model.RouteProject"
-                           asp-route-termId="@item.Id"
-                           asp-route-languageCode="en-AU"
-                           class="btn btn-primary">
-                            Add Translation (en-AU)
-                        </a>
-                        <a asp-page="../Translations/Add"
-                           asp-route-org="@Model.RouteOrg"
-                           asp-route-project="@Model.RouteProject"
-                           asp-route-termId="@item.Id"
-                           asp-route-languageCode="en-UK"
-                           class="btn btn-primary me-2">
-                            Add Translation (en-UK)
-                        </a>
+                        @if (Model.Languages.Any())
+                        {
+                            <a
+                                asp-page="../Translations/Add"
+                                asp-route-org="@Model.RouteOrg"
+                                asp-route-project="@Model.RouteProject"
+                                asp-route-termId="@item.Id"
+                                class="btn btn-primary me-2">
+                                Add New Translation
+                            </a>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Translate To
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach (var language in Model.Languages)
+                                    {
+                                        <li>
+                                            <a asp-page="../Translations/Add"
+                                               asp-route-org="@Model.RouteOrg"
+                                               asp-route-project="@Model.RouteProject"
+                                               asp-route-termId="@item.Id"
+                                               asp-route-languageCode="@language.Code"
+                                               class="dropdown-item">
+                                                @language.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-page="../Translations/Add"
+                               asp-route-org="@Model.RouteOrg"
+                               asp-route-project="@Model.RouteProject"
+                               asp-route-termId="@item.Id"
+                               class="btn btn-primary me-2">
+                                Add Translation
+                            </a>
+                        }
                     </span>
                     <h5 class="card-title">@item.Name</h5>
                 </div>

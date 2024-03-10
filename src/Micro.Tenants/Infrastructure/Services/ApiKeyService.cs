@@ -17,8 +17,8 @@ internal class ApiKeyService : IApiKeyService
         var base64String = Convert.ToBase64String(bytes)
             .Replace("+", "-")
             .Replace("/", "_");
-        
-        var keyLength = LengthOfKey - Prefix.Length; 
+
+        var keyLength = LengthOfKey - Prefix.Length;
 
         var key = Prefix + base64String[..keyLength];
         return new ApiKeyValue(key);

@@ -3,12 +3,12 @@
 public static class Constants
 {
     public const string SchemaName = "tenants";
-    public const string OrganisationsTable ="organisations";
-    public const string MembershipsTable ="memberships";
+    public const string OrganisationsTable = "organisations";
+    public const string MembershipsTable = "memberships";
     public const string UsersTable = "users";
-    public const string ProjectsTable ="projects";
-    public const string UserApiKeysTable ="user_api_keys";
-    
+    public const string ProjectsTable = "projects";
+    public const string UserApiKeysTable = "user_api_keys";
+
     // Common Column Names
     public const string IdColumn = "id";
     public const string NameColumn = "name";

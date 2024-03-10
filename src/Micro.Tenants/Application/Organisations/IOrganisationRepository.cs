@@ -9,5 +9,4 @@ public interface IOrganisationRepository
     void Update(Organisation organisation);
     Task<Organisation?> GetAsync(OrganisationId id, CancellationToken token);
     Task<Organisation?> GetAsync(OrganisationName name, CancellationToken token);
-    
 }
