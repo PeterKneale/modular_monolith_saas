@@ -33,7 +33,7 @@ public partial class Db : DbContext
     public virtual DbSet<UserApiKey> UserApiKeys { get; set; }
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
-
+    
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<OrganisationId>().HaveConversion<OrganisationIdConverter>();

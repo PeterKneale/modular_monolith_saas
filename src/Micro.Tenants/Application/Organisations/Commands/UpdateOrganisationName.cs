@@ -16,7 +16,7 @@ public static class UpdateOrganisationName
         }
     }
 
-    public class Handler(IOrganisationRepository organisations, IOrganisationNameCheck check, IOrganisationExecutionContext context, IOutboxRepository events) : IRequestHandler<Command>
+    public class Handler(IOrganisationRepository organisations, IOrganisationNameCheck check, IOrganisationExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
@@ -30,8 +30,6 @@ public static class UpdateOrganisationName
 
             organisation.ChangeName(name);
             organisations.Update(organisation);
-
-            await events.CreateAsync(new OrganisationChanged { OrganisationId = organisationId, OrganisationName = name }, token);
             return Unit.Value;
         }
     }

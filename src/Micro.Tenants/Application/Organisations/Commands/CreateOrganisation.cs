@@ -19,7 +19,7 @@ public static class CreateOrganisation
         }
     }
 
-    public class Handler(IUserExecutionContext executionContext, IOrganisationRepository organisations, IMembershipRepository memberships, IOrganisationNameCheck check, IOutboxRepository events) : IRequestHandler<Command>
+    public class Handler(IUserExecutionContext executionContext, IOrganisationRepository organisations, IMembershipRepository memberships, IOrganisationNameCheck check) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
@@ -37,7 +37,6 @@ public static class CreateOrganisation
             var membership = Membership.CreateInstance(membershipId, organisationId, executionContext.UserId, MembershipRole.Owner);
             await memberships.CreateAsync(membership, token);
 
-            await events.CreateAsync(new OrganisationChanged { OrganisationId = organisationId, OrganisationName = name }, token);
             return Unit.Value;
         }
     }

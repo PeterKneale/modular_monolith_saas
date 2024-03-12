@@ -1,6 +1,8 @@
-﻿namespace Micro.Tenants.Infrastructure.Database;
+﻿using Micro.Common.Infrastructure.DomainEvents;
 
-public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : IPipelineBehavior<TRequest, TResponse>
+namespace Micro.Tenants.Infrastructure.Database;
+
+public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, DomainEventPublisher mediator, ILogger<Db> log) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
@@ -13,6 +15,9 @@ public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : 
 
         log.LogInformation($"Begin command {request.GetType().FullName}");
         var response = await next();
+        
+        await mediator.PublishDomainEvents(db, cancellationToken);
+        
         log.LogInformation("Saving changes");
         await db.SaveChangesAsync(cancellationToken);
         return response;

@@ -3,6 +3,7 @@ using Micro.Common.Application;
 using Micro.Common.Infrastructure.Behaviours;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Dapper;
+using Micro.Common.Infrastructure.DomainEvents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +21,10 @@ public static class ServiceCollectionExtensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+        
+        // domain events
+        services.AddScoped<DomainEventAccessor>();
+        services.AddScoped<DomainEventPublisher>();
         return services;
     }
 

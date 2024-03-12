@@ -1,4 +1,5 @@
 ﻿using Micro.Tenants.Domain.Memberships;
+using Micro.Tenants.Domain.Organisations.DomainEvents;
 using Micro.Tenants.Domain.Projects;
 
 namespace Micro.Tenants.Domain.Organisations;
@@ -9,6 +10,7 @@ public class Organisation : BaseEntity
     {
         Id = id;
         Name = name;
+        AddDomainEvent(new OrganisationCreatedDomainEvent(id, name));
     }
 
     public OrganisationId Id { get; private init; }
@@ -22,6 +24,7 @@ public class Organisation : BaseEntity
 
     public void ChangeName(OrganisationName name)
     {
+        AddDomainEvent(new OrganisationNameChangedDomainEvent(Id, name));
         Name = name;
     }
 }
