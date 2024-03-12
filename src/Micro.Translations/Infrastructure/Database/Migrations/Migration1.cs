@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
-using Micro.Common.Infrastructure.Inbox;
-using Micro.Common.Infrastructure.Outbox;
+using Micro.Common.Infrastructure.Integration.Inbox;
+using Micro.Common.Infrastructure.Integration.Outbox;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database.Migrations;
@@ -41,7 +41,7 @@ public class Migration1 : Migration
     {
         Delete.Table(TranslationsTable).IfExists();
         Delete.Table(TermsTable).IfExists();
-        
+
         this.DropInboxTable();
         this.DropOutboxTable();
     }

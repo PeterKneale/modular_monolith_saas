@@ -12,6 +12,7 @@ public class DomainEventPublisher(DomainEventAccessor accessor, IPublisher publi
             log.LogInformation($"Publishing {domainEvent.GetType().Name}");
             await publisher.Publish(domainEvent, cancellationToken);
         }
+
         accessor.ClearAllDomainEvents(db);
     }
 }

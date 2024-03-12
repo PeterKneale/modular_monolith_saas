@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Common.Infrastructure.DomainEvents;
 
-public class DomainEventAccessor()
+public class DomainEventAccessor
 {
     public IReadOnlyCollection<IDomainEvent> GetAllDomainEvents(DbContext db)
     {

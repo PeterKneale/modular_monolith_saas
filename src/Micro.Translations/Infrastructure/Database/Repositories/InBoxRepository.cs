@@ -1,5 +1,5 @@
-﻿using Micro.Common.Infrastructure.Inbox;
-using Micro.Common.Infrastructure.Integration;
+﻿using Micro.Common.Infrastructure.Integration;
+using Micro.Common.Infrastructure.Integration.Inbox;
 
 namespace Micro.Translations.Infrastructure.Database.Repositories;
 

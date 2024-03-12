@@ -1,6 +1,4 @@
-﻿using Micro.Common.Infrastructure.Integration;
-
-namespace Micro.Common.Infrastructure.Outbox;
+﻿namespace Micro.Common.Infrastructure.Integration.Outbox;
 
 public interface IOutboxRepository
 {

@@ -1,4 +1,4 @@
-namespace Micro.Common.Infrastructure.Outbox;
+namespace Micro.Common.Infrastructure.Integration.Outbox;
 
 public class OutboxMessage
 {

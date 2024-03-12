@@ -1,6 +1,6 @@
 using FluentMigrator;
 
-namespace Micro.Common.Infrastructure.Inbox;
+namespace Micro.Common.Infrastructure.Integration.Inbox;
 
 public static class InboxMigrationExtensions
 {

@@ -13,7 +13,7 @@ public class Organisation : BaseEntity
         AddDomainEvent(new OrganisationCreatedDomainEvent(id, name));
     }
 
-    public OrganisationId Id { get; private init; }
+    public OrganisationId Id { get; }
     public OrganisationName Name { get; private set; }
 
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();

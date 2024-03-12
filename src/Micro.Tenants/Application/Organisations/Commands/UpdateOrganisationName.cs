@@ -1,5 +1,4 @@
 ﻿using Micro.Tenants.Domain.Organisations;
-using Micro.Tenants.IntegrationEvents;
 
 namespace Micro.Tenants.Application.Organisations.Commands;
 

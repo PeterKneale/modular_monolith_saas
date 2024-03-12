@@ -1,4 +1,4 @@
-﻿using Micro.Common.Infrastructure.Outbox;
+﻿using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.IntegrationEvents;
 

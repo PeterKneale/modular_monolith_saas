@@ -1,6 +1,6 @@
 ﻿using Micro.Common.Infrastructure.Database;
-using Micro.Common.Infrastructure.Inbox;
-using Micro.Common.Infrastructure.Outbox;
+using Micro.Common.Infrastructure.Integration.Inbox;
+using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Tenants.Domain.ApiKeys;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
@@ -36,7 +36,7 @@ public partial class Db : DbContext
     public virtual DbSet<InboxMessage> Inbox { get; set; }
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
-    
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<OrganisationId>().HaveConversion<OrganisationIdConverter>();

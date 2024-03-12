@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
-using Micro.Common.Infrastructure.Inbox;
-using Micro.Common.Infrastructure.Outbox;
+using Micro.Common.Infrastructure.Integration.Inbox;
+using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database;
 using Micro.Translations.Infrastructure.Database.Repositories;

@@ -1,5 +1,4 @@
-﻿using Micro.Common.Infrastructure;
-using Micro.Common.Infrastructure.Integration;
+﻿using Micro.Common.Infrastructure.Integration;
 
 namespace Micro.Translations.IntegrationEvents;
 

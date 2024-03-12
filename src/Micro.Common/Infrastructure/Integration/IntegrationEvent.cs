@@ -1,5 +1,5 @@
 ﻿namespace Micro.Common.Infrastructure.Integration;
 
-public class IntegrationEvent
+public class IntegrationEvent : INotification
 {
 }

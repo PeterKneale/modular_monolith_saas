@@ -1,15 +1,17 @@
-﻿using Micro.Common.Infrastructure.Outbox;
+﻿using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Tenants.Domain.Organisations.DomainEvents;
 using Micro.Tenants.IntegrationEvents;
 
 namespace Micro.Tenants.Application.Organisations.DomainEventHandlers;
 
-public class OrganisationNameChangedHandler(IOutboxRepository events) : INotificationHandler<OrganisationNameChangedDomainEvent>
+public class OrganisationNameChangedHandler(IOutboxRepository outbox) : INotificationHandler<OrganisationNameChangedDomainEvent>
 {
     public async Task Handle(OrganisationNameChangedDomainEvent notification, CancellationToken cancellationToken)
     {
-        var id = notification.Id;
-        var name = notification.Name;
-        await events.CreateAsync(new OrganisationChanged { OrganisationId = id, OrganisationName = name }, cancellationToken);
+        await outbox.CreateAsync(new OrganisationChanged
+        {
+            OrganisationId = notification.Id,
+            OrganisationName = notification.Name
+        }, cancellationToken);
     }
 }

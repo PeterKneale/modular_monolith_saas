@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Micro.Common.Infrastructure.Inbox;
+namespace Micro.Common.Infrastructure.Integration.Outbox;
 
-public static class InboxMappingExtensions
+public static class OutboxMappingExtensions
 {
-    public static void AddInbox(this ModelBuilder modelBuilder, string schema)
+    public static void AddOutbox(this ModelBuilder modelBuilder, string schema)
     {
-        modelBuilder.Entity<InboxMessage>(entity =>
+        modelBuilder.Entity<OutboxMessage>(entity =>
         {
-            entity.ToTable("inbox", schema);
+            entity.ToTable("outbox", schema);
             entity.Property(e => e.Id).ValueGeneratedNever().HasColumnName("id");
             entity.Property(e => e.Data).HasColumnName("data");
             entity.Property(e => e.Type).HasColumnName("type");

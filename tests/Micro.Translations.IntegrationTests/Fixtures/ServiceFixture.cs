@@ -31,6 +31,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     public ITestOutputHelper? OutputHelper { get; set; }
 
+    [Obsolete]
     public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         SetUserContext(userId);

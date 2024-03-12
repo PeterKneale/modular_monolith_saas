@@ -1,5 +1,5 @@
-﻿using Micro.Common.Infrastructure.Inbox;
-using Micro.Common.Infrastructure.Outbox;
+﻿using Micro.Common.Infrastructure.Integration.Inbox;
+using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Infrastructure.Database.Converters;
 using static Micro.Translations.Infrastructure.Database.Constants;
