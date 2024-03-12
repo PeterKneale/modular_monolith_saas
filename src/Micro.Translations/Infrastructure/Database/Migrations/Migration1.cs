@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using Micro.Common.Infrastructure.Inbox;
 using Micro.Common.Infrastructure.Outbox;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
@@ -32,6 +33,7 @@ public class Migration1 : Migration
         Create.UniqueConstraint($"unique_{TranslationsTable}_{TermIdColumn}_{LanguageCodeColumn}")
             .OnTable(TranslationsTable).Columns(TermIdColumn, LanguageCodeColumn);
 
+        this.CreateInboxTable();
         this.CreateOutboxTable();
     }
 
@@ -39,6 +41,8 @@ public class Migration1 : Migration
     {
         Delete.Table(TranslationsTable).IfExists();
         Delete.Table(TermsTable).IfExists();
+        
+        this.DropInboxTable();
         this.DropOutboxTable();
     }
 }
