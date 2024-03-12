@@ -26,5 +26,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Micro.Common\Micro.Common.csproj"/>
+        <ProjectReference Include="..\Micro.Tenants.IntegrationEvents\Micro.Tenants.IntegrationEvents.csproj"/>
     </ItemGroup>
 </Project>

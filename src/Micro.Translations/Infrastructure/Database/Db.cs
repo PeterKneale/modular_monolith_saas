@@ -1,4 +1,6 @@
-﻿using Micro.Translations.Domain.TermAggregate;
+﻿using Micro.Common.Infrastructure.Outbox;
+using Micro.Translations.Domain.TermAggregate;
+using Micro.Translations.Infrastructure.Database.Converters;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
@@ -17,6 +19,8 @@ public partial class Db : DbContext
     public virtual DbSet<Term> Terms { get; set; }
 
     public virtual DbSet<Translation> Translations { get; set; }
+
+    public virtual DbSet<OutboxMessage> Outbox { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -84,6 +88,8 @@ public partial class Db : DbContext
 
             entity.Ignore(x => x.DomainEvents);
         });
+
+        modelBuilder.AddOutbox(SchemaName);
 
         OnModelCreatingPartial(modelBuilder);
     }

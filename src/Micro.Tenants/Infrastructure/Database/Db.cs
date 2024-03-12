@@ -1,4 +1,5 @@
 ﻿using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Outbox;
 using Micro.Tenants.Domain.ApiKeys;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
@@ -6,6 +7,7 @@ using Micro.Tenants.Domain.Projects;
 using Micro.Tenants.Domain.Users;
 using Micro.Tenants.Infrastructure.Database.Converters;
 using Microsoft.EntityFrameworkCore;
+using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
@@ -29,6 +31,8 @@ public partial class Db : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserApiKey> UserApiKeys { get; set; }
+
+    public virtual DbSet<OutboxMessage> Outbox { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -169,8 +173,10 @@ public partial class Db : DbContext
                 .HasConstraintName("fk_user_api_keys_users");
         });
 
+        modelBuilder.AddOutbox(SchemaName);
         OnModelCreatingPartial(modelBuilder);
     }
+
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

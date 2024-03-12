@@ -1,6 +1,4 @@
-﻿using Micro.Translations.Infrastructure.Database;
-
-namespace Micro.Translations.Infrastructure.Behaviours;
+﻿namespace Micro.Translations.Infrastructure.Database;
 
 public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

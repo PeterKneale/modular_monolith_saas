@@ -1,7 +1,8 @@
 ﻿using FluentMigrator;
+using Micro.Common.Infrastructure.Outbox;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
-namespace Micro.Translations.Infrastructure.Migrations;
+namespace Micro.Translations.Infrastructure.Database.Migrations;
 
 [Migration(1)]
 public class Migration1 : Migration
@@ -30,11 +31,14 @@ public class Migration1 : Migration
         // Each translation can only be added to a term once per language
         Create.UniqueConstraint($"unique_{TranslationsTable}_{TermIdColumn}_{LanguageCodeColumn}")
             .OnTable(TranslationsTable).Columns(TermIdColumn, LanguageCodeColumn);
+
+        this.CreateOutboxTable();
     }
 
     public override void Down()
     {
         Delete.Table(TranslationsTable).IfExists();
         Delete.Table(TermsTable).IfExists();
+        this.DropOutboxTable();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using Micro.Common.Infrastructure.Outbox;
 using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database.Migrations;
@@ -52,6 +53,8 @@ public class Migration1 : Migration
         Create.ForeignKey($"fk_{UserApiKeysTable}_{UsersTable}")
             .FromTable(UserApiKeysTable).ForeignColumn(UserIdColumn)
             .ToTable(UsersTable).PrimaryColumn(IdColumn);
+
+        this.CreateOutboxTable();
     }
 
     public override void Down()
@@ -61,5 +64,6 @@ public class Migration1 : Migration
         Delete.Table(MembershipsTable).IfExists();
         Delete.Table(UsersTable).IfExists();
         Delete.Table(OrganisationsTable).IfExists();
+        this.DropOutboxTable();
     }
 }

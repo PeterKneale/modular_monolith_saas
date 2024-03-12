@@ -7,7 +7,7 @@ public class OrganisationName
         Value = value;
     }
 
-    public string Value { get; private init; }
+    public string Value { get; }
 
     public static OrganisationName Create(string value)
     {
@@ -18,6 +18,8 @@ public class OrganisationName
 
         return new OrganisationName(value);
     }
+
+    public static implicit operator string(OrganisationName x) => x.Value;
 
     public override string ToString() => $"{Value}";
 }

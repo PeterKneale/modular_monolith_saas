@@ -22,6 +22,8 @@ public class TermName : ValueObject
 
     public override string ToString() => Value;
 
+    public static implicit operator string(TermName d) => d.Value;
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

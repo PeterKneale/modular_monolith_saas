@@ -24,5 +24,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Micro.Common\Micro.Common.csproj"/>
+        <ProjectReference Include="..\Micro.Translations.IntegrationEvents\Micro.Translations.IntegrationEvents.csproj"/>
     </ItemGroup>
 </Project>

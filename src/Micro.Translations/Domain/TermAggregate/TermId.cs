@@ -15,6 +15,9 @@ public class TermId : ValueObject
 
     public override string ToString() => Value.ToString();
 
+    public static implicit operator string(TermId d) => d.Value.ToString();
+    public static implicit operator Guid(TermId d) => d.Value;
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

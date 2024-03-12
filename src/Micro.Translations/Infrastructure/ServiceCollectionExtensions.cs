@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
+using Micro.Common.Infrastructure.Outbox;
 using Micro.Translations.Application;
-using Micro.Translations.Infrastructure.Behaviours;
 using Micro.Translations.Infrastructure.Database;
-using Micro.Translations.Infrastructure.Repositories;
+using Micro.Translations.Infrastructure.Database.Repositories;
 using Microsoft.Extensions.Configuration;
 
 namespace Micro.Translations.Infrastructure;
@@ -23,6 +23,9 @@ internal static class ServiceCollectionExtensions
 
         // Repositories
         services.AddScoped<ITermRepository, TermRepository>();
+
+        // Outbox
+        services.AddScoped<IOutboxRepository, OutboxRepository>();
 
         // Database Migrations
         services

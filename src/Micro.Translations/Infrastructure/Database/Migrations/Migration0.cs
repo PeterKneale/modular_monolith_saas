@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace Micro.Translations.Infrastructure.Migrations;
+namespace Micro.Translations.Infrastructure.Database.Migrations;
 
 [Migration(0)]
 [ExcludeFromCodeCoverage]
