@@ -1,4 +1,5 @@
 ﻿using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Inbox;
 using Micro.Common.Infrastructure.Outbox;
 using Micro.Tenants.Domain.ApiKeys;
 using Micro.Tenants.Domain.Memberships;
@@ -31,6 +32,8 @@ public partial class Db : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserApiKey> UserApiKeys { get; set; }
+
+    public virtual DbSet<InboxMessage> Inbox { get; set; }
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
     
@@ -173,6 +176,7 @@ public partial class Db : DbContext
                 .HasConstraintName("fk_user_api_keys_users");
         });
 
+        modelBuilder.AddInbox(SchemaName);
         modelBuilder.AddOutbox(SchemaName);
         OnModelCreatingPartial(modelBuilder);
     }

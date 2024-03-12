@@ -1,8 +1,8 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 
-namespace Micro.Common.Infrastructure.Outbox;
+namespace Micro.Common.Infrastructure.Inbox;
 
-public interface IOutboxRepository
+public interface IInboxRepository
 {
     Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token);
 }

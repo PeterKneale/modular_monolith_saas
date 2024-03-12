@@ -1,4 +1,5 @@
-﻿using Micro.Common.Infrastructure.Outbox;
+﻿using Micro.Common.Infrastructure;
+using Micro.Common.Infrastructure.Integration;
 
 namespace Micro.Translations.IntegrationEvents;
 

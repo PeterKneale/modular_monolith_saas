@@ -1,21 +1,20 @@
-using Micro.Common.Infrastructure;
+﻿using Micro.Common.Infrastructure.Inbox;
 using Micro.Common.Infrastructure.Integration;
-using Micro.Common.Infrastructure.Outbox;
 
 namespace Micro.Translations.Infrastructure.Database.Repositories;
 
-internal class OutboxRepository(Db db) : IOutboxRepository
+internal class InboxRepository(Db db) : IInboxRepository
 {
     public async Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token)
     {
         var type = integrationEvent.GetType().Name;
         var data = JsonConvert.SerializeObject(integrationEvent, Formatting.Indented);
-        var record = new OutboxMessage
+        var record = new InboxMessage
         {
             Id = Guid.NewGuid(),
             Type = type,
             Data = data
         };
-        await db.Outbox.AddAsync(record, token);
+        await db.Inbox.AddAsync(record, token);
     }
 }

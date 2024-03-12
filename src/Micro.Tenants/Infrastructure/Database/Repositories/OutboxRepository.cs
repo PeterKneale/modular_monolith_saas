@@ -1,3 +1,4 @@
+using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Outbox;
 
 namespace Micro.Tenants.Infrastructure.Database.Repositories;

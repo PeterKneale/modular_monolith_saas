@@ -1,5 +1,4 @@
-﻿using Micro.Common.Infrastructure.Outbox;
-using Micro.Tenants.Application.Memberships;
+﻿using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.IntegrationEvents;

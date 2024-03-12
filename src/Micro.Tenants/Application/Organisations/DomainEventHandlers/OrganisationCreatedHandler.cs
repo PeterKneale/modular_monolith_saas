@@ -10,6 +10,6 @@ public class OrganisationCreatedHandler(IOutboxRepository events) : INotificatio
     {
         var id = notification.Id;
         var name = notification.Name;
-        await events.CreateAsync(new OrganisationChanged { OrganisationId = id, OrganisationName = name }, cancellationToken);
+        await events.CreateAsync(new OrganisationCreated { OrganisationId = id, OrganisationName = name }, cancellationToken);
     }
 }

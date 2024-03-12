@@ -1,6 +1,6 @@
-namespace Micro.Common.Infrastructure.Outbox;
+namespace Micro.Common.Infrastructure.Inbox;
 
-public class OutboxMessage
+public class InboxMessage
 {
     public Guid Id { get; init; }
     public string Type { get; init; }

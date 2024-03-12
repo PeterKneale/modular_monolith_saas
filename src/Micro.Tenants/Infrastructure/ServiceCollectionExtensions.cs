@@ -3,6 +3,7 @@ using Dapper;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Inbox;
 using Micro.Common.Infrastructure.Outbox;
 using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Application.Memberships;
@@ -45,7 +46,8 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IMembershipRepository, MembershipRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
 
-        // Outbox
+        // Inbox/Outbox
+        services.AddScoped<IInboxRepository, InboxRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
 
         // Database Migrations
