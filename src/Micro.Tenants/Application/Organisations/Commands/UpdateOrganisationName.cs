@@ -14,7 +14,7 @@ public static class UpdateOrganisationName
         }
     }
 
-    public class Handler(IOrganisationRepository organisations, IOrganisationNameCheck check, IOrganisationExecutionContext context) : IRequestHandler<Command>
+    public class Handler(IOrganisationRepository organisations, IOrganisationNameCheck check, IExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {

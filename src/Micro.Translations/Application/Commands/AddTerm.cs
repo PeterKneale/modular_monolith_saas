@@ -17,7 +17,7 @@ public static class AddTerm
         }
     }
 
-    public class Handler(ITermRepository terms, IProjectExecutionContext context, IOutboxRepository events) : IRequestHandler<Command>
+    public class Handler(ITermRepository terms, IExecutionContext context, IOutboxRepository events) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
@@ -32,7 +32,7 @@ public static class AddTerm
             var term = Term.Create(termId, projectId, name);
             await terms.CreateAsync(term, token);
 
-            await events.CreateAsync(new TermChanged { TermId = termId, TermName = name }, token);
+            await events.CreateAsync(new TermChanged(termId, name), token);
             return Unit.Value;
         }
     }

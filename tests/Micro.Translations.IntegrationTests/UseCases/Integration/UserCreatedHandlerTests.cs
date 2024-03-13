@@ -24,6 +24,6 @@ public class UserCreatedHandlerTests(ServiceFixture service, ITestOutputHelper o
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();
-        user.Name.Should().Be("X");
+        user!.Name.Should().Be("X");
     }
 }

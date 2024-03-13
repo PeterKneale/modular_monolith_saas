@@ -15,21 +15,21 @@ public class Translation : BaseEntity
         Text = text;
     }
 
-    public TranslationId Id { get; private init; }
+    public TranslationId Id { get; private init; } = null!;
 
-    public TermId TermId { get; private init; }
+    public TermId TermId { get; private init; } = null!;
 
     public virtual Language Language { get; } = null!;
 
-    public TranslationText Text { get; private set; }
+    public TranslationText Text { get; private set; } = null!;
 
     public virtual Term Term { get; private set; } = null!;
 
     public static Translation Create(TranslationId id, TermId termId, Language language, TranslationText text) => new(id, termId, language, text);
 
-    public void UpdateText(TranslationText translationText)
+    public void UpdateText(TranslationText text)
     {
-        Text = translationText;
+        Text = text;
     }
 
     public override string ToString() => $"{Language}: {Text}";

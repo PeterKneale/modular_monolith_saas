@@ -10,9 +10,7 @@ var userId = Guid.NewGuid();
 var projectId = Guid.NewGuid();
 var accessor = new Accessor
 {
-    User = new UserExecutionContext(new UserId(userId)),
-    Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId)),
-    Project = new ProjectExecutionContext(new ProjectId(projectId))
+    
 };
 
 var configuration = new ConfigurationBuilder()

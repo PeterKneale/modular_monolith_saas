@@ -1,5 +1,4 @@
 ﻿using Micro.Translations.Domain.TermAggregate;
-using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Application.Queries;
 

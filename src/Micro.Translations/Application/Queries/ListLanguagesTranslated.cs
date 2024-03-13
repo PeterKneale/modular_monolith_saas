@@ -1,6 +1,4 @@
-﻿using Micro.Translations.Infrastructure.Database;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class ListLanguagesTranslated
 {
@@ -12,7 +10,7 @@ public static class ListLanguagesTranslated
     {
     }
 
-    public class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
+    public class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
     {
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {

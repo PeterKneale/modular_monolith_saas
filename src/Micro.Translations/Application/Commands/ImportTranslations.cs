@@ -16,7 +16,7 @@ public static class ImportTranslations
         }
     }
 
-    public class Handler(ITermRepository repository, IProjectExecutionContext context) : IRequestHandler<Command>
+    public class Handler(ITermRepository repository, IExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {

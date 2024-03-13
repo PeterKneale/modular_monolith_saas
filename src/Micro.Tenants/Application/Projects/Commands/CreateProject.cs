@@ -15,7 +15,7 @@ public static class CreateProject
         }
     }
 
-    public class Handler(IOrganisationExecutionContext executionContext, IProjectRepository projects, IProjectNameCheck check) : IRequestHandler<Command>
+    public class Handler(IExecutionContext context, IProjectRepository projects, IProjectNameCheck check) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
@@ -26,7 +26,7 @@ public static class CreateProject
             var name = ProjectName.CreateInstance(command.Name);
             if (await check.AnyProjectUsesNameAsync(name, token)) throw new AlreadyInUseException(nameof(ProjectName), name.Value);
 
-            var project = new Project(projectId, executionContext.OrganisationId, name);
+            var project = new Project(projectId, context.OrganisationId, name);
             await projects.CreateAsync(project, token);
 
             return Unit.Value;

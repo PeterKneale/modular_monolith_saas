@@ -14,7 +14,7 @@ public static class UpdateProjectName
         }
     }
 
-    public class Handler(IProjectRepository projects, IProjectNameCheck check, IProjectExecutionContext context) : IRequestHandler<Command>
+    public class Handler(IProjectRepository projects, IProjectNameCheck check, IExecutionContext context) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {

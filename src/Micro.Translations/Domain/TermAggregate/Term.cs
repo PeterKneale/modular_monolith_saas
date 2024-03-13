@@ -4,7 +4,7 @@ namespace Micro.Translations.Domain.TermAggregate;
 
 public class Term : BaseEntity
 {
-    private readonly List<Translation> _translations;
+    private readonly List<Translation> _translations = null!;
 
     private Term()
     {
@@ -16,14 +16,14 @@ public class Term : BaseEntity
         Id = termId;
         ProjectId = projectId;
         Name = termName;
-        _translations = new List<Translation>();
+        _translations = [];
     }
 
-    public TermId Id { get; }
+    public TermId Id { get; } = null!;
 
-    public ProjectId ProjectId { get; private set; }
+    public ProjectId ProjectId { get; private set; } = null!;
 
-    public TermName Name { get; }
+    public TermName Name { get; } = null!;
 
     public IReadOnlyCollection<Translation> Translations => _translations;
 

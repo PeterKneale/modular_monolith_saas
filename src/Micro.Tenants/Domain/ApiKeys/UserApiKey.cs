@@ -17,11 +17,11 @@ public class UserApiKey
         ApiKey = apiKey;
     }
 
-    public UserApiKeyId Id { get; }
+    public UserApiKeyId Id { get; } = null!;
 
-    public UserId UserId { get; }
+    public UserId UserId { get; } = null!;
 
-    public ApiKey ApiKey { get; }
+    public ApiKey ApiKey { get; } = null!;
 
     public virtual User User { get; set; } = null!;
 

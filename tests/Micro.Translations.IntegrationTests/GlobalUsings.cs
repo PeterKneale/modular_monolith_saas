@@ -1,4 +1,5 @@
 global using FluentAssertions;
+global using JetBrains.Annotations;
 global using Micro.Common.Application;
 global using Micro.Common.Infrastructure.Context;
 global using Micro.Translations.IntegrationTests.Fixtures;

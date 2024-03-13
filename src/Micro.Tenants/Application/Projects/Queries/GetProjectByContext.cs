@@ -10,11 +10,11 @@ public static class GetProjectByContext
     {
     }
 
-    public class Handler(IProjectExecutionContext executionContext, IProjectRepository apps) : IRequestHandler<Query, Result>
+    public class Handler(IExecutionContext context, IProjectRepository apps) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var app = await apps.GetAsync(executionContext.ProjectId, token);
+            var app = await apps.GetAsync(context.ProjectId, token);
             if (app == null) throw new Exception("not found");
 
             return new Result(app.Id.Value, app.Name.Value);

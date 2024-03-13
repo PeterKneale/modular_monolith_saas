@@ -19,11 +19,11 @@ public class User : BaseEntity
         AddDomainEvent(new UserCreatedDomainEvent(id, name));
     }
 
-    public UserId Id { get; private init; }
+    public UserId Id { get; private init; } = null!;
 
-    public UserName Name { get; private set; }
+    public UserName Name { get; private set; } = null!;
 
-    public UserCredentials Credentials { get; private set; }
+    public UserCredentials Credentials { get; private set; } = null!;
 
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 

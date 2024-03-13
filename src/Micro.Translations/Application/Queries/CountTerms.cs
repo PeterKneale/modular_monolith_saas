@@ -1,12 +1,10 @@
-﻿using Micro.Translations.Infrastructure.Database;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class CountTerms
 {
     public record Query : IRequest<int>;
 
-    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, int>
+    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, int>
     {
         public async Task<int> Handle(Query query, CancellationToken token)
         {

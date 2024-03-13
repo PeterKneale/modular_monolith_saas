@@ -18,21 +18,20 @@ public class Membership : BaseEntity
         Role = role;
     }
 
-    public MembershipId Id { get; private init; }
-    public OrganisationId OrganisationId { get; private init; }
-    public UserId UserId { get; private init; }
-    public MembershipRole Role { get; private set; }
+    public MembershipId Id { get; private init; } = null!;
 
-    public virtual Organisation Organisation { get; set; } = null!;
+    public OrganisationId OrganisationId { get; private init; } = null!;
 
-    public virtual User User { get; set; } = null!;
+    public UserId UserId { get; private init; } = null!;
 
-    public static Membership CreateInstance(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole membershipRole) => new(id, organisationId, userId, membershipRole);
+    public MembershipRole Role { get; private set; } = null!;
 
-    public void ChangeRole(MembershipRole membershipRole)
-    {
-        Role = membershipRole;
-    }
+    public virtual Organisation Organisation { get; private init; } = null!;
+
+    public virtual User User { get; private init; } = null!;
+
+    public static Membership CreateInstance(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole membershipRole) =>
+        new(id, organisationId, userId, membershipRole);
 
     public void SetRole(MembershipRole role)
     {

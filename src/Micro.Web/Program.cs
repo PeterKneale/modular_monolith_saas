@@ -6,6 +6,7 @@ using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ExecutionContextAccessor = Micro.Web.Code.Contexts.Execution.ExecutionContextAccessor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); });
 builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
 builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
-builder.Services.AddSingleton<IContextAccessor, ContextAccessor>();
+builder.Services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
 
 
 var configuration = new ConfigurationBuilder()
@@ -56,7 +57,7 @@ builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageC
 builder.Services.AddInMemoryEventBus();
 
 var app = builder.Build();
-var accessor = app.Services.GetRequiredService<IContextAccessor>();
+var accessor = app.Services.GetRequiredService<IExecutionContextAccessor>();
 
 var bus = app.Services.GetRequiredService<IEventsBus>();
 var logs = app.Services.GetRequiredService<ILoggerFactory>();

@@ -10,7 +10,7 @@ public static class ListProjects
 
     public record Result(Guid Id, string Name);
 
-    private class Handler(IOrganisationExecutionContext executionContext, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
+    private class Handler(IExecutionContext context, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
     {
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {
@@ -20,7 +20,7 @@ public static class ListProjects
             using var con = connections.CreateConnection();
             return await con.QueryAsync<Result>(new CommandDefinition(sql, new
             {
-                executionContext.OrganisationId
+                context.OrganisationId
             }, cancellationToken: token));
         }
     }

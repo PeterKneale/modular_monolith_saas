@@ -1,5 +1,4 @@
 ﻿using Micro.Translations.Domain.TermAggregate;
-using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Application.Queries;
 
@@ -19,7 +18,7 @@ public static class ListTranslations
         }
     }
 
-    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, Results>
+    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, Results>
     {
         public async Task<Results> Handle(Query query, CancellationToken token)
         {

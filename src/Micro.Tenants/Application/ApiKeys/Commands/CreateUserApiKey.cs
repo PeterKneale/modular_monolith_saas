@@ -16,7 +16,7 @@ public static class CreateUserApiKey
         }
     }
 
-    public class Handler(IUserExecutionContext context, IApiKeyRepository keys, IApiKeyService service) : IRequestHandler<Command>
+    public class Handler(IExecutionContext context, IApiKeyRepository keys, IApiKeyService service) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {

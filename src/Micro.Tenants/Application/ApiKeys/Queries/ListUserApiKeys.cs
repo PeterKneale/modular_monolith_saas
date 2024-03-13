@@ -10,7 +10,7 @@ public static class ListUserApiKeys
     {
     }
 
-    public class Handler(IApiKeyRepository keys, IUserExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
+    public class Handler(IApiKeyRepository keys, IExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
     {
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {

@@ -1,6 +1,4 @@
-﻿using Micro.Translations.Infrastructure.Database;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class ListTerms
 {
@@ -8,7 +6,7 @@ public static class ListTerms
 
     public record Result(Guid Id, string Name);
 
-    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
+    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
     {
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {

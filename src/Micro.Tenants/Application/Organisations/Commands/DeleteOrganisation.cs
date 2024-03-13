@@ -10,7 +10,7 @@ public static class DeleteOrganisation
     {
     }
 
-    public class Handler(IOrganisationExecutionContext context, IOrganisationRepository organisations) : IRequestHandler<Command>
+    public class Handler(IExecutionContext context, IOrganisationRepository organisations) : IRequestHandler<Command>
     {
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {

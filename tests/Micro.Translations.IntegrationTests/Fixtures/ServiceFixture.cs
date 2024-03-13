@@ -1,18 +1,18 @@
 ﻿using MartinCostello.Logging.XUnit;
 using MediatR;
 using Micro.Common;
-using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 
 namespace Micro.Translations.IntegrationTests.Fixtures;
 
 public class ServiceFixture : ITestOutputHelperAccessor
 {
     private readonly IModule _module;
-    private readonly TestContextAccessor _accessor;
+    private readonly ExecutionContextAccessor _accessor;
 
     public ServiceFixture()
     {
@@ -29,7 +29,7 @@ public class ServiceFixture : ITestOutputHelperAccessor
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
-        _accessor = new TestContextAccessor();
+        _accessor = new ExecutionContextAccessor();
         _module = new TranslationModule();
 
         TranslationModuleStartup.Start(_accessor, configuration, bus, logs, true);
@@ -39,62 +39,27 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        SetUserContext(userId);
-        SetOrgContext(organisationId);
-        SetProjectContext(projectId);
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await action(_module);
-        ClearContext();
+        _accessor.ExecutionContext = ExecutionContext.Empty();
     }
-
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        SetUserContext(userId);
-        SetOrgContext(organisationId);
-        SetProjectContext(projectId);
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _module.SendCommand(command);
-        ClearContext();
+        _accessor.ExecutionContext = ExecutionContext.Empty();
+    }
+
+    public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        var result = await _module.SendQuery(query);
+        _accessor.ExecutionContext = ExecutionContext.Empty();
+        return result;
     }
     
     public async Task Publish(IntegrationEvent integrationEvent)
     {
         await _module.PublishNotification(integrationEvent);
-    }
-
-    public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
-    {
-        SetUserContext(userId);
-        SetOrgContext(organisationId);
-        SetProjectContext(projectId);
-        var result = await _module.SendQuery(query);
-        ClearContext();
-        return result;
-    }
-
-    private void ClearContext()
-    {
-        _accessor.User = null;
-        _accessor.Organisation = null;
-        _accessor.Project = null;
-    }
-
-    private void SetProjectContext(Guid? projectId)
-    {
-        if (!projectId.HasValue) return;
-        OutputHelper?.WriteLine($"Setting project ID to {projectId}");
-        _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
-    }
-
-    private void SetOrgContext(Guid? organisationId)
-    {
-        if (!organisationId.HasValue) return;
-        OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
-        _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
-    }
-
-    private void SetUserContext(Guid? userId)
-    {
-        if (!userId.HasValue) return;
-        OutputHelper?.WriteLine($"Setting user ID to {userId}");
-        _accessor.User = new UserExecutionContext(new UserId(userId.Value));
     }
 }

@@ -4,38 +4,28 @@ using Micro.Web.Code.Contexts.Authentication;
 
 namespace Micro.Web.Code.Contexts.Execution;
 
-public class ContextAccessor(IHttpContextAccessor accessor) : IContextAccessor
+public class ExecutionContextAccessor(IHttpContextAccessor httpContextAccessor) : IExecutionContextAccessor
 {
-    public IUserExecutionContext? User
+    public IExecutionContext ExecutionContext
     {
         get
         {
-            var context = new AuthContext(accessor);
-            return context.IsAuthenticated 
-                ? new UserExecutionContext(new UserId(context.UserId)) 
+            var authContext = new AuthContext(httpContextAccessor);
+            var pageContext = new PageContextAccessor(httpContextAccessor);
+            
+            var userId = authContext.IsAuthenticated 
+                ? new UserId(authContext.UserId) 
                 : null;
-        }
-    }
+            
+            var organisationId = pageContext.HasOrganisation 
+                ? new OrganisationId(pageContext.Organisation.Id) 
+                : null;
+            
+            var projectId = pageContext.HasProject 
+                ? new ProjectId(pageContext.Project.Id) 
+                : null;
 
-    public IOrganisationExecutionContext? Organisation
-    {
-        get
-        {
-            var context = new PageContextAccessor(accessor);
-            return context.HasOrganisation 
-                ? new OrganisationExecutionContext(new OrganisationId(context.Organisation.Id)) 
-                : null;
-        }
-    }
-
-    public IProjectExecutionContext? Project
-    {
-        get
-        {
-            var context = new PageContextAccessor(accessor);
-            return context.HasProject 
-                ? new ProjectExecutionContext(new ProjectId(context.Project.Id)) 
-                : null;
+            return Common.Infrastructure.Context.ExecutionContext.Create(userId, organisationId, projectId);
         }
     }
 }

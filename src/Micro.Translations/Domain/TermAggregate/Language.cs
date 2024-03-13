@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Micro.Translations.Domain.TermAggregate;
+﻿namespace Micro.Translations.Domain.TermAggregate;
 
 public record Language(string Name, string Code)
 {

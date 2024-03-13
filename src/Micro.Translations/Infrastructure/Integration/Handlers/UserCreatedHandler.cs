@@ -1,6 +1,5 @@
 ﻿using Micro.Tenants.IntegrationEvents;
 using Micro.Translations.Domain.UserAggregate;
-using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Infrastructure.Integration.Handlers;
 

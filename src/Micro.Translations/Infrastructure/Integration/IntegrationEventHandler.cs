@@ -1,6 +1,5 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
-using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Infrastructure.Integration;
 

@@ -22,7 +22,7 @@ public static class AlertTempDataExtensions
 
     public static Alert GetAlert(this ITempDataDictionary dictionary)
     {
-        var json = dictionary[Key].ToString();
+        var json = dictionary[Key]!.ToString();
         return JsonConvert.DeserializeObject<Alert>(json);
     }
 }

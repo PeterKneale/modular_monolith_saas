@@ -1,10 +1,9 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
-using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Infrastructure.Integration;
 
-public class ProcessInboxCommandHandler(Db db, IPublisher publisher, ILogger<ProcessInboxCommandHandler> logs) : IRequestHandler<ProcessInboxCommand>
+public class ProcessInboxCommandHandler(Db db, IPublisher publisher) : IRequestHandler<ProcessInboxCommand>
 {
     public async Task<Unit> Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
     {

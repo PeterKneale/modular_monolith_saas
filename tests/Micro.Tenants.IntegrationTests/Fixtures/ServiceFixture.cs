@@ -5,13 +5,15 @@ using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Engine.ClientProtocol;
+using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
 
 public class ServiceFixture : ITestOutputHelperAccessor
 {
     private readonly IModule _module;
-    private readonly TestContextAccessor _accessor;
+    private readonly ExecutionContextAccessor _accessor;
 
     public ServiceFixture()
     {
@@ -19,16 +21,19 @@ public class ServiceFixture : ITestOutputHelperAccessor
             .AddJsonFile("appsettings.json", optional: false)
             .AddEnvironmentVariables()
             .Build();
-        
+
         var services = new ServiceCollection()
             .AddLogging(x => x.AddXUnit(this))
             .AddInMemoryEventBus()
             .BuildServiceProvider();
-        
+
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
-        _accessor = new TestContextAccessor();
+        _accessor = new ExecutionContextAccessor
+        {
+            ExecutionContext = ExecutionContext.Empty()
+        };
         _module = new TenantsModule();
 
         TenantsModuleStartup.Start(_accessor, configuration, bus, logs, true);
@@ -38,48 +43,16 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        SetUserContext(userId);
-        SetOrgContext(organisationId);
-        SetProjectContext(projectId);
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _module.SendCommand(command);
-        ClearContext();
+        _accessor.ExecutionContext = ExecutionContext.Empty();
     }
 
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        SetUserContext(userId);
-        SetOrgContext(organisationId);
-        SetProjectContext(projectId);
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         var result = await _module.SendQuery(query);
-        ClearContext();
+        _accessor.ExecutionContext = ExecutionContext.Empty();
         return result;
-    }
-
-    private void ClearContext()
-    {
-        _accessor.User = null;
-        _accessor.Organisation = null;
-        _accessor.Project = null;
-    }
-
-    private void SetProjectContext(Guid? projectId)
-    {
-        if (!projectId.HasValue) return;
-        OutputHelper?.WriteLine($"Setting project ID to {projectId}");
-        _accessor.Project = new ProjectExecutionContext(new ProjectId(projectId.Value));
-    }
-
-    private void SetOrgContext(Guid? organisationId)
-    {
-        if (!organisationId.HasValue) return;
-        OutputHelper?.WriteLine($"Setting organisation ID to {organisationId}");
-        _accessor.Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId.Value));
-    }
-
-    private void SetUserContext(Guid? userId)
-    {
-        if (!userId.HasValue) return;
-        OutputHelper?.WriteLine($"Setting user ID to {userId}");
-        _accessor.User = new UserExecutionContext(new UserId(userId.Value));
     }
 }

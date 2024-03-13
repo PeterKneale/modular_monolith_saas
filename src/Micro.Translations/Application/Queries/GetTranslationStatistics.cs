@@ -1,6 +1,4 @@
-﻿using Micro.Translations.Infrastructure.Database;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class GetTranslationStatistics
 {
@@ -10,7 +8,7 @@ public static class GetTranslationStatistics
 
     public record LanguageStatistic(string Code, string Name, int Number, int Percentage);
 
-    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, Results>
+    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, Results>
     {
         public async Task<Results> Handle(Query query, CancellationToken token)
         {

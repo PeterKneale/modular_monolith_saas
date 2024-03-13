@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Micro.Translations.Infrastructure.Integration;
+﻿using Micro.Translations.Infrastructure.Integration;
 using Micro.Translations.IntegrationEvents;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
@@ -13,12 +12,12 @@ public class ProcessOutboxCommandHandlerTest(ServiceFixture service, ITestOutput
     {
         // arrange
         await IntegrationHelper.PurgeOutbox();
-        await IntegrationHelper.PushMessageIntoOutbox(new TermChanged { TermId = Guid.NewGuid(), TermName = "X" });
+        await IntegrationHelper.PushMessageIntoOutbox(new TermChanged(Guid.NewGuid(), "X"));
         (await IntegrationHelper.CountPendingOutboxMessages()).Should().Be(1);
 
         // act
         await Service.Command(new ProcessOutboxCommand());
-        
+
         // assert
         (await IntegrationHelper.CountPendingOutboxMessages()).Should().Be(0);
     }

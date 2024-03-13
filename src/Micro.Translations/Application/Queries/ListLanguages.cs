@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using Micro.Translations.Domain.TermAggregate;
-using Micro.Translations.Infrastructure.Database;
+﻿using Micro.Translations.Domain.TermAggregate;
 
 namespace Micro.Translations.Application.Queries;
 
@@ -14,18 +12,16 @@ public static class ListLanguages
     {
     }
 
-    public class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
+    public class Handler : IRequestHandler<Query, IEnumerable<Result>>
     {
-        public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
+        public Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {
-            var projectId = context.ProjectId;
-
             var cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-            var langauge = cultures.Select(x => Language.FromIsoCode(x.Name));
+            var languages = cultures.Select(x => Language.FromIsoCode(x.Name));
 
             // todo remove used
 
-            return langauge.Select(x => new Result(x.Code, x.Name));
+            return Task.FromResult(languages.Select(x => new Result(x.Code, x.Name)));
         }
     }
 }

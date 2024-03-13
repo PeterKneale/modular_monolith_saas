@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Micro.Tenants.IntegrationEvents;
+﻿using Micro.Tenants.IntegrationEvents;
 using Micro.Translations.Infrastructure.Integration;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;

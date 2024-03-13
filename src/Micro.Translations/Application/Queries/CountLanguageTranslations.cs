@@ -1,5 +1,4 @@
 ﻿using Micro.Translations.Domain.TermAggregate;
-using Micro.Translations.Infrastructure.Database;
 
 namespace Micro.Translations.Application.Queries;
 
@@ -15,7 +14,7 @@ public static class CountLanguageTranslations
         }
     }
 
-    private class Handler(Db db, IProjectExecutionContext context) : IRequestHandler<Query, int>
+    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, int>
     {
         public async Task<int> Handle(Query query, CancellationToken token)
         {

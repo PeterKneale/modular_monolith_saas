@@ -2,7 +2,7 @@
 
 namespace Micro.Common.Application;
 
-public class AddToInboxCommand : IRequest
+public class AddToInboxCommand(IntegrationEvent integrationEvent) : IRequest
 {
-    public IntegrationEvent IntegrationEvent { get; init; }
+    public IntegrationEvent IntegrationEvent { get; init; } = integrationEvent;
 }

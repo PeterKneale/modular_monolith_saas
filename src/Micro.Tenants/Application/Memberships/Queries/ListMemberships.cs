@@ -10,7 +10,7 @@ public static class ListMemberships
 
     public record Result(Guid OrganisationId, string OrganisationName, string RoleName);
 
-    private class Handler(IUserExecutionContext executionContext, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
+    private class Handler(IExecutionContext context, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
     {
         public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
         {
@@ -24,7 +24,7 @@ public static class ListMemberships
             using var con = connections.CreateConnection();
             return await con.QueryAsync<Result>(new CommandDefinition(sql, new
             {
-                UserId = executionContext.UserId.Value
+                UserId = context.UserId.Value
             }, cancellationToken: token));
         }
     }
