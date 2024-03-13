@@ -8,20 +8,18 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
     public Task Publish<T>(T @event, CancellationToken cancellationToken) where T : IntegrationEvent
     {
         var eventType = GetEventType(@event);
-        logs.LogInformation("Publishing {EventType} to bus", eventType);
+        logs.LogDebug("Publishing {EventType} to bus", eventType);
 
         var handlers = GetHandlers(eventType);
         if (handlers.Count == 0)
         {
-            logs.LogInformation("No subscribers for {EventType}", eventType);
+            logs.LogDebug("No subscribers for {EventType}", eventType);
             return Task.CompletedTask;
         }
         
-        logs.LogInformation("Subscriptions exist for {EventType}", eventType);
-
         foreach (var handler in handlers)
         {
-            logs.LogInformation($"Subscriber handling integration event: {handler.GetType().AssemblyQualifiedName}");
+            logs.LogDebug($"Subscriber handling integration event: {handler.GetType().AssemblyQualifiedName}");
             handler.Handle(@event);
         }
 

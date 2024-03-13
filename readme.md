@@ -115,8 +115,8 @@
   - Context is retrieved via route parameters and authentication details
 
 ```shell
-dotnet ef dbcontext scaffold "Username=admin;Password=password;Database=db;Host=localhost;Port=5432;Search Path=tenants;Include Error Detail=true;Log Parameters=true" \
+dotnet ef dbcontext scaffold "Username=admin;Password=password;Database=db;Host=localhost;Port=5432;Search Path=translate;Include Error Detail=true;Log Parameters=true" \
   Npgsql.EntityFrameworkCore.PostgreSQL \
-  -o Infrastructure/Ef \
+  -o Infrastructure/temp \
   -c "Db"
 ```

@@ -11,6 +11,10 @@ internal class UserRepository(Db db) : IUserRepository
         await db.Users.AddAsync(user, token);
     }
 
+    public void Update(User user) => db.Users.Update(user);
+
+    public void Delete(User user) => db.Users.Remove(user);
+
     public async Task<User?> GetAsync(UserId id, CancellationToken token)
     {
         return await db.Users

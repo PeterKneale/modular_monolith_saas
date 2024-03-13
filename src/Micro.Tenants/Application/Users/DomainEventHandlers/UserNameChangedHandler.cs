@@ -11,7 +11,7 @@ public class UserNameChangedHandler(IOutboxRepository outbox) : INotificationHan
         await outbox.CreateAsync(new UserChanged
         {
             UserId = notification.Id,
-            UserName = notification.Name
+            Name = notification.Name
         }, cancellationToken);
     }
 }

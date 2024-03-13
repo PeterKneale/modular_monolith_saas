@@ -12,7 +12,7 @@ public class UserCreatedHandler(IOutboxRepository outbox, ILogger<UserCreatedHan
         await outbox.CreateAsync(new UserCreated
         {
             UserId = notification.Id,
-            UserName = notification.Name
+            Name = notification.Name
         }, cancellationToken);
     }
 }

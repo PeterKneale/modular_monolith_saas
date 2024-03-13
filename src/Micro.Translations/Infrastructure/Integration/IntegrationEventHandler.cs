@@ -10,12 +10,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
     {
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
-        db.Inbox.Add(new InboxMessage
-        {
-            Id = Guid.NewGuid(),
-            Type = @event.GetType().AssemblyQualifiedName!,
-            Data = JsonConvert.SerializeObject(@event)
-        });
+        db.Inbox.Add(InboxMessage.CreateFrom(@event));
         await db.SaveChangesAsync();
     }
 }

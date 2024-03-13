@@ -7,13 +7,11 @@ public class UnitOfWorkBehaviour<TRequest, TResponse>(Db db, ILogger<Db> log) : 
     {
         if (request is not IRequest<Unit>)
         {
-            log.LogInformation($"Begin query {request.GetType().FullName}");
             return await next();
         }
 
-        log.LogInformation($"Begin command {request.GetType().FullName}");
         var response = await next();
-        log.LogInformation("Saving changes");
+        log.LogDebug("Saving changes");
         await db.SaveChangesAsync(cancellationToken);
         return response;
     }

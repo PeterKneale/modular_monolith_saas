@@ -1,6 +1,8 @@
 ﻿using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Translations.Domain;
 using Micro.Translations.Domain.TermAggregate;
+using Micro.Translations.Domain.UserAggregate;
 using Micro.Translations.Infrastructure.Database.Converters;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
@@ -20,6 +22,8 @@ public partial class Db : DbContext
     public virtual DbSet<Term> Terms { get; set; }
 
     public virtual DbSet<Translation> Translations { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<InboxMessage> Inbox { get; set; }
 
@@ -91,12 +95,20 @@ public partial class Db : DbContext
 
             entity.Ignore(x => x.DomainEvents);
         });
+        
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable(UsersTable, SchemaName);
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName(IdColumn);
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName(NameColumn);
+        });
 
         modelBuilder.AddInbox(SchemaName);
         modelBuilder.AddOutbox(SchemaName);
-
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

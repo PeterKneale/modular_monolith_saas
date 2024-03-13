@@ -2,7 +2,6 @@
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Users.Commands;
-using Micro.Translations.Application.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -37,6 +36,7 @@ TranslationModuleStartup.Start(accessor, configuration, bus, logs, true);
 var tenantsModule = services.GetRequiredService<ITenantsModule>();
 var translationModule = services.GetRequiredService<ITranslationModule>();
 await tenantsModule.SendCommand(new RegisterUser.Command(userId, "x", "x", $"x{Guid.NewGuid().ToString()}@example.com", "x"));
+await tenantsModule.SendCommand(new UpdateUserName.Command("x", "y"));
 await tenantsModule.SendCommand(new CreateOrganisation.Command(organisationId, "x"));
 await tenantsModule.SendCommand(new ProcessOutboxCommand());
 await translationModule.SendCommand(new ProcessInboxCommand());
