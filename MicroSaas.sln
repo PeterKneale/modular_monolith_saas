@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.IntegrationEv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.IntegrationEvents", "src\Micro.Translations.IntegrationEvents\Micro.Translations.IntegrationEvents.csproj", "{3D592CBB-3478-4BDD-936D-0436EA07014E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common.UnitTests", "tests\Micro.Common.UnitTests\Micro.Common.UnitTests.csproj", "{D83D5413-12DA-49BE-89CA-3A55041DA1E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{3D592CBB-3478-4BDD-936D-0436EA07014E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D592CBB-3478-4BDD-936D-0436EA07014E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D592CBB-3478-4BDD-936D-0436EA07014E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D83D5413-12DA-49BE-89CA-3A55041DA1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D83D5413-12DA-49BE-89CA-3A55041DA1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D83D5413-12DA-49BE-89CA-3A55041DA1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D83D5413-12DA-49BE-89CA-3A55041DA1E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B351D8DC-4C47-4FB8-8CBA-4975D90885A3} = {C5645A63-6FD2-4A01-B273-11061F068C10}
@@ -107,5 +113,6 @@ Global
 		{7F5702D7-1808-443D-BD92-FFD5FADE5158} = {C5645A63-6FD2-4A01-B273-11061F068C10}
 		{EFEE4927-9402-4E85-81A2-F2BC9602725B} = {B351D8DC-4C47-4FB8-8CBA-4975D90885A3}
 		{3D592CBB-3478-4BDD-936D-0436EA07014E} = {2FED42D9-12CB-4636-A42B-A1723C72B3DF}
+		{D83D5413-12DA-49BE-89CA-3A55041DA1E1} = {C5645A63-6FD2-4A01-B273-11061F068C10}
 	EndGlobalSection
 EndGlobal

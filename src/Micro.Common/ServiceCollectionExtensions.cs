@@ -4,6 +4,7 @@ using Micro.Common.Infrastructure.Behaviours;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Dapper;
 using Micro.Common.Infrastructure.DomainEvents;
+using Micro.Common.Infrastructure.Integration.Outbox;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +26,8 @@ public static class ServiceCollectionExtensions
         // domain events
         services.AddScoped<DomainEventAccessor>();
         services.AddScoped<DomainEventPublisher>();
+
+        services.AddScoped<OutboxMessagePublisher>();
         return services;
     }
 

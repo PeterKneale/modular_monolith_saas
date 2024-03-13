@@ -1,5 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿using Micro.Common.Application;
+using Micro.Common.Infrastructure.Integration.Bus;
+using Micro.Tenants.Application.Users.Commands;
 using Micro.Translations.Application.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,8 @@ var userId = Guid.NewGuid();
 var accessor = new Accessor
 {
     User = new UserExecutionContext(new UserId(userId)),
-    Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId))
+    Organisation = new OrganisationExecutionContext(new OrganisationId(organisationId)),
+    Project = new ProjectExecutionContext(new ProjectId(Guid.NewGuid()))
 };
 
 var configuration = new ConfigurationBuilder()
@@ -21,13 +23,17 @@ var services = new ServiceCollection()
     .AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); })
     .AddSingleton<ITenantsModule, TenantsModule>()
     .AddSingleton<ITranslationModule, TranslationModule>()
+    .AddInMemoryEventBus()
     .BuildServiceProvider();
 
+var bus = services.GetRequiredService<IEventsBus>();
 var logs = services.GetRequiredService<ILoggerFactory>();
 
-TenantsModuleStartup.Start(accessor, configuration, logs, true);
-TranslationModuleStartup.Start(accessor, configuration, logs, true);
+TenantsModuleStartup.Start(accessor, configuration, bus, logs, true);
+TranslationModuleStartup.Start(accessor, configuration, bus, logs, true);
 
-await services
-    .GetRequiredService<ITranslationModule>()
-    .SendCommand(new AddTerm.Command(Guid.NewGuid(), "x"));
+var tenantsModule = services.GetRequiredService<ITenantsModule>();
+var translationModule = services.GetRequiredService<ITranslationModule>();
+await tenantsModule.SendCommand(new RegisterUser.Command(Guid.NewGuid(), "x", "x", $"x{Guid.NewGuid().ToString()}@example.com", "x"));
+await tenantsModule.SendCommand(new ProcessOutboxCommand());
+await translationModule.SendCommand(new ProcessInboxCommand());

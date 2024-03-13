@@ -2,7 +2,7 @@
 using MediatR;
 using Micro.Common;
 using Micro.Common.Domain;
-using Micro.Tenants.Application.Users;
+using Micro.Common.Infrastructure.Integration.Bus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -19,15 +19,19 @@ public class ServiceFixture : ITestOutputHelperAccessor
             .AddJsonFile("appsettings.json", optional: false)
             .AddEnvironmentVariables()
             .Build();
+        
         var services = new ServiceCollection()
             .AddLogging(x => x.AddXUnit(this))
+            .AddInMemoryEventBus()
             .BuildServiceProvider();
-        var logFactory = services.GetRequiredService<ILoggerFactory>();
+        
+        var bus = services.GetRequiredService<IEventsBus>();
+        var logs = services.GetRequiredService<ILoggerFactory>();
 
         _accessor = new TestContextAccessor();
         _module = new TenantsModule();
 
-        TenantsModuleStartup.Start(_accessor, configuration, logFactory, true);
+        TenantsModuleStartup.Start(_accessor, configuration, bus, logs, true);
     }
 
     public ITestOutputHelper? OutputHelper { get; set; }

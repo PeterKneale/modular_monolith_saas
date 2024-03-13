@@ -1,5 +1,7 @@
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Integration;
+using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
@@ -51,13 +53,16 @@ builder.Services.AddScoped<PageContextMiddleware>();
 builder.Services.AddScoped<IPageContextAccessor, PageContextAccessor>();
 builder.Services.AddScoped<IPageContextOrganisation>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
 builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageContextAccessor>().Project);
+builder.Services.AddInMemoryEventBus();
 
 var app = builder.Build();
 var accessor = app.Services.GetRequiredService<IContextAccessor>();
+
+var bus = app.Services.GetRequiredService<IEventsBus>();
 var logs = app.Services.GetRequiredService<ILoggerFactory>();
 
-TenantsModuleStartup.Start(accessor, configuration, logs);
-TranslationModuleStartup.Start(accessor, configuration, logs);
+TenantsModuleStartup.Start(accessor, configuration, bus, logs);
+TranslationModuleStartup.Start(accessor, configuration, bus, logs);
 
 if (!app.Environment.IsDevelopment())
 {
