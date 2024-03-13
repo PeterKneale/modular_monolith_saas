@@ -6,6 +6,8 @@ public class DomainEventPublisher(DomainEventAccessor accessor, IPublisher publi
 {
     public async Task PublishDomainEvents(DbContext db, CancellationToken cancellationToken)
     {
+        log.LogInformation("Publishing domain events");
+        
         var domainEvents = accessor.GetAllDomainEvents(db);
         foreach (var domainEvent in domainEvents)
         {

@@ -21,7 +21,17 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var services = new ServiceCollection()
-    .AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); })
+    .AddLogging(c =>
+    {
+        c.ClearProviders();
+        c.AddSimpleConsole(o =>
+        {
+            o.IncludeScopes = true;
+            o.SingleLine = true;
+        });
+        c.AddFilter("FluentMigrator", LogLevel.Warning);
+        c.AddFilter("Microsoft", LogLevel.Error);
+    })
     .AddSingleton<ITenantsModule, TenantsModule>()
     .AddSingleton<ITranslationModule, TranslationModule>()
     .AddInMemoryEventBus()
@@ -38,5 +48,6 @@ var translationModule = services.GetRequiredService<ITranslationModule>();
 await tenantsModule.SendCommand(new RegisterUser.Command(userId, "x", "x", $"x{Guid.NewGuid().ToString()}@example.com", "x"));
 await tenantsModule.SendCommand(new UpdateUserName.Command("x", "y"));
 await tenantsModule.SendCommand(new CreateOrganisation.Command(organisationId, "x"));
+await tenantsModule.SendCommand(new UpdateOrganisationName.Command("y"));
 await tenantsModule.SendCommand(new ProcessOutboxCommand());
 await translationModule.SendCommand(new ProcessInboxCommand());

@@ -18,4 +18,11 @@ public class TenantsModule : ITenantsModule
         var dispatcher = scope.ServiceProvider.GetRequiredService<IMediator>();
         return await dispatcher.Send(query);
     }
+
+    public async Task PublishNotification(INotification notification)
+    {
+        using var scope = CompositionRoot.BeginLifetimeScope();
+        var dispatcher = scope.ServiceProvider.GetRequiredService<IMediator>();
+        await dispatcher.Publish(notification);
+    }
 }

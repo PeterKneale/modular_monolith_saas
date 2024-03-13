@@ -47,7 +47,6 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IProjectRepository, ProjectRepository>();
 
         // Inbox/Outbox
-        services.AddScoped<IInboxRepository, InboxRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
 
         // Database Migrations

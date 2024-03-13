@@ -1,4 +1,4 @@
-namespace Micro.Translations.IntegrationTests.Fixtures;
+namespace Micro.Web.IntegrationTests.Fixtures;
 
 public class BaseTest
 {
@@ -9,6 +9,4 @@ public class BaseTest
     }
 
     protected ServiceFixture Service { get; }
-    
-
 }

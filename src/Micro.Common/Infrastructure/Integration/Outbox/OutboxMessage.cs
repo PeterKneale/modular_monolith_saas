@@ -5,6 +5,8 @@ public class OutboxMessage
     public Guid Id { get; init; }
     public string Type { get; init; }
     public string Data { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public DateTime? ProcessedAt { get; init; } = null;
     
     public static OutboxMessage CreateFrom<T>(T integrationEvent) where T : IntegrationEvent
     {
@@ -12,7 +14,8 @@ public class OutboxMessage
         {
             Id = Guid.NewGuid(),
             Type = integrationEvent.GetType().AssemblyQualifiedName!,
-            Data = JsonConvert.SerializeObject(integrationEvent)
+            Data = JsonConvert.SerializeObject(integrationEvent),
+            CreatedAt = DateTime.UtcNow
         };
     }
     

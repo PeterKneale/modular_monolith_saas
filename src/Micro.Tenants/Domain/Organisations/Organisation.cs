@@ -6,6 +6,10 @@ namespace Micro.Tenants.Domain.Organisations;
 
 public class Organisation : BaseEntity
 {
+    private Organisation()
+    {
+        // ef core
+    }
     private Organisation(OrganisationId id, OrganisationName name)
     {
         Id = id;

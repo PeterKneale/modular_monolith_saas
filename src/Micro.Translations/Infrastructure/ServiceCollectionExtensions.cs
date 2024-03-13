@@ -26,7 +26,6 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<ITermRepository, TermRepository>();
 
         // Inbox/Outbox
-        services.AddScoped<IInboxRepository, InboxRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
 
         // Database Migrations

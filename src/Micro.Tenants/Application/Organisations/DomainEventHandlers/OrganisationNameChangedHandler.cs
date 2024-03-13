@@ -4,10 +4,11 @@ using Micro.Tenants.IntegrationEvents;
 
 namespace Micro.Tenants.Application.Organisations.DomainEventHandlers;
 
-public class OrganisationNameChangedHandler(IOutboxRepository outbox) : INotificationHandler<OrganisationNameChangedDomainEvent>
+public class OrganisationNameChangedHandler(IOutboxRepository outbox, ILogger<OrganisationNameChangedHandler> logs) : INotificationHandler<OrganisationNameChangedDomainEvent>
 {
     public async Task Handle(OrganisationNameChangedDomainEvent notification, CancellationToken cancellationToken)
     {
+        logs.LogInformation("Organisation changed, publishing to outbox");
         await outbox.CreateAsync(new OrganisationChanged
         {
             OrganisationId = notification.Id,
