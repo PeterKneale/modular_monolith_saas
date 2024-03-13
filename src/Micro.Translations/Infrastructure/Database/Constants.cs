@@ -8,6 +8,7 @@ public static class Constants
     // tables
     public const string TermsTable = "terms";
     public const string TranslationsTable = "translations";
+    public const string UsersTable = "users";
 
     // columns
     public const string IdColumn = "id";
