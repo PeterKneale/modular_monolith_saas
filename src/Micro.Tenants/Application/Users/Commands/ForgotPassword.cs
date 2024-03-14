@@ -23,8 +23,6 @@ public static class ForgotPassword
             // todo: send email with reset link
 
             users.Update(user);
-
-            
         }
     }
 }

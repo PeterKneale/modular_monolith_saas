@@ -28,7 +28,6 @@ public static class RemoveTranslation
             term.RemoveTranslation(language);
 
             terms.Update(term);
-            
         }
     }
 }

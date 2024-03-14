@@ -31,8 +31,6 @@ public static class UpdateMember
             membership.SetRole(role);
 
             memberships.Update(membership);
-
-            
         }
     }
 }

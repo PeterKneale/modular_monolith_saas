@@ -28,7 +28,6 @@ public static class UpdateProjectName
 
             project.ChangeName(name);
             projects.Update(project);
-            
         }
     }
 }

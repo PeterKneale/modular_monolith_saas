@@ -34,8 +34,6 @@ public static class CreateOrganisation
             var membershipId = new MembershipId(Guid.NewGuid());
             var membership = Membership.CreateInstance(membershipId, organisationId, context.UserId, MembershipRole.Owner);
             await memberships.CreateAsync(membership, token);
-
-            
         }
     }
 }

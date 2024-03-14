@@ -33,7 +33,6 @@ public static class AddTerm
             await terms.CreateAsync(term, token);
 
             await events.CreateAsync(new TermChanged(termId, name), token);
-            
         }
     }
 }

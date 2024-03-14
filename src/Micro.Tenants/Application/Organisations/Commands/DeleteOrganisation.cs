@@ -20,8 +20,6 @@ public static class DeleteOrganisation
             if (organisation == null) throw new NotFoundException(nameof(Organisation), organisationId.Value);
 
             organisations.Delete(organisation);
-
-            
         }
     }
 }

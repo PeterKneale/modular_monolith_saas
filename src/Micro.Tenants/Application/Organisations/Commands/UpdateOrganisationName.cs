@@ -28,7 +28,6 @@ public static class UpdateOrganisationName
 
             organisation.ChangeName(name);
             organisations.Update(organisation);
-            
         }
     }
 }

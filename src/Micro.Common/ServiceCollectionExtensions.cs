@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Micro.Common.Application;
-using Micro.Common.Infrastructure.Behaviours;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Dapper;
 using Micro.Common.Infrastructure.DomainEvents;
@@ -19,7 +18,7 @@ public static class ServiceCollectionExtensions
         SqlMapper.AddTypeHandler(ProjectIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(EmailAddressTypeHandler.Default);
         SqlMapper.AddTypeHandler(PasswordTypeHandler.Default);
-        
+
         // domain events
         services.AddScoped<DomainEventAccessor>();
         services.AddScoped<DomainEventPublisher>();

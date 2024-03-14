@@ -30,7 +30,6 @@ public static class AddTranslation
             term.AddTranslation(language, text);
 
             terms.Update(term);
-            
         }
     }
 }

@@ -27,10 +27,7 @@ internal static class ServiceCollectionExtensions
 
         // application
         var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
-        services.AddMediatR(c =>
-        {
-            c.RegisterServicesFromAssemblies(assemblies);
-        });
+        services.AddMediatR(c => { c.RegisterServicesFromAssemblies(assemblies); });
         services.AddValidatorsFromAssemblies(assemblies);
 
         // Connections

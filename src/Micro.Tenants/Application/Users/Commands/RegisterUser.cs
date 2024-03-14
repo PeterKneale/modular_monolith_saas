@@ -31,8 +31,6 @@ public static class RegisterUser
             var userCredentials = new UserCredentials(userEmail, userPassword);
             var user = User.CreateInstance(userId, userName, userCredentials);
             await users.CreateAsync(user, token);
-
-            
         }
     }
 }

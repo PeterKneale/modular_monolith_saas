@@ -29,8 +29,6 @@ public static class UpdateUserPassword
 
             user.ChangePassword(oldPassword, newPassword);
             users.Update(user);
-
-            
         }
     }
 }

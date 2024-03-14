@@ -33,8 +33,6 @@ public static class ImportTerms
                 var term = Term.Create(projectId, name);
                 await repository.CreateAsync(term, token);
             }
-
-            
         }
     }
 }

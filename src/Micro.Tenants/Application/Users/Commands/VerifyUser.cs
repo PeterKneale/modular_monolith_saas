@@ -26,7 +26,6 @@ public static class VerifyUser
             if (user == null) throw new NotFoundException(nameof(User), userId.Value);
 
             user.Verification.Verify(verification);
-            
         }
     }
 }

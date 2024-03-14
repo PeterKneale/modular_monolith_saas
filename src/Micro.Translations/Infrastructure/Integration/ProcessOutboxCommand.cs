@@ -14,7 +14,5 @@ public class ProcessOutboxCommand(Db db, OutboxMessagePublisher publisher) : IRe
             await publisher.PublishToBus(message, cancellationToken);
             db.Remove(message);
         }
-
-        
     }
 }

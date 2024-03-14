@@ -15,7 +15,5 @@ public class ProcessOutboxCommandHandler(Db db, OutboxMessagePublisher publisher
             await publisher.PublishToBus(message, cancellationToken);
             db.Outbox.Remove(message);
         }
-
-        
     }
 }

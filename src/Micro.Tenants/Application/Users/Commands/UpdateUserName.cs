@@ -26,8 +26,6 @@ public static class UpdateUserName
             if (user == null) throw new NotFoundException(nameof(User), userId.Value);
             user.ChangeName(name);
             users.Update(user);
-
-            
         }
     }
 }

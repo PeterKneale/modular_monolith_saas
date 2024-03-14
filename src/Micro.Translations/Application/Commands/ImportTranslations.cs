@@ -40,8 +40,6 @@ public static class ImportTranslations
                     term.UpdateTranslation(language, text);
                 }
             }
-
-            
         }
     }
 }

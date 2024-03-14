@@ -28,8 +28,6 @@ public static class DeleteMember
                 throw new NotFoundException(nameof(Membership), organisationId.Value);
 
             memberships.Delete(membership);
-
-            
         }
     }
 }

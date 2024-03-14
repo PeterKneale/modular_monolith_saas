@@ -14,7 +14,5 @@ public class ProcessInboxCommand(Db db, IPublisher publisher) : IRequestHandler<
             await publisher.Publish(InboxMessage.ToIntegrationEvent(message), cancellationToken);
             db.Remove(message);
         }
-
-        
     }
 }

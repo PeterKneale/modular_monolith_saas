@@ -24,6 +24,7 @@ public class UserCreatedHandler(Db db, ILogger<UserCreatedHandler> logs) : INoti
             user.Name = notification.Name;
             db.Users.Update(user);
         }
+
         await db.SaveChangesAsync(cancellationToken);
     }
 }

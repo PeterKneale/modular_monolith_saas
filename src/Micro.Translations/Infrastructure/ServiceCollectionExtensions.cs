@@ -2,7 +2,6 @@
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common;
-using Micro.Common.Infrastructure.Behaviours;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database.Repositories;
