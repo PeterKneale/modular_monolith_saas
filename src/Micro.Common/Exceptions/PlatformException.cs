@@ -2,7 +2,7 @@
 
 public class PlatformException : Exception
 {
-    protected PlatformException(string message) : base(message)
+    public PlatformException(string message) : base(message)
     {
     }
 }

@@ -25,7 +25,10 @@ public class Migration1 : Migration
             .WithColumn(FirstNameColumn).AsString(NameMaxLength)
             .WithColumn(LastNameColumn).AsString(NameMaxLength)
             .WithColumn(EmailColumn).AsString(EmailMaxLength).Unique()
-            .WithColumn(PasswordColumn).AsString(NameMaxLength);
+            .WithColumn(PasswordColumn).AsString(NameMaxLength)
+            .WithColumn(IsVerified).AsBoolean() // initially false
+            .WithColumn(VerifiedAt).AsDateTimeOffset().Nullable() // initially null then set on verification
+            .WithColumn(VerifiedToken).AsString(50).Nullable(); // initially set then cleared on verification
 
         Create.Table(ProjectsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()

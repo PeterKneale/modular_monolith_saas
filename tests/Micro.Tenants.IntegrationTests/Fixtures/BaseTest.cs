@@ -1,5 +1,6 @@
 ﻿using Micro.Tenants.Application.Memberships.Commands;
 using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Application.Users.Commands;
 using Micro.Tenants.Domain.Memberships;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
@@ -12,6 +13,16 @@ public class BaseTest
     {
         service.OutputHelper = output;
         Service = service;
+    }
+
+    protected async Task<Guid> RegisterUser()
+    {
+        var userId = Guid.NewGuid();
+        var register = Build.RegisterCommand(userId);
+        await Service.Command(register);
+        var token = await Service.Query(new GetUserVerificationToken.Query(userId));
+        await Service.Command(new VerifyUser.Command(userId, token));
+        return userId;
     }
 
     protected async Task<Guid> CreateOrganisation(Guid ctxUserId, string? name=null)
@@ -33,14 +44,6 @@ public class BaseTest
     {
         var command = new DeleteOrganisation.Command();
         await Service.Command(command, ctxUserId, ctxOrganisationId);
-    }
-
-    protected async Task<Guid> RegisterUser()
-    {
-        var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId);
-        await Service.Command(register);
-        return userId;
     }
 
     protected async Task CreateMember(Guid userId, Guid ctxUserId, Guid ctxOrganisationId)

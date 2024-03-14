@@ -7,9 +7,9 @@ public class ExecutionContext : IExecutionContext
 {
     private ExecutionContext(UserId? userId, OrganisationId? organisationId, ProjectId? projectId)
     {
-        UserId = userId;
-        OrganisationId = organisationId;
-        ProjectId = projectId != null ? new ProjectId(projectId.Value) : null;
+        UserId = userId!;
+        OrganisationId = organisationId!;
+        ProjectId = projectId != null ? new ProjectId(projectId.Value) : null!;
     }
 
     public static ExecutionContext Create(UserId userId, OrganisationId organisationId, ProjectId projectId) =>
@@ -26,7 +26,7 @@ public class ExecutionContext : IExecutionContext
     public static ExecutionContext Empty() =>
         new(null, null, null);
 
-    public UserId? UserId { get; }
-    public OrganisationId? OrganisationId { get; }
-    public ProjectId? ProjectId { get; }
+    public UserId UserId { get; }
+    public OrganisationId OrganisationId { get; }
+    public ProjectId ProjectId { get; }
 }

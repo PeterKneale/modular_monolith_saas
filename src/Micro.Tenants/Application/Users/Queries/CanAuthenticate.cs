@@ -28,7 +28,7 @@ public static class CanAuthenticate
             var user = await users.GetAsync(credentials.Email, token);
             if (user == null) return new Result(false);
 
-            var success = user.Credentials.Match(credentials);
+            var success = user.CanLogin(credentials);
             return success
                 ? new Result(true, user.Id.Value)
                 : new Result(false);

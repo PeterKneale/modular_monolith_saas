@@ -16,6 +16,9 @@ public static class Constants
     public const string LastNameColumn = "last_name";
     public const string EmailColumn = "email";
     public const string PasswordColumn = "password";
+    public const string IsVerified = "is_verified";
+    public const string VerifiedAt = "verified_at";
+    public const string VerifiedToken = "verification_token";
     public const string OrganisationIdColumn = "organisation_id";
     public const string UserIdColumn = "user_id";
     public const string RoleColumn = "role";

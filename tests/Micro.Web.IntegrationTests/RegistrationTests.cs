@@ -8,7 +8,7 @@ namespace Micro.Web.IntegrationTests;
 public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
-    public async Task Registering_allows_login()
+    public async Task Registering_synchronises_users()
     {
         // arrange
         var userId = Guid.NewGuid();

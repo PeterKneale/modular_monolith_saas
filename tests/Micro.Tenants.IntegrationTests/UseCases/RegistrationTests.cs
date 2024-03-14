@@ -1,29 +1,25 @@
-﻿using Micro.Tenants.Application.Users.Queries;
+﻿using Micro.Tenants.Application.Users.Commands;
+using Micro.Tenants.Application.Users.Queries;
 
 namespace Micro.Tenants.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class RegistrationTests
+public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
-    private readonly ServiceFixture _service;
-
-    public RegistrationTests(ServiceFixture service, ITestOutputHelper outputHelper)
-    {
-        service.OutputHelper = outputHelper;
-        _service = service;
-    }
-
     [Fact]
-    public async Task Registering_allows_login()
+    public async Task Registering_and_verification_allows_login()
     {
         // arrange
         var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId);
-        var login = new CanAuthenticate.Query(register.Email, register.Password);
+        var email = $"test{Guid.NewGuid().ToString()}@example.org";
+        var password = "password";
+        var register = new RegisterUser.Command(userId, "x", "x", email, password);
 
         // act
-        await _service.Command(register);
-        var results = await _service.Query(login);
+        await Service.Command(register);
+        var token = await Service.Query(new GetUserVerificationToken.Query(userId));
+        await Service.Command(new VerifyUser.Command(userId, token));
+        var results = await Service.Query(new CanAuthenticate.Query(email, password));
 
         // assert
         results.Success.Should().BeTrue();
