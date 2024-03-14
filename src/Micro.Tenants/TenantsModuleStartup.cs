@@ -17,7 +17,7 @@ public static class TenantsModuleStartup
 {
     private static IScheduler? _scheduler;
 
-    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false, bool enableScheduler= true)
+    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false, bool enableScheduler = true)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)
@@ -30,15 +30,12 @@ public static class TenantsModuleStartup
 
         CompositionRoot.SetProvider(serviceProvider);
 
-        if (enableScheduler)
-        {
-            _scheduler = await SetupScheduledJobs();
-        }
+        if (enableScheduler) _scheduler = await SetupScheduledJobs();
     }
 
     public static async Task Stop()
     {
-        if(_scheduler!=null)
+        if (_scheduler != null)
             await _scheduler.Shutdown();
     }
 

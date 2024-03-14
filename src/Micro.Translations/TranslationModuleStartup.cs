@@ -18,7 +18,7 @@ public static class TranslationModuleStartup
 {
     private static IScheduler? _scheduler;
 
-    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false, bool enableScheduler=true)
+    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false, bool enableScheduler = true)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)
@@ -35,18 +35,12 @@ public static class TranslationModuleStartup
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
         CompositionRoot.SetProvider(serviceProvider);
 
-        if (enableScheduler)
-        {
-            _scheduler = await SetupScheduledJobs();    
-        }
+        if (enableScheduler) _scheduler = await SetupScheduledJobs();
     }
 
     public static async Task Stop()
     {
-        if (_scheduler != null)
-        {
-            await _scheduler.Shutdown();
-        }
+        if (_scheduler != null) await _scheduler.Shutdown();
     }
 
     private static async Task<IScheduler> SetupScheduledJobs()
