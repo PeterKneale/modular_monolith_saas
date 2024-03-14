@@ -15,9 +15,9 @@ namespace Micro.Tenants;
 
 public static class TenantsModuleStartup
 {
-    private static IScheduler _scheduler = null!;
+    private static IScheduler? _scheduler;
 
-    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false)
+    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false, bool enableScheduler= true)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)
@@ -30,12 +30,16 @@ public static class TenantsModuleStartup
 
         CompositionRoot.SetProvider(serviceProvider);
 
-        _scheduler = await SetupScheduledJobs();
+        if (enableScheduler)
+        {
+            _scheduler = await SetupScheduledJobs();
+        }
     }
 
     public static async Task Stop()
     {
-        await _scheduler.Shutdown();
+        if(_scheduler!=null)
+            await _scheduler.Shutdown();
     }
 
     private static async Task<IScheduler> SetupScheduledJobs()
