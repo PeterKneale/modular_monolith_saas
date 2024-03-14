@@ -7,6 +7,7 @@ public class UserChangedHandler(Db db, ILogger<UserChangedHandler> logs) : INoti
 {
     public async Task Handle(UserChanged notification, CancellationToken cancellationToken)
     {
+        logs.LogInformation($"Syncing user changed: {notification.Name}");
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == notification.UserId, cancellationToken);
         if (user == null)
         {
