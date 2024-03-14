@@ -10,7 +10,7 @@ namespace Micro.Tenants;
 
 public static class TenantsModuleStartup
 {
-    public static void Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false)
+    public static Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)
@@ -22,5 +22,7 @@ public static class TenantsModuleStartup
             .ApplyDatabaseMigrations(resetDb);
 
         CompositionRoot.SetProvider(serviceProvider);
+        
+        return Task.CompletedTask;
     }
 }

@@ -10,7 +10,7 @@ namespace Micro.Translations;
 
 public static class TranslationModuleStartup
 {
-    public static void Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus,ILoggerFactory logs, bool resetDb = false)
+    public static Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus,ILoggerFactory logs, bool resetDb = false)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)
@@ -26,5 +26,7 @@ public static class TranslationModuleStartup
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
         CompositionRoot.SetProvider(serviceProvider);
+        
+        return Task.CompletedTask;
     }
 }

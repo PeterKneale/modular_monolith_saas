@@ -26,6 +26,6 @@ public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputH
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();
-        user.Name.Should().Be($"{firstName} {lastName}");
+        user!.Name.Should().Be($"{firstName} {lastName}");
     }
 }

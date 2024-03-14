@@ -4,6 +4,6 @@ namespace Micro.Cli
 {
     public class Accessor : IExecutionContextAccessor
     {
-        public IExecutionContext ExecutionContext { get; }
+        public IExecutionContext ExecutionContext { get; set; }
     }
 }

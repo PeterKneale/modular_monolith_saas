@@ -2,6 +2,7 @@
 using Dapper;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
+using Micro.Common;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
@@ -27,9 +28,9 @@ internal static class ServiceCollectionExtensions
         if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
         // application
-        var assembly = Assembly.GetExecutingAssembly();
-        services.AddMediatR(assembly);
-        services.AddValidatorsFromAssembly(assembly);
+        var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
+        services.AddMediatR(assemblies);
+        services.AddValidatorsFromAssemblies(assemblies);
 
         // Connections
         services.AddSingleton<ConnectionFactory>(_ => new ConnectionFactory(connectionString));

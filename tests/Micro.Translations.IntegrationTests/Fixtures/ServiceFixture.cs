@@ -9,12 +9,12 @@ using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 
 namespace Micro.Translations.IntegrationTests.Fixtures;
 
-public class ServiceFixture : ITestOutputHelperAccessor
+public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
-    private readonly IModule _module;
-    private readonly ExecutionContextAccessor _accessor;
+    private IModule _module = null!;
+    private ExecutionContextAccessor _accessor = null!;
 
-    public ServiceFixture()
+    public async Task InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false)
@@ -32,7 +32,12 @@ public class ServiceFixture : ITestOutputHelperAccessor
         _accessor = new ExecutionContextAccessor();
         _module = new TranslationModule();
 
-        TranslationModuleStartup.Start(_accessor, configuration, bus, logs, true);
+        await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, true);
+    }
+
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
     }
 
     public ITestOutputHelper? OutputHelper { get; set; }

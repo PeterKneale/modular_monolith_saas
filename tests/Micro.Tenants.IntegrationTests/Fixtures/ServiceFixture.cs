@@ -1,22 +1,20 @@
 ﻿using MartinCostello.Logging.XUnit;
 using MediatR;
 using Micro.Common;
-using Micro.Common.Domain;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Engine.ClientProtocol;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
 
-public class ServiceFixture : ITestOutputHelperAccessor
+public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
-    private readonly IModule _module;
-    private readonly ExecutionContextAccessor _accessor;
+    private IModule _module = null!;
+    private ExecutionContextAccessor _accessor = null!;
 
-    public ServiceFixture()
+    public async Task InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false)
@@ -37,9 +35,14 @@ public class ServiceFixture : ITestOutputHelperAccessor
         };
         _module = new TenantsModule();
 
-        TenantsModuleStartup.Start(_accessor, configuration, bus, logs, true);
+        await TenantsModuleStartup.Start(_accessor, configuration, bus, logs, true);
     }
 
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
+    }
+    
     public ITestOutputHelper? OutputHelper { get; set; }
 
     public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)

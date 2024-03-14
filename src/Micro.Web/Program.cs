@@ -1,12 +1,9 @@
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Database;
-using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
-using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using ExecutionContextAccessor = Micro.Web.Code.Contexts.Execution.ExecutionContextAccessor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,8 +59,8 @@ var accessor = app.Services.GetRequiredService<IExecutionContextAccessor>();
 var bus = app.Services.GetRequiredService<IEventsBus>();
 var logs = app.Services.GetRequiredService<ILoggerFactory>();
 
-TenantsModuleStartup.Start(accessor, configuration, bus, logs);
-TranslationModuleStartup.Start(accessor, configuration, bus, logs);
+await TenantsModuleStartup.Start(accessor, configuration, bus, logs);
+await TranslationModuleStartup.Start(accessor, configuration, bus, logs);
 
 if (!app.Environment.IsDevelopment())
 {
@@ -88,6 +85,4 @@ app.MapGet("/test/auth/impersonate/", async ctx =>
     await login.Impersonate(userId);
     ctx.Response.Redirect("/");
 });
-var c = configuration.GetDbConnectionString();
-Console.WriteLine(c);
 app.Run();
