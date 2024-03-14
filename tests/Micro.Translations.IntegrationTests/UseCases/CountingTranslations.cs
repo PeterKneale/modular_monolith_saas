@@ -4,16 +4,8 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class CountingTranslations
+public class CountingTranslations(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
-    private readonly ServiceFixture _service;
-
-    public CountingTranslations(ServiceFixture service, ITestOutputHelper outputHelper)
-    {
-        service.OutputHelper = outputHelper;
-        _service = service;
-    }
-
     [Fact]
     public async Task Can_count_translations_per_language()
     {
@@ -24,7 +16,7 @@ public class CountingTranslations
         var termId3 = Guid.NewGuid();
 
         // act
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, TestTerm1));

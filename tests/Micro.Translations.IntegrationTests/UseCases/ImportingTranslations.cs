@@ -5,16 +5,8 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ImportingTranslations
+public class ImportingTranslations(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
-    private readonly ServiceFixture _service;
-
-    public ImportingTranslations(ServiceFixture service, ITestOutputHelper outputHelper)
-    {
-        service.OutputHelper = outputHelper;
-        _service = service;
-    }
-
     [Fact]
     public async Task Can_import_translations()
     {
@@ -22,7 +14,7 @@ public class ImportingTranslations
         var projectId = Guid.NewGuid();
         var translations = GetTranslations();
 
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             await Act(ctx, translations);
             await Assert(ctx, translations);
@@ -36,7 +28,7 @@ public class ImportingTranslations
         var projectId = Guid.NewGuid();
         var translations = GetTranslations();
 
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             await Act(ctx, translations);
             await Act(ctx, translations);

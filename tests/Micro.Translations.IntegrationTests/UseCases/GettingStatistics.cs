@@ -4,16 +4,8 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class GettingStatistics
+public class GettingStatistics(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
-    private readonly ServiceFixture _service;
-
-    public GettingStatistics(ServiceFixture service, ITestOutputHelper outputHelper)
-    {
-        service.OutputHelper = outputHelper;
-        _service = service;
-    }
-
     [Fact]
     public async Task Can_create_term_with_multiple_translations()
     {
@@ -31,7 +23,7 @@ public class GettingStatistics
         const string text3 = "text3";
 
         // act
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, term1));

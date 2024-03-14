@@ -4,16 +4,8 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ManagingTranslations
+public class ManagingTranslations(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
-    private readonly ServiceFixture _service;
-
-    public ManagingTranslations(ServiceFixture service, ITestOutputHelper outputHelper)
-    {
-        service.OutputHelper = outputHelper;
-        _service = service;
-    }
-
     [Fact]
     public async Task Can_create_term_with_multiple_translations()
     {
@@ -24,7 +16,7 @@ public class ManagingTranslations
         var termId3 = Guid.NewGuid();
 
         // act
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, TestTerm1));
@@ -74,7 +66,7 @@ public class ManagingTranslations
         var termId = Guid.NewGuid();
 
         // act
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId, TestTerm1));
@@ -104,7 +96,7 @@ public class ManagingTranslations
         var termId = Guid.NewGuid();
 
         // act
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId, TestTerm1));

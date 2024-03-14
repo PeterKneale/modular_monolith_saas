@@ -4,16 +4,8 @@ using Micro.Translations.Application.Queries;
 namespace Micro.Translations.IntegrationTests.UseCases;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ManagingTerms
+public class ManagingTerms(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
-    private readonly ServiceFixture _service;
-
-    public ManagingTerms(ServiceFixture service, ITestOutputHelper outputHelper)
-    {
-        service.OutputHelper = outputHelper;
-        _service = service;
-    }
-
     [Fact]
     public async Task Can_list_terms()
     {
@@ -28,7 +20,7 @@ public class ManagingTerms
         const string term2 = "APP_LOGIN";
         const string term3 = "APP_LOGOUT";
 
-        await _service.Execute(async ctx =>
+        await Service.Execute(async ctx =>
         {
             // act
             await ctx.SendCommand(new AddTerm.Command(termId1, term1));

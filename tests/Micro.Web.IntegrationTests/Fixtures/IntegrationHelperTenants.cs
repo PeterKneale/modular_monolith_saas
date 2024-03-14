@@ -1,12 +1,12 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
-using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Database;
+using Micro.Tenants.Infrastructure;
+using Micro.Tenants.Infrastructure.Database;
 
 namespace Micro.Web.IntegrationTests.Fixtures;
 
-public static class TranslationsIntegrationHelper
+public static class IntegrationHelperTenants
 {
     public static async Task PurgeInbox()
     {
