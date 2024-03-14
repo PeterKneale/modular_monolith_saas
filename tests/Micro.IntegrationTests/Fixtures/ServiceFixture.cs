@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 
-namespace Micro.Web.IntegrationTests.Fixtures;
+namespace Micro.IntegrationTests.Fixtures;
 
 public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {

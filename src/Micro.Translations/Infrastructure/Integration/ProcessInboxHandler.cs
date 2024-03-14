@@ -1,6 +1,6 @@
 ﻿using Micro.Common.Infrastructure.Integration.Inbox;
 
-namespace Micro.Tenants.Infrastructure.Integration;
+namespace Micro.Translations.Infrastructure.Integration;
 
 public class ProcessInboxHandler(IInboxRepository inbox, IPublisher publisher) : IRequestHandler<ProcessInboxCommand>
 {

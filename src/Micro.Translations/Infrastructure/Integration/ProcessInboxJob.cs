@@ -6,6 +6,6 @@ public class ProcessInboxJob : IJob
 {
     public async Task Execute(IJobExecutionContext context)
     {
-        await CommandExecutor.SendCommand(new Common.Application.ProcessInboxCommand());
+        await CommandExecutor.SendCommand(new ProcessInboxCommand());
     }
 }

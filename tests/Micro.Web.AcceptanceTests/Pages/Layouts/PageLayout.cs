@@ -2,11 +2,13 @@
 
 public class PageLayout(IPage page) 
 {
-    public Components.PageId.Component PageId => new(page);
+    protected readonly IPage Page = page;
     
-    public Components.OrganisationSelector.Component OrganisationSelector => new(page);
+    public Components.PageId.Component PageId => new(Page);
+    
+    public Components.OrganisationSelector.Component OrganisationSelector => new(Page);
 
-    public Components.ProjectSelector.Component ProjectSelector => new(page);
+    public Components.ProjectSelector.Component ProjectSelector => new(Page);
     
-    public Components.AlertComponent.Component Alert => new(page);
+    public Components.AlertComponent.Component Alert => new(Page);
 }

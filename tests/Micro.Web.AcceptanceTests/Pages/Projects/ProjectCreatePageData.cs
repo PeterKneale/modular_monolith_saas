@@ -4,7 +4,7 @@ namespace Micro.Web.AcceptanceTests.Pages.Projects;
 
 public record ProjectCreatePageData
 {
-    public string Name { get; init; }
+    public string Name { get; init; } = null!;
 
     private static readonly Faker<ProjectCreatePageData> Fake;
 

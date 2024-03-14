@@ -19,7 +19,7 @@ public class ApiKey
 
     public override string ToString() => $"{Name}:{Key}";
 
-    public static ApiKey Create(ApiKeyName name, ApiKeyValue key) => new(name, key, SystemClock.Now);
+    public static ApiKey Create(ApiKeyName name, ApiKeyValue key) => new(name, key, SystemClock.UtcNow);
 
     public static ApiKey From(ApiKeyName name, ApiKeyValue key, DateTime createdAt) => new(name, key, createdAt);
 }

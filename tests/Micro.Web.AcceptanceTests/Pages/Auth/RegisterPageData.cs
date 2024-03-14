@@ -2,7 +2,7 @@
 
 namespace Micro.Web.AcceptanceTests.Pages.Auth;
 
-public record RegisterPageData
+internal record RegisterPageData
 {
     private static readonly Faker<RegisterPageData> Fake;
 
@@ -16,10 +16,10 @@ public record RegisterPageData
             .RuleFor(u => u.Password, (f, u) => f.Internet.Password(memorable: true));
     }
 
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string Password { get; set; } = null!;
 
     public static RegisterPageData CreateValid() => Fake.Generate();
 }

@@ -1,6 +1,6 @@
 using Micro.Tenants.IntegrationEvents;
 
-namespace Micro.Translations.Infrastructure.Integration.Handlers;
+namespace Micro.Translations.Infrastructure.Integration.EventHandlers;
 
 public class OrganisationCreatedHandler(ILogger<OrganisationCreatedHandler> logs) : INotificationHandler<OrganisationCreated>
 {

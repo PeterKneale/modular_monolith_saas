@@ -1,4 +1,4 @@
-namespace Micro.Web.IntegrationTests.Fixtures;
+namespace Micro.IntegrationTests.Fixtures;
 
 public class BaseTest
 {

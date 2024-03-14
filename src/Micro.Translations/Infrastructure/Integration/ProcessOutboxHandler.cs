@@ -1,6 +1,6 @@
 using Micro.Common.Infrastructure.Integration.Outbox;
 
-namespace Micro.Tenants.Infrastructure.Integration;
+namespace Micro.Translations.Infrastructure.Integration;
 
 public class ProcessOutboxHandler(IOutboxRepository outbox, OutboxMessagePublisher publisher) : IRequestHandler<ProcessOutboxCommand>
 {

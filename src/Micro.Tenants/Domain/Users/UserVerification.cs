@@ -29,7 +29,7 @@ public class UserVerification : BaseEntity
         CheckRule(new MustNotBeVerifiedRule(this));
         CheckRule(new VerificationTokenMustMatchRule(this, token));
         IsVerified = true;
-        VerifiedAt = SystemClock.Now;
+        VerifiedAt = SystemClock.UtcNow;
         VerificationToken = null;
     }
 }

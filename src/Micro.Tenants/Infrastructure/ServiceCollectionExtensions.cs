@@ -4,6 +4,7 @@ using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common;
 using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Application.Memberships;
@@ -13,7 +14,6 @@ using Micro.Tenants.Application.Users;
 using Micro.Tenants.Infrastructure.Database;
 using Micro.Tenants.Infrastructure.Database.Repositories;
 using Micro.Tenants.Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Micro.Tenants.Infrastructure;
@@ -46,6 +46,7 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IProjectRepository, ProjectRepository>();
 
         // Inbox/Outbox
+        services.AddScoped<IInboxRepository, InboxRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
 
         // Database Migrations

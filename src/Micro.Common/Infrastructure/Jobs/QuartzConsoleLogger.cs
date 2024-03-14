@@ -3,7 +3,7 @@ using LogLevel = Quartz.Logging.LogLevel;
 
 namespace Micro.Common.Infrastructure.Jobs;
 
-public class ConsoleLogProvider : ILogProvider
+public class QuartzConsoleLogger : ILogProvider
 {
     public Logger GetLogger(string name)
     {

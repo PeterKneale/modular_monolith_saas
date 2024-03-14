@@ -1,6 +1,5 @@
 ﻿using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Domain.ApiKeys;
-using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Tenants.Infrastructure.Database.Repositories;
 

@@ -7,7 +7,6 @@ using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.Domain.Projects;
 using Micro.Tenants.Domain.Users;
 using Micro.Tenants.Infrastructure.Database.Converters;
-using Microsoft.EntityFrameworkCore;
 using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;

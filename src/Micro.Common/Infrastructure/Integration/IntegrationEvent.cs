@@ -3,8 +3,3 @@
 public class IntegrationEvent : INotification
 {
 }
-
-public interface IIntegrationEventHandler
-{
-    Task Handle(IntegrationEvent @event);
-}

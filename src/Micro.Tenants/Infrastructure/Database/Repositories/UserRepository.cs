@@ -1,6 +1,5 @@
 ﻿using Micro.Tenants.Application.Users;
 using Micro.Tenants.Domain.Users;
-using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Tenants.Infrastructure.Database.Repositories;
 

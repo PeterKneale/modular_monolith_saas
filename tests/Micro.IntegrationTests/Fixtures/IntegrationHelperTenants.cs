@@ -4,7 +4,7 @@ using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Tenants.Infrastructure;
 using Micro.Tenants.Infrastructure.Database;
 
-namespace Micro.Web.IntegrationTests.Fixtures;
+namespace Micro.IntegrationTests.Fixtures;
 
 public static class IntegrationHelperTenants
 {

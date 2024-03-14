@@ -1,6 +1,5 @@
 ﻿using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
-using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Tenants.Infrastructure.Database.Repositories;
 

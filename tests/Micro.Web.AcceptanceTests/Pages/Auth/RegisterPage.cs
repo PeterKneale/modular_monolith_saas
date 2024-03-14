@@ -16,10 +16,10 @@ public class RegisterPage(IPage page) : PageLayout(page)
 
     public async Task Register(string firstName, string lastName, string email, string password)
     {
-        await page.GetByTestId(FirstNameField).FillAsync(firstName);
-        await page.GetByTestId(LastNameField).FillAsync(lastName);
-        await page.GetByTestId(EmailField).FillAsync(email);
-        await page.GetByTestId(PasswordField).FillAsync(password);
-        await page.GetByTestId(RegisterButton).ClickAsync();
+        await Page.GetByTestId(FirstNameField).FillAsync(firstName);
+        await Page.GetByTestId(LastNameField).FillAsync(lastName);
+        await Page.GetByTestId(EmailField).FillAsync(email);
+        await Page.GetByTestId(PasswordField).FillAsync(password);
+        await Page.GetByTestId(RegisterButton).ClickAsync();
     }
 }

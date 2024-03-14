@@ -13,7 +13,7 @@ public class OrganisationCreatePage(IPage page) : OrganisationPageLayout(page)
 
     public async Task Create(string name)
     {
-        await page.GetByTestId(NameField).FillAsync(name);
-        await page.GetByTestId(CreateButton).ClickAsync();
+        await Page.GetByTestId(NameField).FillAsync(name);
+        await Page.GetByTestId(CreateButton).ClickAsync();
     }
 }

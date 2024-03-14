@@ -1,7 +1,7 @@
 ﻿using Micro.Tenants.IntegrationEvents;
 using Micro.Translations.Domain.UserAggregate;
 
-namespace Micro.Translations.Infrastructure.Integration.Handlers;
+namespace Micro.Translations.Infrastructure.Integration.EventHandlers;
 
 public class UserCreatedHandler(Db db, ILogger<UserCreatedHandler> logs) : INotificationHandler<UserCreated>
 {

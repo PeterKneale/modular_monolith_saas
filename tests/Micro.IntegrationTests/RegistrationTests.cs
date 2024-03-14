@@ -1,8 +1,9 @@
+using Micro.IntegrationTests.Fixtures;
 using Micro.Tenants.Application.Users.Commands;
 using Micro.Translations.Infrastructure;
 using Micro.Translations.Infrastructure.Database;
 
-namespace Micro.Web.IntegrationTests;
+namespace Micro.IntegrationTests;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)

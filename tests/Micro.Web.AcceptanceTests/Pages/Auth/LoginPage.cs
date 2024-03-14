@@ -14,8 +14,8 @@ public class LoginPage(IPage page) : PageLayout(page)
 
     public async Task Login(string email, string password)
     {
-        await page.GetByTestId(EmailField).FillAsync(email);
-        await page.GetByTestId(PasswordField).FillAsync(password);
-        await page.GetByTestId(LoginButton).ClickAsync();
+        await Page.GetByTestId(EmailField).FillAsync(email);
+        await Page.GetByTestId(PasswordField).FillAsync(password);
+        await Page.GetByTestId(LoginButton).ClickAsync();
     }
 }

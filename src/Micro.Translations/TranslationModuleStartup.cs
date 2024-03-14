@@ -45,7 +45,7 @@ public static class TranslationModuleStartup
 
     private static async Task<IScheduler> SetupScheduledJobs()
     {
-        LogProvider.SetCurrentLogProvider(new ConsoleLogProvider());
+        LogProvider.SetCurrentLogProvider(new QuartzConsoleLogger());
         var factory = new StdSchedulerFactory(new NameValueCollection
         {
             { "quartz.scheduler.instanceName", Assembly.GetExecutingAssembly().GetName().Name }

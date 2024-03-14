@@ -5,9 +5,15 @@ namespace Micro.Translations.Infrastructure.Database.Repositories;
 
 internal class OutboxRepository(Db db) : IOutboxRepository
 {
-    public async Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token)
-    {
-        var message = OutboxMessage.CreateFrom(integrationEvent);
-        await db.Outbox.AddAsync(message, token);
-    }
+    public async Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token) =>
+        await db.Outbox.AddAsync(OutboxMessage.CreateFrom(integrationEvent), token);
+
+    public void Update(OutboxMessage message) =>
+        db.Outbox.Update(message);
+
+    public async Task<List<OutboxMessage>> ListPending(CancellationToken token) =>
+        await db.Outbox
+            .Where(x => x.ProcessedAt == null)
+            .OrderBy(x => x.CreatedAt)
+            .ToListAsync(token);
 }
