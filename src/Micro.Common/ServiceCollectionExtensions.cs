@@ -19,10 +19,7 @@ public static class ServiceCollectionExtensions
         SqlMapper.AddTypeHandler(ProjectIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(EmailAddressTypeHandler.Default);
         SqlMapper.AddTypeHandler(PasswordTypeHandler.Default);
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-
+        
         // domain events
         services.AddScoped<DomainEventAccessor>();
         services.AddScoped<DomainEventPublisher>();

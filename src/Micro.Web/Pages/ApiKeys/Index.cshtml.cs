@@ -17,7 +17,7 @@ public class Index(ITenantsModule module) : PageModel
             return Page();
         }
 
-        await module.SendQuery(new DeleteUserApiKey.Command(Id));
+        await module.SendCommand(new DeleteUserApiKey.Command(Id));
 
         TempData.SetAlert(Alert.Success("ApiKey has been deleted."));
         return RedirectToPage(nameof(Index));

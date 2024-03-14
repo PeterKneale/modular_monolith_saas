@@ -18,7 +18,7 @@ public static class AddTranslation
 
     public class Handler(ITermRepository terms) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var termId = TermId.Create(command.TermId);
 
@@ -30,7 +30,7 @@ public static class AddTranslation
             term.AddTranslation(language, text);
 
             terms.Update(term);
-            return Unit.Value;
+            
         }
     }
 }

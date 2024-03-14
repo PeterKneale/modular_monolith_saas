@@ -18,7 +18,7 @@ public static class ImportTerms
 
     public class Handler(ITermRepository repository, IExecutionContext context) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var projectId = context.ProjectId;
             var names = command.Names
@@ -34,7 +34,7 @@ public static class ImportTerms
                 await repository.CreateAsync(term, token);
             }
 
-            return Unit.Value;
+            
         }
     }
 }

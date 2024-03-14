@@ -16,7 +16,7 @@ public static class DeleteMember
 
     public class Handler(IExecutionContext context, IMembershipRepository memberships) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var organisationId = context.OrganisationId;
 
@@ -29,7 +29,7 @@ public static class DeleteMember
 
             memberships.Delete(membership);
 
-            return Unit.Value;
+            
         }
     }
 }

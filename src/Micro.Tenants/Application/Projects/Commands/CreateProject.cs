@@ -17,7 +17,7 @@ public static class CreateProject
 
     public class Handler(IExecutionContext context, IProjectRepository projects, IProjectNameCheck check) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var projectId = new ProjectId(command.ProjectId);
 
@@ -28,8 +28,6 @@ public static class CreateProject
 
             var project = new Project(projectId, context.OrganisationId, name);
             await projects.CreateAsync(project, token);
-
-            return Unit.Value;
         }
     }
 }

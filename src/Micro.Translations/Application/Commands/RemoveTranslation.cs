@@ -17,7 +17,7 @@ public static class RemoveTranslation
 
     public class Handler(ITermRepository terms) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var termId = TermId.Create(command.TermId);
             var language = Language.FromIsoCode(command.LanguageCode);
@@ -28,7 +28,7 @@ public static class RemoveTranslation
             term.RemoveTranslation(language);
 
             terms.Update(term);
-            return Unit.Value;
+            
         }
     }
 }

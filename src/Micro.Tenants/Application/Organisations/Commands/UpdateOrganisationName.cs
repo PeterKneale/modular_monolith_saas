@@ -16,7 +16,7 @@ public static class UpdateOrganisationName
 
     public class Handler(IOrganisationRepository organisations, IOrganisationNameCheck check, IExecutionContext context) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var organisationId = context.OrganisationId;
 
@@ -28,7 +28,7 @@ public static class UpdateOrganisationName
 
             organisation.ChangeName(name);
             organisations.Update(organisation);
-            return Unit.Value;
+            
         }
     }
 }

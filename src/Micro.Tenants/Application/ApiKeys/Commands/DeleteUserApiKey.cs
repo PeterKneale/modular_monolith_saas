@@ -16,7 +16,7 @@ public static class DeleteUserApiKey
 
     public class Handler(IApiKeyRepository keys) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var id = new UserApiKeyId(command.Id);
 
@@ -25,8 +25,6 @@ public static class DeleteUserApiKey
             if (key == null) throw new NotFoundException(nameof(UserApiKey), id.Value);
 
             keys.Delete(key);
-
-            return Unit.Value;
         }
     }
 }

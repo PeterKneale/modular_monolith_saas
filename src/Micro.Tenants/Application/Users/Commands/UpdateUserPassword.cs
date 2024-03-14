@@ -17,7 +17,7 @@ public static class UpdateUserPassword
 
     public class Handler(IExecutionContext context, IUserRepository users) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var userId = context.UserId;
 
@@ -30,7 +30,7 @@ public static class UpdateUserPassword
             user.ChangePassword(oldPassword, newPassword);
             users.Update(user);
 
-            return Unit.Value;
+            
         }
     }
 }

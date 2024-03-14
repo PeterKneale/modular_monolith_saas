@@ -17,7 +17,7 @@ public static class VerifyUser
 
     public class Handler(IUserRepository users) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken cancellationToken)
+        public async Task Handle(Command command, CancellationToken cancellationToken)
         {
             var userId = new UserId(command.UserId);
             var verification = command.Verification;
@@ -26,7 +26,7 @@ public static class VerifyUser
             if (user == null) throw new NotFoundException(nameof(User), userId.Value);
 
             user.Verification.Verify(verification);
-            return Unit.Value;
+            
         }
     }
 }

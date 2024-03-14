@@ -20,7 +20,7 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
 
     public async Task<RedirectToPageResult> OnGetRemoveTranslation(Guid termId, string languageCode, CancellationToken token)
     {
-        await module.SendQuery(new RemoveTranslation.Command(termId, languageCode));
+        await module.SendCommand(new RemoveTranslation.Command(termId, languageCode));
 
         return RedirectToPage(nameof(Index), new
         {

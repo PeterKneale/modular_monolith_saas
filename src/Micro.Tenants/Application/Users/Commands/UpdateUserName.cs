@@ -17,7 +17,7 @@ public static class UpdateUserName
 
     public class Handler(IExecutionContext context, IUserRepository users) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var userId = context.UserId;
             var name = new UserName(command.FirstName, command.LastName);
@@ -27,7 +27,7 @@ public static class UpdateUserName
             user.ChangeName(name);
             users.Update(user);
 
-            return Unit.Value;
+            
         }
     }
 }

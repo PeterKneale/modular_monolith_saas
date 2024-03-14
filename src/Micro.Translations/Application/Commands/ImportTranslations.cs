@@ -18,7 +18,7 @@ public static class ImportTranslations
 
     public class Handler(ITermRepository repository, IExecutionContext context) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var projectId = context.ProjectId;
             var language = Language.FromIsoCode(command.LanguageCode);
@@ -41,7 +41,7 @@ public static class ImportTranslations
                 }
             }
 
-            return Unit.Value;
+            
         }
     }
 }

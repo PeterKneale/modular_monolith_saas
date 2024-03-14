@@ -16,7 +16,7 @@ public static class UpdateProjectName
 
     public class Handler(IProjectRepository projects, IProjectNameCheck check, IExecutionContext context) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var projectId = context.ProjectId;
 
@@ -28,7 +28,7 @@ public static class UpdateProjectName
 
             project.ChangeName(name);
             projects.Update(project);
-            return Unit.Value;
+            
         }
     }
 }

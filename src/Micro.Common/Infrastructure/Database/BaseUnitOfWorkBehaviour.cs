@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Micro.Common.Infrastructure.Database;
 
 public class BaseUnitOfWorkBehaviour<TRequest, TResponse>(DbContext db, DomainEventPublisher publisher, ILogger<DbContext> log) : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+    where TRequest : notnull
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (request is not IRequest<Unit>) return await next();
+        // todo, add a check for IRequest<Unit> and return next() if not
+        //if (request is not IRequest<Unit>) return await next();
 
         log.LogDebug("Beginning unit of work");
         var response = await next();

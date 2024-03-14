@@ -17,7 +17,7 @@ public static class UpdateMember
 
     public class Handler(IExecutionContext context, IMembershipRepository memberships) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var organisationId = context.OrganisationId;
 
@@ -32,7 +32,7 @@ public static class UpdateMember
 
             memberships.Update(membership);
 
-            return Unit.Value;
+            
         }
     }
 }

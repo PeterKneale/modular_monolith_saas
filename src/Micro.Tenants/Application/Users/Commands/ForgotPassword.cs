@@ -12,7 +12,7 @@ public static class ForgotPassword
 
     public class Handler(IUserRepository users) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var email = new EmailAddress(command.email);
 
@@ -24,7 +24,7 @@ public static class ForgotPassword
 
             users.Update(user);
 
-            return Unit.Value;
+            
         }
     }
 }

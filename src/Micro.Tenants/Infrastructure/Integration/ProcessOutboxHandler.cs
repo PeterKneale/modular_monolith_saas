@@ -6,7 +6,7 @@ namespace Micro.Tenants.Infrastructure.Integration;
 
 public class ProcessOutboxCommandHandler(Db db, OutboxMessagePublisher publisher) : IRequestHandler<ProcessOutboxCommand>
 {
-    public async Task<Unit> Handle(ProcessOutboxCommand command, CancellationToken cancellationToken)
+    public async Task Handle(ProcessOutboxCommand command, CancellationToken cancellationToken)
     {
         var messages = await QueryHelper.GetMessagesToPublish(db.Outbox, cancellationToken);
 
@@ -16,6 +16,6 @@ public class ProcessOutboxCommandHandler(Db db, OutboxMessagePublisher publisher
             db.Outbox.Remove(message);
         }
 
-        return Unit.Value;
+        
     }
 }

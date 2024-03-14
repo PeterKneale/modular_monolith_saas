@@ -5,7 +5,7 @@ namespace Micro.Translations.Infrastructure.Integration;
 
 public class ProcessInboxCommand(Db db, IPublisher publisher) : IRequestHandler<Common.Application.ProcessInboxCommand>
 {
-    public async Task<Unit> Handle(Common.Application.ProcessInboxCommand command, CancellationToken cancellationToken)
+    public async Task Handle(Common.Application.ProcessInboxCommand command, CancellationToken cancellationToken)
     {
         var messages = await QueryHelper.GetMessagesToPublish(db.Inbox, cancellationToken);
 
@@ -15,6 +15,6 @@ public class ProcessInboxCommand(Db db, IPublisher publisher) : IRequestHandler<
             db.Remove(message);
         }
 
-        return Unit.Value;
+        
     }
 }

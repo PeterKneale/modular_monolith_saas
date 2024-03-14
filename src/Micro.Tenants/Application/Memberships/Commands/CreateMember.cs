@@ -19,7 +19,7 @@ public static class CreateMember
 
     public class Handler(IExecutionContext context, IOrganisationRepository organisations, IMembershipRepository memberships) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var organisationId = context.OrganisationId;
 
@@ -32,8 +32,6 @@ public static class CreateMember
             var membershipId = new MembershipId(Guid.NewGuid());
             var membership = Membership.CreateInstance(membershipId, organisationId, userId, MembershipRole.FromString(role));
             await memberships.CreateAsync(membership, token);
-
-            return Unit.Value;
         }
     }
 }

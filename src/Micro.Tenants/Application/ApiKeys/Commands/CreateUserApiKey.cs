@@ -18,7 +18,7 @@ public static class CreateUserApiKey
 
     public class Handler(IExecutionContext context, IApiKeyRepository keys, IApiKeyService service) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var id = new UserApiKeyId(command.Id);
             var name = new ApiKeyName(command.Name);
@@ -30,8 +30,6 @@ public static class CreateUserApiKey
 
             var key = UserApiKey.CreateNew(id, userId, name, service);
             await keys.CreateAsync(key, token);
-
-            return Unit.Value;
         }
     }
 }

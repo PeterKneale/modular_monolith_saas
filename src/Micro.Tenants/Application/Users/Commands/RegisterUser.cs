@@ -20,7 +20,7 @@ public static class RegisterUser
 
     public class Handler(IUserRepository users) : IRequestHandler<Command>
     {
-        public async Task<Unit> Handle(Command command, CancellationToken token)
+        public async Task Handle(Command command, CancellationToken token)
         {
             var userId = new UserId(command.UserId);
             if (await users.GetAsync(userId, token) != null) throw new Exception("User already exists");
@@ -32,7 +32,7 @@ public static class RegisterUser
             var user = User.CreateInstance(userId, userName, userCredentials);
             await users.CreateAsync(user, token);
 
-            return Unit.Value;
+            
         }
     }
 }

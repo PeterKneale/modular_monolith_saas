@@ -2,6 +2,7 @@
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common;
+using Micro.Common.Infrastructure.Behaviours;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database.Repositories;
@@ -18,7 +19,11 @@ internal static class ServiceCollectionExtensions
 
         // application
         var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
-        services.AddMediatR(assemblies);
+        services.AddMediatR(c =>
+        {
+            c.RegisterServicesFromAssemblies(assemblies);
+            c.AddOpenBehavior(typeof(UnitOfWorkBehaviour<,>));
+        });
         services.AddValidatorsFromAssemblies(assemblies);
 
         // Repositories
@@ -44,7 +49,6 @@ internal static class ServiceCollectionExtensions
             // options.EnableDetailedErrors();
         });
 
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
         return services;
     }
 }
