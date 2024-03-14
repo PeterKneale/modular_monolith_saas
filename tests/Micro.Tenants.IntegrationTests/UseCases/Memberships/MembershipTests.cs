@@ -10,7 +10,7 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Creating_an_organisation_also_creates_membership()
     {
         // arrange
-        var userId = await RegisterUser();
+        var userId = await RegisterAndVerifyUser();
 
         // act
         var organisationId = await CreateOrganisation(userId);
@@ -26,8 +26,8 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Member_can_be_created()
     {
         // arrange
-        var userId1 = await RegisterUser();
-        var userId2 = await RegisterUser();
+        var userId1 = await RegisterAndVerifyUser();
+        var userId2 = await RegisterAndVerifyUser();
         var organisationId = await CreateOrganisation(userId1);
 
         // act
@@ -44,8 +44,8 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Member_can_be_deleted()
     {
         // arrange
-        var userId1 = await RegisterUser();
-        var userId2 = await RegisterUser();
+        var userId1 = await RegisterAndVerifyUser();
+        var userId2 = await RegisterAndVerifyUser();
         var organisationId = await CreateOrganisation(userId1);
         await CreateMember(userId2, userId1, organisationId);
         

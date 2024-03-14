@@ -38,8 +38,7 @@ public class User : BaseEntity
 
     public bool CanLogin(UserCredentials credentials)
     {
-        CheckRule(new MustBeVerifiedRule(this));
-        return Credentials.Matches(credentials);
+        return Verification.IsVerified && Credentials.Matches(credentials);
     }
     
     public void ChangeName(UserName name)
@@ -50,7 +49,7 @@ public class User : BaseEntity
 
     public void ChangePassword(Password oldPassword, Password newPassword)
     {
-        CheckRule(new MustBeVerifiedRule(this));
+        CheckRule(new MustBeVerifiedRule(Verification));
         CheckRule(new PasswordMatchesRule(this, oldPassword));
         Credentials.ChangePassword(newPassword);
     }

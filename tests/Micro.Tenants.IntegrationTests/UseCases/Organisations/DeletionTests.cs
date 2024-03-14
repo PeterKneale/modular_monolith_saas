@@ -9,7 +9,7 @@ public class DeletionTests(ServiceFixture service, ITestOutputHelper outputHelpe
     public async Task Organisation_can_be_deleted()
     {
         // arrange
-        var userId = await RegisterUser();
+        var userId = await RegisterAndVerifyUser();
         var organisationId = await CreateOrganisation(userId);
         
         // act

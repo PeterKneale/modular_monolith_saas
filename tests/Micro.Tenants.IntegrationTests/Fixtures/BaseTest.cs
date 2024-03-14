@@ -15,17 +15,23 @@ public class BaseTest
         Service = service;
     }
 
-    protected async Task<Guid> RegisterUser()
+    protected async Task<Guid> RegisterAndVerifyUser(string? email = null, string? password = null)
     {
-        var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId);
-        await Service.Command(register);
+        var userId = await RegisterUser(email, password);
         var token = await Service.Query(new GetUserVerificationToken.Query(userId));
         await Service.Command(new VerifyUser.Command(userId, token));
         return userId;
     }
 
-    protected async Task<Guid> CreateOrganisation(Guid ctxUserId, string? name=null)
+    protected async Task<Guid> RegisterUser(string? email = null, string? password = null)
+    {
+        var userId = Guid.NewGuid();
+        var register = Build.RegisterCommand(userId, email, password);
+        await Service.Command(register);
+        return userId;
+    }
+
+    protected async Task<Guid> CreateOrganisation(Guid ctxUserId, string? name = null)
     {
         var organisationId = Guid.NewGuid();
         name ??= Guid.NewGuid().ToString()[..10];
@@ -39,7 +45,7 @@ public class BaseTest
         var update = new UpdateOrganisationName.Command(name);
         await Service.Command(update, ctxUserId, ctxOrganisationId);
     }
-    
+
     protected async Task DeleteOrganisation(Guid ctxUserId, Guid ctxOrganisationId)
     {
         var command = new DeleteOrganisation.Command();

@@ -10,7 +10,7 @@ public class NameTests(ServiceFixture service, ITestOutputHelper outputHelper) :
     public async Task Organisation_name_can_be_changed()
     {
         // arrange
-        var userId = await RegisterUser();
+        var userId = await RegisterAndVerifyUser();
         var organisationId = await CreateOrganisation(userId);
         var name = Guid.NewGuid().ToString()[..10];
 
@@ -27,7 +27,7 @@ public class NameTests(ServiceFixture service, ITestOutputHelper outputHelper) :
     public async Task Cant_create_organisation_if_name_used()
     {
         // arrange
-        var userId = await RegisterUser();
+        var userId = await RegisterAndVerifyUser();
         var name = Guid.NewGuid().ToString()[..10];
         
         // act
@@ -42,7 +42,7 @@ public class NameTests(ServiceFixture service, ITestOutputHelper outputHelper) :
     public async Task Cant_update_organisation_name_if_used()
     {
         // arrange
-        var userId = await RegisterUser();
+        var userId = await RegisterAndVerifyUser();
         var name = Guid.NewGuid().ToString()[..10];
         await CreateOrganisation(userId, name);
         

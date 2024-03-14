@@ -1,4 +1,6 @@
-﻿namespace Micro.Tenants.Domain.Users;
+﻿using Micro.Tenants.Domain.Users.Rules;
+
+namespace Micro.Tenants.Domain.Users;
 
 public class UserVerification : BaseEntity
 {
@@ -18,14 +20,8 @@ public class UserVerification : BaseEntity
     
     public void Verify(string token)
     {
-        if (IsVerified)
-        {
-            throw new BusinessRuleBrokenException("User is already verified.");
-        }
-        if (token != VerificationToken)
-        {
-            throw new BusinessRuleBrokenException("Invalid verification token.");
-        }
+        CheckRule(new MustNotBeVerifiedRule(this));
+        CheckRule(new VerificationTokenMustMatchRule(this, token));
         IsVerified = true;
         VerifiedAt = SystemClock.Now;
         VerificationToken = null;

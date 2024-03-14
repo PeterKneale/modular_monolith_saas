@@ -2,7 +2,7 @@ using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Projects.Commands;
 using Micro.Tenants.Application.Projects.Queries;
 
-namespace Micro.Tenants.IntegrationTests.UseCases;
+namespace Micro.Tenants.IntegrationTests.UseCases.Projects;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class ProjectTests

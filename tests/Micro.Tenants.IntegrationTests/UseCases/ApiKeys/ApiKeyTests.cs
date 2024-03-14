@@ -1,7 +1,7 @@
 ﻿using Micro.Tenants.Application.ApiKeys.Commands;
 using Micro.Tenants.Application.ApiKeys.Queries;
 
-namespace Micro.Tenants.IntegrationTests.UseCases;
+namespace Micro.Tenants.IntegrationTests.UseCases.ApiKeys;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class ApiKeyTests
