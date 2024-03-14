@@ -1,4 +1,5 @@
-﻿using Micro.Translations.Domain.TermAggregate.Rules;
+﻿using Micro.Translations.Domain.TermAggregate.DomainEvents;
+using Micro.Translations.Domain.TermAggregate.Rules;
 
 namespace Micro.Translations.Domain.TermAggregate;
 
@@ -17,13 +18,14 @@ public class Term : BaseEntity
         ProjectId = projectId;
         Name = termName;
         _translations = [];
+        AddDomainEvent(new TermCreatedDomainEvent(termId, termName));
     }
 
     public TermId Id { get; } = null!;
 
     public ProjectId ProjectId { get; private set; } = null!;
 
-    public TermName Name { get; } = null!;
+    public TermName Name { get; private set; } = null!;
 
     public IReadOnlyCollection<Translation> Translations => _translations;
 
@@ -33,19 +35,29 @@ public class Term : BaseEntity
     public static Term Create(ProjectId projectId, TermName name) =>
         Create(TermId.Create(), projectId, name);
 
+    public void UpdateName(TermName name)
+    {
+        var oldName = Name;
+        Name = name;
+        AddDomainEvent(new TermNameUpdatedDomainEvent(Id, oldName, name));
+    }
+    
     public void AddTranslation(Language language, TranslationText text)
     {
         CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, language));
         var translationId = TranslationId.Create();
         var translation = Translation.Create(translationId, Id, language, text);
         _translations.Add(translation);
+        AddDomainEvent(new TranslationAddedDomainEvent(Id, Name, language, text));
     }
 
     public void UpdateTranslation(Language language, TranslationText text)
     {
         CheckRule(new MustHaveTranslationForALanguage(this, language));
         var translation = _translations.Single(x => x.Language == language);
+        var oldText = translation.Text;
         translation.UpdateText(text);
+        AddDomainEvent(new TranslationUpdatedDomainEvent(Id, Name, language, oldText, text));
     }
 
     public void RemoveTranslation(Language language)
@@ -53,6 +65,7 @@ public class Term : BaseEntity
         CheckRule(new MustHaveTranslationForALanguage(this, language));
         var translation = _translations.Single(x => x.Language == language);
         _translations.Remove(translation);
+        AddDomainEvent(new TranslationRemovedDomainEvent(Id, Name, language));
     }
 
     public bool HasTranslationFor(Language language)

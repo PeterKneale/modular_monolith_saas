@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentMigrator.Runner.Processors.DotConnectOracle;
 using JetBrains.Annotations;
 using Micro.Common.Domain;
 using Micro.Translations.Domain.TermAggregate;
@@ -73,4 +74,5 @@ public class TermTest
     }
 
     private static Term CreateTerm() => Term.Create(TermId.Create(), ProjectId.Create(), TermName.Create("name"));
+
 }
