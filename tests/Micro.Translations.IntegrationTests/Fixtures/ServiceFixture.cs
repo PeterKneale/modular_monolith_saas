@@ -41,21 +41,18 @@ public class ServiceFixture : ITestOutputHelperAccessor
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await action(_module);
-        _accessor.ExecutionContext = ExecutionContext.Empty();
     }
+    
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _module.SendCommand(command);
-        _accessor.ExecutionContext = ExecutionContext.Empty();
     }
 
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
-        var result = await _module.SendQuery(query);
-        _accessor.ExecutionContext = ExecutionContext.Empty();
-        return result;
+        return await _module.SendQuery(query);
     }
     
     public async Task Publish(IntegrationEvent integrationEvent)

@@ -60,10 +60,23 @@ public class ServiceFixture : ITestOutputHelperAccessor
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _tenants.SendCommand(command);
     }
+    
     public async Task CommandTranslations(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _translations.SendCommand(command);
+    }
+    
+    public async Task<T> QueryTenants<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        return await _tenants.SendQuery(query);
+    }
+    
+    public async Task<T> QueryTranslations<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        return await _translations.SendQuery(query);
     }
     
     public async Task PublishTenants(IntegrationEvent integrationEvent)
@@ -76,14 +89,4 @@ public class ServiceFixture : ITestOutputHelperAccessor
         await _translations.PublishNotification(integrationEvent);
     }
 
-    public async Task<T> QueryTenants<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
-    {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
-        return await _tenants.SendQuery(query);
-    }
-    public async Task<T> QueryTranslations<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
-    {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
-        return await _translations.SendQuery(query);
-    }
 }

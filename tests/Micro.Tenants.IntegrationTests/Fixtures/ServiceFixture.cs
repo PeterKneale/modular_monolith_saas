@@ -2,6 +2,7 @@
 using MediatR;
 using Micro.Common;
 using Micro.Common.Domain;
+using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,18 +42,26 @@ public class ServiceFixture : ITestOutputHelperAccessor
 
     public ITestOutputHelper? OutputHelper { get; set; }
 
+    public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        await action(_module);
+    }
+    
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _module.SendCommand(command);
-        _accessor.ExecutionContext = ExecutionContext.Empty();
     }
 
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
-        var result = await _module.SendQuery(query);
-        _accessor.ExecutionContext = ExecutionContext.Empty();
-        return result;
+        return await _module.SendQuery(query);
+    }
+    
+    public async Task Publish(IntegrationEvent integrationEvent)
+    {
+        await _module.PublishNotification(integrationEvent);
     }
 }
