@@ -28,10 +28,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        
+    - run: dotnet build --configuration Release
+      
+    - name: Install playwright
+      run: pwsh tests/Micro.Web.AcceptanceTests/bin/Release/net8.0/playwright.ps1 install --with-deps
+      
     - name: Test
       run: dotnet test --configuration Release --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"
 
