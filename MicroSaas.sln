@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants", "src\Micro.Tenants\Micro.Tenants.csproj", "{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.IntegrationTests", "Tests\Micro.Tenants.IntegrationTests\Micro.Tenants.IntegrationTests.csproj", "{74F19403-CCCC-4B1C-9810-58E139698770}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.IntegrationTests", "tests\Micro.Tenants.IntegrationTests\Micro.Tenants.IntegrationTests.csproj", "{74F19403-CCCC-4B1C-9810-58E139698770}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{CC782926-4967-457F-88A2-A4BCD13C38EB}"
 	ProjectSection(SolutionItems) = preProject
