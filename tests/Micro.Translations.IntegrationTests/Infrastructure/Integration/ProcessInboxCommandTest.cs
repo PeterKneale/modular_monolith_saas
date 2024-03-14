@@ -1,11 +1,10 @@
 ﻿using Micro.Tenants.IntegrationEvents;
-using Micro.Translations.Infrastructure.Integration;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 
-[TestSubject(typeof(ProcessInboxCommandHandler))]
+[TestSubject(typeof(ProcessInboxCommand))]
 [Collection(nameof(ServiceFixtureCollection))]
-public class ProcessInboxCommandHandlerTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
+public class ProcessInboxCommandTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Inbox_can_be_processed()
@@ -17,7 +16,7 @@ public class ProcessInboxCommandHandlerTest(ServiceFixture service, ITestOutputH
 
         // act
         await Service.Command(new ProcessInboxCommand());
-        
+
         // assert
         (await IntegrationHelper.CountPendingInboxMessages()).Should().Be(0);
     }

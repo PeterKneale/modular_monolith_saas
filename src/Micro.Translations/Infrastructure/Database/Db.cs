@@ -1,6 +1,5 @@
 ﻿using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
-using Micro.Translations.Domain;
 using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Domain.UserAggregate;
 using Micro.Translations.Infrastructure.Database.Converters;
@@ -8,7 +7,7 @@ using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
 
-public partial class Db : DbContext
+public class Db : DbContext
 {
     public Db()
     {
@@ -95,7 +94,7 @@ public partial class Db : DbContext
 
             entity.Ignore(x => x.DomainEvents);
         });
-        
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable(UsersTable, SchemaName);

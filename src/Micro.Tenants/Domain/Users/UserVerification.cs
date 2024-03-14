@@ -8,7 +8,7 @@ public class UserVerification : BaseEntity
     {
         // ef
     }
-    
+
     private UserVerification(bool isVerified, string? verificationToken)
     {
         IsVerified = isVerified;
@@ -16,8 +16,14 @@ public class UserVerification : BaseEntity
         VerificationToken = verificationToken;
     }
 
+    public bool IsVerified { get; private set; }
+
+    public DateTimeOffset? VerifiedAt { get; private set; }
+
+    public string? VerificationToken { get; private set; }
+
     public static UserVerification Unverified() => new(false, Guid.NewGuid().ToString());
-    
+
     public void Verify(string token)
     {
         CheckRule(new MustNotBeVerifiedRule(this));
@@ -26,10 +32,4 @@ public class UserVerification : BaseEntity
         VerifiedAt = SystemClock.Now;
         VerificationToken = null;
     }
-
-    public bool IsVerified { get; private set; }
-    
-    public DateTimeOffset? VerifiedAt { get; private set; }
-    
-    public string? VerificationToken { get; private set; }
 }

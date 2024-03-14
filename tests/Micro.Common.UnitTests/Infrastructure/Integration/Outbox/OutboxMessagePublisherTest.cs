@@ -3,7 +3,6 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Moq;
-using Newtonsoft.Json;
 using Xunit.Abstractions;
 
 namespace Micro.Common.UnitTests.Infrastructure.Integration.Outbox;
@@ -17,7 +16,7 @@ public class OutboxMessagePublisherTest(ITestOutputHelper output)
         // arrange
         var logs = output.ToLogger<OutboxMessagePublisher>();
         var bus = new Mock<IEventsBus>();
-       
+
         // act
         var sut = new OutboxMessagePublisher(bus.Object, logs);
         var integrationEvent = new TestIntegrationEvent { TestId = Guid.NewGuid() };

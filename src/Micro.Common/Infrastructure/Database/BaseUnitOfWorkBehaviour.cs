@@ -8,19 +8,16 @@ public class BaseUnitOfWorkBehaviour<TRequest, TResponse>(DbContext db, DomainEv
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (request is not IRequest<Unit>)
-        {
-            return await next();
-        }
+        if (request is not IRequest<Unit>) return await next();
 
-        log.LogInformation("Beginning unit of work");
+        log.LogDebug("Beginning unit of work");
         var response = await next();
         await publisher.PublishDomainEvents(db, cancellationToken);
-        
-        log.LogInformation("Saving changes");
+
+        log.LogDebug("Saving changes");
         await db.SaveChangesAsync(cancellationToken);
-        
-        log.LogInformation("Finished unit of work");
+
+        log.LogDebug("Finished unit of work");
         return response;
     }
 }

@@ -1,11 +1,10 @@
-﻿using Micro.Translations.Infrastructure.Integration;
-using Micro.Translations.IntegrationEvents;
+﻿using Micro.Translations.IntegrationEvents;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 
-[TestSubject(typeof(ProcessInboxCommandHandler))]
+[TestSubject(typeof(ProcessInboxCommand))]
 [Collection(nameof(ServiceFixtureCollection))]
-public class ProcessOutboxCommandHandlerTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
+public class ProcessOutboxCommandTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Outbox_can_be_processed()

@@ -21,13 +21,13 @@ public class User : BaseEntity
         Verification = UserVerification.Unverified();
     }
 
-    public UserId Id { get; private init; } = null!;
+    public UserId Id { get; } = null!;
 
     public UserName Name { get; private set; } = null!;
 
-    public UserCredentials Credentials { get; private set; } = null!;
+    public UserCredentials Credentials { get; } = null!;
 
-    public UserVerification Verification { get; private init; } = null!;
+    public UserVerification Verification { get; } = null!;
 
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 
@@ -36,11 +36,8 @@ public class User : BaseEntity
     public static User CreateInstance(UserId id, UserName name, UserCredentials credentials) =>
         new(id, name, credentials);
 
-    public bool CanLogin(UserCredentials credentials)
-    {
-        return Verification.IsVerified && Credentials.Matches(credentials);
-    }
-    
+    public bool CanLogin(UserCredentials credentials) => Verification.IsVerified && Credentials.Matches(credentials);
+
     public void ChangeName(UserName name)
     {
         AddDomainEvent(new UserNameChangedDomainEvent(Id, name));

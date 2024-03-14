@@ -11,21 +11,21 @@ namespace Micro.Translations.IntegrationTests.Fixtures;
 
 public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
-    private IModule _module = null!;
     private ExecutionContextAccessor _accessor = null!;
+    private IModule _module = null!;
 
     public async Task InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
+            .AddJsonFile("appsettings.json", false)
             .AddEnvironmentVariables()
             .Build();
-        
+
         var services = new ServiceCollection()
             .AddLogging(x => x.AddXUnit(this))
             .AddInMemoryEventBus()
             .BuildServiceProvider();
-        
+
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
@@ -35,9 +35,9 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, true);
     }
 
-    public Task DisposeAsync()
+    public async Task DisposeAsync()
     {
-        return Task.CompletedTask;
+        await TranslationModuleStartup.Stop();
     }
 
     public ITestOutputHelper? OutputHelper { get; set; }
@@ -47,7 +47,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await action(_module);
     }
-    
+
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
@@ -59,7 +59,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         return await _module.SendQuery(query);
     }
-    
+
     public async Task Publish(IntegrationEvent integrationEvent)
     {
         await _module.PublishNotification(integrationEvent);

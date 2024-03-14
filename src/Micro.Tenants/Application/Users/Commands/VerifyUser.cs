@@ -23,10 +23,7 @@ public static class VerifyUser
             var verification = command.Verification;
 
             var user = await users.GetAsync(userId, cancellationToken);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(User), userId.Value);
-            }
+            if (user == null) throw new NotFoundException(nameof(User), userId.Value);
 
             user.Verification.Verify(verification);
             return Unit.Value;

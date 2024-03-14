@@ -144,7 +144,7 @@ public partial class Db : DbContext
                     .HasMaxLength(100)
                     .HasColumnName("password");
             });
-            
+
             entity.OwnsOne(x => x.Verification, x =>
             {
                 x.Property(e => e.IsVerified).HasColumnName(IsVerified);

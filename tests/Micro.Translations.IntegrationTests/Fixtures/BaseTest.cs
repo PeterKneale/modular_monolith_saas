@@ -9,6 +9,4 @@ public class BaseTest
     }
 
     protected ServiceFixture Service { get; }
-    
-
 }

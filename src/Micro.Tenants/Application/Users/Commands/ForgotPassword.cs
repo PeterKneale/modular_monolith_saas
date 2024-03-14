@@ -15,18 +15,15 @@ public static class ForgotPassword
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var email = new EmailAddress(command.email);
-            
+
             var user = await users.GetAsync(email, token);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(User), email);
-            }
-            
+            if (user == null) throw new NotFoundException(nameof(User), email);
+
             // todo: generate reset token
             // todo: send email with reset link
-            
+
             users.Update(user);
-            
+
             return Unit.Value;
         }
     }

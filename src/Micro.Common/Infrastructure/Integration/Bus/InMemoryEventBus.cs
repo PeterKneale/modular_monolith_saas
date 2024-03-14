@@ -16,7 +16,7 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
             logs.LogInformation("No subscribers for {EventType}", eventType);
             return Task.CompletedTask;
         }
-        
+
         foreach (var handler in handlers)
         {
             logs.LogInformation($"Subscriber handling integration event: {handler.GetType().AssemblyQualifiedName}");
@@ -30,31 +30,25 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
     {
         var eventType = GetEventType<T>();
         if (!_subscriptions.TryGetValue(eventType, out var handlers))
-        {
             _subscriptions.Add(eventType, [handler]);
-        }
         else
-        {
             handlers.Add(handler);
-        }
     }
-
-    private List<IIntegrationEventHandler> GetHandlers(string key)
-    {
-        return _subscriptions.TryGetValue(key, out var handlers) 
-            ? handlers 
-            : [];
-    }
-    
-    private static string GetEventType<T>() where T : IntegrationEvent =>
-        typeof(T).FullName!;
-    
-    private static string GetEventType<T>(T @event) where T : IntegrationEvent => 
-        @event.GetType().FullName!;
 
 
     public void StartConsuming()
     {
         throw new NotImplementedException();
     }
+
+    private List<IIntegrationEventHandler> GetHandlers(string key) =>
+        _subscriptions.TryGetValue(key, out var handlers)
+            ? handlers
+            : [];
+
+    private static string GetEventType<T>() where T : IntegrationEvent =>
+        typeof(T).FullName!;
+
+    private static string GetEventType<T>(T @event) where T : IntegrationEvent =>
+        @event.GetType().FullName!;
 }

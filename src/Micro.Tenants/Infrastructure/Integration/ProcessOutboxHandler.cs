@@ -1,7 +1,8 @@
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Tenants.Infrastructure.Database;
 
-namespace Micro.Translations.Infrastructure.Integration;
+namespace Micro.Tenants.Infrastructure.Integration;
 
 public class ProcessOutboxCommandHandler(Db db, OutboxMessagePublisher publisher) : IRequestHandler<ProcessOutboxCommand>
 {
@@ -12,7 +13,7 @@ public class ProcessOutboxCommandHandler(Db db, OutboxMessagePublisher publisher
         foreach (var message in messages)
         {
             await publisher.PublishToBus(message, cancellationToken);
-            db.Remove(message);
+            db.Outbox.Remove(message);
         }
 
         return Unit.Value;

@@ -10,7 +10,7 @@ public class Organisation : BaseEntity
     {
         // ef core
     }
-    
+
     private Organisation(OrganisationId id, OrganisationName name)
     {
         Id = id;
@@ -18,15 +18,15 @@ public class Organisation : BaseEntity
         AddDomainEvent(new OrganisationCreatedDomainEvent(id, name));
     }
 
-    public OrganisationId Id { get; private init; } = null!;
-    
+    public OrganisationId Id { get; } = null!;
+
     public OrganisationName Name { get; private set; } = null!;
 
     public virtual ICollection<Membership> Memberships { get; private init; } = new List<Membership>();
 
     public virtual ICollection<Project> Projects { get; private init; } = new List<Project>();
 
-    public static Organisation Create(OrganisationId id, OrganisationName name) => 
+    public static Organisation Create(OrganisationId id, OrganisationName name) =>
         new(id, name);
 
     public void ChangeName(OrganisationName name)

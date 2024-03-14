@@ -8,5 +8,4 @@ public class ProcessInboxCommand : IRequest
 
 public class ProcessInboxCommandValidator : AbstractValidator<ProcessInboxCommand>
 {
-    
 }

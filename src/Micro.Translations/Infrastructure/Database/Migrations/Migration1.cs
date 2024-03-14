@@ -20,7 +20,7 @@ public class Migration1 : Migration
             .WithColumn(TermIdColumn).AsGuid()
             .WithColumn(LanguageCodeColumn).AsString(10)
             .WithColumn(TextColumn).AsString(100);
-        
+
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(NameColumn).AsString(100);

@@ -2,7 +2,7 @@
 
 public class UserCredentials(EmailAddress email, Password password)
 {
-    public EmailAddress Email { get; private init; } = email;
+    public EmailAddress Email { get; } = email;
     public Password Password { get; private set; } = password;
 
     internal bool Matches(UserCredentials credentials) =>
@@ -13,6 +13,6 @@ public class UserCredentials(EmailAddress email, Password password)
     {
         Password = password;
     }
-    
+
     public override string ToString() => $"{Email}";
 }

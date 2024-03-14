@@ -20,15 +20,9 @@ public static class GetUserVerificationToken
         {
             var userId = new UserId(query.UserId);
             var user = await users.GetAsync(userId, cancellationToken);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(User), userId.Value);
-            }
+            if (user == null) throw new NotFoundException(nameof(User), userId.Value);
 
-            if (user.Verification.IsVerified)
-            {
-                throw new InvalidOperationException(userId);
-            }
+            if (user.Verification.IsVerified) throw new InvalidOperationException(userId);
 
             return user.Verification.VerificationToken!;
         }

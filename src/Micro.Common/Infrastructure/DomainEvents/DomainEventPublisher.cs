@@ -6,9 +6,11 @@ public class DomainEventPublisher(DomainEventAccessor accessor, IPublisher publi
 {
     public async Task PublishDomainEvents(DbContext db, CancellationToken cancellationToken)
     {
-        log.LogInformation("Publishing domain events");
-        
         var domainEvents = accessor.GetAllDomainEvents(db);
+        if (domainEvents.Count == 0) return;
+
+        log.LogInformation("Publishing domain events");
+
         foreach (var domainEvent in domainEvents)
         {
             log.LogInformation($"Publishing {domainEvent.GetType().Name}");

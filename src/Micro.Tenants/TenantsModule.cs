@@ -1,5 +1,4 @@
 ﻿using Micro.Tenants.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Tenants;
 

@@ -41,7 +41,7 @@ public class Term : BaseEntity
         Name = name;
         AddDomainEvent(new TermNameUpdatedDomainEvent(Id, oldName, name));
     }
-    
+
     public void AddTranslation(Language language, TranslationText text)
     {
         CheckRule(new MustNotAlreadyHaveTranslationForALanguage(this, language));

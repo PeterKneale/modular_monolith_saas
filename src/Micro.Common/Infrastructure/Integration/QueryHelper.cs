@@ -13,7 +13,7 @@ public static class QueryHelper
             .OrderBy(x => x.CreatedAt)
             .ToListAsync(token);
     }
-    
+
     public static async Task<List<InboxMessage>> GetMessagesToPublish(DbSet<InboxMessage> messages, CancellationToken token)
     {
         return await messages

@@ -16,15 +16,15 @@ public class UserChangedHandlerTests(ServiceFixture service, ITestOutputHelper o
         var userId = Guid.NewGuid();
         var integrationEvent1 = new UserCreated { UserId = userId, Name = "X" };
         var integrationEvent2 = new UserChanged { UserId = userId, Name = "Y" };
-        
+
         // act
         await Service.Publish(integrationEvent1);
         await Service.Publish(integrationEvent2);
-        
+
         // assert
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
-        var user = await db.Users.SingleOrDefaultAsync(x=>x.Id == userId);
+        var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();
         user.Name.Should().Be("Y");
     }

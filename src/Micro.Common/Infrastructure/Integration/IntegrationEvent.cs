@@ -4,7 +4,7 @@ public class IntegrationEvent : INotification
 {
 }
 
-public interface IIntegrationEventHandler 
+public interface IIntegrationEventHandler
 {
     Task Handle(IntegrationEvent @event);
 }

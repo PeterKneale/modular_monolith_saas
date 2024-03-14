@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Micro.Tenants.Infrastructure;
+﻿namespace Micro.Tenants.Infrastructure;
 
 internal static class CompositionRoot
 {

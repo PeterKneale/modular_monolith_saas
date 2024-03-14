@@ -38,9 +38,9 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         await TenantsModuleStartup.Start(_accessor, configuration, bus, logs, true);
     }
 
-    public Task DisposeAsync()
+    public async Task DisposeAsync()
     {
-        return Task.CompletedTask;
+        await TenantsModuleStartup.Stop();
     }
     
     public ITestOutputHelper? OutputHelper { get; set; }

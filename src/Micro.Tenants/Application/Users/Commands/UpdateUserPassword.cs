@@ -20,19 +20,16 @@ public static class UpdateUserPassword
         public async Task<Unit> Handle(Command command, CancellationToken token)
         {
             var userId = context.UserId;
-            
+
             var user = await users.GetAsync(userId, token);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(User), userId.Value);
-            }
-            
+            if (user == null) throw new NotFoundException(nameof(User), userId.Value);
+
             var oldPassword = new Password(command.OldPassword);
             var newPassword = new Password(command.NewPassword);
-            
+
             user.ChangePassword(oldPassword, newPassword);
             users.Update(user);
-            
+
             return Unit.Value;
         }
     }

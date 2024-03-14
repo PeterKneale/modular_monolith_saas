@@ -23,13 +23,10 @@ public static class UpdateUserName
             var name = new UserName(command.FirstName, command.LastName);
 
             var user = await users.GetAsync(userId, token);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(User), userId.Value);
-            }
+            if (user == null) throw new NotFoundException(nameof(User), userId.Value);
             user.ChangeName(name);
             users.Update(user);
-            
+
             return Unit.Value;
         }
     }

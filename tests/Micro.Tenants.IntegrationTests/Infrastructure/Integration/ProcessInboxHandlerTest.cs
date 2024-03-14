@@ -3,7 +3,7 @@
 namespace Micro.Tenants.IntegrationTests.Infrastructure.Integration;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ProcessInboxCommandHandlerTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
+public class ProcessInboxHandlerTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Inbox_can_be_processed()
