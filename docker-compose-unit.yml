@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+
+  unit-tests:
+    container_name: unit-tests
+    build:
+      context: .
+      dockerfile: ./src/Micro.Web/Dockerfile
+      target: tests
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - Logging:LogLevel:Default=Warning
+      - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
+    entrypoint:
+      - dotnet
+      - test
+      - --configuration=Release
+      - --filter=Type=Unit
+      - --logger=GitHubActions

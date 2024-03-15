@@ -7,6 +7,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{CC782926-4967-457F-88A2-A4BCD13C38EB}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose-infra.yml = docker-compose-infra.yml
+		docker-compose-acceptance.yml = docker-compose-acceptance.yml
+		docker-compose-integration.yml = docker-compose-integration.yml
+		docker-compose-unit.yml = docker-compose-unit.yml
+		docker-compose-test.sh = docker-compose-test.sh
+		docker-compose-build.sh = docker-compose-build.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations", "src\Micro.Translations\Micro.Translations.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"
@@ -19,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web", "src\Micro.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common", "src\Micro.Common\Micro.Common.csproj", "{7F5702D7-1808-443D-BD92-FFD5FADE5158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web.AcceptanceTests", "tests\Micro.Web.AcceptanceTests\Micro.Web.AcceptanceTests.csproj", "{303110BA-112C-4CF4-AE69-7376AA933F87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.AcceptanceTests", "tests\Micro.AcceptanceTests\Micro.AcceptanceTests.csproj", "{303110BA-112C-4CF4-AE69-7376AA933F87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.UnitTests", "tests\Micro.Translations.UnitTests\Micro.Translations.UnitTests.csproj", "{8C389821-57AF-4369-8B35-F5AD237B8DC5}"
 EndProject
@@ -43,6 +48,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common.UnitTests", "tests\Micro.Common.UnitTests\Micro.Common.UnitTests.csproj", "{D83D5413-12DA-49BE-89CA-3A55041DA1E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.IntegrationTests", "tests\Micro.IntegrationTests\Micro.IntegrationTests.csproj", "{CB7A4003-0789-4740-A6C6-AD687D80EEA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4451ED11-3583-4CD6-9C83-AF8C6ED0D3FE}"
+	ProjectSection(SolutionItems) = preProject
+		run.sh = run.sh
+		watch.sh = watch.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,6 +131,5 @@ Global
 		{EFEE4927-9402-4E85-81A2-F2BC9602725B} = {B351D8DC-4C47-4FB8-8CBA-4975D90885A3}
 		{3D592CBB-3478-4BDD-936D-0436EA07014E} = {2FED42D9-12CB-4636-A42B-A1723C72B3DF}
 		{D83D5413-12DA-49BE-89CA-3A55041DA1E1} = {C5645A63-6FD2-4A01-B273-11061F068C10}
-		{CB7A4003-0789-4740-A6C6-AD687D80EEA5} = {C5645A63-6FD2-4A01-B273-11061F068C10}
 	EndGlobalSection
 EndGlobal

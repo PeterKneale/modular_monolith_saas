@@ -3,7 +3,7 @@ using Micro.Tenants.Application.ApiKeys.Queries;
 
 namespace Micro.Web.Pages.ApiKeys;
 
-public class AddPage(ITenantsModule module, IPageContextAccessor context, ILogger<AddPage> logs) : ContextualPageModel(context)
+public class AddPage(ITenantsModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     public async Task<IActionResult> OnPostAsync()
     {

@@ -15,7 +15,7 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
     {
         var results = await module.SendQuery(new ListTranslations.Query(languageCode));
         var stream = await FileDownloads.ToCsvMemoryStream(results, token);
-        var name = $"{RouteOrg}-{RouteProject}-{results.LanguageCode}.{FileDownloads.CsvExtension}";
+        var name = $"{Org}-{Project}-{results.LanguageCode}.{FileDownloads.CsvExtension}";
         return new FileStreamResult(stream, FileDownloads.CsvContentType)
         {
             FileDownloadName = name
@@ -26,7 +26,7 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
     {
         var results = await module.SendQuery(new ListTranslations.Query(languageCode));
         var stream = FileDownloads.ToResXMemoryStream(results, token);
-        var name = $"{RouteOrg}-{RouteProject}-{results.LanguageCode}.{FileDownloads.ResxExtension}";
+        var name = $"{Org}-{Project}-{results.LanguageCode}.{FileDownloads.ResxExtension}";
         return new FileStreamResult(stream, FileDownloads.TextContentType)
         {
             FileDownloadName = name

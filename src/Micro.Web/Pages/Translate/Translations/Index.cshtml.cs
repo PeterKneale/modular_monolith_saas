@@ -24,9 +24,9 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
 
         return RedirectToPage(nameof(Index), new
         {
-            LanguageCode = LanguageCode,
-            Org = context.Organisation.Name,
-            Project = context.Project.Name
+            Org,
+            Project,
+            LanguageCode
         });
     }
 }

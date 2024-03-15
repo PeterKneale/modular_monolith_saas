@@ -3,7 +3,7 @@ using Micro.Translations.Application.Commands;
 
 namespace Micro.Web.Pages.Translate.Terms;
 
-public class ImportPage(ITranslationModule module, IPageContextAccessor context, ILogger<ImportPage> logs) : PageModel
+public class ImportPage(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {

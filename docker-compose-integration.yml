@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+
+  integration-tests:
+    container_name: integration-tests
+    build:
+      context: .
+      dockerfile: ./src/Micro.Web/Dockerfile
+      target: tests
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - Logging:LogLevel:Default=Warning
+      - DB_HOST=db
+      - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
+    entrypoint:
+      - dotnet
+      - test
+      - --configuration=Release
+      - --filter=Type=Integration
+      - --logger=GitHubActions
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.3-alpine
+    container_name: db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    command: "-c log_statement=all"
+    ports:
+      - "5432:5432"

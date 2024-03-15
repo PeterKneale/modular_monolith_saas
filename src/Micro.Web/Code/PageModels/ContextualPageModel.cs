@@ -9,6 +9,6 @@ public class ContextualPageModel : PageModel
         _context = context;
     }
     
-    public string RouteOrg => _context.Organisation.Name;
-    public string RouteProject => _context.Project.Name;
+    public string Org => _context.Organisation.Name;
+    public string Project => _context.Project.Name;
 }

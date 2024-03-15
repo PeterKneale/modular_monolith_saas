@@ -18,8 +18,8 @@
                         {
                             <a
                                 asp-page="../Translations/Add"
-                                asp-route-org="@Model.RouteOrg"
-                                asp-route-project="@Model.RouteProject"
+                                asp-route-org="@Model.Org"
+                                asp-route-project="@Model.Project"
                                 asp-route-termId="@item.Id"
                                 class="btn btn-primary me-2">
                                 Add New Translation
@@ -33,8 +33,8 @@
                                     {
                                         <li>
                                             <a asp-page="../Translations/Add"
-                                               asp-route-org="@Model.RouteOrg"
-                                               asp-route-project="@Model.RouteProject"
+                                               asp-route-org="@Model.Org"
+                                               asp-route-project="@Model.Project"
                                                asp-route-termId="@item.Id"
                                                asp-route-languageCode="@language.Code"
                                                class="dropdown-item">
@@ -48,8 +48,8 @@
                         else
                         {
                             <a asp-page="../Translations/Add"
-                               asp-route-org="@Model.RouteOrg"
-                               asp-route-project="@Model.RouteProject"
+                               asp-route-org="@Model.Org"
+                               asp-route-project="@Model.Project"
                                asp-route-termId="@item.Id"
                                class="btn btn-primary me-2">
                                 Add Translation

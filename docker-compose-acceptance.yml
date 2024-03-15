@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  acceptance-tests:
+    container_name: acceptance-tests
+    build:
+      context: .
+      dockerfile: ./tests/Micro.AcceptanceTests/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - WEB_HOST=web
+      - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
+    entrypoint:
+      - dotnet
+      - test
+      - Micro.AcceptanceTests.dll
+      - --configuration=Release
+    depends_on:
+      - web
+  
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: ./src/Micro.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - Logging:LogLevel:Default=Warning
+      - DB_HOST=db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.3-alpine
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"

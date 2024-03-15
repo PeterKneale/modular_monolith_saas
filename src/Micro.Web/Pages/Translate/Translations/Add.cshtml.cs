@@ -4,7 +4,7 @@ using Micro.Translations.Application.Queries;
 
 namespace Micro.Web.Pages.Translate.Translations;
 
-public class AddPage(ITranslationModule module, IPageContextAccessor context) : PageModel
+public class AddPage(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     public async Task OnGet()
     {
@@ -49,9 +49,9 @@ public class AddPage(ITranslationModule module, IPageContextAccessor context) : 
             
             return RedirectToPage(nameof(Index), new
             {
-                LanguageCode = LanguageCode,
-                Org = context.Organisation.Name, 
-                Project = context.Project.Name
+                Org,
+                Project,
+                LanguageCode
             });
         }
         catch (PlatformException e)
