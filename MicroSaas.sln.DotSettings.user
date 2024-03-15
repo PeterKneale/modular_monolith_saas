@@ -8,6 +8,7 @@
     &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.IntegrationTests" Presentation="&amp;lt;Micro.Web.IntegrationTests&amp;gt;" /&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.AcceptanceTests" Presentation="&amp;lt;Micro.AcceptanceTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

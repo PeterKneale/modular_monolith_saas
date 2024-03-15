@@ -11,7 +11,7 @@ namespace Micro.Translations.IntegrationTests.Fixtures;
 
 public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
-    private ExecutionContextAccessor _accessor = null!;
+    private SettableExecutionContextAccessor _accessor = null!;
     private IModule _module = null!;
 
     public async Task InitializeAsync()
@@ -29,7 +29,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
-        _accessor = new ExecutionContextAccessor();
+        _accessor = new SettableExecutionContextAccessor();
         _module = new TranslationModule();
 
         await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, true, false);

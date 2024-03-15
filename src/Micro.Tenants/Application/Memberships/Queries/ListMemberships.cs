@@ -22,6 +22,15 @@ public static class ListMemberships
                                $"INNER JOIN {OrganisationsTable} o ON m.{OrganisationIdColumn} = o.{IdColumn} " +
                                $"WHERE m.{UserIdColumn} = @UserId";
             using var con = connections.CreateConnection();
+
+            if (con == null)
+                throw new Exception("The connection is null");
+            if (context == null)
+                throw new Exception("The context is null");
+            if (context.UserId == null)
+                throw new Exception("The context.UserId is null");
+            
+            
             return await con.QueryAsync<Result>(new CommandDefinition(sql, new
             {
                 UserId = context.UserId.Value

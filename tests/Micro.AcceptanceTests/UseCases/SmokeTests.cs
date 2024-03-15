@@ -12,17 +12,19 @@ public class SmokeTests : PageTest
     public async Task Can_register_and_login_create_an_organisation_and_project()
     {
         var registerPage = await RegisterPage.Goto(Page);
-        var registerPageData = RegisterPageData.CreateValid();
+        var user = RegisterPageData.CreateValid();
 
-        await registerPage.Register(registerPageData.FirstName, registerPageData.LastName, registerPageData.Email, registerPageData.Password);
+        await registerPage.Register(user.FirstName, user.LastName, user.Email, user.Password);
         await registerPage.Alert.AssertVisible();
         await registerPage.Alert.AssertLevelIsSuccess();
         
+        await VerifyPage.Goto(Page, user.Email);
+        
         var loginPage = await LoginPage.Goto(Page);
-        await loginPage.Login(registerPageData.Email, registerPageData.Password);
+        await loginPage.Login(user.Email, user.Password);
         await loginPage.Alert.AssertVisible();
         await loginPage.Alert.AssertLevelIsSuccess();
-
+        
         var orgCreatePage = await OrganisationCreatePage.Goto(Page);
         var orgCreateData = OrganisationCreatePageData.CreateValid();
         await orgCreatePage.Create(orgCreateData.Name);
@@ -34,6 +36,5 @@ public class SmokeTests : PageTest
         await projectCreatePage.Create(projectCreateData.Name); 
         await projectCreatePage.Alert.AssertVisible();
         await projectCreatePage.Alert.AssertLevelIsSuccess();
-
     }
 }

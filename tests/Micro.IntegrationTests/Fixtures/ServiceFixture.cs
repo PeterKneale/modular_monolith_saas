@@ -16,7 +16,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
     private IModule _tenants = null!;
     private IModule _translations = null!;
-    private ExecutionContextAccessor _accessor = null!;
+    private SettableExecutionContextAccessor _accessor = null!;
 
     public async Task InitializeAsync()
     {
@@ -33,7 +33,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
-        _accessor = new ExecutionContextAccessor();
+        _accessor = new SettableExecutionContextAccessor();
         _tenants = new TenantsModule();
         _translations = new TranslationModule();
 

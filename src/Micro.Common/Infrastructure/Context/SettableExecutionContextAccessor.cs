@@ -7,7 +7,7 @@ public interface IExecutionContextAccessor
     public IExecutionContext ExecutionContext { get; }
 }
 
-public class ExecutionContextAccessor : IExecutionContextAccessor
+public class SettableExecutionContextAccessor : IExecutionContextAccessor
 {
     public IExecutionContext ExecutionContext { get; set; }
 }

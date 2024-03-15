@@ -1,4 +1,5 @@
-﻿using Micro.AcceptanceTests.Pages.Auth;
+﻿using Micro.AcceptanceTests.Pages;
+using Micro.AcceptanceTests.Pages.Auth;
 using Micro.AcceptanceTests.Pages.Components.AlertComponent;
 using Micro.AcceptanceTests.Pages.Organisations;
 using Micro.AcceptanceTests.Pages.Projects;
@@ -23,6 +24,8 @@ public static class PageExtensions
         await register.Register(data.FirstName, data.LastName, data.Email, data.Password);
         await register.AssertSuccessMessageShown();
 
+        await VerifyPage.Goto(page, data.Email);
+        
         var login = await LoginPage.Goto(page);
         await login.Login(data.Email, data.Password);
         await login.AssertSuccessMessageShown();

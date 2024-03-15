@@ -12,7 +12,7 @@ namespace Micro.Tenants.IntegrationTests.Fixtures;
 public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
     private IModule _module = null!;
-    private ExecutionContextAccessor _accessor = null!;
+    private SettableExecutionContextAccessor _accessor = null!;
 
     public async Task InitializeAsync()
     {
@@ -29,7 +29,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
-        _accessor = new ExecutionContextAccessor
+        _accessor = new SettableExecutionContextAccessor
         {
             ExecutionContext = ExecutionContext.Empty()
         };

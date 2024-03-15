@@ -1,23 +1,21 @@
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration.Bus;
+using Micro.Tenants.Application.Users.Commands;
+using Micro.Tenants.Application.Users.Queries;
 using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
+using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); });
-builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
-builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
-builder.Services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
-
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
     .AddEnvironmentVariables()
     .Build();
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); });
 
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
@@ -51,6 +49,10 @@ builder.Services.AddScoped<PageContextMiddleware>();
 builder.Services.AddScoped<IPageContextAccessor, PageContextAccessor>();
 builder.Services.AddScoped<IPageContextOrganisation>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
 builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageContextAccessor>().Project);
+
+builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
+builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
+builder.Services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
 builder.Services.AddInMemoryEventBus();
 
 var app = builder.Build();
@@ -77,12 +79,25 @@ app.MapRazorPages();
 app.UseMiddleware<PageContextMiddleware>();
 app.MapGet("/health/alive", () => "alive");
 app.MapGet("/health/ready", () => "ready");
-app.MapGet("/test/auth/impersonate/", async ctx =>
+app.MapGet("/Test/Auth/Impersonate/", async ctx =>
 {
-    // TODO: This is for testing purposes only and will be restricted
     var login = ctx.RequestServices.GetRequiredService<LoginService>();
     var userId = Guid.Parse(ctx.Request.Query["userId"]!);
     await login.Impersonate(userId);
     ctx.Response.Redirect("/");
+});
+app.MapGet("/Test/GetUserId", async ctx =>
+{
+    var module = ctx.RequestServices.GetRequiredService<ITenantsModule>();
+    var email = ctx.Request.Query["email"]!;
+    var userId = await module.SendQuery(new GetUserId.Query(email!));
+    await ctx.Response.WriteAsync(userId.ToString());
+});
+app.MapGet("/Test/GetUserVerification", async ctx =>
+{
+    var module = ctx.RequestServices.GetRequiredService<ITenantsModule>();
+    var userId = Guid.Parse(ctx.Request.Query["userId"]!);
+    var token = await module.SendQuery(new GetUserVerificationToken.Query(userId));
+    await ctx.Response.WriteAsync(token);
 });
 app.Run();
