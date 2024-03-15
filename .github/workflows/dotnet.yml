@@ -15,5 +15,5 @@ jobs:
     - uses: actions/checkout@v4
       
     - name: Build and Test
-      run: ./docker-run-tests.sh
+      run: ./run-docker-compose-test.sh
 
