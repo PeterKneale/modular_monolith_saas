@@ -25,7 +25,7 @@ COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationT
 RUN dotnet restore
 COPY . .
 WORKDIR "/workspace/"
-RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "src/Micro.Web/Micro.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS tests
 

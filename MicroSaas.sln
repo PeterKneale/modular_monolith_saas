@@ -10,8 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{CC7829
 		docker-compose-acceptance.yml = docker-compose-acceptance.yml
 		docker-compose-integration.yml = docker-compose-integration.yml
 		docker-compose-unit.yml = docker-compose-unit.yml
-		docker-compose-test.sh = docker-compose-test.sh
-		docker-compose-build.sh = docker-compose-build.sh
+		run-docker-compose-test.sh = run-docker-compose-test.sh
+		run-docker-compose-build.sh = run-docker-compose-build.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations", "src\Micro.Translations\Micro.Translations.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"
