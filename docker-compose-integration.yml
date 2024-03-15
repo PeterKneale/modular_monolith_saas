@@ -11,6 +11,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
+      - DOTNET_NOLOGO=true
+      - DOTNET_CLI_TELEMETRY_OPTOUT=true
       - Logging:LogLevel:Default=Warning
       - DB_HOST=db
       - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
