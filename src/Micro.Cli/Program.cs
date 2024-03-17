@@ -1,5 +1,4 @@
-﻿using Micro.Common.Application;
-using Micro.Common.Infrastructure.Integration.Bus;
+﻿using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Users.Commands;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,17 +19,7 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var services = new ServiceCollection()
-    .AddLogging(c =>
-    {
-        c.ClearProviders();
-        c.AddSimpleConsole(o =>
-        {
-            o.IncludeScopes = true;
-            o.SingleLine = true;
-        });
-        c.AddFilter("FluentMigrator", LogLevel.Warning);
-        c.AddFilter("Microsoft", LogLevel.Error);
-    })
+    .AddLogging(builder => builder.AddSimpleConsole(x=>x.SingleLine = true))
     .AddSingleton<ITenantsModule, TenantsModule>()
     .AddSingleton<ITranslationModule, TranslationModule>()
     .AddInMemoryEventBus()
@@ -48,5 +37,4 @@ await tenantsModule.SendCommand(new RegisterUser.Command(userId, "x", "x", $"x{G
 await tenantsModule.SendCommand(new UpdateUserName.Command("x", "y"));
 await tenantsModule.SendCommand(new CreateOrganisation.Command(organisationId, "x"));
 await tenantsModule.SendCommand(new UpdateOrganisationName.Command("y"));
-await tenantsModule.SendCommand(new ProcessOutboxCommand());
-await translationModule.SendCommand(new ProcessInboxCommand());
+await Task.Delay(TimeSpan.FromSeconds(10));
