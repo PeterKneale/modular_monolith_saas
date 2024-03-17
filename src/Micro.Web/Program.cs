@@ -7,6 +7,8 @@ using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
@@ -38,6 +40,14 @@ builder.Services
         options.LogoutPath = "/Auth/Logout";
         options.AccessDeniedPath = "/Auth/Forbidden";
     });
+builder.Services
+    .AddHealthChecks()
+    .AddNpgSql(
+        connectionString: configuration.GetDbConnectionString(),
+        healthQuery: "SELECT 1;",
+        name: "sql",
+        failureStatus: HealthStatus.Unhealthy,
+        tags: new[] { "db" });
 
 builder.Services.AddSingleton<LoginService>();
 
@@ -77,8 +87,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 app.UseMiddleware<PageContextMiddleware>();
-app.MapGet("/health/alive", () => "alive");
-app.MapGet("/health/ready", () => "ready");
+app.MapHealthChecks("/health/alive", new HealthCheckOptions
+{
+    Predicate = _ => true
+});
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = checks => checks.Tags.Contains("db"),
+});
 app.MapGet("/Test/Auth/Impersonate/", async ctx =>
 {
     var login = ctx.RequestServices.GetRequiredService<LoginService>();
@@ -100,4 +116,5 @@ app.MapGet("/Test/GetUserVerification", async ctx =>
     var token = await module.SendQuery(new GetUserVerificationToken.Query(userId));
     await ctx.Response.WriteAsync(token);
 });
+
 app.Run();
