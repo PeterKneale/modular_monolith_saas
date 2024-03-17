@@ -8,7 +8,7 @@ public class Config
         .AddEnvironmentVariables()
         .Build();
 
-    public static Config Instance { get; } = new Config();
+    public static Config Instance { get; } = new();
     
     public Uri BaseUrl
     {
@@ -20,6 +20,9 @@ public class Config
             return new Uri($"{scheme}://{host}:{port}");
         }
     }
+    public Uri AliveEndpoint => new(BaseUrl, "/health/alive");
+    
+    public Uri ReadyEndpoint => new(BaseUrl, "/health/ready");
     
     // routes
     public const string OrgRoute = "org";

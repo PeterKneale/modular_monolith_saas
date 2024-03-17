@@ -6,7 +6,7 @@ namespace Micro.AcceptanceTests.UseCases.Home;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class PageIdTests : PageTest
+public class PageIdTests: BaseTest
 {
     [Test]
     public async Task On_home_page()

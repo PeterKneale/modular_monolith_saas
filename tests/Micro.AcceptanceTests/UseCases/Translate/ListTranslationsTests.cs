@@ -5,7 +5,7 @@ namespace Micro.AcceptanceTests.UseCases.Translate;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class ListTranslationsTests : PageTest
+public class ListTranslationsTests: BaseTest
 {
     [Test]
     public async Task Can_list_translations()

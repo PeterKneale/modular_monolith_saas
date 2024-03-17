@@ -7,7 +7,7 @@ namespace Micro.AcceptanceTests.UseCases.Components;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class ProjectSelectorTests : PageTest
+public class ProjectSelectorTests: BaseTest
 {
     [Test]
     public async Task A_user_is_on_home_page_an_owns_no_organisations()

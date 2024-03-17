@@ -5,7 +5,7 @@ namespace Micro.AcceptanceTests.UseCases.Auth;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class RegistrationTests : PageTest
+public class RegistrationTests: BaseTest
 {
     [Test]
     public async Task Can_register_and_login_create_an_organisation()
