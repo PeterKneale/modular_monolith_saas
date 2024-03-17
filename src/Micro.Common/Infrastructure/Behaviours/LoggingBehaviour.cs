@@ -5,10 +5,21 @@ public class LoggingBehaviour<TRequest, TResponse>(ILogger<TRequest> logs) : IPi
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var name = typeof(TRequest).FullName;
+        var name = typeof(TRequest).FullName.Split(".").Last();
         var body = JsonConvert.SerializeObject(request);
 
-        logs.LogInformation("{Name} - {Body}", name, body);
-        return await next();
+        logs.LogInformation("Executing: {Name} - {Body}", name, body);
+        TResponse result;
+        try
+        {
+            result = await next();
+        }
+        catch (Exception e)
+        {
+            logs.LogError(e,"Error Executing: {Name} - {Body}", name, body);
+            throw;
+        }
+
+        return result;
     }
 }
