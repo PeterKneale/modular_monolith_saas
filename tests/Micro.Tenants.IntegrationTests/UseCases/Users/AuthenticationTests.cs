@@ -35,4 +35,18 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
         // assert
         results.Success.Should().BeFalse();
     }
+    
+    [Fact]
+    public async Task Invalid_email_address_fails_validation()
+    {
+        // arrange
+        var email = "test";
+        var password = "password";
+        
+        // act
+        var action = async () => { await RegisterUser(email, password); };
+        
+        // assert
+        await action.Should().ThrowAsync<ValidationException>();
+    }
 }
