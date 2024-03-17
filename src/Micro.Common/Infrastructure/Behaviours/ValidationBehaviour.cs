@@ -32,6 +32,6 @@ public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRe
 
         var errors = string.Join(",", failures.Select(x => x.ErrorMessage));
         logs.LogInformation("{Name} Failed validation {@Request} {errors}", name, request, errors);
-        throw new ValidationException(failures);
+        throw new Exceptions.ValidationException(errors);
     }
 }
