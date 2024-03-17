@@ -9,10 +9,11 @@ public class UserCreatedHandler(IOutboxRepository outbox, ILogger<UserCreatedHan
     public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
         logs.LogInformation("User created, publishing to outbox");
+        var user = notification.User;
         await outbox.CreateAsync(new UserCreated
         {
-            UserId = notification.Id,
-            Name = notification.Name
+            UserId = user.Id,
+            Name = user.Name
         }, cancellationToken);
     }
 }

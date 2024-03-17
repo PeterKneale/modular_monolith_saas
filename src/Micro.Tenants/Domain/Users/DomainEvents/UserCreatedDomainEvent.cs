@@ -1,7 +1,6 @@
 namespace Micro.Tenants.Domain.Users.DomainEvents;
 
-public class UserCreatedDomainEvent(UserId id, UserName name) : IDomainEvent
+public class UserCreatedDomainEvent(User user) : IDomainEvent
 {
-    public UserId Id { get; } = id;
-    public UserName Name { get; } = name;
+    public User User { get; } = user;
 }

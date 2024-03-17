@@ -17,7 +17,7 @@ public class User : BaseEntity
         Id = id;
         Name = name;
         Credentials = credentials;
-        AddDomainEvent(new UserCreatedDomainEvent(id, name));
+        AddDomainEvent(new UserCreatedDomainEvent(this));
         Verification = UserVerification.Unverified();
     }
 
