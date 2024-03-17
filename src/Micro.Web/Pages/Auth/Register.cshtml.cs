@@ -18,7 +18,7 @@ public class Register(ITenantsModule module, ILogger<Login> logs) : PageModel
             TempData.SetAlert(Alert.Success("You have been registered."));
             return Redirect("/");
         }
-        catch (BusinessRuleBrokenException e)
+        catch (PlatformException e)
         {
             logs.LogWarning("Registration was not successful: {Message}", e.Message);
             ModelState.AddModelError(string.Empty, e.Message!);
