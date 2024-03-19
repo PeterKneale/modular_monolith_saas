@@ -1,4 +1,6 @@
-﻿using Micro.Tenants.Domain.Users;
+﻿using Micro.Common.Infrastructure.Integration.Queue;
+using Micro.Tenants.Application.Queue;
+using Micro.Tenants.Domain.Users;
 
 namespace Micro.Tenants.Application.Users.Commands;
 
@@ -18,7 +20,7 @@ public static class RegisterUser
         }
     }
 
-    public class Handler(IUserRepository users) : IRequestHandler<Command>
+    public class Handler(IUserRepository users, IQueueRepository queue) : IRequestHandler<Command>
     {
         public async Task Handle(Command command, CancellationToken token)
         {
@@ -27,13 +29,16 @@ public static class RegisterUser
             var userName = new UserName(command.FirstName, command.LastName);
             var userPassword = new Password(command.Password);
             var userCredentials = new UserCredentials(userEmail, userPassword);
-            
+
             if (await users.GetAsync(userId, token) != null) throw new AlreadyExistsException(nameof(User), userId);
-            
+
             if (await users.GetAsync(userEmail, token) != null) AlreadyExistsException.ThrowBecauseEmailAlreadyExists(nameof(User), userEmail);
 
             var user = User.CreateInstance(userId, userName, userCredentials);
             await users.CreateAsync(user, token);
+
+            var sendEmail = new SendWelcomeEmail.Command { UserId = userId };
+            await queue.CreateAsync(QueueMessage.CreateFrom(sendEmail), token);
         }
     }
 }

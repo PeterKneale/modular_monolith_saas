@@ -2,7 +2,7 @@
 
 public interface IInboxRepository
 {
-    Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token);
+    Task CreateAsync(IIntegrationEvent integrationEvent, CancellationToken token);
     void Update(InboxMessage message);
     Task<List<InboxMessage>> ListPending(CancellationToken token);
 }

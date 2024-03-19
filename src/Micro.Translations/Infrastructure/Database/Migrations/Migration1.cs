@@ -1,6 +1,7 @@
 ﻿using FluentMigrator;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Common.Infrastructure.Integration.Queue;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database.Migrations;
@@ -39,6 +40,7 @@ public class Migration1 : Migration
 
         this.CreateInboxTable();
         this.CreateOutboxTable();
+        this.CreateCommandTable();
     }
 
     public override void Down()
@@ -49,5 +51,6 @@ public class Migration1 : Migration
 
         this.DropInboxTable();
         this.DropOutboxTable();
+        this.DropCommandsTable();
     }
 }

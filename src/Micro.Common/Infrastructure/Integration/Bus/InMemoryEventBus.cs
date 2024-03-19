@@ -5,7 +5,7 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
     private readonly IDictionary<string, List<IIntegrationEventHandler>> _subscriptions =
         new Dictionary<string, List<IIntegrationEventHandler>>();
 
-    public Task Publish<T>(T @event, CancellationToken cancellationToken) where T : IntegrationEvent
+    public Task Publish<T>(T @event, CancellationToken cancellationToken) where T : IIntegrationEvent
     {
         var eventType = GetEventType(@event);
         logs.LogInformation("Publishing {EventType} to bus", eventType);
@@ -26,7 +26,7 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
         return Task.CompletedTask;
     }
 
-    public void Subscribe<T>(IIntegrationEventHandler handler) where T : IntegrationEvent
+    public void Subscribe<T>(IIntegrationEventHandler handler) where T : IIntegrationEvent
     {
         var eventType = GetEventType<T>();
         if (!_subscriptions.TryGetValue(eventType, out var handlers))
@@ -46,9 +46,9 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
             ? handlers
             : [];
 
-    private static string GetEventType<T>() where T : IntegrationEvent =>
+    private static string GetEventType<T>() where T : IIntegrationEvent =>
         typeof(T).FullName!;
 
-    private static string GetEventType<T>(T @event) where T : IntegrationEvent =>
+    private static string GetEventType<T>(T @event) where T : IIntegrationEvent =>
         @event.GetType().FullName!;
 }

@@ -14,19 +14,37 @@ public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputH
         // arrange
         var userId = Guid.NewGuid();
         var email = $"test{userId.ToString()}@example.com";
-        var firstName = "first";
-        var lastName = "last";
+        var firstName = "a";
+        var lastName = "a";
 
         // act
         await Service.CommandTenants(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
         await Service.CommandTenants(new ProcessOutboxCommand());
         await Service.CommandTranslations(new ProcessInboxCommand());
-
+        
+        //
         // assert
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();
         user!.Name.Should().Be($"{firstName} {lastName}");
+    }
+    
+    [Fact]
+    public async Task Registering_sends_email()
+    {
+        // arrange
+        var userId = Guid.NewGuid();
+        var email = $"test{userId.ToString()}@example.com";
+        var firstName = "b";
+        var lastName = "b";
+
+        // act
+        await Service.CommandTenants(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
+        await Service.CommandTenants(new ProcessQueuedCommand());
+
+        // assert
+        
     }
 }

@@ -26,7 +26,7 @@ public static class IntegrationHelper
         await db.SaveChangesAsync();
     }
 
-    public static async Task PushMessageIntoInbox(IntegrationEvent integrationEvent)
+    public static async Task PushMessageIntoInbox(IIntegrationEvent integrationEvent)
     {
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
@@ -34,7 +34,7 @@ public static class IntegrationHelper
         await db.SaveChangesAsync();
     }
 
-    public static async Task PushMessageIntoOutbox(IntegrationEvent integrationEvent)
+    public static async Task PushMessageIntoOutbox(IIntegrationEvent integrationEvent)
     {
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();

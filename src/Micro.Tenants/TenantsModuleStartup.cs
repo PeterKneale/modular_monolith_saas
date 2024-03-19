@@ -49,6 +49,7 @@ public static class TenantsModuleStartup
         var scheduler = await factory.GetScheduler();
         await scheduler.ScheduleJob(JobBuilder.Create<ProcessOutboxJob>().WithIdentity("outbox").Build(), GetTrigger("outbox"));
         await scheduler.ScheduleJob(JobBuilder.Create<ProcessInboxJob>().WithIdentity("inbox").Build(), GetTrigger("inbox"));
+        await scheduler.ScheduleJob(JobBuilder.Create<ProcessQueuedCommandsJob>().WithIdentity("commands").Build(), GetTrigger("commands"));
         await scheduler.Start();
         return scheduler;
     }

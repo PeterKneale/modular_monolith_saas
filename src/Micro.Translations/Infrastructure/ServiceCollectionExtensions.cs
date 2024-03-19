@@ -22,9 +22,9 @@ internal static class ServiceCollectionExtensions
         services.AddMediatR(c =>
         {
             c.RegisterServicesFromAssemblies(assemblies);
-            c.AddOpenBehavior(typeof(UnitOfWorkBehaviour<,>));
         });
         services.AddValidatorsFromAssemblies(assemblies);
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         // Repositories
         services.AddScoped<ITermRepository, TermRepository>();

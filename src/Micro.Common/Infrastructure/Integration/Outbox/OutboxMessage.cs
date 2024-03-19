@@ -15,7 +15,7 @@ public class OutboxMessage
         ProcessedAt = SystemClock.UtcNow;
     }
 
-    public static OutboxMessage CreateFrom<T>(T integrationEvent) where T : IntegrationEvent =>
+    public static OutboxMessage CreateFrom<T>(T integrationEvent) where T : IIntegrationEvent =>
         new()
         {
             Id = Guid.NewGuid(),
@@ -24,10 +24,10 @@ public class OutboxMessage
             CreatedAt = DateTime.UtcNow
         };
 
-    public static IntegrationEvent ToIntegrationEvent(OutboxMessage message)
+    public static IIntegrationEvent ToIntegrationEvent(OutboxMessage message)
     {
         var messageType = System.Type.GetType(message.Type);
         if (messageType == null) throw new Exception("Unable to find type: " + messageType);
-        return JsonConvert.DeserializeObject(message.Data, messageType) as IntegrationEvent ?? throw new InvalidOperationException();
+        return JsonConvert.DeserializeObject(message.Data, messageType) as IIntegrationEvent ?? throw new InvalidOperationException();
     }
 }

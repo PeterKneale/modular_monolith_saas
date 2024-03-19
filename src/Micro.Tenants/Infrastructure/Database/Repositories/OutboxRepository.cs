@@ -5,7 +5,7 @@ namespace Micro.Tenants.Infrastructure.Database.Repositories;
 
 internal class OutboxRepository(Db db) : IOutboxRepository
 {
-    public async Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token) =>
+    public async Task CreateAsync(IIntegrationEvent integrationEvent, CancellationToken token) =>
         await db.Outbox.AddAsync(OutboxMessage.CreateFrom(integrationEvent), token);
 
     public void Update(OutboxMessage message) =>

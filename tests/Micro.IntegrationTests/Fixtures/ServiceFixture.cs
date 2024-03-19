@@ -84,12 +84,12 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         return await _translations.SendQuery(query);
     }
     
-    public async Task PublishTenants(IntegrationEvent integrationEvent)
+    public async Task PublishTenants(IIntegrationEvent integrationEvent)
     {
         await _tenants.PublishNotification(integrationEvent);
     }
     
-    public async Task PublishTranslations(IntegrationEvent integrationEvent)
+    public async Task PublishTranslations(IIntegrationEvent integrationEvent)
     {
         await _translations.PublishNotification(integrationEvent);
     }

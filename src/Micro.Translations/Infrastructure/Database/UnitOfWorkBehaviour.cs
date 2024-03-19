@@ -1,4 +1,5 @@
-﻿using Micro.Common.Infrastructure.DomainEvents;
+﻿using Micro.Common.Infrastructure.Behaviours;
+using Micro.Common.Infrastructure.DomainEvents;
 
 namespace Micro.Translations.Infrastructure.Database;
 

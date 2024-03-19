@@ -5,7 +5,7 @@ namespace Micro.Translations.Infrastructure.Database.Repositories;
 
 internal class InboxRepository(Db db) : IInboxRepository
 {
-    public async Task CreateAsync(IntegrationEvent integrationEvent, CancellationToken token) =>
+    public async Task CreateAsync(IIntegrationEvent integrationEvent, CancellationToken token) =>
         await db.Inbox.AddAsync(InboxMessage.CreateFrom(integrationEvent), token);
 
     public void Update(InboxMessage message) =>

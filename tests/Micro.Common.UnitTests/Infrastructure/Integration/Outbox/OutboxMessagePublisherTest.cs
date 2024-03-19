@@ -25,10 +25,10 @@ public class OutboxMessagePublisherTest(ITestOutputHelper output)
         await sut.PublishToBus(message, CancellationToken.None);
 
         // assert
-        bus.Verify(x => x.Publish(It.IsAny<IntegrationEvent>(), It.IsAny<CancellationToken>()), Times.Once);
+        bus.Verify(x => x.Publish(It.IsAny<IIntegrationEvent>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    public class TestIntegrationEvent : IntegrationEvent
+    public class TestIntegrationEvent : IIntegrationEvent
     {
         public Guid TestId { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Common.Infrastructure.Integration.Queue;
 using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Domain.UserAggregate;
 using Micro.Translations.Infrastructure.Database.Converters;
@@ -27,6 +28,8 @@ public class Db : DbContext
     public virtual DbSet<InboxMessage> Inbox { get; set; }
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
+
+    public virtual DbSet<QueueMessage> Commands { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -109,5 +112,6 @@ public class Db : DbContext
 
         modelBuilder.AddInbox(SchemaName);
         modelBuilder.AddOutbox(SchemaName);
+        modelBuilder.AddQueue(SchemaName);
     }
 }

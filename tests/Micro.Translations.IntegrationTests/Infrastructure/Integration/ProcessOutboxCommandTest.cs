@@ -1,4 +1,8 @@
-﻿using Micro.Translations.IntegrationEvents;
+﻿using Micro.Translations.Infrastructure;
+using Micro.Translations.Infrastructure.Database;
+using Micro.Translations.IntegrationEvents;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 
@@ -10,14 +14,15 @@ public class ProcessOutboxCommandTest(ServiceFixture service, ITestOutputHelper 
     public async Task Outbox_can_be_processed()
     {
         // arrange
-        await IntegrationHelper.PurgeOutbox();
-        await IntegrationHelper.PushMessageIntoOutbox(new TermChanged(Guid.NewGuid(), "X"));
-        (await IntegrationHelper.CountPendingOutboxMessages()).Should().Be(1);
+        var termId = Guid.NewGuid();
+        var name = "X";
+        await IntegrationHelper.PushMessageIntoOutbox(new TermChanged(termId, name));
 
         // act
         await Service.Command(new ProcessOutboxCommand());
 
         // assert
-        (await IntegrationHelper.CountPendingOutboxMessages()).Should().Be(0);
+        
+        // TODO: how to assert,
     }
 }

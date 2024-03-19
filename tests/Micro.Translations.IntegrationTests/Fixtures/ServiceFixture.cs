@@ -60,7 +60,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         return await _module.SendQuery(query);
     }
 
-    public async Task Publish(IntegrationEvent integrationEvent)
+    public async Task Publish(IIntegrationEvent integrationEvent)
     {
         await _module.PublishNotification(integrationEvent);
     }

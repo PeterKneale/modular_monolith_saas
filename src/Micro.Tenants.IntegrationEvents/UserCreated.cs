@@ -2,7 +2,7 @@
 
 namespace Micro.Tenants.IntegrationEvents;
 
-public class UserCreated : IntegrationEvent
+public class UserCreated : IIntegrationEvent
 {
     public Guid UserId { get; init; }
     public string Name { get; init; } = null!;

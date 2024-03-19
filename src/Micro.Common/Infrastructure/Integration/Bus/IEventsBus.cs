@@ -2,9 +2,9 @@
 
 public interface IEventsBus
 {
-    Task Publish<T>(T @event, CancellationToken cancellationToken) where T : IntegrationEvent;
+    Task Publish<T>(T @event, CancellationToken cancellationToken) where T : IIntegrationEvent;
 
-    void Subscribe<T>(IIntegrationEventHandler handler) where T : IntegrationEvent;
+    void Subscribe<T>(IIntegrationEventHandler handler) where T : IIntegrationEvent;
 
     void StartConsuming();
 }

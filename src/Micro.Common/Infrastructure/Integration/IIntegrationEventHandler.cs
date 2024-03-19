@@ -2,5 +2,5 @@
 
 public interface IIntegrationEventHandler
 {
-    Task Handle(IntegrationEvent @event);
+    Task Handle(IIntegrationEvent @event);
 }

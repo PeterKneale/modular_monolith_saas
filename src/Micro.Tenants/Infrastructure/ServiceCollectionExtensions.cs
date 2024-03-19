@@ -6,6 +6,7 @@ using Micro.Common;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Common.Infrastructure.Integration.Queue;
 using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
@@ -27,7 +28,12 @@ internal static class ServiceCollectionExtensions
 
         // application
         var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
-        services.AddMediatR(c => { c.RegisterServicesFromAssemblies(assemblies); });
+        services.AddMediatR(c =>
+        {
+            c.RegisterServicesFromAssemblies(assemblies);
+        });
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
+
         services.AddValidatorsFromAssemblies(assemblies);
 
         // Connections
@@ -48,7 +54,8 @@ internal static class ServiceCollectionExtensions
         // Inbox/Outbox
         services.AddScoped<IInboxRepository, InboxRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
-
+        services.AddScoped<IQueueRepository, QueueRepository>();
+        
         // Database Migrations
 
         services
@@ -66,8 +73,6 @@ internal static class ServiceCollectionExtensions
             // options.EnableSensitiveDataLogging();
             // options.EnableDetailedErrors();
         });
-
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         DefaultTypeMap.MatchNamesWithUnderscores = true;
 

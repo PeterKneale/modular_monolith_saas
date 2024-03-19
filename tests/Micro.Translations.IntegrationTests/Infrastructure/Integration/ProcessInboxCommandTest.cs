@@ -1,4 +1,8 @@
 ﻿using Micro.Tenants.IntegrationEvents;
+using Micro.Translations.Infrastructure;
+using Micro.Translations.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 
@@ -10,14 +14,18 @@ public class ProcessInboxCommandTest(ServiceFixture service, ITestOutputHelper o
     public async Task Inbox_can_be_processed()
     {
         // arrange
-        await IntegrationHelper.PurgeInbox();
-        await IntegrationHelper.PushMessageIntoInbox(new UserCreated { UserId = Guid.NewGuid(), Name = "X" });
-        (await IntegrationHelper.CountPendingInboxMessages()).Should().Be(1);
-
+        var userId = Guid.NewGuid();
+        var name = "X";
+        await IntegrationHelper.PushMessageIntoInbox(new UserCreated { UserId = userId, Name = name });
+        
         // act
         await Service.Command(new ProcessInboxCommand());
 
         // assert
-        (await IntegrationHelper.CountPendingInboxMessages()).Should().Be(0);
+        using var scope = CompositionRoot.BeginLifetimeScope();
+        var db = scope.ServiceProvider.GetRequiredService<Db>();
+        var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
+        user.Should().NotBeNull();
+        user!.Name.Should().Be(name);
     }
 }

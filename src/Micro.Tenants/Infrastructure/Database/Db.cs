@@ -1,6 +1,7 @@
 ﻿using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Common.Infrastructure.Integration.Queue;
 using Micro.Tenants.Domain.ApiKeys;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
@@ -35,6 +36,8 @@ public partial class Db : DbContext
     public virtual DbSet<InboxMessage> Inbox { get; set; }
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
+    
+    public virtual DbSet<QueueMessage> Commands { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -186,6 +189,7 @@ public partial class Db : DbContext
 
         modelBuilder.AddInbox(SchemaName);
         modelBuilder.AddOutbox(SchemaName);
+        modelBuilder.AddQueue(SchemaName);
         OnModelCreatingPartial(modelBuilder);
     }
 

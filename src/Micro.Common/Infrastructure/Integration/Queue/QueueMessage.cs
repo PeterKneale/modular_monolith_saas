@@ -1,8 +1,9 @@
+﻿using System.Windows.Input;
 using Micro.Common.Domain;
 
-namespace Micro.Common.Infrastructure.Integration.Inbox;
+namespace Micro.Common.Infrastructure.Integration.Queue;
 
-public class InboxMessage
+public class QueueMessage
 {
     public Guid Id { get; private init; }
     public string Type { get; private init; } = null!;
@@ -15,19 +16,19 @@ public class InboxMessage
         ProcessedAt = SystemClock.UtcNow;
     }
 
-    public static InboxMessage CreateFrom<T>(T integrationEvent) where T : IIntegrationEvent =>
+    public static QueueMessage CreateFrom<T>(T command) where T : IQueuedCommand =>
         new()
         {
             Id = Guid.NewGuid(),
-            Type = integrationEvent.GetType().AssemblyQualifiedName!,
-            Data = JsonConvert.SerializeObject(integrationEvent),
+            Type = command.GetType().AssemblyQualifiedName!,
+            Data = JsonConvert.SerializeObject(command),
             CreatedAt = DateTime.UtcNow
         };
 
-    public static IIntegrationEvent ToIntegrationEvent(InboxMessage message)
+    public static IQueuedCommand ToRequest(QueueMessage command)
     {
-        var messageType = System.Type.GetType(message.Type);
+        var messageType = System.Type.GetType(command.Type);
         if (messageType == null) throw new Exception("Unable to find type: " + messageType);
-        return JsonConvert.DeserializeObject(message.Data, messageType) as IIntegrationEvent ?? throw new InvalidOperationException();
+        return JsonConvert.DeserializeObject(command.Data, messageType) as IQueuedCommand ?? throw new InvalidOperationException();
     }
 }

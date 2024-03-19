@@ -5,7 +5,7 @@ namespace Micro.Translations.Infrastructure.Integration;
 
 public class IntegrationEventHandler : IIntegrationEventHandler
 {
-    public async Task Handle(IntegrationEvent @event)
+    public async Task Handle(IIntegrationEvent @event)
     {
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
