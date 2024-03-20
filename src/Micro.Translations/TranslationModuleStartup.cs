@@ -7,6 +7,7 @@ using Micro.Common.Infrastructure.Jobs;
 using Micro.Tenants.IntegrationEvents;
 using Micro.Translations.Infrastructure;
 using Micro.Translations.Infrastructure.Integration;
+using Micro.Translations.Infrastructure.Integration.Handlers;
 using Microsoft.Extensions.Configuration;
 using Quartz;
 using Quartz.Impl;
@@ -33,6 +34,7 @@ public static class TranslationModuleStartup
         bus.Subscribe<OrganisationChanged>(new IntegrationEventHandler());
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
+        
         CompositionRoot.SetProvider(serviceProvider);
 
         if (enableScheduler) _scheduler = await SetupScheduledJobs();
@@ -53,7 +55,7 @@ public static class TranslationModuleStartup
         var scheduler = await factory.GetScheduler();
         await scheduler.ScheduleJob(JobBuilder.Create<ProcessOutboxJob>().WithIdentity("outbox").Build(), GetTrigger("outbox"));
         await scheduler.ScheduleJob(JobBuilder.Create<ProcessInboxJob>().WithIdentity("inbox").Build(), GetTrigger("inbox"));
-        await scheduler.ScheduleJob(JobBuilder.Create<ProcessCommandsJob>().WithIdentity("commands").Build(), GetTrigger("commands"));
+        await scheduler.ScheduleJob(JobBuilder.Create<QueueJob>().WithIdentity("commands").Build(), GetTrigger("commands"));
         await scheduler.Start();
         return scheduler;
     }

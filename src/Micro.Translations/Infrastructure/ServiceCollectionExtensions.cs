@@ -44,9 +44,9 @@ internal static class ServiceCollectionExtensions
         });
 
         // Inbox/Outbox
-        services.AddScoped<IInboxDbSet>(c => c.GetRequiredService<Db>());
-        services.AddScoped<IOutboxDbSet>(c => c.GetRequiredService<Db>());
-        services.AddScoped<IQueueDbSet>(c => c.GetRequiredService<Db>());
+        services.AddScoped<IDbSetInbox>(c => c.GetRequiredService<Db>());
+        services.AddScoped<IDbSetOutbox>(c => c.GetRequiredService<Db>());
+        services.AddScoped<IDbSetQueue>(c => c.GetRequiredService<Db>());
 
         return services;
     }

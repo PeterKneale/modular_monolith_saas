@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Common.Infrastructure.Integration;
 
-public interface IQueueDbSet
+public interface IDbSetQueue
 {
-    public DbSet<QueueMessage> Commands { get; }
+    public DbSet<QueueMessage> Queue { get; }
 }

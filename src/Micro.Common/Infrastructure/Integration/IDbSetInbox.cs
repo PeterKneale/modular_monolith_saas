@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Common.Infrastructure.Integration;
 
-public interface IInboxDbSet
+public interface IDbSetInbox
 {
     public DbSet<InboxMessage> Inbox { get; }
 }

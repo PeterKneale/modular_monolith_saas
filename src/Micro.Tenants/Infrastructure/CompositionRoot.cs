@@ -9,6 +9,6 @@ internal static class CompositionRoot
         _provider = provider;
     }
 
-    public static IServiceScope BeginLifetimeScope() => 
+    public static IServiceScope BeginLifetimeScope() =>
         _provider?.CreateScope() ?? throw new Exception("Service provider not set.");
 }

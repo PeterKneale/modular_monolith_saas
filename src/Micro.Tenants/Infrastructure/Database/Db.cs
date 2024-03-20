@@ -13,7 +13,7 @@ using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
-public partial class Db : DbContext, IInboxDbSet, IOutboxDbSet, IQueueDbSet
+public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 {
     public Db()
     {
@@ -38,7 +38,7 @@ public partial class Db : DbContext, IInboxDbSet, IOutboxDbSet, IQueueDbSet
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
 
-    public virtual DbSet<QueueMessage> Commands { get; set; }
+    public virtual DbSet<QueueMessage> Queue { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {

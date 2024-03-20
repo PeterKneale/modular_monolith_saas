@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Common.Infrastructure.Integration.Inbox;
 
-public class InboxHandlerBase(IInboxDbSet set, IPublisher publisher, ILogger<InboxHandlerBase> log)
+public class InboxHandler(IDbSetInbox set, IPublisher publisher, ILogger<InboxHandler> log): IRequestHandler<ProcessInboxCommand>
 {
     public async Task Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
     {
@@ -13,6 +13,7 @@ public class InboxHandlerBase(IInboxDbSet set, IPublisher publisher, ILogger<Inb
             .ToListAsync(cancellationToken);
 
         log.LogInformation($"Found {messages.Count} pending messages in inbox.");
+        
         foreach (var message in messages)
         {
             await publisher.Publish(InboxMessage.ToIntegrationEvent(message), cancellationToken);

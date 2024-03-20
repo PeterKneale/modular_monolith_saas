@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Common.Infrastructure.Integration.Outbox;
 
-public class OutboxHandlerBase(IOutboxDbSet set, OutboxMessagePublisher publisher, ILogger<OutboxHandlerBase> log)
+public class OutboxHandler(IDbSetOutbox set, OutboxMessagePublisher publisher, ILogger<OutboxHandler> log) : IRequestHandler<ProcessOutboxCommand>
 {
     public async Task Handle(ProcessOutboxCommand command, CancellationToken cancellationToken)
     {
@@ -11,7 +11,9 @@ public class OutboxHandlerBase(IOutboxDbSet set, OutboxMessagePublisher publishe
             .Where(x => x.ProcessedAt == null)
             .OrderBy(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
+        
         log.LogInformation($"Found {messages.Count} pending messages in outbox.");
+        
         foreach (var message in messages)
         {
             await publisher.PublishToBus(message, cancellationToken);

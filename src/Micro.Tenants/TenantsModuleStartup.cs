@@ -47,9 +47,9 @@ public static class TenantsModuleStartup
             { "quartz.scheduler.instanceName", Assembly.GetExecutingAssembly().GetName().Name }
         });
         var scheduler = await factory.GetScheduler();
-        await scheduler.ScheduleJob(JobBuilder.Create<ProcessOutboxJob>().WithIdentity("outbox").Build(), GetTrigger("outbox"));
-        await scheduler.ScheduleJob(JobBuilder.Create<ProcessInboxJob>().WithIdentity("inbox").Build(), GetTrigger("inbox"));
-        await scheduler.ScheduleJob(JobBuilder.Create<ProcessQueuedCommandsJob>().WithIdentity("commands").Build(), GetTrigger("commands"));
+        await scheduler.ScheduleJob(JobBuilder.Create<OutboxJob>().WithIdentity("outbox").Build(), GetTrigger("outbox"));
+        await scheduler.ScheduleJob(JobBuilder.Create<InboxJob>().WithIdentity("inbox").Build(), GetTrigger("inbox"));
+        await scheduler.ScheduleJob(JobBuilder.Create<QueueJob>().WithIdentity("commands").Build(), GetTrigger("commands"));
         await scheduler.Start();
         return scheduler;
     }

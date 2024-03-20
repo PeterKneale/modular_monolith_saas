@@ -42,7 +42,7 @@ public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputH
 
         // act
         await Service.CommandTenants(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
-        await Service.CommandTenants(new ProcessQueuedCommand());
+        await Service.CommandTenants(new ProcessQueueCommand());
 
         // assert
         

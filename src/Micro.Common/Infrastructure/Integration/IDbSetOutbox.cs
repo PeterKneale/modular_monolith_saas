@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Micro.Common.Infrastructure.Integration;
 
-public interface IOutboxDbSet
+public interface IDbSetOutbox
 {
     public DbSet<OutboxMessage> Outbox { get; }
 }

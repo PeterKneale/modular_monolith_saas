@@ -33,6 +33,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IInboxRepository, InboxRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
         services.AddScoped<IQueueRepository, QueueRepository>();
+        services.AddScoped<InboxHandler>();
+        services.AddScoped<OutboxHandler>();
         return services;
     }
 
