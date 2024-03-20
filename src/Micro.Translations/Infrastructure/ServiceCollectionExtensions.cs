@@ -2,8 +2,7 @@
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common;
-using Micro.Common.Infrastructure.Integration.Inbox;
-using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Common.Infrastructure.Integration;
 using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -19,19 +18,12 @@ internal static class ServiceCollectionExtensions
 
         // application
         var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
-        services.AddMediatR(c =>
-        {
-            c.RegisterServicesFromAssemblies(assemblies);
-        });
+        services.AddMediatR(c => { c.RegisterServicesFromAssemblies(assemblies); });
         services.AddValidatorsFromAssemblies(assemblies);
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         // Repositories
         services.AddScoped<ITermRepository, TermRepository>();
-
-        // Inbox/Outbox
-        services.AddScoped<IInboxRepository, InboxRepository>();
-        services.AddScoped<IOutboxRepository, OutboxRepository>();
 
         // Database Migrations
         services
@@ -42,6 +34,7 @@ internal static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
+        // Database
         services.AddDbContext<Db>((ctx, options) =>
         {
             options.UseNpgsql(connectionString);
@@ -49,6 +42,11 @@ internal static class ServiceCollectionExtensions
             // options.EnableSensitiveDataLogging();
             // options.EnableDetailedErrors();
         });
+
+        // Inbox/Outbox
+        services.AddScoped<IInboxDbSet>(c => c.GetRequiredService<Db>());
+        services.AddScoped<IOutboxDbSet>(c => c.GetRequiredService<Db>());
+        services.AddScoped<IQueueDbSet>(c => c.GetRequiredService<Db>());
 
         return services;
     }

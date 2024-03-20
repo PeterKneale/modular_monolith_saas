@@ -1,0 +1,22 @@
+﻿using Micro.Common.Application;
+using Microsoft.EntityFrameworkCore;
+
+namespace Micro.Common.Infrastructure.Integration.Outbox;
+
+public class OutboxHandlerBase(IOutboxDbSet set, OutboxMessagePublisher publisher, ILogger<OutboxHandlerBase> log)
+{
+    public async Task Handle(ProcessOutboxCommand command, CancellationToken cancellationToken)
+    {
+        var messages = await set.Outbox
+            .Where(x => x.ProcessedAt == null)
+            .OrderBy(x => x.CreatedAt)
+            .ToListAsync(cancellationToken);
+        log.LogInformation($"Found {messages.Count} pending messages in outbox.");
+        foreach (var message in messages)
+        {
+            await publisher.PublishToBus(message, cancellationToken);
+            message.MarkProcessed();
+            set.Outbox.Update(message);
+        }
+    }
+}

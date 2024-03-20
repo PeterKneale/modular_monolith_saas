@@ -1,4 +1,5 @@
-﻿using Micro.Common.Infrastructure.Integration.Inbox;
+﻿using Micro.Common.Infrastructure.Integration;
+using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Common.Infrastructure.Integration.Queue;
 using Micro.Translations.Domain.TermAggregate;
@@ -8,7 +9,7 @@ using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
 
-public class Db : DbContext
+public class Db : DbContext , IInboxDbSet, IOutboxDbSet, IQueueDbSet
 {
     public Db()
     {

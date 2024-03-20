@@ -2,7 +2,11 @@
 
 public interface IQueueRepository
 {
-    Task CreateAsync(QueueMessage command, CancellationToken token);
-    void Update(QueueMessage command);
-    Task<List<QueueMessage>> ListPending(CancellationToken token);
+    Task CreateAsync(IQueuedCommand command, CancellationToken token);
+}
+
+public class QueueRepository(IQueueDbSet set) : IQueueRepository
+{
+    public async Task CreateAsync(IQueuedCommand command, CancellationToken token) =>
+        await set.Commands.AddAsync(QueueMessage.CreateFrom(command), token);
 }

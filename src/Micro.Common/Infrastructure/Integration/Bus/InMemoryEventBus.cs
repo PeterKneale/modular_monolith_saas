@@ -20,7 +20,7 @@ public class InMemoryEventBus(ILogger<InMemoryEventBus> logs) : IEventsBus
         foreach (var handler in handlers)
         {
             logs.LogInformation($"Subscriber handling integration event: {handler.GetType().AssemblyQualifiedName}");
-            handler.Handle(@event);
+            handler.Handle(@event, cancellationToken);
         }
 
         return Task.CompletedTask;

@@ -2,7 +2,11 @@
 
 public interface IInboxRepository
 {
-    Task CreateAsync(InboxMessage message);
-    void Update(InboxMessage message);
-    Task<List<InboxMessage>> ListPending(CancellationToken token);
+    Task CreateAsync(IIntegrationEvent integrationEvent, CancellationToken token);
+}
+
+public class InboxRepository(IInboxDbSet set) : IInboxRepository
+{
+    public async Task CreateAsync(IIntegrationEvent integrationEvent, CancellationToken token) => await 
+        set.Inbox.AddAsync(InboxMessage.CreateFrom(integrationEvent), token);
 }

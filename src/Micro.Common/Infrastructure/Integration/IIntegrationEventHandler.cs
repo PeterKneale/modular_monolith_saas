@@ -2,5 +2,5 @@
 
 public interface IIntegrationEventHandler
 {
-    Task Handle(IIntegrationEvent @event);
+    Task Handle(IIntegrationEvent integrationEvent, CancellationToken token);
 }

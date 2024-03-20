@@ -1,4 +1,5 @@
 ﻿using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Common.Infrastructure.Integration.Queue;
@@ -12,7 +13,7 @@ using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
-public partial class Db : DbContext
+public partial class Db : DbContext, IInboxDbSet, IOutboxDbSet, IQueueDbSet
 {
     public Db()
     {
@@ -36,7 +37,7 @@ public partial class Db : DbContext
     public virtual DbSet<InboxMessage> Inbox { get; set; }
 
     public virtual DbSet<OutboxMessage> Outbox { get; set; }
-    
+
     public virtual DbSet<QueueMessage> Commands { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

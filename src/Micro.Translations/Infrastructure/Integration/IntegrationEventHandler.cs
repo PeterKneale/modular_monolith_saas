@@ -5,13 +5,12 @@ namespace Micro.Translations.Infrastructure.Integration;
 
 public class IntegrationEventHandler : IIntegrationEventHandler
 {
-    public async Task Handle(IIntegrationEvent @event)
+    public async Task Handle(IIntegrationEvent integrationEvent, CancellationToken token)
     {
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var inbox = scope.ServiceProvider.GetRequiredService<IInboxRepository>();
-        var message = InboxMessage.CreateFrom(@event);
-        await inbox.CreateAsync(message);
-        await db.SaveChangesAsync();
+        await inbox.CreateAsync(integrationEvent, token);
+        await db.SaveChangesAsync(token);
     }
 }

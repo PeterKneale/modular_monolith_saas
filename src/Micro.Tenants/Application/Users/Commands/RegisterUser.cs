@@ -38,7 +38,7 @@ public static class RegisterUser
             await users.CreateAsync(user, token);
 
             var sendEmail = new SendWelcomeEmail.Command { UserId = userId };
-            await queue.CreateAsync(QueueMessage.CreateFrom(sendEmail), token);
+            await queue.CreateAsync(sendEmail, token);
         }
     }
 }
