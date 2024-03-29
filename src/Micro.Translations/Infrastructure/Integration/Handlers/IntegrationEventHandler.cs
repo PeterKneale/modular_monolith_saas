@@ -9,8 +9,8 @@ public class IntegrationEventHandler : IIntegrationEventHandler
     {
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
-        var inbox = scope.ServiceProvider.GetRequiredService<IInboxRepository>();
-        await inbox.CreateAsync(integrationEvent, token);
+        var inbox = scope.ServiceProvider.GetRequiredService<InboxWriter>();
+        await inbox.WriteAsync(integrationEvent, token);
         await db.SaveChangesAsync(token);
     }
 }

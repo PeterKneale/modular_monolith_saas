@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Micro.Common.Domain;
+﻿using Micro.Common.Domain;
 
 namespace Micro.Common.Infrastructure.Integration.Queue;
 

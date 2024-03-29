@@ -20,7 +20,7 @@ public static class RegisterUser
         }
     }
 
-    public class Handler(IUserRepository users, IQueueRepository queue) : IRequestHandler<Command>
+    public class Handler(IUserRepository users, QueueWriter queue) : IRequestHandler<Command>
     {
         public async Task Handle(Command command, CancellationToken token)
         {
@@ -38,7 +38,7 @@ public static class RegisterUser
             await users.CreateAsync(user, token);
 
             var sendEmail = new SendWelcomeEmail.Command { UserId = userId };
-            await queue.CreateAsync(sendEmail, token);
+            await queue.WriteAsync(sendEmail, token);
         }
     }
 }

@@ -30,11 +30,17 @@ public static class ServiceCollectionExtensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         
-        services.AddScoped<IInboxRepository, InboxRepository>();
-        services.AddScoped<IOutboxRepository, OutboxRepository>();
-        services.AddScoped<IQueueRepository, QueueRepository>();
+        // inbox
+        services.AddScoped<InboxWriter>();
         services.AddScoped<InboxHandler>();
+        
+        // outbox
+        services.AddScoped<OutboxWriter>();
         services.AddScoped<OutboxHandler>();
+        
+        // queue
+        services.AddScoped<QueueWriter>();
+        
         return services;
     }
 
