@@ -14,7 +14,7 @@ public class EmailAddressTypeHandler : SqlMapper.TypeHandler<EmailAddress>
 
     public override EmailAddress Parse(object? value)
     {
-        if (value is string email) return new EmailAddress(email);
+        if (value is string email) return EmailAddress.CreateInstance(email);
 
         throw new FormatException($"Invalid conversion to {nameof(EmailAddress)}");
     }

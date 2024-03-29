@@ -1,4 +1,4 @@
-﻿using Micro.Tenants.Domain.UserAggregate;
+﻿using Micro.Tenants.Domain.Users;
 using Micro.Users.IntegrationEvents;
 
 namespace Micro.Tenants.Infrastructure.Integration.EventHandlers;

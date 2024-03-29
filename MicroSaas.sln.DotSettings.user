@@ -1,5 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\pkne0634\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_MicroSaas.-2053870454\Snapshot\snapshot.utdcvr</s:String>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/ShowAdvancedOptions/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=76473D0D_002D3A10_002D480D_002DB356_002DA4C24F35AAA7/@EntryIndexedValue">360D495D-4117-434D-BCFD-FA4CB2EEF296</s:String>
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=78DC164C_002D08C1_002D4797_002D8229_002D502F45FF4C96/@EntryIndexedValue">2137843E-DE15-468B-8126-01C8DA8651C1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>

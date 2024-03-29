@@ -1,6 +1,6 @@
 ﻿using Micro.Tenants.Domain.Memberships;
 
-namespace Micro.Tenants.Domain.UserAggregate;
+namespace Micro.Tenants.Domain.Users;
 
 public class User
 {

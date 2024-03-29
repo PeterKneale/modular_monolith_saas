@@ -24,7 +24,7 @@ public static class RegisterUser
         public async Task Handle(Command command, CancellationToken token)
         {
             var userId = new UserId(command.UserId);
-            var userEmail = new EmailAddress(command.Email);
+            var userEmail = EmailAddress.CreateInstance(command.Email);
             var userName = new UserName(command.FirstName, command.LastName);
             var userPassword = new Password(command.Password);
             var userCredentials = new UserCredentials(userEmail, userPassword);

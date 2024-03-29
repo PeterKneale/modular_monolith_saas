@@ -12,7 +12,7 @@ public static class ForgotPassword
     {
         public async Task Handle(Command command, CancellationToken token)
         {
-            var email = new EmailAddress(command.email);
+            var email = EmailAddress.CreateInstance(command.email);
 
             var user = await users.GetAsync(email, token);
             if (user == null) throw new NotFoundException(nameof(User), email);

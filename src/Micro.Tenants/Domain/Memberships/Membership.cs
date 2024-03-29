@@ -1,5 +1,5 @@
 ﻿using Micro.Tenants.Domain.Organisations;
-using Micro.Tenants.Domain.UserAggregate;
+using Micro.Tenants.Domain.Users;
 
 namespace Micro.Tenants.Domain.Memberships;
 

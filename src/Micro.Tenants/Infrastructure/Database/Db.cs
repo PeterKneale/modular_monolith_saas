@@ -7,7 +7,7 @@ using Micro.Common.Infrastructure.Integration.Queue;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
 using Micro.Tenants.Domain.Projects;
-using Micro.Tenants.Domain.UserAggregate;
+using Micro.Tenants.Domain.Users;
 using Micro.Tenants.Infrastructure.Database.Converters;
 using static Micro.Tenants.Constants;
 
