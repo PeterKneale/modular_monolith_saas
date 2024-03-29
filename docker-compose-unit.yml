@@ -20,4 +20,5 @@ services:
       - test
       - --configuration=Release
       - --filter=Type=Unit
+      - --verbosity=quiet
       - --logger=GitHubActions

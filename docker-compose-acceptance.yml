@@ -18,6 +18,8 @@ services:
       - test
       - Micro.Web.AcceptanceTests.dll
       - --configuration=Release
+      - --verbosity=quiet
+      - --logger=GitHubActions
     depends_on:
       - web
   

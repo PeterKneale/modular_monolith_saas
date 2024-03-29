@@ -21,6 +21,7 @@ services:
       - test
       - --configuration=Release
       - --filter=Type=Integration
+      - --verbosity=quiet
       - --logger=GitHubActions
     depends_on:
       - db
