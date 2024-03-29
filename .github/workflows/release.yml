@@ -22,7 +22,6 @@ jobs:
         filter: tree:0
 
     - name: Install version tool
-      id: version
       run: dotnet tool install --global minver-cli --version 5.0.0
 
     - name: Calculate version
