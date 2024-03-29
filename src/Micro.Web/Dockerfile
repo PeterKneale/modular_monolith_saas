@@ -8,20 +8,38 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /workspace
 COPY ["MicroSaas.sln", ""]
+
+# apps
 COPY ["src/Micro.Web/Micro.Web.csproj", "src/Micro.Web/"]
+COPY ["tests/Micro.Web.AcceptanceTests/Micro.Web.AcceptanceTests.csproj", "tests/Micro.Web.AcceptanceTests/"]
+
 COPY ["src/Micro.Cli/Micro.Cli.csproj", "src/Micro.Cli/"]
+
+# common
+
+# module
 COPY ["src/Micro.Common/Micro.Common.csproj", "src/Micro.Common/"]
+COPY ["tests/Micro.Common.UnitTests/Micro.Common.UnitTests.csproj", "tests/Micro.Common.UnitTests/"]
+COPY ["tests/Micro.Modules.IntegrationTests/Micro.Modules.IntegrationTests.csproj", "tests/Micro.Modules.IntegrationTests/"]
+
+# module - users
+COPY ["src/Micro.Users/Micro.Users.csproj", "src/Micro.Users/"]
+COPY ["src/Micro.Users.IntegrationEvents/Micro.Users.IntegrationEvents.csproj", "src/Micro.Users.IntegrationEvents/"]
+COPY ["tests/Micro.Users.UnitTests/Micro.Users.UnitTests.csproj", "tests/Micro.Users.UnitTests/"]
+COPY ["tests/Micro.Users.IntegrationTests/Micro.Users.IntegrationTests.csproj", "tests/Micro.Users.IntegrationTests/"]
+
+# module - tenants
 COPY ["src/Micro.Tenants/Micro.Tenants.csproj", "src/Micro.Tenants/"]
 COPY ["src/Micro.Tenants.IntegrationEvents/Micro.Tenants.IntegrationEvents.csproj", "src/Micro.Tenants.IntegrationEvents/"]
-COPY ["src/Micro.Translations/Micro.Translations.csproj", "src/Micro.Translations/"]
-COPY ["src/Micro.Translations.IntegrationEvents/Micro.Translations.IntegrationEvents.csproj", "src/Micro.Translations.IntegrationEvents/"]
-COPY ["tests/Micro.Common.UnitTests/Micro.Common.UnitTests.csproj", "tests/Micro.Common.UnitTests/"]
-COPY ["tests/Micro.AcceptanceTests/Micro.AcceptanceTests.csproj", "tests/Micro.AcceptanceTests/"]
-COPY ["tests/Micro.IntegrationTests/Micro.IntegrationTests.csproj", "tests/Micro.IntegrationTests/"]
 COPY ["tests/Micro.Tenants.UnitTests/Micro.Tenants.UnitTests.csproj", "tests/Micro.Tenants.UnitTests/"]
 COPY ["tests/Micro.Tenants.IntegrationTests/Micro.Tenants.IntegrationTests.csproj", "tests/Micro.Tenants.IntegrationTests/"]
+
+# module - translations 
+COPY ["src/Micro.Translations/Micro.Translations.csproj", "src/Micro.Translations/"]
+COPY ["src/Micro.Translations.IntegrationEvents/Micro.Translations.IntegrationEvents.csproj", "src/Micro.Translations.IntegrationEvents/"]
 COPY ["tests/Micro.Translations.UnitTests/Micro.Translations.UnitTests.csproj", "tests/Micro.Translations.UnitTests/"]
 COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationTests.csproj", "tests/Micro.Translations.IntegrationTests/"]
+
 RUN dotnet restore
 COPY . .
 WORKDIR "/workspace/"

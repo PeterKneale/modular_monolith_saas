@@ -1,9 +1,9 @@
-﻿using Micro.Users.Application.Users;
+﻿using Micro.Users;
 using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Web.Pages.Auth;
 
-public class Register(ITenantsModule module, ILogger<Login> logs) : PageModel
+public class Register(IUsersModule module, ILogger<Login> logs) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {

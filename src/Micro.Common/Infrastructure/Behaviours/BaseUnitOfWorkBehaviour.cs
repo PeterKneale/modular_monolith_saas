@@ -12,24 +12,24 @@ public class BaseUnitOfWorkBehaviour<TRequest, TResponse>(DbContext db, DomainEv
         
         if (name.Contains("query", StringComparison.InvariantCultureIgnoreCase))
         {
-            log.LogInformation($"{name} Executing query");
+            log.LogDebug($"{name} Executing query");
             return await next();
         }
 
-        log.LogInformation($"{name} - Beginning unit of work");
+        log.LogDebug($"{name} - Beginning unit of work");
         await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
-        log.LogInformation($"{name} - Started transaction {tx.TransactionId}");
+        log.LogDebug($"{name} - Started transaction {tx.TransactionId}");
         
-        log.LogInformation($"{name} - Executing next step in pipeline");
+        log.LogDebug($"{name} - Executing next step in pipeline");
         var response = await next();
         
-        log.LogInformation($"{name} - Publishing domain events");
+        log.LogDebug($"{name} - Publishing domain events");
         await publisher.PublishDomainEvents(db, cancellationToken);
 
-        log.LogInformation($"{name} - Saving changes");
+        log.LogDebug($"{name} - Saving changes");
         await db.SaveChangesAsync(cancellationToken);
         
-        log.LogInformation($"{name} - Committing unit of work");
+        log.LogDebug($"{name} - Committing unit of work");
         await tx.CommitAsync(cancellationToken);
 
         return response;

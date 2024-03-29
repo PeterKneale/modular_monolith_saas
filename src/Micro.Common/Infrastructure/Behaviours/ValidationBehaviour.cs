@@ -26,7 +26,7 @@ public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRe
 
         if (!failures.Any())
         {
-            logs.LogInformation("{Name} is valid", name);
+            logs.LogDebug("{Name} is valid", name);
             return await next();
         }
 

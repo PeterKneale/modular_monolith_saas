@@ -12,7 +12,7 @@ public class QueueHandler(IDbSetQueue set, ILogger<QueueHandler> log) : IRequest
             .OrderBy(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
 
-        log.LogInformation($"Found {messages.Count} pending commands in queue.");
+        log.LogDebug($"Found {messages.Count} pending commands in queue.");
 
         foreach (var message in messages)
         {

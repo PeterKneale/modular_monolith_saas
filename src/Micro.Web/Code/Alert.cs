@@ -24,7 +24,7 @@ public class Alert
         Danger
     }
 
-    public string CssClass => $"alert alert-{Enum.GetName(Level).ToLower()}";
+    public string CssClass => $"alert alert-{Enum.GetName(Level)!.ToLower()}";
 
     public static Alert Info(string message) => new(message, AlertLevel.Info);
     public static Alert Success(string message) => new(message, AlertLevel.Success);

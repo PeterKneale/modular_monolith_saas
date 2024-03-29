@@ -12,7 +12,7 @@ public class InboxHandler(IDbSetInbox set, IPublisher publisher, ILogger<InboxHa
             .OrderBy(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
 
-        log.LogInformation($"Found {messages.Count} pending messages in inbox.");
+        log.LogDebug($"Found {messages.Count} pending messages in inbox.");
         
         foreach (var message in messages)
         {

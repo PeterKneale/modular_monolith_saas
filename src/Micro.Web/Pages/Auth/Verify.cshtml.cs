@@ -1,8 +1,9 @@
-﻿using Micro.Users.Application.Users.Commands;
+﻿using Micro.Users;
+using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Web.Pages.Auth;
 
-public class Verify(ITenantsModule module, ILogger<Login> logs) : PageModel
+public class Verify(IUsersModule module, ILogger<Login> logs) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {

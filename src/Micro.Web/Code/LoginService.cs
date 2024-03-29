@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Micro.Users;
 using Micro.Users.Application.Users.Queries;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,7 +7,7 @@ using static Micro.Web.Code.Contexts.Authentication.Constants;
 
 namespace Micro.Web.Code;
 
-public class LoginService(ITenantsModule module, IHttpContextAccessor accessor, ILogger<LoginService> logs)
+public class LoginService(IUsersModule module, IHttpContextAccessor accessor, ILogger<LoginService> logs)
 {
     public async Task<bool> AuthenticateWithCredentials(string email, string password)
     {

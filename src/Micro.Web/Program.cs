@@ -4,6 +4,7 @@ using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Users.Application.Users.Commands;
 using Micro.Users.Application.Users.Queries;
 using Micro.Translations;
+using Micro.Users;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -60,9 +61,14 @@ builder.Services.AddScoped<IPageContextAccessor, PageContextAccessor>();
 builder.Services.AddScoped<IPageContextOrganisation>(c => c.GetRequiredService<IPageContextAccessor>().Organisation);
 builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageContextAccessor>().Project);
 
+// Execution context
+builder.Services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
+
+// modules
+builder.Services.AddSingleton<IUsersModule, UsersModule>();
 builder.Services.AddSingleton<ITenantsModule, TenantsModule>();
 builder.Services.AddSingleton<ITranslationModule, TranslationModule>();
-builder.Services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
+
 builder.Services.AddInMemoryEventBus();
 
 var app = builder.Build();
@@ -71,6 +77,7 @@ var accessor = app.Services.GetRequiredService<IExecutionContextAccessor>();
 var bus = app.Services.GetRequiredService<IEventsBus>();
 var logs = app.Services.GetRequiredService<ILoggerFactory>();
 
+await UsersModuleStartup.Start(accessor, configuration, bus, logs);
 await TenantsModuleStartup.Start(accessor, configuration, bus, logs);
 await TranslationModuleStartup.Start(accessor, configuration, bus, logs);
 
@@ -104,14 +111,14 @@ app.MapGet("/Test/Auth/Impersonate/", async ctx =>
 });
 app.MapGet("/Test/GetUserId", async ctx =>
 {
-    var module = ctx.RequestServices.GetRequiredService<ITenantsModule>();
+    var module = ctx.RequestServices.GetRequiredService<IUsersModule>();
     var email = ctx.Request.Query["email"]!;
     var userId = await module.SendQuery(new GetUserId.Query(email!));
     await ctx.Response.WriteAsync(userId.ToString());
 });
 app.MapGet("/Test/GetUserVerification", async ctx =>
 {
-    var module = ctx.RequestServices.GetRequiredService<ITenantsModule>();
+    var module = ctx.RequestServices.GetRequiredService<IUsersModule>();
     var userId = Guid.Parse(ctx.Request.Query["userId"]!);
     var token = await module.SendQuery(new GetUserVerificationToken.Query(userId));
     await ctx.Response.WriteAsync(token);

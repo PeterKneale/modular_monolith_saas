@@ -8,7 +8,15 @@ public class LoggingBehaviour<TRequest, TResponse>(ILogger<TRequest> logs) : IPi
         var name = typeof(TRequest).FullName.Split(".").Last();
         var body = JsonConvert.SerializeObject(request);
 
-        logs.LogInformation("Executing: {Name} - {Body}", name, body);
+        if (name.StartsWith("Process"))
+        {
+            logs.LogDebug("Executing: {Name} - {Body}", name, body);
+        }
+        else
+        {
+            logs.LogInformation("Executing: {Name} - {Body}", name, body);
+        }
+
         TResponse result;
         try
         {

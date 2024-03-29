@@ -1,11 +1,14 @@
 ﻿@if (!ViewData.ModelState.IsValid)
 {
     var messages = new List<string>();
-    foreach (var key in ViewData.ModelState.Keys)
+    if (ViewData != null)
     {
-        foreach (var error in ViewData.ModelState[key].Errors)
+        foreach (var key in ViewData.ModelState.Keys)
         {
-            messages.Add(error.ErrorMessage);
+            foreach (var error in ViewData.ModelState[key]?.Errors)
+            {
+                messages.Add(error.ErrorMessage);
+            }
         }
     }
 
