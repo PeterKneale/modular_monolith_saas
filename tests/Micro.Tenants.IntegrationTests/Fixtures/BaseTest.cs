@@ -1,7 +1,7 @@
 ﻿using Micro.Tenants.Application.Memberships.Commands;
 using Micro.Tenants.Application.Organisations.Commands;
-using Micro.Tenants.Application.Users.Commands;
 using Micro.Tenants.Domain.Memberships;
+using Micro.Users.IntegrationEvents;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
 
@@ -15,28 +15,16 @@ public class BaseTest
         Service = service;
     }
 
-    protected async Task<Guid> RegisterAndVerifyUser(string? email = null, string? password = null)
+    protected async Task CreateUser(Guid userId)
     {
-        var userId = await RegisterUser(email, password);
-        var token = await Service.Query(new GetUserVerificationToken.Query(userId));
-        await Service.Command(new VerifyUser.Command(userId, token));
-        return userId;
+        await Service.Publish(new UserCreated{UserId = userId, Name = "X"});
     }
 
-    protected async Task<Guid> RegisterUser(string? email = null, string? password = null)
+    protected async Task<Guid> CreateOrganisation(Guid userId, Guid organisationId, string? name = null)
     {
-        var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId, email, password);
-        await Service.Command(register);
-        return userId;
-    }
-
-    protected async Task<Guid> CreateOrganisation(Guid ctxUserId, string? name = null)
-    {
-        var organisationId = Guid.NewGuid();
         name ??= Guid.NewGuid().ToString()[..10];
         var create = new CreateOrganisation.Command(organisationId, name);
-        await Service.Command(create, ctxUserId);
+        await Service.Command(create, userId);
         return organisationId;
     }
 

@@ -10,11 +10,13 @@ public class NameTests(ServiceFixture service, ITestOutputHelper outputHelper) :
     public async Task Organisation_name_can_be_changed()
     {
         // arrange
-        var userId = await RegisterAndVerifyUser();
-        var organisationId = await CreateOrganisation(userId);
+        var userId = Guid.NewGuid();
+        var organisationId = Guid.NewGuid();
         var name = Guid.NewGuid().ToString()[..10];
 
         // act
+        await CreateUser(userId);
+        await CreateOrganisation(userId, organisationId);
         var command = new UpdateOrganisationName.Command(name);
         await Service.Command(command, userId, organisationId);
 
@@ -27,12 +29,16 @@ public class NameTests(ServiceFixture service, ITestOutputHelper outputHelper) :
     public async Task Cant_create_organisation_if_name_used()
     {
         // arrange
-        var userId = await RegisterAndVerifyUser();
+        var userId = Guid.NewGuid();
+        var organisationId1 = Guid.NewGuid();
+        var organisationId2 = Guid.NewGuid();
         var name = Guid.NewGuid().ToString()[..10];
-        
+
         // act
-        await CreateOrganisation(userId, name);
-        var action = async () =>  await CreateOrganisation(userId, name);;
+        await CreateUser(userId);
+        await CreateOrganisation(userId, organisationId1, name);
+        var action = async () => await CreateOrganisation(userId, organisationId2, name);
+
 
         // assert
         await action.Should().ThrowAsync<AlreadyInUseException>($"*{name}*");
@@ -42,13 +48,16 @@ public class NameTests(ServiceFixture service, ITestOutputHelper outputHelper) :
     public async Task Cant_update_organisation_name_if_used()
     {
         // arrange
-        var userId = await RegisterAndVerifyUser();
+        var userId = Guid.NewGuid();
+        var organisationId1= Guid.NewGuid();
+        var organisationId2= Guid.NewGuid();
         var name = Guid.NewGuid().ToString()[..10];
-        await CreateOrganisation(userId, name);
-        
+
         // act
-        var organisationId = await CreateOrganisation(userId);
-        var action = async () => await UpdateOrganisationName(name, userId, organisationId);
+        await CreateUser(userId);
+        await CreateOrganisation(userId, organisationId1, name);
+        await CreateOrganisation(userId, organisationId2, "X");
+        var action = async () => await UpdateOrganisationName(name, userId, organisationId2);
 
         // assert
         await action.Should().ThrowAsync<AlreadyInUseException>();

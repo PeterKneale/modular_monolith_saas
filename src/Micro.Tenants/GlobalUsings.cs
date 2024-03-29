@@ -6,6 +6,7 @@ global using MediatR;
 global using Micro.Common.Application;
 global using Micro.Common.Domain;
 global using Micro.Common.Exceptions;
+global using Micro.Tenants.Infrastructure.Database;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

@@ -1,8 +1,6 @@
 ﻿using Micro.Translations.Infrastructure;
 using Micro.Translations.Infrastructure.Database;
 using Micro.Translations.IntegrationEvents;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 

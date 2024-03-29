@@ -6,6 +6,7 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Tenants;
 using Micro.Translations;
+using Micro.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
@@ -16,6 +17,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
     private IModule _tenants = null!;
     private IModule _translations = null!;
+    private IModule _users = null!;
     private SettableExecutionContextAccessor _accessor = null!;
 
     public async Task InitializeAsync()
@@ -36,7 +38,9 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         _accessor = new SettableExecutionContextAccessor();
         _tenants = new TenantsModule();
         _translations = new TranslationModule();
+        _users = new UsersModule();
 
+        await UsersModuleStartup.Start(_accessor, configuration, bus, logs, resetDb:true, enableScheduler:false);
         await TenantsModuleStartup.Start(_accessor, configuration, bus, logs, resetDb:true, enableScheduler:false);
         await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, resetDb:true, enableScheduler:false);
     }
@@ -64,6 +68,12 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
     {
         _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
         await _tenants.SendCommand(command);
+    }
+    
+    public async Task CommandUsers(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    {
+        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        await _users.SendCommand(command);
     }
     
     public async Task CommandTranslations(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)

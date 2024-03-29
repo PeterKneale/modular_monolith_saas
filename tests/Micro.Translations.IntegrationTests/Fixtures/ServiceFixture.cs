@@ -3,7 +3,6 @@ using MediatR;
 using Micro.Common;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 

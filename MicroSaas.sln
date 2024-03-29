@@ -57,19 +57,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4451
 		create-module.sh = create-module.sh
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBDE1B48-23FE-4778-BFEC-0B14D4A0B6E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users", "src\Micro.Users\Micro.Users.csproj", "{76473D0D-3A10-480D-B356-A4C24F35AAA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.IntegrationEvents", "src\Micro.Users.IntegrationEvents\Micro.Users.IntegrationEvents.csproj", "{E49CD730-BFF0-4F56-B69C-E005F24034C3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{23174CFC-96A3-4F9B-9A83-31DCA8A4336B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.IntegrationTests", "tests\Micro.Users.IntegrationTests\Micro.Users.IntegrationTests.csproj", "{1E66C0C9-DAA3-4E55-86C7-F6197E900D57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.UnitTests", "tests\Micro.Users.UnitTests\Micro.Users.UnitTests.csproj", "{360D495D-4117-434D-BCFD-FA4CB2EEF296}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{72E53323-A8EC-4833-A5C1-0C233FA443B5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "users", "users", "{72E53323-A8EC-4833-A5C1-0C233FA443B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration.Bus;
-using Micro.Tenants.Application.Users.Commands;
-using Micro.Tenants.Application.Users.Queries;
+using Micro.Users.Application.Users.Commands;
+using Micro.Users.Application.Users.Queries;
 using Micro.Translations;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;

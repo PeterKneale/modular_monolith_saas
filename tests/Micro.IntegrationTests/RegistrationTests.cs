@@ -1,7 +1,7 @@
 using Micro.IntegrationTests.Fixtures;
-using Micro.Tenants.Application.Users.Commands;
 using Micro.Translations.Infrastructure;
 using Micro.Translations.Infrastructure.Database;
+using Micro.Users.Application.Users.Commands;
 
 namespace Micro.IntegrationTests;
 
@@ -18,11 +18,11 @@ public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputH
         var lastName = "a";
 
         // act
-        await Service.CommandTenants(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
-        await Service.CommandTenants(new ProcessOutboxCommand());
+        await Service.CommandUsers(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
+        await Service.CommandUsers(new ProcessOutboxCommand());
+        await Service.CommandTenants(new ProcessInboxCommand());
         await Service.CommandTranslations(new ProcessInboxCommand());
         
-        //
         // assert
         using var scope = CompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
@@ -41,8 +41,8 @@ public class RegistrationTests(ServiceFixture service, ITestOutputHelper outputH
         var lastName = "b";
 
         // act
-        await Service.CommandTenants(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
-        await Service.CommandTenants(new ProcessQueueCommand());
+        await Service.CommandUsers(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
+        await Service.CommandUsers(new ProcessQueueCommand());
 
         // assert
         

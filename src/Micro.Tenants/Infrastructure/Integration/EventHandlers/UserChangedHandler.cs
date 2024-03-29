@@ -1,21 +1,20 @@
-﻿using Micro.Tenants.IntegrationEvents;
-using Micro.Translations.Domain.UserAggregate;
+﻿using Micro.Tenants.Domain.UserAggregate;
 using Micro.Users.IntegrationEvents;
 
-namespace Micro.Translations.Infrastructure.Integration.EventHandlers;
+namespace Micro.Tenants.Infrastructure.Integration.EventHandlers;
 
-public class UserCreatedHandler(Db db, ILogger<UserCreatedHandler> logs) : INotificationHandler<UserCreated>
+public class UserChangedHandler(Db db, ILogger<UserChangedHandler> logs) : INotificationHandler<UserChanged>
 {
-    public async Task Handle(UserCreated notification, CancellationToken cancellationToken)
+    public async Task Handle(UserChanged notification, CancellationToken cancellationToken)
     {
-        logs.LogInformation($"Syncing user created: {notification.Name}");
+        logs.LogInformation($"Syncing user changed: {notification.Name}");
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == notification.UserId, cancellationToken);
         if (user == null)
         {
             logs.LogInformation($"Syncing user changed (inserting): {notification.Name}");
             await db.Users.AddAsync(new User
             {
-                Id = notification.UserId,
+                Id = new UserId(notification.UserId),
                 Name = notification.Name
             }, cancellationToken);
         }

@@ -1,5 +1,5 @@
-﻿using Micro.Tenants.Application.ApiKeys.Commands;
-using Micro.Tenants.Application.ApiKeys.Queries;
+﻿using Micro.Users.Application.ApiKeys.Commands;
+using Micro.Users.Application.ApiKeys.Queries;
 
 namespace Micro.Web.Pages.ApiKeys;
 

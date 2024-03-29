@@ -1,5 +1,5 @@
-﻿using Micro.Tenants.Application.Users;
-using Micro.Tenants.Application.Users.Commands;
+﻿using Micro.Users.Application.Users;
+using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Web.Pages.Auth;
 

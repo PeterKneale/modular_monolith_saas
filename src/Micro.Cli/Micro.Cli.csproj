@@ -21,6 +21,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
         <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj"/>
+        <ProjectReference Include="..\Micro.Users\Micro.Users.csproj" />
     </ItemGroup>
 
     <ItemGroup>

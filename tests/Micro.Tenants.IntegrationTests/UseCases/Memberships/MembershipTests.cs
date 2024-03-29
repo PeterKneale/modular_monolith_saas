@@ -10,10 +10,12 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Creating_an_organisation_also_creates_membership()
     {
         // arrange
-        var userId = await RegisterAndVerifyUser();
+        var userId = Guid.NewGuid();
+        var organisationId = Guid.NewGuid();
 
         // act
-        var organisationId = await CreateOrganisation(userId);
+        await CreateUser(userId);
+        await CreateOrganisation(userId, organisationId);
 
         // assert
         var memberships = await Service.Query(new ListMemberships.Query(), userId);
@@ -26,11 +28,14 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Member_can_be_created()
     {
         // arrange
-        var userId1 = await RegisterAndVerifyUser();
-        var userId2 = await RegisterAndVerifyUser();
-        var organisationId = await CreateOrganisation(userId1);
+        var userId1 = Guid.NewGuid();
+        var userId2 = Guid.NewGuid();
+        var organisationId = Guid.NewGuid();
 
         // act
+        await CreateUser(userId1);
+        await CreateUser(userId2);
+        await CreateOrganisation(userId1, organisationId);
         await CreateMember(userId2, userId1, organisationId);
 
         // assert
@@ -44,12 +49,15 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Member_can_be_deleted()
     {
         // arrange
-        var userId1 = await RegisterAndVerifyUser();
-        var userId2 = await RegisterAndVerifyUser();
-        var organisationId = await CreateOrganisation(userId1);
-        await CreateMember(userId2, userId1, organisationId);
+        var userId1 = Guid.NewGuid();
+        var userId2 = Guid.NewGuid();
+        var organisationId = Guid.NewGuid();
         
         // act
+        await CreateUser(userId1);
+        await CreateUser(userId2);
+        await CreateOrganisation(userId1, organisationId);
+        await CreateMember(userId2, userId1, organisationId);
         await DeleteMember(userId2, userId1, organisationId);
 
         // assert

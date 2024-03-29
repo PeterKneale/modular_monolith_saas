@@ -3,8 +3,6 @@ using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Infrastructure;
 using Micro.Translations.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Translations.IntegrationTests.Fixtures;
 

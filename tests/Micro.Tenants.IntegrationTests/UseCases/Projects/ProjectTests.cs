@@ -14,14 +14,13 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
         var organisationId = Guid.NewGuid();
         var projectId = Guid.NewGuid();
         var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId);
         var orgName = Guid.NewGuid().ToString()[..10];
         var projectName = Guid.NewGuid().ToString()[..10];        
         var projectNameUpdated = Guid.NewGuid().ToString()[..10];
 
         // act
-        await Service.Command(register);
-        await Service.Command(new CreateOrganisation.Command(organisationId, orgName), userId);
+        await CreateUser(userId);
+        await CreateOrganisation(userId, organisationId);
         await Service.Command(new CreateProject.Command(projectId, projectName), userId, organisationId);
         
         // Assert can get by id

@@ -5,12 +5,9 @@ using FluentMigrator.Runner.Conventions;
 using Micro.Common;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration;
-using Micro.Tenants.Application.ApiKeys;
 using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Projects;
-using Micro.Tenants.Application.Users;
-using Micro.Tenants.Infrastructure.Database;
 using Micro.Tenants.Infrastructure.Database.Repositories;
 using Micro.Tenants.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
@@ -40,12 +37,9 @@ internal static class ServiceCollectionExtensions
         // Services
         services.AddSingleton<IOrganisationNameCheck, OrganisationNameCheck>();
         services.AddSingleton<IProjectNameCheck, ProjectNameCheck>();
-        services.AddSingleton<IApiKeyService, ApiKeyService>();
 
         // Repositories
         services.AddScoped<IOrganisationRepository, OrganisationRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
         services.AddScoped<IMembershipRepository, MembershipRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
 

@@ -1,4 +1,5 @@
 ﻿using Micro.Tenants.IntegrationEvents;
+using Micro.Users.IntegrationEvents;
 
 namespace Micro.Tenants.IntegrationTests.Infrastructure.Integration;
 

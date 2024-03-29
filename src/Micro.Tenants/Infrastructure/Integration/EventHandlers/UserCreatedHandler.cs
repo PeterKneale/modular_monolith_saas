@@ -1,10 +1,9 @@
-﻿using Micro.Tenants.IntegrationEvents;
-using Micro.Translations.Domain.UserAggregate;
+﻿using Micro.Tenants.Domain.UserAggregate;
 using Micro.Users.IntegrationEvents;
 
-namespace Micro.Translations.Infrastructure.Integration.EventHandlers;
+namespace Micro.Tenants.Infrastructure.Integration.EventHandlers;
 
-public class UserCreatedHandler(Db db, ILogger<UserCreatedHandler> logs) : INotificationHandler<UserCreated>
+internal class UserCreatedHandler(Db db, ILogger<UserCreatedHandler> logs) : INotificationHandler<UserCreated>
 {
     public async Task Handle(UserCreated notification, CancellationToken cancellationToken)
     {
@@ -15,7 +14,7 @@ public class UserCreatedHandler(Db db, ILogger<UserCreatedHandler> logs) : INoti
             logs.LogInformation($"Syncing user changed (inserting): {notification.Name}");
             await db.Users.AddAsync(new User
             {
-                Id = notification.UserId,
+                Id = new UserId(notification.UserId),
                 Name = notification.Name
             }, cancellationToken);
         }
