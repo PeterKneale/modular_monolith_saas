@@ -1,5 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants", "src\Micro.Tenants\Micro.Tenants.csproj", "{5F16D48A-25CB-405C-9F6A-7DD9FCEE1D11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.IntegrationTests", "tests\Micro.Tenants.IntegrationTests\Micro.Tenants.IntegrationTests.csproj", "{74F19403-CCCC-4B1C-9810-58E139698770}"
@@ -53,7 +54,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4451
 	ProjectSection(SolutionItems) = preProject
 		run.sh = run.sh
 		watch.sh = watch.sh
+		create-module.sh = create-module.sh
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBDE1B48-23FE-4778-BFEC-0B14D4A0B6E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users", "src\Micro.Users\Micro.Users.csproj", "{76473D0D-3A10-480D-B356-A4C24F35AAA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.IntegrationEvents", "src\Micro.Users.IntegrationEvents\Micro.Users.IntegrationEvents.csproj", "{E49CD730-BFF0-4F56-B69C-E005F24034C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{23174CFC-96A3-4F9B-9A83-31DCA8A4336B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.IntegrationTests", "tests\Micro.Users.IntegrationTests\Micro.Users.IntegrationTests.csproj", "{1E66C0C9-DAA3-4E55-86C7-F6197E900D57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.UnitTests", "tests\Micro.Users.UnitTests\Micro.Users.UnitTests.csproj", "{360D495D-4117-434D-BCFD-FA4CB2EEF296}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{72E53323-A8EC-4833-A5C1-0C233FA443B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +133,22 @@ Global
 		{CB7A4003-0789-4740-A6C6-AD687D80EEA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB7A4003-0789-4740-A6C6-AD687D80EEA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB7A4003-0789-4740-A6C6-AD687D80EEA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76473D0D-3A10-480D-B356-A4C24F35AAA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76473D0D-3A10-480D-B356-A4C24F35AAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76473D0D-3A10-480D-B356-A4C24F35AAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76473D0D-3A10-480D-B356-A4C24F35AAA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49CD730-BFF0-4F56-B69C-E005F24034C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49CD730-BFF0-4F56-B69C-E005F24034C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49CD730-BFF0-4F56-B69C-E005F24034C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49CD730-BFF0-4F56-B69C-E005F24034C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E66C0C9-DAA3-4E55-86C7-F6197E900D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E66C0C9-DAA3-4E55-86C7-F6197E900D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E66C0C9-DAA3-4E55-86C7-F6197E900D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E66C0C9-DAA3-4E55-86C7-F6197E900D57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B351D8DC-4C47-4FB8-8CBA-4975D90885A3} = {C5645A63-6FD2-4A01-B273-11061F068C10}
@@ -132,5 +164,10 @@ Global
 		{3D592CBB-3478-4BDD-936D-0436EA07014E} = {2FED42D9-12CB-4636-A42B-A1723C72B3DF}
 		{D83D5413-12DA-49BE-89CA-3A55041DA1E1} = {C5645A63-6FD2-4A01-B273-11061F068C10}
 		{CB7A4003-0789-4740-A6C6-AD687D80EEA5} = {C5645A63-6FD2-4A01-B273-11061F068C10}
+		{72E53323-A8EC-4833-A5C1-0C233FA443B5} = {C5645A63-6FD2-4A01-B273-11061F068C10}
+		{76473D0D-3A10-480D-B356-A4C24F35AAA7} = {72E53323-A8EC-4833-A5C1-0C233FA443B5}
+		{E49CD730-BFF0-4F56-B69C-E005F24034C3} = {72E53323-A8EC-4833-A5C1-0C233FA443B5}
+		{360D495D-4117-434D-BCFD-FA4CB2EEF296} = {72E53323-A8EC-4833-A5C1-0C233FA443B5}
+		{1E66C0C9-DAA3-4E55-86C7-F6197E900D57} = {72E53323-A8EC-4833-A5C1-0C233FA443B5}
 	EndGlobalSection
 EndGlobal
