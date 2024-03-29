@@ -6,14 +6,24 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 jobs:
+  
   build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-      
+      with:
+        fetch-depth: 0
+        filter: tree:0
+
+    - name: Install minver CLI
+      run: dotnet tool install --global minver-cli --version 5.0.0
+        
     - name: Build and Test
       run: ./run-docker-compose-test.sh
 
