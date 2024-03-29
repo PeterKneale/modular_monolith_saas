@@ -15,7 +15,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MartinCostello.Logging.XUnit" Version="0.3.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
@@ -33,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Micro.Users\Micro.Users.csproj" />
+    <ProjectReference Include="..\Micro.IntegrationTests.Common\Micro.IntegrationTests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,17 +9,19 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /workspace
 COPY ["MicroSaas.sln", ""]
 
-# apps
+
+# cli
+COPY ["src/Micro.Cli/Micro.Cli.csproj", "src/Micro.Cli/"]
+
+# web
 COPY ["src/Micro.Web/Micro.Web.csproj", "src/Micro.Web/"]
 COPY ["tests/Micro.Web.AcceptanceTests/Micro.Web.AcceptanceTests.csproj", "tests/Micro.Web.AcceptanceTests/"]
 
-COPY ["src/Micro.Cli/Micro.Cli.csproj", "src/Micro.Cli/"]
-
 # common
-
-# module
 COPY ["src/Micro.Common/Micro.Common.csproj", "src/Micro.Common/"]
 COPY ["tests/Micro.Common.UnitTests/Micro.Common.UnitTests.csproj", "tests/Micro.Common.UnitTests/"]
+
+# module
 COPY ["tests/Micro.Modules.IntegrationTests/Micro.Modules.IntegrationTests.csproj", "tests/Micro.Modules.IntegrationTests/"]
 
 # module - users
@@ -39,6 +41,9 @@ COPY ["src/Micro.Translations/Micro.Translations.csproj", "src/Micro.Translation
 COPY ["src/Micro.Translations.IntegrationEvents/Micro.Translations.IntegrationEvents.csproj", "src/Micro.Translations.IntegrationEvents/"]
 COPY ["tests/Micro.Translations.UnitTests/Micro.Translations.UnitTests.csproj", "tests/Micro.Translations.UnitTests/"]
 COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationTests.csproj", "tests/Micro.Translations.IntegrationTests/"]
+
+# testing
+COPY ["tests/Micro.IntegrationTests.Common/Micro.IntegrationTests.Common.csproj", "tests/Micro.IntegrationTests.Common/"]
 
 RUN dotnet restore
 COPY . .

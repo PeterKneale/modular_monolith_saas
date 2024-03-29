@@ -6,7 +6,7 @@ services:
     container_name: acceptance-tests
     build:
       context: .
-      dockerfile: ./tests/Micro.AcceptanceTests/Dockerfile
+      dockerfile: ./tests/Micro.Web.AcceptanceTests/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_NOLOGO=true

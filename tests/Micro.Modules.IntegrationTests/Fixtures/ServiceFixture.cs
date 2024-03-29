@@ -4,6 +4,7 @@ using Micro.Common;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
+using Micro.IntegrationTests.Common;
 using Micro.Tenants;
 using Micro.Translations;
 using Micro.Users;
@@ -28,7 +29,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
             .Build();
         
         var services = new ServiceCollection()
-            .AddLogging(x => x.AddXUnit(this))
+            .AddTestLogging(this)
             .AddInMemoryEventBus()
             .BuildServiceProvider();
         
