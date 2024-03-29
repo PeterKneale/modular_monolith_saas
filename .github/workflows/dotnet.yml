@@ -21,11 +21,13 @@ jobs:
         fetch-depth: 0
         filter: tree:0
 
-    - name: Version
+    - name: Install version tool
       id: version
-      run: |
-        dotnet tool install --global minver-cli --version 5.0.0
-        echo "VERSION=$(minver)" >> "$GITHUB_ENV"
+      run: dotnet tool install --global minver-cli --version 5.0.0
+
+    - name: Calculate version
+      id: version
+      run: echo "VERSION=$(minver)" >> "$GITHUB_ENV"
 
     - name: Test
       run: ./run-docker-compose-test.sh
