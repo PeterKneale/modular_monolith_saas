@@ -25,7 +25,7 @@ jobs:
       id: version
       run: |
         dotnet tool install --global minver-cli --version 5.0.0
-        echo "VERSION=$(./minver/minver)" >> "$GITHUB_ENV"
+        echo "VERSION=$(minver)" >> "$GITHUB_ENV"
 
     - name: Test
       run: ./run-docker-compose-test.sh
