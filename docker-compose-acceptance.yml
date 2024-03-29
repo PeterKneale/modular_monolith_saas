@@ -16,7 +16,7 @@ services:
     entrypoint:
       - dotnet
       - test
-      - Micro.AcceptanceTests.dll
+      - Micro.Web.AcceptanceTests.dll
       - --configuration=Release
     depends_on:
       - web
