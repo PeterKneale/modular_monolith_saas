@@ -49,7 +49,7 @@ builder.Services
 builder.Services
     .AddHealthChecks()
     .AddNpgSql(
-        connectionString: configuration.GetDbConnectionString(),
+        connectionString: configuration.GetDbConnectionString("public"),
         healthQuery: "SELECT 1;",
         name: "sql",
         failureStatus: HealthStatus.Unhealthy,
