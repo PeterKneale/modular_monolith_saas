@@ -31,3 +31,7 @@ jobs:
     - name: Test
       run: ./run-docker-compose-test.sh
 
+    - name: Create release
+      run: |
+        echo "Creating release $VERSION" >> $GITHUB_STEP_SUMMARY
+
