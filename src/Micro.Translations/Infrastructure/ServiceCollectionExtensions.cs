@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetDbConnectionString();
+        var connectionString = configuration.GetDbConnectionString(Constants.SchemaName);
         if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
         // application
