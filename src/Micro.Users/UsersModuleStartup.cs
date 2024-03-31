@@ -2,6 +2,7 @@
 using System.Reflection;
 using Micro.Common;
 using Micro.Common.Infrastructure.Context;
+using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Common.Infrastructure.Jobs;
 using Micro.Users.Infrastructure;
@@ -47,21 +48,10 @@ public static class UsersModuleStartup
             { "quartz.scheduler.instanceName", Assembly.GetExecutingAssembly().GetName().Name }
         });
         var scheduler = await factory.GetScheduler();
-        await scheduler.ScheduleJob(JobBuilder.Create<OutboxJob>().WithIdentity("outbox").Build(), GetTrigger("outbox"));
-        await scheduler.ScheduleJob(JobBuilder.Create<InboxJob>().WithIdentity("inbox").Build(), GetTrigger("inbox"));
-        await scheduler.ScheduleJob(JobBuilder.Create<QueueJob>().WithIdentity("commands").Build(), GetTrigger("commands"));
+        await scheduler.AddMessageboxJob<OutboxJob>();
+        await scheduler.AddMessageboxJob<InboxJob>();
+        await scheduler.AddMessageboxJob<QueueJob>();
         await scheduler.Start();
         return scheduler;
-    }
-
-    private static ITrigger GetTrigger(string name)
-    {
-        return TriggerBuilder.Create()
-            .StartNow()
-            .WithIdentity(name)
-            .WithSimpleSchedule(x => x
-                .WithIntervalInSeconds(1)
-                .RepeatForever())
-            .Build();
     }
 }
