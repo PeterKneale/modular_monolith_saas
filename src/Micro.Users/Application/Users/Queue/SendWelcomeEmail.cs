@@ -21,7 +21,6 @@ public static class SendWelcomeEmail
     {
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {
-            logs.LogInformation("Handling queued command: {Name}", nameof(Command));
             var userId = request.UserId;
 
             var user = await users.GetAsync(userId, cancellationToken);
@@ -29,8 +28,7 @@ public static class SendWelcomeEmail
 
             var actionUrl = $"http://localhost:8080/Auth/Verify?userId={user.Id}&token={user.Verification.VerificationToken}";
             
-            logs.LogInformation(actionUrl);
-
+            logs.LogInformation($"Sending welcome email to {user.Credentials.Email} with action url {actionUrl}");
         }
     }
 }
