@@ -1,6 +1,7 @@
 ﻿using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Domain.Memberships;
 using Micro.Tenants.Domain.Organisations;
+using Micro.Tenants.Domain.Users;
 
 namespace Micro.Tenants.Application.Organisations.Commands;
 
@@ -17,7 +18,7 @@ public static class CreateOrganisation
         }
     }
 
-    public class Handler(IExecutionContext context, IOrganisationRepository organisations, IMembershipRepository memberships, IOrganisationNameCheck check) : IRequestHandler<Command>
+    public class Handler(IExecutionContext context, IOrganisationRepository organisations, IMembershipRepository memberships, IUsersRepository users, IOrganisationNameCheck check , ILogger<Handler> logs) : IRequestHandler<Command>
     {
         public async Task Handle(Command command, CancellationToken token)
         {
@@ -32,7 +33,18 @@ public static class CreateOrganisation
             await organisations.CreateAsync(organisation, token);
 
             var membershipId = new MembershipId(Guid.NewGuid());
-            var membership = Membership.CreateInstance(membershipId, organisationId, context.UserId, MembershipRole.Owner);
+            var userId = context.UserId;
+            var user = await users.GetAsync(userId, token);
+            if (user == null)
+            {
+                logs.LogWarning($"User {userId} not found yet,possible eventual consistency issue");
+            }
+            else
+            {
+                logs.LogWarning($"User {userId} found, {user.Name}");
+            }
+
+            var membership = Membership.CreateInstance(membershipId, organisationId, userId, MembershipRole.Owner);
             await memberships.CreateAsync(membership, token);
         }
     }

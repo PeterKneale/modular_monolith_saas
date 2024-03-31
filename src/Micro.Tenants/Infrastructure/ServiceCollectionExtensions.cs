@@ -42,6 +42,7 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IOrganisationRepository, OrganisationRepository>();
         services.AddScoped<IMembershipRepository, MembershipRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IUsersRepository, UserRepository>();
 
         // Database Migrations
         services

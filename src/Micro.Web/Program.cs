@@ -10,6 +10,7 @@ using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging.Console;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
@@ -18,7 +19,11 @@ var configuration = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddLogging(c => { c.AddSimpleConsole(x => x.SingleLine = true); });
+builder.Services.AddLogging(c => { c.AddSimpleConsole(x =>
+{
+    x.SingleLine = false;
+    x.ColorBehavior = LoggerColorBehavior.Enabled;
+}); });
 
 // Add services to the container.
 builder.Services.AddRazorPages(options =>

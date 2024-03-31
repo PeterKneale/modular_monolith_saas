@@ -12,6 +12,7 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.SmokeTests.Can_register_and_login_create_an_organisation_and_project&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

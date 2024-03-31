@@ -6,7 +6,7 @@ namespace Micro.Web.AcceptanceTests.UseCases;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class SmokeTests() : BaseTest(headless:false)
+public class SmokeTests : BaseTest
 {
     [Test]
     public async Task Can_register_and_login_create_an_organisation_and_project()

@@ -1,5 +1,4 @@
-﻿using Micro.Common.Infrastructure.Database;
-using Micro.Common.Infrastructure.Database.Converters;
+﻿using Micro.Common.Infrastructure.Database.Converters;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
