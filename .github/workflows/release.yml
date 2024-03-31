@@ -14,31 +14,40 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         filter: tree:0
 
-    - name: Install version tool
-      run: dotnet tool install --global minver-cli --version 5.0.0
-
-    - name: Calculate version
+    - name: Version
       id: version
-      run: echo "VERSION=$(minver)" >> "$GITHUB_ENV"
+      run: |
+        dotnet tool install --global minver-cli --version 5.0.0
+        echo "VERSION=$(minver)" >> "$GITHUB_ENV"
 
     - name: Test
       run: ./run-docker-compose-test.sh
 
-    - name: Create release
-      run: echo "Creating release $VERSION" >> $GITHUB_STEP_SUMMARY
-    
     - name: Login to GHCR
       if: github.event_name != 'pull_request'
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}]
+
+    - name: Publish to GHCR
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker tag microsaas-web ghcr.io/${{ github.repository_owner }}/microsaas.web:$VERSION
+        docker tag microsaas-web ghcr.io/${{ github.repository_owner }}/microsaas.web:latest
+        docker push ghcr.io/${{ github.repository_owner }}/microsaas.web:$VERSION
+        docker push ghcr.io/${{ github.repository_owner }}/microsaas.web:latest
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
 
