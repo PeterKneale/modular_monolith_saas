@@ -8,6 +8,14 @@ public static class SendWelcomeEmail
     {
         public UserId UserId { get; init; } = null!;
     }
+    
+    public class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.UserId).NotEmpty();
+        }
+    }
 
     public class Handler(IUserRepository users, ILogger<Handler> logs) : IRequestHandler<Command>
     {

@@ -4,6 +4,14 @@ public static class GetUserId
 {
     public record Query(string Email) : IRequest<Guid>;
 
+    public class Validator : AbstractValidator<Query>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Email).NotEmpty().EmailAddress();
+        }
+    }
+
     public class Handler(IUserRepository users) : IRequestHandler<Query, Guid>
     {
         public async Task<Guid> Handle(Query query, CancellationToken token)

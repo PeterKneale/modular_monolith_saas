@@ -7,6 +7,8 @@ namespace Micro.Tenants.Application.Projects.Queries;
 public static class ListProjects
 {
     public record Query : IRequest<IEnumerable<Result>>;
+    
+    public class Validator : AbstractValidator<Query>;
 
     public record Result(Guid Id, string Name);
 

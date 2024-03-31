@@ -8,6 +8,8 @@ public static class ListMemberships
 {
     public record Query : IRequest<IEnumerable<Result>>;
 
+    public class Validator : AbstractValidator<Query>;
+    
     public record Result(Guid OrganisationId, string OrganisationName, string RoleName);
 
     private class Handler(IExecutionContext context, ConnectionFactory connections) : IRequestHandler<Query, IEnumerable<Result>>
