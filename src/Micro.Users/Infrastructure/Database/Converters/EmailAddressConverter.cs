@@ -2,4 +2,4 @@
 
 namespace Micro.Users.Infrastructure.Database.Converters;
 
-public class EmailAddressConverter() : ValueConverter<EmailAddress, string>(v => v.Value, v => EmailAddress.CreateInstance(v));
+public class EmailAddressConverter() : ValueConverter<EmailAddress, string>(v => v.Value, v => EmailAddress.Create(v));

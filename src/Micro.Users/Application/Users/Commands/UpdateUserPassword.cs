@@ -22,8 +22,8 @@ public static class UpdateUserPassword
             var user = await users.GetAsync(userId, token);
             if (user == null) throw new NotFoundException(nameof(User), userId.Value);
 
-            var oldPassword = new Password(command.OldPassword);
-            var newPassword = new Password(command.NewPassword);
+            var oldPassword = Password.Create(command.OldPassword);
+            var newPassword = Password.Create(command.NewPassword);
 
             user.ChangePassword(oldPassword, newPassword);
             users.Update(user);

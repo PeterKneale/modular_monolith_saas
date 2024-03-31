@@ -8,7 +8,7 @@ public static class GetUserId
     {
         public async Task<Guid> Handle(Query query, CancellationToken token)
         {
-            var email = EmailAddress.CreateInstance(query.Email);
+            var email = EmailAddress.Create(query.Email);
             var user = await users.GetAsync(email, token);
             if (user == null)
             {

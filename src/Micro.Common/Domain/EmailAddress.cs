@@ -7,7 +7,7 @@ public record EmailAddress
         this.Value = Value;
     }
 
-    public static EmailAddress CreateInstance(string Value)
+    public static EmailAddress Create(string Value)
     {
         if (string.IsNullOrWhiteSpace(Value))
         {

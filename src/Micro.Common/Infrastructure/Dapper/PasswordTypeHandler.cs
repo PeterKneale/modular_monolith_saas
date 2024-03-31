@@ -14,7 +14,7 @@ public class PasswordTypeHandler : SqlMapper.TypeHandler<Password>
 
     public override Password Parse(object? value)
     {
-        if (value is string password) return new Password(password);
+        if (value is string password) return Password.Create(password);
 
         throw new FormatException($"Invalid conversion to {nameof(EmailAddress)}");
     }

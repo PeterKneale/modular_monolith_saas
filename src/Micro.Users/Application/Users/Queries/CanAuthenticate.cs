@@ -19,8 +19,8 @@ public static class CanAuthenticate
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var email = EmailAddress.CreateInstance(query.Email);
-            var password = new Password(query.Password);
+            var email = EmailAddress.Create(query.Email);
+            var password = Password.Create(query.Password);
             var credentials = new UserCredentials(email, password);
 
             var user = await users.GetAsync(credentials.Email, token);

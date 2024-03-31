@@ -18,7 +18,7 @@ public static class UpdateUserName
         public async Task Handle(Command command, CancellationToken token)
         {
             var userId = context.UserId;
-            var name = new UserName(command.FirstName, command.LastName);
+            var name = UserName.Create(command.FirstName, command.LastName);
 
             var user = await users.GetAsync(userId, token);
             if (user == null) throw new NotFoundException(nameof(User), userId.Value);

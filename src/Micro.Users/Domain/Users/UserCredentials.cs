@@ -14,5 +14,5 @@ public class UserCredentials(EmailAddress email, Password password)
         Password = password;
     }
 
-    public override string ToString() => $"{Email}";
+    public override string ToString() => $"{Email} - {Password}";
 }

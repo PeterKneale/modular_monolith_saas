@@ -24,9 +24,9 @@ public static class RegisterUser
         public async Task Handle(Command command, CancellationToken token)
         {
             var userId = new UserId(command.UserId);
-            var userEmail = EmailAddress.CreateInstance(command.Email);
-            var userName = new UserName(command.FirstName, command.LastName);
-            var userPassword = new Password(command.Password);
+            var userEmail = EmailAddress.Create(command.Email);
+            var userName = UserName.Create(command.FirstName, command.LastName);
+            var userPassword = Password.Create(command.Password);
             var userCredentials = new UserCredentials(userEmail, userPassword);
 
             if (await users.GetAsync(userId, token) != null) throw new AlreadyExistsException(nameof(User), userId);
