@@ -1,4 +1,4 @@
-﻿namespace Micro.Common.Domain;
+﻿namespace Micro.Users.Domain.Users;
 
 public record Password
 {
@@ -19,9 +19,6 @@ public record Password
     public static implicit operator string(Password x) => x.Value;
     
     public string Value { get; }
-
-    public bool Matches(Password password) =>
-        password.Value == Value;
 
     public override string ToString() => "*******";
 }

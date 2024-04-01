@@ -41,11 +41,12 @@ jobs:
           ORIGINAL: microsaas-web
           IMAGE: microsaas
           OWNER: peterkneale
+          REPO: microsaas
         run: |
-          docker tag $ORIGINAL ghcr.io/$OWNER/$IMAGE:$VERSION
-          docker tag $ORIGINAL ghcr.io/$OWNER/$IMAGE:latest
-          docker push ghcr.io/$OWNER/$IMAGE:$VERSION
-          docker push ghcr.io/$OWNER/$IMAGE:latest
+          docker tag $ORIGINAL ghcr.io/$OWNER/$REPO/$IMAGE:$VERSION
+          docker tag $ORIGINAL ghcr.io/$OWNER/$REPO/$IMAGE:latest
+          docker push ghcr.io/$OWNER/$REPO/$IMAGE:$VERSION
+          docker push ghcr.io/$OWNER/$REPO/$IMAGE:latest
 
       - name: Release
         uses: softprops/action-gh-release@v2

@@ -6,6 +6,7 @@ using Micro.Common;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Users.Application.ApiKeys;
+using Micro.Users.Domain.Users.Services;
 using Micro.Users.Infrastructure.Database;
 using Micro.Users.Infrastructure.Database.Repositories;
 using Micro.Users.Infrastructure.Services;
@@ -35,6 +36,8 @@ internal static class ServiceCollectionExtensions
 
         // Services
         services.AddSingleton<IApiKeyService, ApiKeyService>();
+        services.AddSingleton<IHashPassword, CheckHashPasswordService>();
+        services.AddSingleton<ICheckPassword, CheckHashPasswordService>();
 
         // Repositories
         services.AddScoped<IUserRepository, UserRepository>();

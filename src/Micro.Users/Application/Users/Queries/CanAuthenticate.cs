@@ -1,4 +1,6 @@
-﻿namespace Micro.Users.Application.Users.Queries;
+﻿using Micro.Users.Domain.Users.Services;
+
+namespace Micro.Users.Application.Users.Queries;
 
 public static class CanAuthenticate
 {
@@ -15,21 +17,25 @@ public static class CanAuthenticate
         }
     }
 
-    public class Handler(IUserRepository users) : IRequestHandler<Query, Result>
+    public class Handler(IUserRepository users, ICheckPassword checker) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
             var email = EmailAddress.Create(query.Email);
             var password = Password.Create(query.Password);
-            var credentials = new UserCredentials(email, password);
-
-            var user = await users.GetAsync(credentials.Email, token);
+            
+            var user = await users.GetAsync(email, token);
             if (user == null) return new Result(false);
 
-            var success = user.CanLogin(credentials);
-            return success
-                ? new Result(true, user.Id.Value)
-                : new Result(false);
+            try
+            {
+                user.Login(email,password,checker);
+                return new Result(true,user.Id);
+            }
+            catch (BusinessRuleBrokenException e)
+            {
+                return new Result(false);
+            }
         }
     }
 }

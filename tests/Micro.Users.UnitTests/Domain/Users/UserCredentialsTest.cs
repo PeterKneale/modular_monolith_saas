@@ -1,7 +1,6 @@
 ﻿namespace Micro.Users.UnitTests.Domain.Users;
 
-[TestSubject(typeof(UserCredentials))]
-public class UserCredentialsTest
+public class UserLoginTest
 {
     [Theory]
     [InlineData("user@example.com", "X", "user@example.com", "X", true, "matches")]
@@ -9,10 +8,24 @@ public class UserCredentialsTest
     [InlineData("user@example.com", "X", "user@example.com", "WRONG_PASSWORD", false, "right email but wrong password")]
     [InlineData("user@example.com", "X", "WRONG_EMAIL@example.com", "X", false, "wrong email but right password")]
     [InlineData("user@example.com", "X", "WRONG_EMAIL@example.com", "WRONG_PASSWORD", false, "wrong email but right password")]
-    public void UserCredentialsMatchTests(string email1, string password1, string email2, string password2, bool expected, string because)
+    public void CredentialScenarios(string email1, string password1, string email2, string password2, bool expected, string because)
     {
-        var userCredentials1 = new UserCredentials(EmailAddress.Create(email1), Password.Create(password1));
-        var userCredentials2 = new UserCredentials(EmailAddress.Create(email2), Password.Create(password2));
-        userCredentials1.Matches(userCredentials2).Should().Be(expected, because);
+        // arrange
+        var emailAddress = EmailAddress.Create(email1);
+        var password = Password.Create(password1);
+        var userId = UserId.Create();
+        var userName = UserName.Create("x", "x");
+        var service = new DummyPasswordService();
+
+        // act
+        var user = User.Create(userId, userName, emailAddress, password, service);
+        user.Verify(user.VerificationToken);
+        var action = () => user.Login(EmailAddress.Create(email2), Password.Create(password2), service);
+        
+        // assert
+        if (expected)
+            action.Should().NotThrow();
+        else
+            action.Should().Throw<BusinessRuleBrokenException>();
     }
 }

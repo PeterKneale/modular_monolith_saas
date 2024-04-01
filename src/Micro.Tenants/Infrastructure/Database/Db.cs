@@ -44,7 +44,6 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         configurationBuilder.Properties<MembershipRole>().HaveConversion<MembershipRoleConverter>();
         configurationBuilder.Properties<OrganisationId>().HaveConversion<OrganisationIdConverter>();
         configurationBuilder.Properties<OrganisationName>().HaveConversion<OrganisationNameConverter>();
-        configurationBuilder.Properties<Password>().HaveConversion<PasswordConverter>();
         configurationBuilder.Properties<ProjectId>().HaveConversion<ProjectIdConverter>();
         configurationBuilder.Properties<ProjectName>().HaveConversion<ProjectNameConverter>();
         configurationBuilder.Properties<UserId>().HaveConversion<UserIdConverter>();

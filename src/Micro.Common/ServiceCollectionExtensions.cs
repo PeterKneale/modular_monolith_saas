@@ -20,7 +20,6 @@ public static class ServiceCollectionExtensions
         SqlMapper.AddTypeHandler(UserIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(ProjectIdTypeHandler.Default);
         SqlMapper.AddTypeHandler(EmailAddressTypeHandler.Default);
-        SqlMapper.AddTypeHandler(PasswordTypeHandler.Default);
 
         // domain events
         services.AddScoped<DomainEventAccessor>();

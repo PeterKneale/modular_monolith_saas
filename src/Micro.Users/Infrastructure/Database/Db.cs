@@ -37,6 +37,7 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         configurationBuilder.Properties<ApiKeyName>().HaveConversion<ApiKeyNameConverter>();
         configurationBuilder.Properties<EmailAddress>().HaveConversion<EmailAddressConverter>();
         configurationBuilder.Properties<Password>().HaveConversion<PasswordConverter>();
+        configurationBuilder.Properties<HashedPassword>().HaveConversion<HashedPasswordConverter>();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,24 +60,20 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                     .HasMaxLength(100)
                     .HasColumnName("last_name");
             });
-            entity.OwnsOne(x => x.Credentials, x =>
-            {
-                x.Property(e => e.Email)
+            
+            entity.Property(e => e.EmailAddress)
                     .HasMaxLength(200)
                     .HasColumnName("email");
-                x.Property(e => e.Password)
+            
+            entity.Property(e => e.HashedPassword)
                     .HasMaxLength(100)
                     .HasColumnName("password");
-            });
-
-            entity.OwnsOne(x => x.Verification, x =>
-            {
-                x.Property(e => e.IsVerified).HasColumnName(IsVerified);
-                x.Property(e => e.VerifiedAt).HasColumnName(VerifiedAt);
-                x.Property(e => e.VerificationToken)
-                    .HasMaxLength(50)
-                    .HasColumnName(VerifiedToken);
-            });
+            
+            entity.Property(e => e.IsVerified).HasColumnName(IsVerified);
+            entity.Property(e => e.VerifiedAt).HasColumnName(VerifiedAt);
+            entity.Property(e => e.VerificationToken)
+                .HasMaxLength(50)
+                .HasColumnName(VerifiedToken);
 
             entity.Ignore(x => x.DomainEvents);
         });

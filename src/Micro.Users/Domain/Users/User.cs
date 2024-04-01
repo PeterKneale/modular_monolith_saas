@@ -1,5 +1,6 @@
 ﻿using Micro.Users.Domain.Users.DomainEvents;
 using Micro.Users.Domain.Users.Rules;
+using Micro.Users.Domain.Users.Services;
 
 namespace Micro.Users.Domain.Users;
 
@@ -10,29 +11,54 @@ public class User : BaseEntity
         // ef 
     }
 
-    private User(UserId id, UserName name, UserCredentials credentials)
+    private User(UserId id, UserName name, EmailAddress emailAddress, HashedPassword hashedPassword, string verificationToken)
     {
         Id = id;
         Name = name;
-        Credentials = credentials;
+        EmailAddress = emailAddress;
+        HashedPassword = hashedPassword;
+        VerificationToken = verificationToken;
         AddDomainEvent(new UserCreatedDomainEvent(this));
-        Verification = UserVerification.Unverified();
     }
 
     public UserId Id { get; } = null!;
 
     public UserName Name { get; private set; } = null!;
 
-    public UserCredentials Credentials { get; } = null!;
+    public EmailAddress EmailAddress { get; } = null!;
 
-    public UserVerification Verification { get; } = null!;
+    public HashedPassword HashedPassword { get; private set; } = null!;
+
+    public bool IsVerified { get; private set; }
+
+    public DateTimeOffset? VerifiedAt { get; private set; }
+
+    public string? VerificationToken { get; private set; }
 
     public virtual ICollection<UserApiKey> UserApiKeys { get; set; } = new List<UserApiKey>();
 
-    public static User CreateInstance(UserId id, UserName name, UserCredentials credentials) =>
-        new(id, name, credentials);
+    public static User Create(UserId id, UserName name, EmailAddress emailAddress, Password password, IHashPassword hasher)
+    {
+        var hashedPassword = hasher.HashPassword(password);
+        var verificationToken = Guid.NewGuid().ToString();
+        return new(id, name, emailAddress, hashedPassword, verificationToken);
+    }
+    
+    public void Verify(string token)
+    {
+        CheckRule(new MustNotBeVerifiedRule(this));
+        CheckRule(new VerificationTokenMustMatchRule(this, token));
+        IsVerified = true;
+        VerifiedAt = SystemClock.UtcNow;
+        VerificationToken = null;
+    }
 
-    public bool CanLogin(UserCredentials credentials) => Verification.IsVerified && Credentials.Matches(credentials);
+    public void Login(EmailAddress emailAddress, Password password, ICheckPassword checker)
+    {
+        CheckRule(new MustBeVerified(this));
+        CheckRule(new EmailMustMatch(this, emailAddress));
+        CheckRule(new PasswordMustMatch(this, password, checker));
+    }
 
     public void ChangeName(UserName name)
     {
@@ -40,10 +66,11 @@ public class User : BaseEntity
         Name = name;
     }
 
-    public void ChangePassword(Password oldPassword, Password newPassword)
+    public void ChangePassword(Password oldPassword, Password newPassword, ICheckPassword checker, IHashPassword hasher)
     {
-        CheckRule(new MustBeVerifiedRule(Verification));
-        CheckRule(new PasswordMatchesRule(this, oldPassword));
-        Credentials.ChangePassword(newPassword);
+        CheckRule(new MustBeVerified(this));
+        CheckRule(new PasswordMustMatch(this, oldPassword, checker));
+        var newPasswordHashed = hasher.HashPassword(newPassword);
+        HashedPassword = newPasswordHashed;
     }
 }

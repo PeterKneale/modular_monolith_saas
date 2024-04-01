@@ -1,10 +1,10 @@
 ﻿namespace Micro.Users.UnitTests.Domain.Users;
 
 [TestSubject(typeof(User))]
-public class UserAuthenticationTests
+public class UserVerificationTests
 {
     [Fact]
-    public void Verified_users_can_login()
+    public void Users_are_initially_unverified()
     {
         // arrange
         var userId = UserId.Create();
@@ -15,13 +15,15 @@ public class UserAuthenticationTests
 
         // act
         var user = User.Create(userId, userName, email, password, service);
-        var token = user.VerificationToken;
-        user.Verify(token);
-        user.Login(email, password, service);
+
+        // assert
+        user.VerificationToken.Should().NotBeNull();
+        user.IsVerified.Should().BeFalse();
+        user.VerifiedAt.Should().BeNull();
     }
 
     [Fact]
-    public void Unverified_users_can_not_login()
+    public void Users_can_be_verified()
     {
         // arrange
         var userId = UserId.Create();
@@ -32,9 +34,12 @@ public class UserAuthenticationTests
 
         // act
         var user = User.Create(userId, userName, email, password, service);
-        var action = () => user.Login(email, password, service);
+        var verificationToken = user.VerificationToken;
+        user.Verify(verificationToken);
 
         // assert
-        action.Should().Throw<BusinessRuleBrokenException>();
+        user.VerificationToken.Should().BeNull();
+        user.IsVerified.Should().BeTrue();
+        user.VerifiedAt.Should().NotBeNull();
     }
 }

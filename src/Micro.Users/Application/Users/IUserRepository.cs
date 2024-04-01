@@ -6,5 +6,5 @@ public interface IUserRepository
     void Update(User user);
     void Delete(User user);
     Task<User?> GetAsync(UserId id, CancellationToken token);
-    Task<User?> GetAsync(EmailAddress email, CancellationToken token);
+    Task<User?> GetAsync(EmailAddress emailAddress, CancellationToken token);
 }

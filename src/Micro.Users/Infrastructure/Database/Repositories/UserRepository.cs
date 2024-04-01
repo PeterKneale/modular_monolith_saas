@@ -18,10 +18,10 @@ internal class UserRepository(Db db) : IUserRepository
             .SingleOrDefaultAsync(x => x.Id == id, token);
     }
 
-    public async Task<User?> GetAsync(EmailAddress email, CancellationToken token)
+    public async Task<User?> GetAsync(EmailAddress emailAddress, CancellationToken token)
     {
         return await db.Users
             .Include(x => x.UserApiKeys)
-            .SingleOrDefaultAsync(x => x.Credentials.Email.Equals(email), token);
+            .SingleOrDefaultAsync(x => x.EmailAddress.Equals(emailAddress), token);
     }
 }

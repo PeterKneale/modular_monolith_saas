@@ -26,6 +26,7 @@ public record EmailAddress
     }
 
     public static implicit operator string(EmailAddress x) => x.Value;
+    
     public string Value { get; init; }
 
     public bool Matches(EmailAddress emailAddress) =>
