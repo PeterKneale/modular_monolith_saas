@@ -66,4 +66,25 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         // assert
         await act.Should().ThrowAsync<BusinessRuleBrokenException>().WithMessage("This action must be performed on a verified user");
     }
+    
+    [Fact]
+    public async Task Can_reset_password_multiple_times_and_use_latest_token()
+    {
+        // arrange
+        var email = GetUniqueEmail();
+        var password = "password";
+
+        // act
+        var userId = await RegisterAndVerifyUser(email, password);
+        await Service.Command(new ForgotPassword.Command(email));
+        await Service.Command(new ForgotPassword.Command(email));
+        await Service.Command(new ForgotPassword.Command(email));
+        await Service.Command(new ForgotPassword.Command(email));
+        var token = await Service.Query(new GetForgotPasswordToken.Query(userId));
+        await Service.Command(new ResetPassword.Command(userId, token, password));
+
+        // assert
+        var result = await Service.Query(new CanAuthenticate.Query(email, password));
+        result.UserId.Should().Be(userId);
+    }
 }

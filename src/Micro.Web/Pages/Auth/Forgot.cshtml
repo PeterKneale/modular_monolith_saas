@@ -1,0 +1,15 @@
+﻿@page
+@model Micro.Web.Pages.Auth.Forgot
+
+<partial name="_ValidationSummary"/>
+
+<form method="post" class="card">
+    <div class="card-body">
+        @Html.EditorFor(x => x.Email, null, new { autofocus = "autofocus" })
+    </div>
+    <div class="card-footer">
+        <div class="d-flex">
+            <input type="submit" value="Reset Password" class="btn btn-primary ms-auto" data-testid="ForgotButton"/>
+        </div>
+    </div>
+</form>

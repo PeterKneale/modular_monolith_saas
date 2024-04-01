@@ -26,4 +26,6 @@ public static class Constants
     public const int NameMaxLength = 100;
     public const int KeyMaxLength = 100;
     public const int EmailMaxLength = 200;
+    public const int MaxEmailLength = 200;
+    public const int MaxPasswordLength = 100;
 }
