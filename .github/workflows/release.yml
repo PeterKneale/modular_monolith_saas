@@ -38,7 +38,6 @@ jobs:
 
       - name: Publish to GHCR
         env:
-          VERSION: ${{ steps.version.outputs.version }}
           ORIGINAL: microsaas-web
           IMAGE: microsaas
           OWNER: peterkneale
