@@ -17,14 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - name: Version
-        id: version
-        run: |
-          dotnet tool install --global minver-cli --version 5.0.0
-          echo "VERSION=$(minver)" >> "$GITHUB_ENV"
+          show-progress: 'false'
 
       - name: Test
         run: ./run-docker-compose-test.sh
@@ -37,18 +30,28 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate version number
+        id: version
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+
       - name: Publish to GHCR
         env:
           ORIGINAL: microsaas-web
           IMAGE: microsaas
           OWNER: peterkneale
           REPO: microsaas
+          VERSION: ${{ steps.version.outputs.tag }}
         run: |
           docker tag $ORIGINAL ghcr.io/$OWNER/$REPO/$IMAGE:$VERSION
           docker tag $ORIGINAL ghcr.io/$OWNER/$REPO/$IMAGE:latest
           docker push ghcr.io/$OWNER/$REPO/$IMAGE:$VERSION
           docker push ghcr.io/$OWNER/$REPO/$IMAGE:latest
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
-
+      - name: Create github release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.version.outputs.tag }}
+          generateReleaseNotes: true
