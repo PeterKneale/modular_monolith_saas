@@ -14,37 +14,40 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        filter: tree:0
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: tree:0
 
-    - name: Version
-      id: version
-      run: |
-        dotnet tool install --global minver-cli --version 5.0.0
-        echo "VERSION=$(minver)" >> "$GITHUB_ENV"
+      - name: Version
+        id: version
+        run: |
+          dotnet tool install --global minver-cli --version 5.0.0
+          echo "VERSION=$(minver)" >> "$GITHUB_ENV"
 
-    - name: Test
-      run: ./run-docker-compose-test.sh
+      - name: Test
+        run: ./run-docker-compose-test.sh
 
-    - name: Login to GHCR
-      if: github.event_name != 'pull_request'
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Publish to GHCR
-      env:
-        VERSION: ${{ steps.version.outputs.version }}
-      run: |
-        docker tag microsaas-web ghcr.io/${{ github.repository_owner }}/microsaas.web:$VERSION
-        docker tag microsaas-web ghcr.io/${{ github.repository_owner }}/microsaas.web:latest
-        docker push ghcr.io/${{ github.repository_owner }}/microsaas.web:$VERSION
-        docker push ghcr.io/${{ github.repository_owner }}/microsaas.web:latest
+      - name: Publish to GHCR
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          ORIGINAL: microsaas-web
+          IMAGE: ${GITHUB_REPOSITORY@L}
+          OWNER: ${GITHUB_REPOSITORY_OWNER@L}
+        run: |
+          docker tag $ORIGINAL ghcr.io/$OWNER/$IMAGE:$VERSION
+          docker tag $ORIGINAL ghcr.io/$OWNER/$IMAGE:latest
+          docker push ghcr.io/$OWNER/$IMAGE:$VERSION
+          docker push ghcr.io/$OWNER/$IMAGE:latest
 
-    - name: Release
-      uses: softprops/action-gh-release@v2
+      - name: Release
+        uses: softprops/action-gh-release@v2
 
