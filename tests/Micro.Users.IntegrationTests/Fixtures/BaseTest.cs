@@ -27,4 +27,6 @@ public class BaseTest
         await Service.Command(register);
         return userId;
     }
+    
+    protected string GetUniqueEmail() => $"test{Guid.NewGuid().ToString()}@example.org";
 }

@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Domain.Users.Rules;
 
-internal class MustBeVerified(User user) : IBusinessRule
+internal class MustBeVerifiedRule(User user) : IBusinessRule
 {
     public string Message => "This action must be performed on a verified user";
 

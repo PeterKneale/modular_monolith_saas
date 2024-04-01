@@ -19,7 +19,9 @@ public class Migration1 : Migration
             .WithColumn(PasswordColumn).AsString(NameMaxLength)
             .WithColumn(IsVerified).AsBoolean() // initially false
             .WithColumn(VerifiedAt).AsDateTimeOffset().Nullable() // initially null then set on verification
-            .WithColumn(VerifiedToken).AsString(50).Nullable(); // initially set then cleared on verification
+            .WithColumn(VerifiedToken).AsString(50).Nullable() // initially set then cleared on verification
+            .WithColumn(ForgotToken).AsString(50).Nullable()
+            .WithColumn(ForgotPasswordTokenExpiry).AsDateTimeOffset().Nullable();
 
         Create.Table(UserApiKeysTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()

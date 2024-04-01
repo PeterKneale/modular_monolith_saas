@@ -7,7 +7,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
     public async Task Verification_token_must_be_correct()
     {
         // arrange
-        var email = $"test{Guid.NewGuid().ToString()}@example.org";
+        var email = GetUniqueEmail();
         var password = "password";
         
         // act
@@ -19,5 +19,53 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
         await act.Should()
             .ThrowAsync<BusinessRuleBrokenException>()
             .WithMessage("*token*");
+    }
+    
+    [Fact]
+    public async Task Cant_verify_with_wrong_email()
+    {
+        // arrange
+        var email = GetUniqueEmail();
+        var password = "password";
+
+        // act
+        var userId = await RegisterUser(email, password);
+        var verification = await Service.Query(new GetUserVerificationToken.Query(userId));
+        var act = async () => await Service.Command(new VerifyUser.Command(Guid.NewGuid(), verification));
+
+        // assert
+        await act.Should().ThrowAsync<NotFoundException>();
+    }
+    
+    [Fact]
+    public async Task Cant_verify_with_wrong_verification()
+    {
+        // arrange
+        var email = GetUniqueEmail();
+        var password = "password";
+
+        // act
+        var userId = await RegisterUser(email, password);
+        var act = async () => await Service.Command(new VerifyUser.Command(userId, "wrong"));
+
+        // assert
+        await act.Should().ThrowAsync<BusinessRuleBrokenException>().WithMessage("The verification token does not match");
+    }
+
+    [Fact]
+    public async Task Can_not_verify_multiple_times()
+    {
+        // arrange
+        var email = GetUniqueEmail();
+        var password = "password";
+
+        // act
+        var userId = await RegisterUser(email, password);
+        var verification = await Service.Query(new GetUserVerificationToken.Query(userId));
+        await Service.Command(new VerifyUser.Command(userId, verification));
+        var act = async () => await Service.Command(new VerifyUser.Command(userId, verification));
+
+        // assert
+        await act.Should().ThrowAsync<BusinessRuleBrokenException>().WithMessage("This user has already been verified");
     }
 }

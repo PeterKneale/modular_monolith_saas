@@ -17,8 +17,7 @@ public static class ForgotPassword
             var user = await users.GetAsync(email, token);
             if (user == null) throw new NotFoundException(nameof(User), email);
 
-            // todo: generate reset token
-            // todo: send email with reset link
+            user.ForgotPassword();
 
             users.Update(user);
         }

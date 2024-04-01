@@ -34,6 +34,10 @@ public class User : BaseEntity
     public DateTimeOffset? VerifiedAt { get; private set; }
 
     public string? VerificationToken { get; private set; }
+    
+    public string? ForgotPasswordToken { get; set; }
+
+    public DateTimeOffset? ForgotPasswordTokenExpiry { get; set; }
 
     public virtual ICollection<UserApiKey> UserApiKeys { get; set; } = new List<UserApiKey>();
 
@@ -55,9 +59,9 @@ public class User : BaseEntity
 
     public void Login(EmailAddress emailAddress, Password password, ICheckPassword checker)
     {
-        CheckRule(new MustBeVerified(this));
-        CheckRule(new EmailMustMatch(this, emailAddress));
-        CheckRule(new PasswordMustMatch(this, password, checker));
+        CheckRule(new MustBeVerifiedRule(this));
+        CheckRule(new EmailMustMatchRule(this, emailAddress));
+        CheckRule(new PasswordMustMatchRule(this, password, checker));
     }
 
     public void ChangeName(UserName name)
@@ -68,9 +72,27 @@ public class User : BaseEntity
 
     public void ChangePassword(Password oldPassword, Password newPassword, ICheckPassword checker, IHashPassword hasher)
     {
-        CheckRule(new MustBeVerified(this));
-        CheckRule(new PasswordMustMatch(this, oldPassword, checker));
+        CheckRule(new MustBeVerifiedRule(this));
+        CheckRule(new PasswordMustMatchRule(this, oldPassword, checker));
         var newPasswordHashed = hasher.HashPassword(newPassword);
         HashedPassword = newPasswordHashed;
+    }
+    
+    public void ForgotPassword()
+    {
+        CheckRule(new MustBeVerifiedRule(this));
+        ForgotPasswordToken = Guid.NewGuid().ToString();
+        ForgotPasswordTokenExpiry = SystemClock.UtcNow + TimeSpan.FromHours(24);
+    }
+    
+    public void ResetPassword(string token, Password password, IHashPassword hasher)
+    {
+        CheckRule(new MustBeVerifiedRule(this));
+        CheckRule(new MustHaveForgotPasswordRule(this));
+        CheckRule(new ForgotTokenMustMatchRule(this, token));
+        CheckRule(new ForgotTokenMustNotBeExpiredRule(this));
+        ForgotPasswordToken = null;
+        ForgotPasswordTokenExpiry = null;
+        HashedPassword = hasher.HashPassword(password);
     }
 }

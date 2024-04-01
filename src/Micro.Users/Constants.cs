@@ -19,6 +19,8 @@ public static class Constants
     public const string UserIdColumn = "user_id";
     public const string VerifiedAt = "verified_at";
     public const string VerifiedToken = "verification_token";
+    public const string ForgotToken = "forgot_token";
+    public const string ForgotPasswordTokenExpiry = "forgot_token_expiry";
 
     // Other Constants
     public const int NameMaxLength = 100;

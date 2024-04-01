@@ -7,7 +7,7 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
     public async Task Registering_and_verification_allows_login()
     {
         // arrange
-        var email = $"test{Guid.NewGuid().ToString()}@example.org";
+        var email = GetUniqueEmail();
         var password = "password";
         
         // act
@@ -18,6 +18,7 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
         results.Success.Should().BeTrue();
         results.UserId.Should().Be(userId);
     }
+
 
     [Fact]
     public async Task Unverified_users_cannot_login()

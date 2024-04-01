@@ -51,6 +51,7 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
+            
             entity.OwnsOne(x => x.Name, x =>
             {
                 x.Property(e => e.First)
@@ -74,6 +75,12 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
             entity.Property(e => e.VerificationToken)
                 .HasMaxLength(50)
                 .HasColumnName(VerifiedToken);
+            
+            entity.Property(e => e.ForgotPasswordToken)
+                .HasMaxLength(50)
+                .HasColumnName(ForgotToken);
+            entity.Property(e => e.ForgotPasswordTokenExpiry)
+                .HasColumnName(ForgotPasswordTokenExpiry);
 
             entity.Ignore(x => x.DomainEvents);
         });

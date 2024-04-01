@@ -2,7 +2,7 @@
 
 namespace Micro.Users.Domain.Users.Rules;
 
-public class PasswordMustMatch(User user, Password password, ICheckPassword checker) : IBusinessRule
+public class PasswordMustMatchRule(User user, Password password, ICheckPassword checker) : IBusinessRule
 {
     public string Message => "The password is incorrect.";
 
