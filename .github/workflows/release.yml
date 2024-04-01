@@ -40,8 +40,8 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.version }}
           ORIGINAL: microsaas-web
-          IMAGE: ${GITHUB_REPOSITORY@L}
-          OWNER: ${GITHUB_REPOSITORY_OWNER@L}
+          IMAGE: microsaas
+          OWNER: peterkneale
         run: |
           docker tag $ORIGINAL ghcr.io/$OWNER/$IMAGE:$VERSION
           docker tag $ORIGINAL ghcr.io/$OWNER/$IMAGE:latest
