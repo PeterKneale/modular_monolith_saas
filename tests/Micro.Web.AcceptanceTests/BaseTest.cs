@@ -20,7 +20,7 @@ public abstract class BaseTest : IDisposable
         _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
             Headless = !debug,
-            SlowMo = debug ? 500 : 0
+            SlowMo = debug ? 0 : 0
         });
         Page = await _browser.NewPageAsync();
 

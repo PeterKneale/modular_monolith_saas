@@ -3,7 +3,7 @@
 public static class Constants
 {
     public const string SchemaName = "tenants";
-    
+
     // Table names
     public const string OrganisationsTable = "organisations";
     public const string MembershipsTable = "memberships";

@@ -1,4 +1,4 @@
-﻿using Micro.Tenants.Domain.Organisations;
+﻿using Micro.Tenants.Domain.OrganisationAggregate;
 
 namespace Micro.Tenants.Application.Organisations;
 
