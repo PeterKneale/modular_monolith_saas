@@ -1,5 +1,4 @@
-﻿using Micro.Tenants.Application.Memberships.Queries;
-using Micro.Tenants.Application.Organisations;
+﻿using Micro.Tenants.Application.Organisations;
 using Micro.Tenants.Application.Organisations.Queries;
 
 namespace Micro.Web.Pages.Shared.Components.OrganisationSelector;
@@ -19,7 +18,7 @@ public class OrganisationSelector(ITenantsModule module, IPageContextAccessor co
         }
         
         // Get the current organisation
-        model.Organisation = await module.SendQuery(new GetOrganisation.Query());
+        model.Organisation = await module.SendQuery(new GetOrganisationByContext.Query());
 
         // Remove the current organisation from the list of memberships
         model.Memberships = model.Memberships.Where(x => x.OrganisationId != model.Organisation.Id);

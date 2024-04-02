@@ -24,7 +24,7 @@ public class Migration1 : Migration
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(NameColumn).AsString(100);
-        
+
         Create.Table(ProjectsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(OrganisationIdColumn).AsGuid()

@@ -1,5 +1,5 @@
 using Micro.Tenants.Application.Organisations;
-using Micro.Tenants.Domain.Organisations;
+using Micro.Tenants.Domain.OrganisationAggregate;
 
 namespace Micro.Tenants.Infrastructure.Services;
 
@@ -15,7 +15,7 @@ public class OrganisationNameCheck(IOrganisationRepository repo) : IOrganisation
             return false;
 
         // an organisation uses this name, but is it the same organisation?
-        var same = organisation.Id.Value == id.Value;
+        var same = organisation.OrganisationId.Value == id.Value;
         return !same;
     }
 }

@@ -3,16 +3,14 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Common.Infrastructure.Integration.Queue;
-using Micro.Tenants.Domain.Memberships;
-using Micro.Tenants.Domain.Organisations;
-using Micro.Tenants.Domain.Projects;
-using Micro.Tenants.Domain.Users;
+using Micro.Tenants.Domain.OrganisationAggregate;
+using Micro.Tenants.Domain.UserAggregate;
 using Micro.Tenants.Infrastructure.Database.Converters;
 using static Micro.Tenants.Constants;
 
 namespace Micro.Tenants.Infrastructure.Database;
 
-public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
+public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 {
     public Db()
     {
@@ -39,7 +37,6 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
-        configurationBuilder.Properties<EmailAddress>().HaveConversion<EmailAddressConverter>();
         configurationBuilder.Properties<MembershipId>().HaveConversion<MembershipIdConverter>();
         configurationBuilder.Properties<MembershipRole>().HaveConversion<MembershipRoleConverter>();
         configurationBuilder.Properties<OrganisationId>().HaveConversion<OrganisationIdConverter>();
@@ -57,7 +54,7 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
             entity.HasIndex(e => e.Name, "IX_organisations_name").IsUnique();
 
-            entity.Property(e => e.Id)
+            entity.Property(e => e.OrganisationId)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
 
@@ -109,7 +106,7 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 .ToTable(ProjectsTable, SchemaName);
 
             entity
-                .Property(e => e.Id)
+                .Property(e => e.ProjectId)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
 
@@ -137,12 +134,12 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         {
             entity
                 .ToTable(UsersTable, SchemaName);
-            
+
             entity
                 .Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
-            
+
             entity
                 .Property(e => e.Name)
                 .HasMaxLength(100)

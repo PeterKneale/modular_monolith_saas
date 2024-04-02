@@ -1,5 +1,5 @@
 ﻿using Micro.Tenants.Application.Organisations;
-using Micro.Tenants.Domain.Organisations;
+using Micro.Tenants.Domain.OrganisationAggregate;
 
 namespace Micro.Tenants.Infrastructure.Database.Repositories;
 
@@ -25,7 +25,7 @@ internal class OrganisationRepository(Db db) : IOrganisationRepository
         return await db.Organisations
             .Include(x => x.Memberships)
             .Include(x => x.Projects)
-            .SingleOrDefaultAsync(x => x.Id == id, token);
+            .SingleOrDefaultAsync(x => x.OrganisationId == id, token);
     }
 
     public async Task<Organisation?> GetAsync(OrganisationName name, CancellationToken token)

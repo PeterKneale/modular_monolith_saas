@@ -8,7 +8,6 @@ using Micro.Common.Infrastructure.Jobs;
 using Micro.Tenants.Infrastructure;
 using Micro.Tenants.Infrastructure.Integration;
 using Micro.Tenants.Infrastructure.Integration.Handlers;
-using Micro.Tenants.IntegrationEvents;
 using Micro.Users.IntegrationEvents;
 using Microsoft.Extensions.Configuration;
 using Quartz;
@@ -31,7 +30,7 @@ public static class TenantsModuleStartup
             .AddSingleton(logs)
             .BuildServiceProvider()
             .ApplyDatabaseMigrations(resetDb);
-        
+
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
 

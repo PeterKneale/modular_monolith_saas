@@ -1,6 +1,4 @@
-﻿using Micro.Tenants.Application.Memberships.Commands;
-using Micro.Tenants.Application.Organisations.Commands;
-using Micro.Tenants.Domain.Memberships;
+﻿using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Users.IntegrationEvents;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
@@ -42,14 +40,13 @@ public class BaseTest
 
     protected async Task CreateMember(Guid userId, Guid ctxUserId, Guid ctxOrganisationId)
     {
-        var role = MembershipRole.Member.Name;
-        var createMember = new CreateMember.Command(userId, role);
+        var createMember = new CreateMember.Command(userId);
         await Service.Command(createMember, ctxUserId, ctxOrganisationId);
     }
 
     protected async Task DeleteMember(Guid userId, Guid ctxUserId, Guid ctxOrganisationId)
     {
-        var deleteMember = new DeleteMember.Command(userId);
+        var deleteMember = new RemoveMember.Command(userId);
         await Service.Command(deleteMember, ctxUserId, ctxOrganisationId);
     }
 }
