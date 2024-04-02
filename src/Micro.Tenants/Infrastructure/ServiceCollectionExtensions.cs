@@ -5,9 +5,7 @@ using FluentMigrator.Runner.Conventions;
 using Micro.Common;
 using Micro.Common.Infrastructure.Database;
 using Micro.Common.Infrastructure.Integration;
-using Micro.Tenants.Application.Memberships;
 using Micro.Tenants.Application.Organisations;
-using Micro.Tenants.Application.Projects;
 using Micro.Tenants.Infrastructure.Database.Repositories;
 using Micro.Tenants.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
@@ -23,10 +21,7 @@ internal static class ServiceCollectionExtensions
 
         // application
         var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
-        services.AddMediatR(c =>
-        {
-            c.RegisterServicesFromAssemblies(assemblies);
-        });
+        services.AddMediatR(c => { c.RegisterServicesFromAssemblies(assemblies); });
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         services.AddValidatorsFromAssemblies(assemblies);
@@ -36,13 +31,9 @@ internal static class ServiceCollectionExtensions
 
         // Services
         services.AddSingleton<IOrganisationNameCheck, OrganisationNameCheck>();
-        services.AddSingleton<IProjectNameCheck, ProjectNameCheck>();
 
         // Repositories
         services.AddScoped<IOrganisationRepository, OrganisationRepository>();
-        services.AddScoped<IMembershipRepository, MembershipRepository>();
-        services.AddScoped<IProjectRepository, ProjectRepository>();
-        services.AddScoped<IUsersRepository, UserRepository>();
 
         // Database Migrations
         services
@@ -61,7 +52,7 @@ internal static class ServiceCollectionExtensions
             // options.EnableSensitiveDataLogging();
             // options.EnableDetailedErrors();
         });
-        
+
         // Inbox/Outbox
         services.AddScoped<IDbSetInbox>(c => c.GetRequiredService<Db>());
         services.AddScoped<IDbSetOutbox>(c => c.GetRequiredService<Db>());

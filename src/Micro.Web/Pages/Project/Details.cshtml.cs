@@ -1,5 +1,4 @@
-﻿using Micro.Tenants.Application.Projects;
-using Micro.Tenants.Application.Projects.Queries;
+﻿using Micro.Tenants.Application.Organisations.Queries;
 using static Micro.Web.Code.Contexts.Page.Constants;
 
 namespace Micro.Web.Pages.Project;

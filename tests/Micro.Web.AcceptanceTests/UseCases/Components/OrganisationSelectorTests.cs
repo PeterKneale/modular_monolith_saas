@@ -8,7 +8,7 @@ namespace Micro.Web.AcceptanceTests.UseCases.Components;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class OrganisationSelectorTests: BaseTest
+public class OrganisationSelectorTests : BaseTest
 {
     [Test]
     public async Task A_user_with_no_organisations_on_home_page()

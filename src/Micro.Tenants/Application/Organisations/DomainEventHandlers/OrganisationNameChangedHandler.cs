@@ -1,5 +1,5 @@
 ﻿using Micro.Common.Infrastructure.Integration.Outbox;
-using Micro.Tenants.Domain.Organisations.DomainEvents;
+using Micro.Tenants.Domain.OrganisationAggregate.DomainEvents;
 using Micro.Tenants.IntegrationEvents;
 
 namespace Micro.Tenants.Application.Organisations.DomainEventHandlers;
