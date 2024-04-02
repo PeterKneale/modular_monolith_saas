@@ -1,27 +1,9 @@
-﻿using Micro.Translations.Infrastructure;
+﻿using Micro.Common;
+using Micro.Translations.Infrastructure;
+using Micro.Users;
 
 namespace Micro.Translations;
 
-public class TranslationModule : ITranslationModule
-{
-    public async Task SendCommand(IRequest command)
-    {
-        using var scope = CompositionRoot.BeginLifetimeScope();
-        var dispatcher = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await dispatcher.Send(command);
-    }
+public interface ITranslationModule : IModule;
 
-    public async Task<TResult> SendQuery<TResult>(IRequest<TResult> query)
-    {
-        using var scope = CompositionRoot.BeginLifetimeScope();
-        var dispatcher = scope.ServiceProvider.GetRequiredService<IMediator>();
-        return await dispatcher.Send(query);
-    }
-
-    public async Task PublishNotification(INotification notification)
-    {
-        using var scope = CompositionRoot.BeginLifetimeScope();
-        var dispatcher = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await dispatcher.Publish(notification);
-    }
-}
+public class TranslationModule() : BaseModule(CompositionRoot.BeginLifetimeScope), ITranslationModule;
