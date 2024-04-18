@@ -67,7 +67,7 @@ builder.Services.AddScoped<IPageContextOrganisation>(c => c.GetRequiredService<I
 builder.Services.AddScoped<IPageContextProject>(c => c.GetRequiredService<IPageContextAccessor>().Project);
 
 // Execution context
-builder.Services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
+builder.Services.AddSingleton<IExecutionContextAccessor, HttpExecutionContextAccessor>();
 
 // modules
 builder.Services.AddSingleton<IUsersModule, UsersModule>();

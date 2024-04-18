@@ -4,7 +4,7 @@ using Micro.Web.Code.Contexts.Authentication;
 
 namespace Micro.Web.Code.Contexts.Execution;
 
-public class ExecutionContextAccessor(IHttpContextAccessor httpContextAccessor) : IExecutionContextAccessor
+public class HttpExecutionContextAccessor(IHttpContextAccessor httpContextAccessor) : IExecutionContextAccessor
 {
     public IExecutionContext ExecutionContext
     {
@@ -25,7 +25,7 @@ public class ExecutionContextAccessor(IHttpContextAccessor httpContextAccessor) 
                 ? new ProjectId(pageContext.Project.Id) 
                 : null;
 
-            return Common.Infrastructure.Context.ExecutionContext.Create(userId, organisationId, projectId);
+            return new Micro.Common.Infrastructure.Context.ExecutionContext(userId, organisationId, projectId);
         }
     }
 }

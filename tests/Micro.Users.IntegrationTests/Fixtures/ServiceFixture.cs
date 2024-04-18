@@ -30,10 +30,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         var bus = services.GetRequiredService<IEventsBus>();
         var logs = services.GetRequiredService<ILoggerFactory>();
 
-        _accessor = new SettableExecutionContextAccessor
-        {
-            ExecutionContext = ExecutionContext.Empty()
-        };
+        _accessor = new SettableExecutionContextAccessor();
         _module = new UsersModule();
 
         await UsersModuleStartup.Start(_accessor, configuration, bus, logs, true);
@@ -43,27 +40,27 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
     {
         await UsersModuleStartup.Stop();
     }
-    
+
     public ITestOutputHelper? OutputHelper { get; set; }
 
     public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        _accessor.ExecutionContext = new ExecutionContext(userId, organisationId, projectId);
         await action(_module);
     }
-    
+
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        _accessor.ExecutionContext = new ExecutionContext(userId, organisationId, projectId);
         await _module.SendCommand(command);
     }
 
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        _accessor.ExecutionContext = new ExecutionContext(userId, organisationId, projectId);
         return await _module.SendQuery(query);
     }
-    
+
     public async Task Publish(IIntegrationEvent integrationEvent)
     {
         await _module.PublishNotification(integrationEvent);

@@ -5,28 +5,38 @@ namespace Micro.Common.Infrastructure.Context;
 
 public class ExecutionContext : IExecutionContext
 {
-    private ExecutionContext(UserId? userId, OrganisationId? organisationId, ProjectId? projectId)
+    private readonly UserId? _userId;
+    private readonly OrganisationId? _organisationId;
+    private readonly ProjectId? _projectId;
+
+    public ExecutionContext(UserId? userId = null, OrganisationId? organisationId = null, ProjectId? projectId = null)
     {
-        UserId = userId!;
-        OrganisationId = organisationId!;
-        ProjectId = projectId != null ? new ProjectId(projectId.Value) : null!;
+        _userId = userId;
+        _organisationId = organisationId;
+        _projectId = projectId;
     }
 
-    public UserId UserId { get; }
-    public OrganisationId OrganisationId { get; }
-    public ProjectId ProjectId { get; }
-
-    public static ExecutionContext Create(UserId userId, OrganisationId organisationId, ProjectId projectId) =>
-        new(userId, organisationId, projectId);
-
-    public static ExecutionContext Create(Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    public ExecutionContext(Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        var x = userId != null ? new UserId(userId.Value) : null;
-        var y = organisationId != null ? new OrganisationId(organisationId.Value) : null;
-        var z = projectId != null ? new ProjectId(projectId.Value) : null;
-        return new ExecutionContext(x, y, z);
+        if (userId != null)
+        {
+            _userId = new UserId(userId.Value);
+        }
+
+        if (organisationId != null)
+        {
+            _organisationId = new OrganisationId(organisationId.Value);
+        }
+
+        if (projectId != null)
+        {
+            _projectId = new ProjectId(projectId.Value);
+        }
     }
 
-    public static ExecutionContext Empty() =>
-        new(null, null, null);
+    public UserId UserId => _userId ?? throw new ExecutionContextException("User ID is not set in the execution context");
+
+    public OrganisationId OrganisationId => _organisationId ?? throw new ExecutionContextException("Organisation ID is not set in the execution context");
+
+    public ProjectId ProjectId => _projectId ?? throw new ExecutionContextException("Project ID is not set in the execution context");
 }

@@ -44,19 +44,19 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 
     public async Task Execute(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        _accessor.ExecutionContext = new ExecutionContext(userId, organisationId, projectId);
         await action(_module);
     }
 
     public async Task Command(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        _accessor.ExecutionContext = new ExecutionContext(userId, organisationId, projectId);
         await _module.SendCommand(command);
     }
 
     public async Task<T> Query<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId);
+        _accessor.ExecutionContext = new ExecutionContext(userId, organisationId, projectId);
         return await _module.SendQuery(query);
     }
 
