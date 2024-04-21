@@ -9,6 +9,7 @@ public class ListPage(IPage page) : PageLayout(page)
     private static string AddButton => "AddButton";
     private static string DeleteButton => "DeleteButton";
     private static string Row => "Row";
+    private static string Name = "Name";
 
     public async Task<int> GetRowCount() =>
         await Page.GetByTestId(Row).CountAsync();
@@ -32,5 +33,17 @@ public class ListPage(IPage page) : PageLayout(page)
     public async Task ClickDelete(int rowNumber)
     {
         await Page.GetByTestId(Row).Nth(rowNumber).GetByTestId(DeleteButton).ClickAsync();
+    }
+
+    public async Task<IEnumerable<string>> GetNames()
+    {
+        var rows = await Page.GetByTestId(Row).AllAsync();
+        var list = new List<string>();
+        foreach (var row in rows)
+        {
+            var text = await row.GetByTestId(Name).InnerTextAsync();
+            list.Add(text);
+        }
+        return list;
     }
 }

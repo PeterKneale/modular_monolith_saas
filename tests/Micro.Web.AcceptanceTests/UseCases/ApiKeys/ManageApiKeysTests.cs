@@ -16,7 +16,24 @@ public class ManageApiKeysTests : BaseTest
         var list = await ListPage.Goto(Page);
         await ListShouldBeEmpty(list);
     }
-    
+
+    [Test]
+    public async Task Shown_in_creation_order()
+    {
+        await Page.GivenLoggedIn();
+        var list = await ListPage.Goto(Page);
+        var names = new List<string> { "b", "a", "c" };
+
+        // add records
+        list = await AddOne(list,names[0]);
+        list = await AddOne(list,names[1]);
+        list = await AddOne(list,names[2]);
+
+        // assert order
+        var actual = await list.GetNames();
+        actual.Should().BeEquivalentTo(names.OrderBy(x => x));
+    }
+
     [Test]
     public async Task Can_add_and_remove()
     {

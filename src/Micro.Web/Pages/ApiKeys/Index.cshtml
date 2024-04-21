@@ -23,7 +23,7 @@
                         @Html.Hidden("id", item.Id)
                         <button class="btn btn-danger" data-testid="DeleteButton">Delete</button>
                     </form>
-                    <h5 class="card-title">@item.Name</h5>
+                    <h5 class="card-title" data-testid="Name">@item.Name</h5>
                 </div>
             </div>
         }
