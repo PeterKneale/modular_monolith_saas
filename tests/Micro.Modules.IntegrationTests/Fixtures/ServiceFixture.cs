@@ -55,43 +55,43 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 
     public async Task ExecuteTenants(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         await action(_tenants);
     }
     
     public async Task ExecuteTranslations(Func<IModule, Task> action, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         await action(_tenants);
     }
 
     public async Task CommandTenants(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         await _tenants.SendCommand(command);
     }
     
     public async Task CommandUsers(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         await _users.SendCommand(command);
     }
     
     public async Task CommandTranslations(IRequest command, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         await _translations.SendCommand(command);
     }
     
     public async Task<T> QueryTenants<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         return await _tenants.SendQuery(query);
     }
     
     public async Task<T> QueryTranslations<T>(IRequest<T> query, Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
-        _accessor.ExecutionContext =  new ExecutionContext(userId, organisationId, projectId);
+        _accessor.ExecutionContext =  ExecutionContext.Create(userId, organisationId, projectId);
         return await _translations.SendQuery(query);
     }
     

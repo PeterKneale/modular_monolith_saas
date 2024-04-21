@@ -29,7 +29,8 @@ builder.Services.AddLogging(c => { c.AddSimpleConsole(x =>
 builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AllowAnonymousToPage("/Auth/Forbidden");
-        options.Conventions.AllowAnonymousToPage("/Auth/Forgot");
+        options.Conventions.AllowAnonymousToPage("/Auth/ForgotPassword");
+        options.Conventions.AllowAnonymousToPage("/Auth/ResetPassword");
         options.Conventions.AllowAnonymousToPage("/Auth/Login");
         options.Conventions.AllowAnonymousToPage("/Auth/Logout");
         options.Conventions.AllowAnonymousToPage("/Auth/Register");
@@ -121,11 +122,18 @@ app.MapGet("/Test/GetUserId", async ctx =>
     var userId = await module.SendQuery(new GetUserId.Query(email!));
     await ctx.Response.WriteAsync(userId.ToString());
 });
-app.MapGet("/Test/GetUserVerification", async ctx =>
+app.MapGet("/Test/GetUserVerificationToken", async ctx =>
 {
     var module = ctx.RequestServices.GetRequiredService<IUsersModule>();
     var userId = Guid.Parse(ctx.Request.Query["userId"]!);
     var token = await module.SendQuery(new GetUserVerificationToken.Query(userId));
+    await ctx.Response.WriteAsync(token);
+});
+app.MapGet("/Test/GetPasswordResetToken", async ctx =>
+{
+    var module = ctx.RequestServices.GetRequiredService<IUsersModule>();
+    var userId = Guid.Parse(ctx.Request.Query["userId"]!);
+    var token = await module.SendQuery(new GetResetPasswordToken.Query(userId));
     await ctx.Response.WriteAsync(token);
 });
 

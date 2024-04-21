@@ -4,7 +4,7 @@ using Constants = Micro.Users.Constants;
 
 namespace Micro.Web.Pages.Auth;
 
-public class Forgot(IUsersModule mediator) : PageModel
+public class ForgotPasswordPage(IUsersModule mediator) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -17,7 +17,7 @@ public class Forgot(IUsersModule mediator) : PageModel
         {
             await mediator.SendCommand(new ForgotPassword.Command(Email));
             TempData.SetAlert(Alert.Success("Your password reset has been requested, please check your email"));
-            return Redirect(nameof(Login));
+            return Redirect(nameof(LoginPage));
         }
         catch (BusinessRuleBrokenException e)
         {

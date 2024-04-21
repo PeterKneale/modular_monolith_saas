@@ -1,5 +1,4 @@
-﻿using MartinCostello.Logging.XUnit;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Micro.IntegrationTests.Common;

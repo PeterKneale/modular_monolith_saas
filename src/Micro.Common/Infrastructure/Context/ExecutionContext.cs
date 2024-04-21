@@ -9,14 +9,14 @@ public class ExecutionContext : IExecutionContext
     private readonly OrganisationId? _organisationId;
     private readonly ProjectId? _projectId;
 
-    public ExecutionContext(UserId? userId = null, OrganisationId? organisationId = null, ProjectId? projectId = null)
+    private ExecutionContext(UserId? userId = null, OrganisationId? organisationId = null, ProjectId? projectId = null)
     {
         _userId = userId;
         _organisationId = organisationId;
         _projectId = projectId;
     }
 
-    public ExecutionContext(Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
+    private ExecutionContext(Guid? userId = null, Guid? organisationId = null, Guid? projectId = null)
     {
         if (userId != null)
         {
@@ -33,6 +33,12 @@ public class ExecutionContext : IExecutionContext
             _projectId = new ProjectId(projectId.Value);
         }
     }
+
+    public static ExecutionContext Create(UserId? userId = null, OrganisationId? organisationId = null, ProjectId? projectId = null) =>
+        new(userId, organisationId, projectId);
+
+    public static ExecutionContext Create(Guid? userId = null, Guid? organisationId = null, Guid? projectId = null) =>
+        new(userId, organisationId, projectId);
 
     public UserId UserId => _userId ?? throw new ExecutionContextException("User ID is not set in the execution context");
 

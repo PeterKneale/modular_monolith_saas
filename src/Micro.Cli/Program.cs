@@ -12,7 +12,7 @@ var userId = Guid.NewGuid();
 var projectId = Guid.NewGuid();
 var accessor = new Accessor
 {
-    ExecutionContext = new ExecutionContext(userId, organisationId, projectId)
+    ExecutionContext = ExecutionContext.Create(userId, organisationId, projectId)
 };
 
 var configuration = new ConfigurationBuilder()

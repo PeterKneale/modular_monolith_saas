@@ -1,6 +1,7 @@
 ﻿using Micro.Common.Application;
 using Micro.Common.Infrastructure.Context;
 using Micro.Web.Code.Contexts.Authentication;
+using static Micro.Common.Infrastructure.Context.ExecutionContext;
 
 namespace Micro.Web.Code.Contexts.Execution;
 
@@ -25,7 +26,7 @@ public class HttpExecutionContextAccessor(IHttpContextAccessor httpContextAccess
                 ? new ProjectId(pageContext.Project.Id) 
                 : null;
 
-            return new Micro.Common.Infrastructure.Context.ExecutionContext(userId, organisationId, projectId);
+            return Create(userId, organisationId, projectId);
         }
     }
 }

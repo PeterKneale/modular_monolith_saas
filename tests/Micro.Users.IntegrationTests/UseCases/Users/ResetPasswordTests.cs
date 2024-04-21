@@ -13,7 +13,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         // act
         var userId = await RegisterAndVerifyUser(email, password);
         await Service.Command(new ForgotPassword.Command(email));
-        var token = await Service.Query(new GetForgotPasswordToken.Query(userId));
+        var token = await Service.Query(new GetResetPasswordToken.Query(userId));
         await Service.Command(new ResetPassword.Command(userId, token, password));
 
         // assert
@@ -80,7 +80,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         await Service.Command(new ForgotPassword.Command(email));
         await Service.Command(new ForgotPassword.Command(email));
         await Service.Command(new ForgotPassword.Command(email));
-        var token = await Service.Query(new GetForgotPasswordToken.Query(userId));
+        var token = await Service.Query(new GetResetPasswordToken.Query(userId));
         await Service.Command(new ResetPassword.Command(userId, token, password));
 
         // assert

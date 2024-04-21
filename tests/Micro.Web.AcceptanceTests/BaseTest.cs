@@ -7,20 +7,20 @@ public abstract class BaseTest : IDisposable
     private IPlaywright _playwright = null!;
     private IBrowser _browser = null!;
 
-    protected BaseTest(bool debug = false)
+    protected BaseTest()
     {
-        Setup(debug).GetAwaiter().GetResult();
+        Setup().GetAwaiter().GetResult();
     }
 
     protected IPage Page { get; private set; } = null!;
 
-    private async Task Setup(bool debug)
+    private async Task Setup()
     {
         _playwright = await Playwright.CreateAsync();
         _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = !debug,
-            SlowMo = debug ? 0 : 0
+            Headless = false,
+            SlowMo = 200
         });
         Page = await _browser.NewPageAsync();
 

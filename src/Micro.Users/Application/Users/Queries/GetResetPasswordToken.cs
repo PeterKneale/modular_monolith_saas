@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Application.Users.Queries;
 
-public static class GetForgotPasswordToken
+public static class GetResetPasswordToken
 {
     public record Query(Guid UserId) : IRequest<string>;
 

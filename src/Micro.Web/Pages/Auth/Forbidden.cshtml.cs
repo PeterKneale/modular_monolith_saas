@@ -1,5 +1,5 @@
 namespace Micro.Web.Pages.Auth;
 
-public class Forbidden : PageModel
+public class ForbiddenPage : PageModel
 {
 }

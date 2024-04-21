@@ -3,7 +3,7 @@ using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Web.Pages.Auth;
 
-public class Register(IUsersModule module, ILogger<Login> logs) : PageModel
+public class RegisterPage(IUsersModule module, ILogger<LoginPage> logs) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
