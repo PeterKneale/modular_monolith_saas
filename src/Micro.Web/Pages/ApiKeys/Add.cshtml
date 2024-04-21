@@ -1,5 +1,9 @@
 ﻿@page "/user/apikeys/add"
 @model Micro.Web.Pages.ApiKeys.AddPage
+@{
+    ViewBag.Title = "Add API Key";
+    ViewBag.PageId = "AddApiKey";
+}
 
 
 <div class="card mb-2">
@@ -13,7 +17,7 @@
                 @Html.EditorFor(x => x.Name, null, new { autofocus = "autofocus" })
             </div>
             <div class="card-footer">
-                <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>
+                <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="SubmitButton"/>
             </div>
         </form>
     </div>

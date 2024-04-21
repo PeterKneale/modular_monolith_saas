@@ -26,7 +26,7 @@ public static class PageExtensions
         var userId = await page.GetUserId(data.Email);
         var token = await page.GetUserVerificationToken(userId);
 
-        var verify = await VerifyPage.Goto(page, userId, token);
+        var verify = await VerifyEmailPage.Goto(page, userId, token);
         await verify.Alert.AssertSuccess();
 
         var login = await LoginPage.Goto(page);

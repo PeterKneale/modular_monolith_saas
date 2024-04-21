@@ -1,9 +1,10 @@
-﻿using Micro.Users.Application.ApiKeys.Commands;
+﻿using Micro.Users;
+using Micro.Users.Application.ApiKeys.Commands;
 using Micro.Users.Application.ApiKeys.Queries;
 
 namespace Micro.Web.Pages.ApiKeys;
 
-public class Index(ITenantsModule module) : PageModel
+public class Index(IUsersModule module) : PageModel
 {
     public async Task OnGet()
     {

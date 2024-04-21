@@ -1,9 +1,8 @@
 ﻿using Micro.Users;
-using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Web.Pages.Auth;
 
-public class ResetPasswordPage(IUsersModule mediator, ILogger<ResetPasswordPage> logs) : PageModel
+public class ResetPassword(IUsersModule mediator, ILogger<ResetPassword> logs) : PageModel
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -14,9 +13,9 @@ public class ResetPasswordPage(IUsersModule mediator, ILogger<ResetPasswordPage>
 
         try
         {
-            await mediator.SendCommand(new ResetPassword.Command(UserId, Token, Password));
+            await mediator.SendCommand(new Users.Application.Users.Commands.ResetPassword.Command(UserId, Token, Password));
             TempData.SetAlert(Alert.Success("Your password has been reset, please login to continue"));
-            return Redirect(nameof(LoginPage));
+            return Redirect(nameof(Login));
         }
         catch (BusinessRuleBrokenException e)
         {

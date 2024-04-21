@@ -26,7 +26,7 @@ public static class SendWelcomeEmail
             var user = await users.GetAsync(userId, cancellationToken);
             if (user == null) throw new NotFoundException(nameof(User), userId.ToString());
 
-            var actionUrl = $"http://localhost:8080/Auth/Verify?userId={user.Id}&token={user.VerificationToken}";
+            var actionUrl = $"http://localhost:8080/Auth/VerifyEmail?userId={user.Id}&token={user.VerificationToken}";
             
             logs.LogInformation($"Sending welcome email to {user.EmailAddress} with action url {actionUrl}");
         }

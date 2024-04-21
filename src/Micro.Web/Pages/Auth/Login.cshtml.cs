@@ -1,6 +1,6 @@
 ﻿namespace Micro.Web.Pages.Auth;
 
-public class LoginPage(LoginService login) : PageModel
+public class Login(LoginService login) : PageModel
 {
     public async Task<IActionResult> OnPostAsync(string? returnUrl)
     {

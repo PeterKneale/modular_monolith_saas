@@ -1,9 +1,10 @@
-﻿using Micro.Users.Application.ApiKeys.Commands;
+﻿using Micro.Users;
+using Micro.Users.Application.ApiKeys.Commands;
 using Micro.Users.Application.ApiKeys.Queries;
 
 namespace Micro.Web.Pages.ApiKeys;
 
-public class AddPage(ITenantsModule module, IPageContextAccessor context) : ContextualPageModel(context)
+public class AddPage(IUsersModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     public async Task<IActionResult> OnPostAsync()
     {

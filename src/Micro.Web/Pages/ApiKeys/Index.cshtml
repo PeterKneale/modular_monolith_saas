@@ -1,10 +1,14 @@
 ﻿@page "/user/apikeys"
 @model Index
+@{
+    ViewBag.Title = "API Keys";
+    ViewBag.PageId = "ListApiKeys";
+}
 
 <div class="card mb-2">
     <div class="card-header">
         <span class="float-end">
-            <a asp-page="Add" class="btn btn-primary btn-sm">
+            <a asp-page="Add" class="btn btn-primary btn-sm" data-testid="AddButton">
                 Add
             </a>
         </span>
@@ -13,11 +17,11 @@
     <div class="card-body">
         @foreach (var item in Model.Results)
         {
-            <div class="card mb-2">
+            <div class="card mb-2" data-testid="Row">
                 <div class="card-body">
                     <form method="post" asp-page-handler="Delete" class="float-end">
                         @Html.Hidden("id", item.Id)
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-danger" data-testid="DeleteButton">Delete</button>
                     </form>
                     <h5 class="card-title">@item.Name</h5>
                 </div>

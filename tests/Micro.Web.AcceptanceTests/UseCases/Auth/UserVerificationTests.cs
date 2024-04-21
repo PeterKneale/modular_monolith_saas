@@ -18,8 +18,22 @@ public class UserVerificationTests : BaseTest
         var userId = await Page.GetUserId(data.Email);
         var token = await Page.GetUserVerificationToken(userId);
 
-        var verify = await VerifyPage.Goto(Page, userId, token);
+        var verify = await VerifyEmailPage.Goto(Page, userId, token);
         await verify.Alert.AssertSuccess("verified");
+    }
+
+    [Test]
+    public async Task UserIdMustBeSupplied()
+    {
+        var verify = await VerifyEmailPage.Goto(Page, null, Guid.NewGuid());
+        await verify.Alert.AssertError();
+    }
+    
+    [Test]
+    public async Task TokenMustBeSupplied()
+    {
+        var verify = await VerifyEmailPage.Goto(Page, Guid.NewGuid(), null);
+        await verify.Alert.AssertError();
     }
     
     [Test]
@@ -33,9 +47,9 @@ public class UserVerificationTests : BaseTest
         var userId = await Page.GetUserId(data.Email);
         var token = await Page.GetUserVerificationToken(userId);
 
-        var verify = await VerifyPage.Goto(Page, userId, token);
+        var verify = await VerifyEmailPage.Goto(Page, userId, token);
         await verify.Alert.AssertSuccess("verified");
-        var verify2 = await VerifyPage.Goto(Page, userId, token);
+        var verify2 = await VerifyEmailPage.Goto(Page, userId, token);
         await verify2.Alert.AssertError("This user has already been verified");
     }
     
@@ -50,7 +64,7 @@ public class UserVerificationTests : BaseTest
         var userId = await Page.GetUserId(data.Email);
         var token = Guid.NewGuid();
 
-        var verify = await VerifyPage.Goto(Page, userId, token);
+        var verify = await VerifyEmailPage.Goto(Page, userId, token);
         await verify.Alert.AssertError("verification token");
     }
 

@@ -6,20 +6,25 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=78DC164C_002D08C1_002D4797_002D8229_002D502F45FF4C96/@EntryIndexedValue">2137843E-DE15-468B-8126-01C8DA8651C1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3b0dd146_002Df429_002D4d8c_002D9c3e_002D1011ce9f2b68/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;modules&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=09e8bc80_002Df3d5_002D4004_002D9d43_002D17a4c1559419/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;ProjectFolder&gt;303110BA-112C-4CF4-AE69-7376AA933F87/d:UseCases/d:Auth&lt;/ProjectFolder&gt;&#xD;
+      &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
+    &lt;/And&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.SmokeTests.Can_register_and_login_create_an_organisation_and_project&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.ApiKeys.ManageApiKeysTests.Can_reset_password&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.ApiKeys.ManageApiKeysTests&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=86ab2219_002Dd6f0_002D4055_002Db41c_002D6497f226cac6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Cant_verify_with_incorrect_token" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=df1f8ab2_002Dfacb_002D4cb8_002Da89e_002D0f3ae5ffb033/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Can_reset_password" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.SmokeTests.Can_register&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.Auth.PasswordResetTests.Can_reset_password&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
+	
 	
 	
 	

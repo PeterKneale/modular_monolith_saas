@@ -1,9 +1,10 @@
-﻿using Micro.Users;
+﻿using System.ComponentModel;
+using Micro.Users;
 using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Web.Pages.Auth;
 
-public class VerifyPage(IUsersModule module, ILogger<LoginPage> logs) : PageModel
+public class VerifyEmail(IUsersModule module, ILogger<Login> logs) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
@@ -27,12 +28,14 @@ public class VerifyPage(IUsersModule module, ILogger<LoginPage> logs) : PageMode
     }
 
     [Required]
+    [DisplayName("UserId")]
     [BindProperty(SupportsGet = true)]
     public Guid UserId { get; set; }
     
     [Required]
     [BindProperty(SupportsGet = true)]
     [StringLength(50)]
+    [DisplayName("Token")]
     public string Token { get; set; }
 
 }

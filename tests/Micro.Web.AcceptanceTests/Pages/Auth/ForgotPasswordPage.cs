@@ -6,7 +6,7 @@ namespace Micro.Web.AcceptanceTests.Pages.Auth;
 public class ForgotPasswordPage(IPage page) : PageLayout(page)
 {
     private static string EmailField => "Email";
-    private static string Button => "ForgotButton";
+    private static string Button => "ForgotPasswordButton";
 
     public static async Task<ForgotPasswordPage> Goto(IPage page)
     {

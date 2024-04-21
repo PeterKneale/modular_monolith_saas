@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Micro.Web.Pages.Auth;
 
-public class LogoutPage : PageModel
+public class Logout : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
