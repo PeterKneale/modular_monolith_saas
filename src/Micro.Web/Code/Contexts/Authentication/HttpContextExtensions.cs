@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace Micro.Web.Code.Contexts.Authentication;
+﻿namespace Micro.Web.Code.Contexts.Authentication;
 
 public static class HttpContextExtensions
 {
@@ -9,25 +7,49 @@ public static class HttpContextExtensions
         var identity = context.User.Identity;
         return identity is not null && identity.IsAuthenticated;
     }
-    
-    public static Guid GetUserId(this HttpContext context)
+
+    public static bool HasUserId(this HttpContext context)
     {
-        var claim = GetClaim(context, Constants.UserClaimUserId);
-        return claim != null 
-            ? Guid.Parse(claim.Value) 
-            : throw new InvalidOperationException("User Id claim not found");
+        return context.Items.ContainsKey(Constants.UserIdKey);
     }
-    
-    public static string GetUserEmail(this HttpContext context)
+    public static void SetUserId(this HttpContext context, Guid userId)
     {
-        var claim = GetClaim(context, Constants.UserClaimEmail);
-        return claim != null 
-            ? claim.Value
-            : throw new InvalidOperationException("User Email claim not found");
+        context.Items.Add(Constants.UserIdKey, userId.ToString());
     }
 
-    private static Claim? GetClaim(HttpContext context, string key)
+    public static void SetUserEmail(this HttpContext context, string email)
     {
-        return context.User.FindFirst(key);
+        context.Items.Add(Constants.UserEmailKey, email);
+    }
+
+    public static Guid GetUserId(this HttpContext context)
+    {
+        var claim = context.User.FindFirst(Constants.UserIdKey);
+        if (claim != null)
+        {
+            return Guid.Parse(claim.Value);
+        }
+
+        if (context.Items.TryGetValue(Constants.UserIdKey, out var value))
+        {
+            return Guid.Parse(value!.ToString()!);
+        }
+
+        throw new InvalidOperationException("User Id not found");
+    }
+
+    public static string GetUserEmail(this HttpContext context)
+    {
+        var claim = context.User.FindFirst(Constants.UserEmailKey);
+        if (claim != null)
+        {
+            return claim.Value;
+        }
+        if (context.Items.TryGetValue(Constants.UserEmailKey, out var value))
+        {
+            return value!.ToString()!;
+        }
+        
+        throw new InvalidOperationException("User Email not found");
     }
 }

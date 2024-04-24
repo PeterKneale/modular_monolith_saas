@@ -1,8 +1,13 @@
+using FluentAssertions.Equivalency.Tracing;
+
 namespace Micro.Web.AcceptanceTests.Pages.Components.AlertComponent;
 
 public class Component(IPage page)
 {
     private readonly ILocator _alert = page.GetByTestId("alert");
+
+    public async Task<string> GetMessage() => 
+        await _alert.InnerTextAsync();
 
     public async Task AssertVisible() =>
         await Assertions
@@ -14,7 +19,7 @@ public class Component(IPage page)
             .Expect(_alert)
             .Not
             .ToBeVisibleAsync();
-    
+
     public async Task AssertSuccess(string? message = null)
     {
         await AssertVisible();

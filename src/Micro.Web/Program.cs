@@ -5,6 +5,7 @@ using Micro.Users.Application.Users.Commands;
 using Micro.Users.Application.Users.Queries;
 using Micro.Translations;
 using Micro.Users;
+using Micro.Web.Api;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -58,6 +59,9 @@ builder.Services
 
 builder.Services.AddSingleton<LoginService>();
 
+// Authentication
+builder.Services.AddScoped<ApiKeyAuthenticationMiddleware>();
+
 // Authentication context
 builder.Services.AddScoped<IAuthContext, AuthContext>();
 
@@ -98,6 +102,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<ApiKeyAuthenticationMiddleware>();
 app.MapRazorPages();
 app.UseMiddleware<PageContextMiddleware>();
 app.MapHealthChecks("/health/alive", new HealthCheckOptions
@@ -108,6 +113,10 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 {
     Predicate = checks => checks.Tags.Contains("db"),
 });
+
+var usersApi = app.MapGroup("/api/users");
+usersApi.MapGet("/current", User.GetCurrentUser);
+
 app.MapGet("/Test/Auth/Impersonate/", async ctx =>
 {
     var login = ctx.RequestServices.GetRequiredService<LoginService>();

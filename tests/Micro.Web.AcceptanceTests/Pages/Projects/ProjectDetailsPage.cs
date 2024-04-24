@@ -1,4 +1,3 @@
-using Micro.Web.AcceptanceTests.Extensions;
 using Micro.Web.AcceptanceTests.Pages.Layouts;
 
 namespace Micro.Web.AcceptanceTests.Pages.Projects;

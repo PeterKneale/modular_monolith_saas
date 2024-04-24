@@ -23,7 +23,10 @@
                         @Html.Hidden("id", item.Id)
                         <button class="btn btn-danger" data-testid="DeleteButton">Delete</button>
                     </form>
-                    <h5 class="card-title" data-testid="Name">@item.Name</h5>
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold" data-testid="Name">@item.Name</div>
+                        <span class="text-muted">Created: @DateTime.Now.ToShortDateString()</span>
+                    </div>
                 </div>
             </div>
         }

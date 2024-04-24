@@ -1,6 +1,4 @@
-﻿using Micro.Web.AcceptanceTests.Extensions;
-
-namespace Micro.Web.AcceptanceTests;
+﻿namespace Micro.Web.AcceptanceTests;
 
 public abstract class BaseTest : IDisposable
 {
@@ -19,8 +17,8 @@ public abstract class BaseTest : IDisposable
         _playwright = await Playwright.CreateAsync();
         _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = false,
-            SlowMo = 100
+            Headless = true,
+            //SlowMo = 100
         });
         Page = await _browser.NewPageAsync();
 

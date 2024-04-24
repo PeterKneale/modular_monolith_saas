@@ -1,13 +1,11 @@
 ﻿using FluentAssertions;
-using Micro.Web.AcceptanceTests.Extensions;
 using Micro.Web.AcceptanceTests.Pages.ApiKeys;
-using Micro.Web.AcceptanceTests.Pages.Components.PageId;
 
 namespace Micro.Web.AcceptanceTests.UseCases.ApiKeys;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class ManageApiKeysTests : BaseTest
+public class ManagementTests : BaseTest
 {
     [SetUp]
     public async Task Setup()
@@ -36,6 +34,22 @@ public class ManageApiKeysTests : BaseTest
         await ListShouldContain(names);
     }
 
+    [Test]
+    public async Task Cant_add_same_name_twice()
+    {
+        // arrange
+        var name = "a";
+        await AddToList(name);
+
+        // act
+        var page = await AddPage.Goto(Page);
+        await page.EnterName(name);
+        await page.ClickSubmit();
+
+        // assert
+        await page.Alert.AssertError("already in use");
+    }
+    
     private async Task ListShouldContain(IEnumerable<string> names)
     {
         var list = await ListPage.Goto(Page);

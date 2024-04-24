@@ -2,7 +2,7 @@
 
 public static class Constants
 {
-    // claims
-    public const string UserClaimUserId = "userId";
-    public const string UserClaimEmail = "email";
+    public const string ApiHeaderName = "x-api-key";
+    public const string UserIdKey = "userId";
+    public const string UserEmailKey = "email";
 }

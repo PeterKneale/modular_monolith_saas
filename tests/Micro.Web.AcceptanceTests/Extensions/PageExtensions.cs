@@ -14,7 +14,7 @@ public static class PageExtensions
         await page.GotoAsync(uri.ToString());
     }
 
-    public static async Task GivenLoggedIn(this IPage page)
+    public static async Task<TestUser> GivenLoggedIn(this IPage page)
     {
         var data = TestUser.CreateValid();
 
@@ -32,6 +32,8 @@ public static class PageExtensions
         var login = await LoginPage.Goto(page);
         await login.Login(data.Email, data.Password);
         await login.Alert.AssertSuccess();
+
+        return data with { UserId = userId };
     }
 
     public static async Task<string> GivenAnOrganisationOwned(this IPage page) =>

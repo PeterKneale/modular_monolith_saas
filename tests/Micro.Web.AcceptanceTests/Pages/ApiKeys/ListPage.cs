@@ -1,6 +1,4 @@
-﻿using Micro.Web.AcceptanceTests.Extensions;
-using Micro.Web.AcceptanceTests.Pages.Components.PageId;
-using Micro.Web.AcceptanceTests.Pages.Layouts;
+﻿using Micro.Web.AcceptanceTests.Pages.Layouts;
 
 namespace Micro.Web.AcceptanceTests.Pages.ApiKeys;
 

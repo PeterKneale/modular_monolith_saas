@@ -1,5 +1,4 @@
-﻿using Micro.Web.AcceptanceTests.Extensions;
-using Micro.Web.AcceptanceTests.Pages.Auth;
+﻿using Micro.Web.AcceptanceTests.Pages.Auth;
 
 namespace Micro.Web.AcceptanceTests.UseCases.Auth;
 
@@ -20,6 +19,8 @@ public class UserVerificationTests : BaseTest
 
         var verify = await VerifyEmailPage.Goto(Page, userId, token);
         await verify.Alert.AssertSuccess("verified");
+        
+        await TestContext.Out.WriteLineAsync($"Registered user {data.Email} {data.Password}.");
     }
 
     [Test]

@@ -43,8 +43,8 @@ public class LoginService(IUsersModule module, IHttpContextAccessor accessor, IL
     {
         var claims = new Claim[]
         {
-            new(UserClaimUserId, userId.ToString()),
-            new(UserClaimEmail, email)
+            new(UserIdKey, userId.ToString()),
+            new(UserEmailKey, email)
         };
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);

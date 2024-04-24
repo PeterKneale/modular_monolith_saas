@@ -12,6 +12,7 @@ public static class HttpContextExtensions
 
     public static void SetOrganisationContext(this HttpContext context, PageContextOrganisation value) => 
         context.Items[OrganisationContextKey] = value;
+    
     public static void SetProjectContext(this HttpContext context, PageContextProject value) => 
         context.Items[ProjectContextKey] = value;
 

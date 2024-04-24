@@ -1,5 +1,4 @@
-﻿using Micro.Web.AcceptanceTests.Extensions;
-using Micro.Web.AcceptanceTests.Pages.Auth;
+﻿using Micro.Web.AcceptanceTests.Pages.Auth;
 
 namespace Micro.Web.AcceptanceTests.Pages.Translate;
 

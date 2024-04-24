@@ -1,7 +1,5 @@
 using FluentAssertions;
-using Micro.Web.AcceptanceTests.Extensions;
 using Micro.Web.AcceptanceTests.Pages;
-using Micro.Web.AcceptanceTests.Pages.Components.PageId;
 using Micro.Web.AcceptanceTests.Pages.Projects;
 
 namespace Micro.Web.AcceptanceTests.UseCases.Components;
