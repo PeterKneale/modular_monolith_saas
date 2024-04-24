@@ -9,27 +9,36 @@ namespace Micro.Web.AcceptanceTests.UseCases.ApiKeys;
 [TestFixture]
 public class ManageApiKeysTests : BaseTest
 {
+    [SetUp]
+    public async Task Setup()
+    {
+        await Page.GivenLoggedIn();
+    }
+    
     [Test]
     public async Task Can_show_initial_state()
     {
-        await Page.GivenLoggedIn();
-        var list = await ListPage.Goto(Page);
-        await ListShouldBeEmpty(list);
+        await ListShouldBeEmpty();
     }
 
     [Test]
     public async Task Shown_in_creation_order()
     {
-        await Page.GivenLoggedIn();
-        var list = await ListPage.Goto(Page);
+        // arrange
         var names = new List<string> { "b", "a", "c" };
 
-        // add records
-        list = await AddOne(list,names[0]);
-        list = await AddOne(list,names[1]);
-        list = await AddOne(list,names[2]);
+        // act
+        await AddToList(names[0]);
+        await AddToList(names[1]);
+        await AddToList(names[2]);
 
-        // assert order
+        // assert
+        await ListShouldContain(names);
+    }
+
+    private async Task ListShouldContain(IEnumerable<string> names)
+    {
+        var list = await ListPage.Goto(Page);
         var actual = await list.GetNames();
         actual.Should().BeEquivalentTo(names.OrderBy(x => x));
     }
@@ -38,41 +47,44 @@ public class ManageApiKeysTests : BaseTest
     public async Task Can_add_and_remove()
     {
         await Page.GivenLoggedIn();
-        var list = await ListPage.Goto(Page);
 
         // add records
-        list = await AddOne(list);
-        await ListShouldHave(list, 1);
-        list = await AddOne(list);
-        await ListShouldHave(list, 2);
-        list = await AddOne(list);
-        await ListShouldHave(list, 3);
-        
+        await AddToList("X");
+        await ListCountShouldBe(1);
+        await AddToList("Y");
+        await ListCountShouldBe(2);
+        await AddToList("Z");
+        await ListCountShouldBe(3);
+
         // remove records
+        var list = await ListPage.Goto(Page);
         await list.ClickDelete(0);
-        await ListShouldHave(list, 2);
+        await ListCountShouldBe(2);
         await list.ClickDelete(0);
-        await ListShouldHave(list, 1);
+        await ListCountShouldBe(1);
         await list.ClickDelete(0);
-        await ListShouldBeEmpty(list);
+        await ListShouldBeEmpty();
     }
 
-    private static async Task<ListPage> AddOne(ListPage list, string? name = null)
+    private async Task AddToList(string? name = null)
     {
-        var addPage = await list.ClickAdd();
-        await addPage.AssertPageId();
-        await addPage.EnterName(name ?? Guid.NewGuid().ToString()[6..]);
-        return await addPage.ClickSubmit();
+        var list = await ListPage.Goto(Page);
+        var add = await list.ClickAdd();
+        await add.AssertPageId();
+        await add.EnterName(name ?? Guid.NewGuid().ToString()[6..]);
+        await add.ClickSubmit();
     }
 
-    private static async Task ListShouldBeEmpty(ListPage list)
+    private async Task ListShouldBeEmpty()
     {
+        var list = await ListPage.Goto(Page);
         var count = await list.GetRowCount();
         count.Should().Be(0);
     }
 
-    private static async Task ListShouldHave(ListPage list, int total)
+    private async Task ListCountShouldBe(int total)
     {
+        var list = await ListPage.Goto(Page);
         var count = await list.GetRowCount();
         count.Should().Be(total);
     }
