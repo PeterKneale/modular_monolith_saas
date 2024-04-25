@@ -33,7 +33,7 @@ public static class TranslationModuleStartup
             .ApplyDatabaseMigrations(resetDb);
 
         bus.Subscribe<OrganisationCreated>(new IntegrationEventHandler());
-        bus.Subscribe<OrganisationChanged>(new IntegrationEventHandler());
+        bus.Subscribe<OrganisationUpdated>(new IntegrationEventHandler());
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
         

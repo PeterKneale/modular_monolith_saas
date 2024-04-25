@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Application.ApiKeys.Queries;
 
-public static class GetUserApiKeyById
+public static class GetById
 {
     public record Query(Guid Id) : IRequest<string>;
 

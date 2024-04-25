@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Application.ApiKeys.Queries;
 
-public static class CanAuthenticateWithApiKey
+public static class CanAuthenticate
 {
     public record Query(string ApiKeyValue) : IRequest<Result>;
 

@@ -2,8 +2,9 @@
 
 namespace Micro.Tenants.IntegrationEvents;
 
-public class OrganisationChanged : IIntegrationEvent
+public class ProjectCreated : IIntegrationEvent
 {
     public Guid OrganisationId { get; init; }
-    public string OrganisationName { get; init; } = null!;
+    public Guid ProjectId { get; init; }
+    public string ProjectName { get; init; } = null!;
 }

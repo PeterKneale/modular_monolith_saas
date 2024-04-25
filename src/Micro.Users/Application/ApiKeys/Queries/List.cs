@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Application.ApiKeys.Queries;
 
-public static class ListUserApiKeys
+public static class List
 {
     public record Query : IRequest<IEnumerable<Result>>;
 

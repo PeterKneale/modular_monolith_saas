@@ -17,7 +17,7 @@ public class AddPage(IUsersModule module, IPageContextAccessor context) : Contex
         {
             var id = Guid.NewGuid();
             await module.SendCommand(new CreateUserApiKey.Command(id, Name));
-            var key = await module.SendQuery(new GetUserApiKeyById.Query(id));
+            var key = await module.SendQuery(new GetById.Query(id));
             TempData.SetAlert(Alert.Success($"You have added a new API Key. Please copy it now as it will not be shown again. \n'{key}'"));
             return RedirectToPage(nameof(Index));
         }

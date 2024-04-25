@@ -1,5 +1,13 @@
-﻿using Micro.Tenants.Application.Organisations.Commands;
+﻿using Micro.Common.Infrastructure.Integration;
+using Micro.Common.Infrastructure.Integration.Outbox;
+using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Infrastructure;
+using Micro.Tenants.Infrastructure.Database;
+using Micro.Tenants.IntegrationEvents;
 using Micro.Users.IntegrationEvents;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Micro.Tenants.IntegrationTests.Fixtures;
 
@@ -11,6 +19,16 @@ public class BaseTest
     {
         service.OutputHelper = output;
         Service = service;
+    }
+
+    public static async Task<IEnumerable<T>> GetOutboxMessages<T>() where T:IIntegrationEvent
+    {
+        using var scope = CompositionRoot.BeginLifetimeScope();
+        var db = scope.ServiceProvider.GetRequiredService<Db>();
+        var messages = await db.Outbox
+            .Where(x => x.Type.Contains(typeof(T).FullName))
+            .ToListAsync();
+        return messages.Select(x => JsonConvert.DeserializeObject<T>(x.Data))!;
     }
 
     protected async Task CreateUser(Guid userId)

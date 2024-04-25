@@ -24,7 +24,7 @@ public class ApiKeyAuthenticationMiddleware(IUsersModule module, IHttpContextAcc
                 log.LogDebug("Header detected: {Header}", header);
                 var apiKey = header.ToString();
                 log.LogDebug("ApiKey detected: {apiKey}", apiKey);
-                var result = await module.SendQuery(new CanAuthenticateWithApiKey.Query(apiKey));
+                var result = await module.SendQuery(new CanAuthenticate.Query(apiKey));
                 if (result.Valid)
                 {
                     var userId = result.UserId!.Value;

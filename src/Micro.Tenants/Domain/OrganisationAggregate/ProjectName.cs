@@ -19,5 +19,7 @@ public record ProjectName
         return new ProjectName(value);
     }
 
+    public static implicit operator string(ProjectName d) => d.Value;
+    
     public override string ToString() => $"{Value}";
 }

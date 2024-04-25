@@ -62,6 +62,7 @@ public class Organisation : BaseEntity
         CheckRule(new ProjectMustNotExistRule(_projects, projectId));
         CheckRule(new ProjectNameMustNotExistRule(_projects, name));
         _projects.Add(new Project(projectId, OrganisationId, name));
+        AddDomainEvent(new ProjectCreatedDomainEvent(OrganisationId, projectId, name));
     }
 
     public void UpdateProjectName(ProjectId projectId, ProjectName projectName)
@@ -70,5 +71,6 @@ public class Organisation : BaseEntity
         CheckRule(new ProjectNameMustNotExistRule(_projects, projectName));
         var project = _projects.Single(x => x.ProjectId.Equals(projectId));
         project.ChangeName(projectName);
+        AddDomainEvent(new ProjectUpdatedDomainEvent(projectId, projectName));
     }
 }

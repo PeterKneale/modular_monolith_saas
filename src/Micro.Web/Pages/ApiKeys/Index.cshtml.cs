@@ -8,7 +8,7 @@ public class Index(IUsersModule module) : PageModel
 {
     public async Task OnGet()
     {
-        Results = await module.SendQuery(new ListUserApiKeys.Query());
+        Results = await module.SendQuery(new List.Query());
     }
 
     public async Task<IActionResult> OnPostDelete()
@@ -24,7 +24,7 @@ public class Index(IUsersModule module) : PageModel
         return RedirectToPage(nameof(Index));
     }
 
-    public IEnumerable<ListUserApiKeys.Result> Results { get; set; }
+    public IEnumerable<List.Result> Results { get; set; }
 
     [BindProperty] [Required] public Guid Id { get; set; }
 }

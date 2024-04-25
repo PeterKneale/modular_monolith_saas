@@ -1,7 +1,12 @@
 using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Organisations.Queries;
+using Micro.Tenants.Infrastructure;
+using Micro.Tenants.Infrastructure.Database;
+using Micro.Tenants.IntegrationEvents;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Micro.Tenants.IntegrationTests.UseCases.Projects;
+namespace Micro.Tenants.IntegrationTests.UseCases.Organisations;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)

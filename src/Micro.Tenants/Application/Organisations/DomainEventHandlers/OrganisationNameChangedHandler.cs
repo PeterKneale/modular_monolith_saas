@@ -9,7 +9,7 @@ public class OrganisationNameChangedHandler(OutboxWriter outbox, ILogger<Organis
     public async Task Handle(OrganisationNameChangedDomainEvent notification, CancellationToken cancellationToken)
     {
         logs.LogInformation("Organisation changed, publishing to outbox");
-        await outbox.WriteAsync(new OrganisationChanged
+        await outbox.WriteAsync(new OrganisationUpdated
         {
             OrganisationId = notification.Id,
             OrganisationName = notification.Name
