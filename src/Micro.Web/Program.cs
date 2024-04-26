@@ -6,6 +6,7 @@ using Micro.Users.Application.Users.Queries;
 using Micro.Translations;
 using Micro.Users;
 using Micro.Web.Api;
+using Micro.Web.Api.Users;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;

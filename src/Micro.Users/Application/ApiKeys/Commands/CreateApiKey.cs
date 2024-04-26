@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Application.ApiKeys.Commands;
 
-public static class CreateUserApiKey
+public static class CreateApiKey
 {
     public record Command(Guid Id, string Name) : IRequest;
 

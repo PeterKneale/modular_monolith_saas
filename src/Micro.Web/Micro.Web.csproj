@@ -18,15 +18,54 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
-        <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj"/>
-        <ProjectReference Include="..\Micro.Users\Micro.Users.csproj"/>
+        <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj" />
+        <ProjectReference Include="..\Micro.Translations\Micro.Translations.csproj" />
+        <ProjectReference Include="..\Micro.Users\Micro.Users.csproj" />
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.3"/>
-        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.0"/>
-        <PackageReference Include="ResXResourceReader.NetStandard" Version="1.3.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.1" />
+        <PackageReference Include="ResXResourceReader.NetStandard" Version="1.3.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\Auth\Forbidden.cshtml" />
+      <AdditionalFiles Include="Pages\Auth\ForgotPassword.cshtml" />
+      <AdditionalFiles Include="Pages\Auth\Login.cshtml" />
+      <AdditionalFiles Include="Pages\Auth\Logout.cshtml" />
+      <AdditionalFiles Include="Pages\Auth\Register.cshtml" />
+      <AdditionalFiles Include="Pages\Auth\ResetPassword.cshtml" />
+      <AdditionalFiles Include="Pages\Auth\VerifyEmail.cshtml" />
+      <AdditionalFiles Include="Pages\Shared\Components\Menu\Default.cshtml" />
+      <AdditionalFiles Include="Pages\User\ApiKeys\Add.cshtml" />
+      <AdditionalFiles Include="Pages\User\ApiKeys\Index.cshtml" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Auth\Forbidden.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Auth\ForgotPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Auth\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Auth\Logout.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Auth\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Auth\ResetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Auth\VerifyEmail.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\ApiKeys\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\ApiKeys\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\Forbidden.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\ForgotPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\Logout.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\ResetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Auth\VerifyEmail.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\Components\OrganisationSelector\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\Components\ProjectSelector\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\Components\UserMenu\Default.cshtml" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Pages\User\" />
     </ItemGroup>
 
 

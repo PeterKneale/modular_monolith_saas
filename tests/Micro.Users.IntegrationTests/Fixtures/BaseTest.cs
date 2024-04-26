@@ -1,14 +1,17 @@
 ﻿namespace Micro.Users.IntegrationTests.Fixtures;
 
-public class BaseTest
+public abstract class BaseTest
 {
     protected ServiceFixture Service { get; }
 
     protected BaseTest(ServiceFixture service, ITestOutputHelper output)
     {
+        Output = output;
         service.OutputHelper = output;
         Service = service;
     }
+
+    protected ITestOutputHelper Output { get; set; }
 
     protected async Task<Guid> GivenVerifiedUser(string? email = null, string? password = null)
     {

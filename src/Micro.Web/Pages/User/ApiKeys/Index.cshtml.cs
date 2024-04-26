@@ -2,7 +2,7 @@
 using Micro.Users.Application.ApiKeys.Commands;
 using Micro.Users.Application.ApiKeys.Queries;
 
-namespace Micro.Web.Pages.ApiKeys;
+namespace Micro.Web.Pages.User.ApiKeys;
 
 public class Index(IUsersModule module) : PageModel
 {
@@ -18,7 +18,7 @@ public class Index(IUsersModule module) : PageModel
             return Page();
         }
 
-        await module.SendCommand(new DeleteUserApiKey.Command(Id));
+        await module.SendCommand(new DeleteApiKey.Command(Id));
 
         TempData.SetAlert(Alert.Success("ApiKey has been deleted."));
         return RedirectToPage(nameof(Index));

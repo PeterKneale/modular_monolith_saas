@@ -2,9 +2,9 @@
 using Micro.Users.Application.ApiKeys.Commands;
 using Micro.Users.Application.ApiKeys.Queries;
 
-namespace Micro.Web.Pages.ApiKeys;
+namespace Micro.Web.Pages.User.ApiKeys;
 
-public class AddPage(IUsersModule module, IPageContextAccessor context) : ContextualPageModel(context)
+public class Add(IUsersModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
     public async Task<IActionResult> OnPostAsync()
     {
@@ -16,7 +16,7 @@ public class AddPage(IUsersModule module, IPageContextAccessor context) : Contex
         try
         {
             var id = Guid.NewGuid();
-            await module.SendCommand(new CreateUserApiKey.Command(id, Name));
+            await module.SendCommand(new CreateApiKey.Command(id, Name));
             var key = await module.SendQuery(new GetById.Query(id));
             TempData.SetAlert(Alert.Success($"You have added a new API Key. Please copy it now as it will not be shown again. \n'{key}'"));
             return RedirectToPage(nameof(Index));

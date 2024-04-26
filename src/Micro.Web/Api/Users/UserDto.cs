@@ -1,4 +1,4 @@
-﻿namespace Micro.Web.Api;
+﻿namespace Micro.Web.Api.Users;
 
 public class UserDto
 {

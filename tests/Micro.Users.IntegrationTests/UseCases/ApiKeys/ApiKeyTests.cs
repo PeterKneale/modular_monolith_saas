@@ -17,7 +17,7 @@ public class ApiKeyTests(ServiceFixture service, ITestOutputHelper outputHelper)
         var register = Build.RegisterCommand(userId);
         await Service.Command(register);
 
-        var createKey = new CreateUserApiKey.Command(keyId, "x");
+        var createKey = new CreateApiKey.Command(keyId, "x");
         await Service.Command(createKey, userId);
 
         var getKey = new GetById.Query(keyId);

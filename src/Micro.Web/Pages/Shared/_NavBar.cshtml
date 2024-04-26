@@ -1,24 +1,13 @@
-﻿@using Micro.Web.Code.Contexts.Page
-@using Micro.Web.Pages.Shared.Components.ProjectSelector
-@using Micro.Web.Pages.Shared.Components.UserMenu
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Micro.Web.Code.Contexts.Authentication
-@using Micro.Web.Pages.Shared.Components.OrganisationSelector
 @inject IAuthContext AuthContext
-@inject IPageContextAccessor PageContext
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="/">MicroSAAS</a>
         <ul class="navbar-nav">
             @if (AuthContext.IsAuthenticated)
             {
-                <div class="me-2">
-                    <vc:project-selector/>
-                </div>
-                <div class="me-2">
-                    <vc:organisation-selector/>
-                </div>
-                <vc:user-menu/>
+                <vc:menu/>
             }
             else
             {

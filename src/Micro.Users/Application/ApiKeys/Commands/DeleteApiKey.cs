@@ -1,6 +1,6 @@
 ﻿namespace Micro.Users.Application.ApiKeys.Commands;
 
-public static class DeleteUserApiKey
+public static class DeleteApiKey
 {
     public record Command(Guid Id) : IRequest;
 

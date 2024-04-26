@@ -1,0 +1,88 @@
+﻿@model Model
+<div data-testid="UserMenu">
+    <form class="d-flex align-items-center">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">User</span>
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                @Model.Email
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <h6 class="dropdown-header">User</h6>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="" asp-page="/User/ApiKeys/Index">ApiKeys</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <h6 class="dropdown-header">Organisations</h6>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="" asp-page="/Organisations/Create">Create...</a>
+                </li>
+                @foreach (var org in Model.Organisations)
+                {
+                    <li>
+                        @if (org.IsCurrent)
+                        {
+                            <a class="dropdown-item active" aria-current="true" asp-page="/Organisation/Details" asp-route-org="@org.Name">@org.Name</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-area="" asp-page="/Organisation/Details" asp-route-org="@org.Name">@org.Name</a>
+                        }
+                    </li>
+                }
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                @if (Model.Organisations.Any(x => x.IsCurrent))
+                {
+                    var organisation = Model.Organisations.Single(x => x.IsCurrent);
+                    <li>
+                        <h6 class="dropdown-header">Projects</h6>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" asp-area="" asp-page="/Projects/Create" asp-route-org="@organisation.Name">Create...</a>
+                    </li>
+                    @foreach (var project in Model.Projects)
+                    {
+                        <li>
+                            @if (project.IsCurrent)
+                            {
+                                <a class="dropdown-item active" aria-current="true" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name">@project.Name</a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" asp-area="" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name">@project.Name</a>
+                            }
+                        </li>
+                    }
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    @if (Model.Projects.Any(x => x.IsCurrent))
+                    {
+                        var project = Model.Projects.Single(x => x.IsCurrent);
+                        <li>
+                            <h6 class="dropdown-header">Tools</h6>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-page="/Translate/Index" asp-route-org="@organisation.Name" asp-route-project="@project.Name">Translate</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    }
+                }
+                <li>
+                    <a class="dropdown-item" asp-area="" asp-page="/Auth/Logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
