@@ -1,6 +1,6 @@
 ﻿namespace Micro.Tenants.Domain.OrganisationAggregate;
 
-public class OrganisationName
+public class OrganisationName : ValueObject
 {
     private OrganisationName(string value)
     {
@@ -22,4 +22,9 @@ public class OrganisationName
     public static implicit operator string(OrganisationName x) => x.Value;
 
     public override string ToString() => $"{Value}";
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }
