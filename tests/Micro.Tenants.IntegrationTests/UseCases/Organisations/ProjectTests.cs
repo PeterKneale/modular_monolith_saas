@@ -15,16 +15,14 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
     public async Task Can_manage_project()
     {
         // arrange
-        var organisationId = Guid.NewGuid();
+        var userId =  await GivenUser();
+        var organisationId = await GivenOrganisation(userId);
         var projectId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
         var orgName = Guid.NewGuid().ToString()[..10];
         var projectName = Guid.NewGuid().ToString()[..10];
         var projectNameUpdated = Guid.NewGuid().ToString()[..10];
 
         // act
-        await CreateUser(userId);
-        await CreateOrganisation(userId, organisationId);
         await service.Execute(async module =>
         {
             await module.SendCommand(new CreateProject.Command(projectId, projectName));

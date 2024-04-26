@@ -11,7 +11,7 @@ public class BehaviourTests(ServiceFixture service, ITestOutputHelper outputHelp
         var password = "password";
         
         // act
-        var action = async () => { await RegisterUser(email, password); };
+        var action = async () => { await GivenRegisteredUser(email, password); };
         
         // assert
         await action.Should().ThrowAsync<ValidationException>();

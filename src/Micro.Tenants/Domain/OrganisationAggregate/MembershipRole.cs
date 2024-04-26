@@ -1,6 +1,6 @@
 ﻿namespace Micro.Tenants.Domain.OrganisationAggregate;
 
-public class MembershipRole
+public class MembershipRole : ValueObject
 {
     private MembershipRole(string name)
     {
@@ -18,4 +18,9 @@ public class MembershipRole
         nameof(Member) => Member,
         _ => throw new ArgumentException($"Invalid role name: {name}")
     };
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Name;
+    }
 }

@@ -1,6 +1,4 @@
-﻿using Xunit.Abstractions;
-
-namespace Micro.Users.IntegrationTests.Fixtures;
+﻿namespace Micro.Users.IntegrationTests.Fixtures;
 
 public class BaseTest
 {
@@ -12,15 +10,15 @@ public class BaseTest
         Service = service;
     }
 
-    protected async Task<Guid> RegisterAndVerifyUser(string? email = null, string? password = null)
+    protected async Task<Guid> GivenVerifiedUser(string? email = null, string? password = null)
     {
-        var userId = await RegisterUser(email, password);
+        var userId = await GivenRegisteredUser(email, password);
         var token = await Service.Query(new GetUserVerificationToken.Query(userId));
         await Service.Command(new VerifyUser.Command(userId, token));
         return userId;
     }
 
-    protected async Task<Guid> RegisterUser(string? email = null, string? password = null)
+    protected async Task<Guid> GivenRegisteredUser(string? email = null, string? password = null)
     {
         var userId = Guid.NewGuid();
         var register = Build.RegisterCommand(userId, email, password);
@@ -28,5 +26,5 @@ public class BaseTest
         return userId;
     }
     
-    protected string GetUniqueEmail() => $"test{Guid.NewGuid().ToString()}@example.org";
+    protected static string GetUniqueEmail() => $"test{Guid.NewGuid().ToString()}@example.org";
 }

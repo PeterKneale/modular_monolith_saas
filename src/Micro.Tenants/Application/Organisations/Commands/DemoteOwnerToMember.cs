@@ -2,16 +2,15 @@ using Micro.Tenants.Domain.OrganisationAggregate;
 
 namespace Micro.Tenants.Application.Organisations.Commands;
 
-public static class UpdateMemberRole
+public static class DemoteOwnerToMember
 {
-    public record Command(Guid UserId, string Role) : IRequest;
+    public record Command(Guid OwnerId) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
-            RuleFor(m => m.UserId).NotEmpty();
-            RuleFor(m => m.Role).NotEmpty();
+            RuleFor(m => m.OwnerId).NotEmpty();
         }
     }
 
@@ -21,13 +20,12 @@ public static class UpdateMemberRole
         {
             var organisationId = context.OrganisationId;
 
-            var userId = new UserId(command.UserId);
-            var role = MembershipRole.FromString(command.Role);
+            var ownerId = new UserId(command.OwnerId);
 
             var organisation = await organisations.GetAsync(organisationId, token);
             if (organisation == null) throw new NotFoundException(nameof(Organisation), organisationId.Value);
 
-            organisation.UpdateMembershipRole(userId, role);
+            organisation.DemoteOwnerToMember(ownerId);
             organisations.Update(organisation);
         }
     }

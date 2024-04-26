@@ -1,4 +1,5 @@
-﻿using Micro.Tenants.Application.Organisations.Queries;
+﻿using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Application.Organisations.Queries;
 using Micro.Tenants.Domain.OrganisationAggregate;
 
 namespace Micro.Tenants.IntegrationTests.UseCases.Organisations;
@@ -10,12 +11,10 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Creating_an_organisation_also_creates_owner_membership()
     {
         // arrange
-        var userId = Guid.NewGuid();
-        var organisationId = Guid.NewGuid();
+        var userId =  await GivenUser();
 
         // act
-        await CreateUser(userId);
-        await CreateOrganisation(userId, organisationId);
+        var organisationId = await GivenOrganisation(userId);
 
         // assert
         var memberships = await Service.Query(new ListMemberships.Query(), userId);
@@ -28,14 +27,11 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Member_can_be_created()
     {
         // arrange
-        var userId1 = Guid.NewGuid();
-        var userId2 = Guid.NewGuid();
-        var organisationId = Guid.NewGuid();
+        var userId1 =  await GivenUser();
+        var userId2 =  await GivenUser();
+        var organisationId = await GivenOrganisation(userId1);
 
         // act
-        await CreateUser(userId1);
-        await CreateUser(userId2);
-        await CreateOrganisation(userId1, organisationId);
         await CreateMember(userId2, userId1, organisationId);
 
         // assert
@@ -49,14 +45,11 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
     public async Task Member_can_be_deleted()
     {
         // arrange
-        var userId1 = Guid.NewGuid();
-        var userId2 = Guid.NewGuid();
-        var organisationId = Guid.NewGuid();
+        var userId1 =  await GivenUser();
+        var userId2 =  await GivenUser();
+        var organisationId = await GivenOrganisation(userId1);
         
         // act
-        await CreateUser(userId1);
-        await CreateUser(userId2);
-        await CreateOrganisation(userId1, organisationId);
         await CreateMember(userId2, userId1, organisationId);
         await DeleteMember(userId2, userId1, organisationId);
 
@@ -65,4 +58,16 @@ public class MembershipTests(ServiceFixture service, ITestOutputHelper output) :
         members.Should().BeEmpty();
     }
 
+
+    private async Task CreateMember(Guid userId, Guid ctxUserId, Guid ctxOrganisationId)
+    {
+        var createMember = new CreateMember.Command(userId);
+        await Service.Command(createMember, ctxUserId, ctxOrganisationId);
+    }
+
+    private async Task DeleteMember(Guid userId, Guid ctxUserId, Guid ctxOrganisationId)
+    {
+        var deleteMember = new RemoveMember.Command(userId);
+        await Service.Command(deleteMember, ctxUserId, ctxOrganisationId);
+    }
 }

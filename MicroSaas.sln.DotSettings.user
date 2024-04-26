@@ -6,19 +6,19 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=78DC164C_002D08C1_002D4797_002D8229_002D502F45FF4C96/@EntryIndexedValue">2137843E-DE15-468B-8126-01C8DA8651C1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=756c6718_002D449d_002D48af_002Dbd13_002D48c8c68308c9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;modules&amp;gt;\&amp;lt;users&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8804617d_002Df6d4_002D4756_002Da5d2_002D3b88c7467a84/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Member_can_be_added" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;users&amp;gt;" /&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;xUnit::74F19403-CCCC-4B1C-9810-58E139698770::net8.0::Micro.Tenants.IntegrationTests.UseCases.Organisations.ProjectTests.Creating_a_project_publishes_an_integration_event&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::F027DC8A-1DD9-4541-BB29-8B911287DBDC::net8.0::Micro.Tenants.UnitTests.OrganisationTests&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Tenants.IntegrationTests" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;tenants&amp;gt;\&amp;lt;Micro.Tenants.IntegrationTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c2456529_002D4518_002D497d_002Da414_002Dc908e24f6d2c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="IntegrationEventTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::74F19403-CCCC-4B1C-9810-58E139698770::net8.0::Micro.Tenants.IntegrationTests.UseCases.Organisations.IntegrationEventTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b591ae13_002D9153_002D4dd3_002Dbe0b_002D681257e8ac51/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;modules&amp;gt;\&amp;lt;tenants&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;tenants&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
+	
 	
 	
 	

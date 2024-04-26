@@ -10,13 +10,11 @@ public class OrganisationNameTests(ServiceFixture service, ITestOutputHelper out
     public async Task Organisation_name_can_be_changed()
     {
         // arrange
-        var userId = Guid.NewGuid();
-        var organisationId = Guid.NewGuid();
+        var userId = await GivenUser();
+        var organisationId = await GivenOrganisation(userId);
         var name = Guid.NewGuid().ToString()[..10];
 
         // act
-        await CreateUser(userId);
-        await CreateOrganisation(userId, organisationId);
         var command = new UpdateOrganisationName.Command(name);
         await Service.Command(command, userId, organisationId);
 
@@ -29,34 +27,36 @@ public class OrganisationNameTests(ServiceFixture service, ITestOutputHelper out
     public async Task Cant_create_organisation_if_name_used()
     {
         // arrange
-        var userId = Guid.NewGuid();
-        var organisationId1 = Guid.NewGuid();
-        var organisationId2 = Guid.NewGuid();
-        var name = Guid.NewGuid().ToString()[..10];
+        var userId = await GivenUser();
+        var organisationName = Guid.NewGuid().ToString()[..10];
+        var organisationId1 = await GivenOrganisation(userId, organisationName);
 
         // act
-        await CreateUser(userId);
-        await CreateOrganisation(userId, organisationId1, name);
-        var action = async () => await CreateOrganisation(userId, organisationId2, name);
+        var action = async () =>
+        {
+            var organisationId2 = Guid.NewGuid();
+            var create = new CreateOrganisation.Command(organisationId2, organisationName);
+            await Service.Command(create, userId);
+        };
 
         // assert
-        await action.Should().ThrowAsync<AlreadyInUseException>($"*{name}*");
+        await action.Should().ThrowAsync<AlreadyInUseException>($"*{organisationName}*");
     }
 
     [Fact]
     public async Task Cant_update_organisation_name_if_used()
     {
         // arrange
-        var userId = Guid.NewGuid();
-        var organisationId1= Guid.NewGuid();
-        var organisationId2= Guid.NewGuid();
-        var name = Guid.NewGuid().ToString()[..10];
+        var userId = await GivenUser();
+        var organisationId1 = await GivenOrganisation(userId,"X");
+        var organisationId2 = await GivenOrganisation(userId,"Y");
 
         // act
-        await CreateUser(userId);
-        await CreateOrganisation(userId, organisationId1, name);
-        await CreateOrganisation(userId, organisationId2, "X");
-        var action = async () => await UpdateOrganisationName(name, userId, organisationId2);
+        var action = async () =>
+        {
+            var update = new UpdateOrganisationName.Command("X");
+            await Service.Command(update, userId, organisationId2);
+        };
 
         // assert
         await action.Should().ThrowAsync<AlreadyInUseException>();

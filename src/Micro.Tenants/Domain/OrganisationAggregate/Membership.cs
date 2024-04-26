@@ -1,7 +1,9 @@
-﻿using Micro.Tenants.Domain.UserAggregate;
+﻿using System.Diagnostics;
+using Micro.Tenants.Domain.UserAggregate;
 
 namespace Micro.Tenants.Domain.OrganisationAggregate;
 
+[DebuggerDisplay("{Role.Name} - User:{UserId} - Organisation:{OrganisationId}")]
 public class Membership : BaseEntity
 {
     private Membership()

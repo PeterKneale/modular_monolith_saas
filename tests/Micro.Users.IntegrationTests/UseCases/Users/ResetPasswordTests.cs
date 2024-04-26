@@ -11,7 +11,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         var password = "password";
 
         // act
-        var userId = await RegisterAndVerifyUser(email, password);
+        var userId = await GivenVerifiedUser(email, password);
         await Service.Command(new ForgotPassword.Command(email));
         var token = await Service.Query(new GetResetPasswordToken.Query(userId));
         await Service.Command(new ResetPassword.Command(userId, token, password));
@@ -29,7 +29,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         var password = "password";
 
         // act
-        var userId = await RegisterAndVerifyUser(email, password);
+        var userId = await GivenVerifiedUser(email, password);
         await Service.Command(new ForgotPassword.Command(email));
         var act = async () => await Service.Command(new ResetPassword.Command(userId, "wrong_token", password));
 
@@ -45,7 +45,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         var password = "password";
 
         // act
-        var userId = await RegisterAndVerifyUser(email, password);
+        var userId = await GivenVerifiedUser(email, password);
         var act = async () => await Service.Command(new ResetPassword.Command(userId, "no_token_exists", password));
 
         // assert
@@ -60,7 +60,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         var password = "password";
 
         // act
-        await RegisterUser(email, password);
+        await GivenRegisteredUser(email, password);
         var act = async () => await Service.Command(new ForgotPassword.Command(email));
 
         // assert
@@ -75,7 +75,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         var password = "password";
 
         // act
-        var userId = await RegisterAndVerifyUser(email, password);
+        var userId = await GivenVerifiedUser(email, password);
         await Service.Command(new ForgotPassword.Command(email));
         await Service.Command(new ForgotPassword.Command(email));
         await Service.Command(new ForgotPassword.Command(email));

@@ -1,5 +1,6 @@
 ﻿using Micro.Tenants.Domain.OrganisationAggregate.DomainEvents;
 using Micro.Tenants.Domain.OrganisationAggregate.Rules;
+using NotSupportedException = System.NotSupportedException;
 
 namespace Micro.Tenants.Domain.OrganisationAggregate;
 
@@ -18,6 +19,7 @@ public class Organisation : BaseEntity
         OrganisationId = organisationId;
         Name = name;
         _memberships = [Membership.CreateOwner(organisationId, ownerId)];
+        _projects = new();
         AddDomainEvent(new OrganisationCreatedDomainEvent(organisationId, name));
     }
 
@@ -46,15 +48,26 @@ public class Organisation : BaseEntity
     public void RemoveMember(UserId userId)
     {
         CheckRule(new MembershipMustExistRule(_memberships, userId));
+        CheckRule(new MembershipMustBeForRole(_memberships, userId, MembershipRole.Member));
         var membership = _memberships.Single(x => x.UserId.Equals(userId));
         _memberships.Remove(membership);
     }
 
-    public void UpdateMembershipRole(UserId userId, MembershipRole role)
+    public void PromoteMemberToOwner(UserId userId)
     {
         CheckRule(new MembershipMustExistRule(_memberships, userId));
+        CheckRule(new MembershipMustBeForRole(_memberships, userId, MembershipRole.Member));
         var membership = _memberships.Single(x => x.UserId.Equals(userId));
-        membership.SetRole(role);
+        membership.SetRole(MembershipRole.Owner);
+    }
+
+    public void DemoteOwnerToMember(UserId userId)
+    {
+        CheckRule(new MembershipMustExistRule(_memberships, userId));
+        CheckRule(new MembershipMustBeForRole(_memberships, userId, MembershipRole.Owner));
+        CheckRule(new OtherOwnersMustExistRule(_memberships, userId));
+        var membership = _memberships.Single(x => x.UserId.Equals(userId));
+        membership.SetRole(MembershipRole.Member);
     }
 
     public void AddProject(ProjectId projectId, ProjectName name)
@@ -72,5 +85,25 @@ public class Organisation : BaseEntity
         var project = _projects.Single(x => x.ProjectId.Equals(projectId));
         project.ChangeName(projectName);
         AddDomainEvent(new ProjectUpdatedDomainEvent(projectId, projectName));
+    }
+}
+
+public class MembershipMustBeForRole(List<Membership> memberships, UserId userId, MembershipRole role) : IBusinessRule
+{
+    public string Message => $"Membership must be for role {role.Name}";
+
+    public bool IsBroken()
+    {
+        foreach (var membership in memberships)
+        {
+            // find membership for user
+            if (membership.UserId.Equals(userId))
+            {
+                // the rule is broken if the role is not the same
+                return !membership.Role.Equals(role);
+            }
+        }
+
+        throw new NotSupportedException("No membership is present");
     }
 }

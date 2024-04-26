@@ -11,7 +11,7 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
         var password = "password";
         
         // act
-        var userId = await RegisterAndVerifyUser(email, password);
+        var userId = await GivenVerifiedUser(email, password);
         var results = await Service.Query(new CanAuthenticate.Query(email, password));
 
         // assert
@@ -28,7 +28,7 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
         var password = "password";
         
         // act
-        await RegisterUser(email, password);
+        await GivenRegisteredUser(email, password);
         var results = await Service.Query(new CanAuthenticate.Query(email, password));
 
         // assert
@@ -43,7 +43,7 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
         var password = "password";
         
         // act
-        var action = async () => { await RegisterUser(email, password); };
+        var action = async () => { await GivenRegisteredUser(email, password); };
         
         // assert
         await action.Should().ThrowAsync<ValidationException>();

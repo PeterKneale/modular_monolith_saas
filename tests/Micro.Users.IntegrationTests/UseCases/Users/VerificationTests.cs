@@ -11,7 +11,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
         var password = "password";
         
         // act
-        var userId = await RegisterUser(email, password);
+        var userId = await GivenRegisteredUser(email, password);
         var token = await Service.Query(new GetUserVerificationToken.Query(userId));
         var act = async () => { await Service.Command(new VerifyUser.Command(userId, token + "x")); };
 
@@ -29,7 +29,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
         var password = "password";
 
         // act
-        var userId = await RegisterUser(email, password);
+        var userId = await GivenRegisteredUser(email, password);
         var verification = await Service.Query(new GetUserVerificationToken.Query(userId));
         var act = async () => await Service.Command(new VerifyUser.Command(Guid.NewGuid(), verification));
 
@@ -45,7 +45,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
         var password = "password";
 
         // act
-        var userId = await RegisterUser(email, password);
+        var userId = await GivenRegisteredUser(email, password);
         var act = async () => await Service.Command(new VerifyUser.Command(userId, "wrong"));
 
         // assert
@@ -60,7 +60,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
         var password = "password";
 
         // act
-        var userId = await RegisterUser(email, password);
+        var userId = await GivenRegisteredUser(email, password);
         var verification = await Service.Query(new GetUserVerificationToken.Query(userId));
         await Service.Command(new VerifyUser.Command(userId, verification));
         var act = async () => await Service.Command(new VerifyUser.Command(userId, verification));

@@ -1,4 +1,5 @@
-﻿using Micro.Tenants.Application.Organisations.Queries;
+﻿using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Application.Organisations.Queries;
 
 namespace Micro.Tenants.IntegrationTests.UseCases.Organisations;
 
@@ -9,13 +10,12 @@ public class OrganisationDeletionTests(ServiceFixture service, ITestOutputHelper
     public async Task Organisation_can_be_deleted()
     {
         // arrange
-        var userId = Guid.NewGuid();
-        var organisationId = Guid.NewGuid();
+        var userId =  await GivenUser();
+        var organisationId = await GivenOrganisation(userId);
         
         // act
-        await CreateUser(userId);
-        await CreateOrganisation(userId, organisationId);
-        await DeleteOrganisation(userId, organisationId);
+        var command = new DeleteOrganisation.Command();
+        await Service.Command(command, userId, organisationId);
 
         // assert
         var act = async () => { await Service.Query(new GetOrganisationByContext.Query(), userId, organisationId); };
