@@ -1,12 +1,12 @@
 ﻿@model Model
-<div data-testid="UserMenu">
+<div data-testid="Menu">
     <form class="d-flex align-items-center">
         <div class="input-group input-group-sm">
             <span class="input-group-text">User</span>
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @Model.Email
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <ul class="dropdown-menu dropdown-menu-end" data-testid="Dropdown">
                 <li>
                     <h6 class="dropdown-header">User</h6>
                 </li>
@@ -20,18 +20,18 @@
                     <h6 class="dropdown-header">Organisations</h6>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-area="" asp-page="/Organisations/Create">Create...</a>
+                    <a class="dropdown-item" asp-area="" asp-page="/Organisations/Create" data-testid="CreateOrganisationButton">Create...</a>
                 </li>
                 @foreach (var org in Model.Organisations)
                 {
-                    <li>
+                    <li data-testid="Organisations">
                         @if (org.IsCurrent)
                         {
-                            <a class="dropdown-item active" aria-current="true" asp-page="/Organisation/Details" asp-route-org="@org.Name">@org.Name</a>
+                            <a class="dropdown-item active" aria-current="true" asp-page="/Organisation/Details" asp-route-org="@org.Name" data-testid="SelectedOrganisation">@org.Name</a>
                         }
                         else
                         {
-                            <a class="dropdown-item" asp-area="" asp-page="/Organisation/Details" asp-route-org="@org.Name">@org.Name</a>
+                            <a class="dropdown-item" asp-area="" asp-page="/Organisation/Details" asp-route-org="@org.Name" data-testid="Organisation">@org.Name</a>
                         }
                     </li>
                 }
@@ -45,18 +45,20 @@
                         <h6 class="dropdown-header">Projects</h6>
                     </li>
                     <li>
-                        <a class="dropdown-item" asp-area="" asp-page="/Projects/Create" asp-route-org="@organisation.Name">Create...</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Projects/Create" asp-route-org="@organisation.Name" data-testid="CreateProjectButton">
+                            Create...
+                        </a>
                     </li>
                     @foreach (var project in Model.Projects)
                     {
-                        <li>
+                        <li data-testid="Projects">
                             @if (project.IsCurrent)
                             {
-                                <a class="dropdown-item active" aria-current="true" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name">@project.Name</a>
+                                <a class="dropdown-item active" aria-current="true" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name" data-testid="SelectedProject">@project.Name</a>
                             }
                             else
                             {
-                                <a class="dropdown-item" asp-area="" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name">@project.Name</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name" data-testid="Project">@project.Name</a>
                             }
                         </li>
                     }

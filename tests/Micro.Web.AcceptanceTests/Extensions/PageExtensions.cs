@@ -33,7 +33,16 @@ public static class PageExtensions
         await login.Login(data.Email, data.Password);
         await login.Alert.AssertSuccess();
 
+        await LogImpersonationLink(userId, data.Email);
+        
         return data with { UserId = userId };
+    }
+    
+    private static async Task LogImpersonationLink(Guid userId, string email)
+    {
+        var baseUri = Instance.BaseUrl;
+        var impersonateUri = new Uri(baseUri, new Uri($"/test/auth/impersonate?userId={userId}", UriKind.Relative));
+        await TestContext.Out.WriteLineAsync($"Impersonate {email} with link: {impersonateUri}");
     }
 
     public static async Task<string> GivenAnOrganisationOwned(this IPage page) =>

@@ -1,6 +1,6 @@
-﻿namespace Micro.Web.AcceptanceTests.Pages.Components.PageId;
+﻿namespace Micro.Web.AcceptanceTests.Pages.Components;
 
-public class Component(IPage page)
+public class PageId(IPage page)
 {
     private readonly ILocator _pageId = page.GetByTestId("PageId");
 

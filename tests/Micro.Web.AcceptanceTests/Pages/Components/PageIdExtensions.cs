@@ -2,10 +2,11 @@
 using Micro.Web.AcceptanceTests.Pages.Auth;
 using Micro.Web.AcceptanceTests.Pages.Layouts;
 using Micro.Web.AcceptanceTests.Pages.Organisations;
+using Micro.Web.AcceptanceTests.Pages.Projects;
 
-namespace Micro.Web.AcceptanceTests.Pages.Components.PageId;
+namespace Micro.Web.AcceptanceTests.Pages.Components;
 
-public static class Extensions
+public static class PageIdExtensions
 {
     public static async Task AssertPageId(this HomePage page) =>
         await page.AssertPageId("Home");
@@ -16,10 +17,10 @@ public static class Extensions
     public static async Task AssertPageId(this LoginPage page) =>
         await page.AssertPageId("Login");
     
-    public static async Task AssertPageId(this Micro.Web.AcceptanceTests.Pages.ApiKeys.AddPage page) =>
+    public static async Task AssertPageId(this ApiKeys.AddPage page) =>
         await page.AssertPageId("AddApiKey");
     
-    public static async Task AssertPageId(this Micro.Web.AcceptanceTests.Pages.ApiKeys.ListPage page) =>
+    public static async Task AssertPageId(this ApiKeys.ListPage page) =>
         await page.AssertPageId("ListApiKeys");
 
     public static async Task AssertPageId(this RegisterPage page) =>
@@ -39,6 +40,12 @@ public static class Extensions
 
     public static async Task AssertPageId(this OrganisationDetailsPage page) =>
         await page.AssertPageId("OrganisationDetails");
+
+    public static async Task AssertPageId(this ProjectCreatePage page) =>
+        await page.AssertPageId("ProjectCreate");
+
+    public static async Task AssertPageId(this ProjectDetailsPage page) =>
+        await page.AssertPageId("ProjectDetails");
 
     private static async Task AssertPageId(this PageLayout page, string expected)
     {

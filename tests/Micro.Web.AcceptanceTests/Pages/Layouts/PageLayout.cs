@@ -4,11 +4,9 @@ public class PageLayout(IPage page)
 {
     protected readonly IPage Page = page;
     
-    public Components.PageId.Component PageId => new(Page);
+    public PageId PageId => new(Page);
     
-    public Components.OrganisationSelector.Component OrganisationSelector => new(Page);
-
-    public Components.ProjectSelector.Component ProjectSelector => new(Page);
+    public Components.Menu Menu => new(Page);
     
-    public Components.AlertComponent.Component Alert => new(Page);
+    public AlertComponent Alert => new(Page);
 }

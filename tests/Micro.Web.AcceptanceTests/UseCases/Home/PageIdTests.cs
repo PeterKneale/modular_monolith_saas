@@ -33,7 +33,8 @@ public class PageIdTests : BaseTest
         var home = await HomePage.Goto(Page);
         await home.AssertPageId();
 
-        var org = await home.OrganisationSelector.SelectOrganisationAtPosition(1);
-        await org.AssertPageId();
+        await home.Menu.Activate();
+        var details = await home.Menu.SelectOrganisationAtPosition(1);
+        await details.AssertPageId();
     }
 }
