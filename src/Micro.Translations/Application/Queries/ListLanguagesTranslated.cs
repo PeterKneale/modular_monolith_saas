@@ -2,28 +2,28 @@
 
 public static class ListLanguagesTranslated
 {
-    public record Query : IRequest<IEnumerable<Result>>;
+    public record Query : IRequest<IEnumerable<string>>;
 
-    public record Result(string Code, string Name);
 
     public class Validator : AbstractValidator<Query>
     {
     }
 
-    public class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
+    public class Handler(IDbConnection db, IExecutionContext context) : IRequestHandler<Query, IEnumerable<string>>
     {
-        public async Task<IEnumerable<Result>> Handle(Query query, CancellationToken token)
+        public async Task<IEnumerable<string>> Handle(Query query, CancellationToken token)
         {
+            // list languages where at least one translation exists by joining languages with translations
             var projectId = context.ProjectId;
-
-            var languages = await db.Translations
-                .Where(x => x.Term.ProjectId == projectId)
-                .Select(x => x.Language)
-                .Distinct()
-                .AsNoTracking()
-                .ToListAsync(token);
-
-            return languages.Select(x => new Result(x.Code, x.Name));
+            var sql = """
+                      SELECT lang.language_code AS Code
+                      FROM translate.languages lang
+                      JOIN translate.translations t ON lang.id = t.language_id
+                      WHERE lang.project_id = @projectId
+                      GROUP BY lang.language_code
+                      """;
+            var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
+            return await db.QueryAsync<string>(command);
         }
     }
 }

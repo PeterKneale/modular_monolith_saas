@@ -5,7 +5,9 @@ using Micro.Common;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database.Repositories;
+using Micro.Translations.Infrastructure.Database.TypeHandlers;
 using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 namespace Micro.Translations.Infrastructure;
 
@@ -23,8 +25,13 @@ internal static class ServiceCollectionExtensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         // Repositories
+        services.AddScoped<ILanguageRepository, LanguageRepository>();
         services.AddScoped<ITermRepository, TermRepository>();
-
+        
+        // dapper
+        services.AddScoped<IDbConnection>(c => new NpgsqlConnection(connectionString));
+        SqlMapper.AddTypeHandler(LanguageIdTypeHandler.Default);
+        
         // Database Migrations
         services
             .AddSingleton<IConventionSet>(new DefaultConventionSet(Constants.SchemaName, null))

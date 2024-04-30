@@ -12,12 +12,14 @@ public class ImportingTranslations(ServiceFixture service, ITestOutputHelper out
     {
         // arrange
         var projectId = Guid.NewGuid();
+        var languageId = Guid.NewGuid();
         var translations = GetTranslations();
 
+        await Service.Command(new AddLanguage.Command(languageId, TestLanguageCode1), projectId: projectId);
         await Service.Execute(async ctx =>
         {
-            await Act(ctx, translations);
-            await Assert(ctx, translations);
+            await Act(ctx, languageId, translations);
+            await Assert(ctx, languageId, translations);
         }, projectId: projectId);
     }
 
@@ -26,16 +28,17 @@ public class ImportingTranslations(ServiceFixture service, ITestOutputHelper out
     {
         // arrange
         var projectId = Guid.NewGuid();
+        var languageId = Guid.NewGuid();
         var translations = GetTranslations();
+        await Service.Command(new AddLanguage.Command(languageId, TestLanguageCode1), projectId: projectId);
 
         await Service.Execute(async ctx =>
         {
-            await Act(ctx, translations);
-            await Act(ctx, translations);
-            await Assert(ctx, translations);
+            await Act(ctx, languageId, translations);
+            await Act(ctx, languageId, translations);
+            await Assert(ctx, languageId, translations);
         }, projectId: projectId);
     }
-
 
     private static Dictionary<string, string> GetTranslations() =>
         new()
@@ -44,16 +47,15 @@ public class ImportingTranslations(ServiceFixture service, ITestOutputHelper out
             { TestTerm2, "translation2" }
         };
 
-    private static async Task Act(IModule ctx, IDictionary<string, string> translations) =>
-        await ctx.SendCommand(new ImportTranslations.Command(TestLanguageCode1, translations));
+    private static async Task Act(IModule ctx, Guid languageId, IDictionary<string, string> translations)
+    {
+        await ctx.SendCommand(new ImportTranslations.Command(languageId, translations));
+    }
 
-    private static async Task Assert(IModule ctx, Dictionary<string, string> translations)
+    private static async Task Assert(IModule ctx, Guid languageId, Dictionary<string, string> translations)
     {
         var languages = await ctx.SendQuery(new ListLanguagesTranslated.Query());
-        languages.Should().BeEquivalentTo(new ListLanguagesTranslated.Result[]
-        {
-            new(TestLanguageCode1, TestLanguageName1)
-        });
+        languages.Should().BeEquivalentTo([TestLanguageCode1]);
 
         // assert terms are created
         var terms = await ctx.SendQuery(new ListTerms.Query());
@@ -63,7 +65,7 @@ public class ImportingTranslations(ServiceFixture service, ITestOutputHelper out
             .BeEquivalentTo(translations.Keys);
 
         // assert translations are created
-        var list = await ctx.SendQuery(new ListTranslations.Query(TestLanguageCode1));
+        var list = await ctx.SendQuery(new ListTranslations.Query(languageId));
         list.Translations.ToDictionary(x => x.TermName, x => x.TranslationText)
             .Should()
             .BeEquivalentTo(translations);

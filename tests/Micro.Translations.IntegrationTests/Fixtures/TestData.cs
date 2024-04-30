@@ -4,7 +4,7 @@ public static class TestData
 {
     public const string TestLanguageCode1 = "en-AU";
     public const string TestLanguageName1 = "English (Australia)";
-    public const string TestLanguageCode2 = "en-UK";
+    public const string TestLanguageCode2 = "en-GB";
     public const string TestLanguageName2 = "English (United Kingdom)";
     public const string TestTerm1 = "APP_REGISTER";
     public const string TestTerm2 = "APP_LOGIN";

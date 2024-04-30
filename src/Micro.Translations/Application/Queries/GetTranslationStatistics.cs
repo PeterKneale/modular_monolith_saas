@@ -6,9 +6,9 @@ public static class GetTranslationStatistics
 
     public record Results(int TotalTerms, IEnumerable<LanguageStatistic> Statistics);
 
-    public record LanguageStatistic(string Code, string Name, int Number, int Percentage);
+    public record LanguageStatistic(string Code, int Number, int Percentage);
 
-    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, Results>
+    private class Handler(IDbConnection db, IExecutionContext context) : IRequestHandler<Query, Results>
     {
         public async Task<Results> Handle(Query query, CancellationToken token)
         {
@@ -21,18 +21,9 @@ public static class GetTranslationStatistics
 
         private async Task<List<LanguageStatistic>> CalculateStatistics(ProjectId projectId, int totalTerms, CancellationToken token)
         {
-            // Retrieve all languages associated with the project
-            var allLanguages = await db.Translations
-                .Where(l => l.Term.ProjectId == projectId)
-                .Select(x => x.Language)
-                .Distinct()
-                .ToListAsync(token);
+            var allLanguages = await AllLanguages(projectId, token);
 
-            // Retrieve all translations grouped by language for the project
-            var translationsByLanguage = await db.Translations
-                .Where(x => x.Term.ProjectId == projectId)
-                .GroupBy(x => x.Language)
-                .ToDictionaryAsync(x => x.Key.Code, x => x.Count(), token);
+            var translationsByLanguage = await GetTranslationsByLanguage(projectId, token);
 
             var list = new List<LanguageStatistic>();
 
@@ -40,23 +31,37 @@ public static class GetTranslationStatistics
             foreach (var language in allLanguages)
             {
                 // Check if the language has any translations, otherwise set to 0
-                translationsByLanguage.TryGetValue(language.Code, out var count);
+                translationsByLanguage.TryGetValue(language, out var count);
 
                 // Add the language statistic with the count (0 if no translations)
                 var percentage = totalTerms == 0 ? 0 : count * 100 / totalTerms;
-                var statistic = new LanguageStatistic(language.Code, language.Name, count, percentage);
+                var statistic = new LanguageStatistic(language, count, percentage);
                 list.Add(statistic);
             }
 
             return list;
         }
 
+        private async Task<IDictionary<string, int>> GetTranslationsByLanguage(ProjectId projectId, CancellationToken token)
+        {
+            var sql = "SELECT lang.language_code AS Code, COUNT(t.id) AS Count FROM translate.languages lang LEFT JOIN translate.translations t ON lang.id = t.language_id WHERE lang.project_id = @projectId GROUP BY lang.language_code";
+            var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
+            var results = await db.QueryAsync(command);
+            return results.ToDictionary(x => x.code as string, x => (int)x.count)!;
+        }
+
+        private async Task<IEnumerable<string>> AllLanguages(ProjectId projectId, CancellationToken token)
+        {
+            var sql = "SELECT language_code FROM translate.languages WHERE project_id = @projectId";
+            var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
+            return await db.QueryAsync<string>(command);
+        }
+
         private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
         {
-            return await db.Terms
-                .Where(x => x.ProjectId == projectId)
-                .AsNoTracking()
-                .CountAsync(token);
+            var sql = "SELECT COUNT(id) FROM translate.terms WHERE project_id = @projectId";
+            var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
+            return await db.ExecuteScalarAsync<int>(command);
         }
     }
 }

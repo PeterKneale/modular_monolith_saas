@@ -8,7 +8,7 @@ public class AddPage(ITranslationModule module, IPageContextAccessor context) : 
 {
     public async Task OnGet()
     {
-        var result = await module.SendQuery(new ListLanguages.Query());
+        var result = await module.SendQuery(new ListAllLanguages.Query());
         Languages = result.Select(x => new SelectListItem(x.Name, x.Code));
         if (LanguageCode != null)
         {

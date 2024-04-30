@@ -1,17 +1,18 @@
-﻿using Micro.Translations.Domain.TermAggregate;
+﻿using Micro.Translations.Domain.LanguageAggregate;
+using Micro.Translations.Domain.TermAggregate;
 
 namespace Micro.Translations.Application.Commands;
 
 public static class UpdateTranslation
 {
-    public record Command(Guid TermId, string LanguageCode, string Text) : IRequest;
+    public record Command(Guid TermId, Guid LanguageId, string Text) : IRequest;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
             RuleFor(m => m.TermId).NotEmpty();
-            RuleFor(m => m.LanguageCode).NotEmpty();
+            RuleFor(m => m.LanguageId).NotEmpty();
             RuleFor(m => m.Text).NotEmpty().MaximumLength(100);
         }
     }
@@ -22,12 +23,12 @@ public static class UpdateTranslation
         {
             var termId = TermId.Create(command.TermId);
             var text = TranslationText.Create(command.Text);
-            var language = Language.FromIsoCode(command.LanguageCode);
+            var languageId = LanguageId.Create(command.LanguageId);
 
             var term = await terms.GetAsync(termId, token);
             if (term == null) throw new NotFoundException(nameof(Term), termId.Value);
 
-            term.UpdateTranslation(language, text);
+            term.UpdateTranslation(languageId, text);
 
             terms.Update(term);
         }

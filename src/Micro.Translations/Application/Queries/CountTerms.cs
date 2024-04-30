@@ -4,15 +4,20 @@ public static class CountTerms
 {
     public record Query : IRequest<int>;
 
-    private class Handler(Db db, IExecutionContext context) : IRequestHandler<Query, int>
+    private class Handler(IDbConnection db, IExecutionContext context) : IRequestHandler<Query, int>
     {
         public async Task<int> Handle(Query query, CancellationToken token)
         {
             var projectId = context.ProjectId;
 
-            return await db.Terms
-                .AsNoTracking()
-                .CountAsync(x => x.ProjectId == projectId, token);
+            var sql = @"
+                      SELECT COUNT(id) AS term_count
+                      FROM translate.terms
+                      WHERE project_id = @projectId;
+                      ";
+            
+            var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
+            return await db.ExecuteScalarAsync<int>(command);
         }
     }
 }

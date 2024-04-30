@@ -3,6 +3,7 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Common.Infrastructure.Integration.Queue;
+using Micro.Translations.Domain.LanguageAggregate;
 using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Domain.UserAggregate;
 using Micro.Translations.Infrastructure.Database.Converters;
@@ -10,7 +11,7 @@ using static Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure.Database;
 
-public class Db : DbContext , IDbSetInbox, IDbSetOutbox, IDbSetQueue
+public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 {
     public Db()
     {
@@ -20,6 +21,8 @@ public class Db : DbContext , IDbSetInbox, IDbSetOutbox, IDbSetQueue
         : base(options)
     {
     }
+
+    public virtual DbSet<Language> Languages { get; set; }
 
     public virtual DbSet<Term> Terms { get; set; }
 
@@ -35,7 +38,8 @@ public class Db : DbContext , IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
-        configurationBuilder.Properties<Language>().HaveConversion<LanguageCodeConverter>();
+        configurationBuilder.Properties<LanguageId>().HaveConversion<LanguageIdConverter>();
+        configurationBuilder.Properties<LanguageDetail>().HaveConversion<LanguageDetailConverter>();
         configurationBuilder.Properties<ProjectId>().HaveConversion<ProjectIdConverter>();
         configurationBuilder.Properties<TermId>().HaveConversion<TermIdConverter>();
         configurationBuilder.Properties<TermName>().HaveConversion<TermNameConverter>();
@@ -45,6 +49,23 @@ public class Db : DbContext , IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Language>(entity =>
+        {
+            entity.ToTable(LanguagesTable, SchemaName);
+            
+            entity.Property(e => e.LanguageId)
+                .ValueGeneratedNever()
+                .HasColumnName(IdColumn);
+            
+            entity.Property(e => e.ProjectId)
+                .HasColumnName(ProjectIdColumn);
+            
+            entity.OwnsOne(x=>x.Detail)
+                .Property(x=>x.Code)
+                .HasMaxLength(10)
+                .HasColumnName(LanguageCodeColumn);
+        });
+        
         modelBuilder.Entity<Term>(entity =>
         {
             entity.ToTable(TermsTable, SchemaName);
@@ -62,7 +83,6 @@ public class Db : DbContext , IDbSetInbox, IDbSetOutbox, IDbSetQueue
             entity.Property(e => e.ProjectId)
                 .HasColumnName(ProjectIdColumn);
 
-
             // EF access the Translations collection property through its backing field
             // https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core
             entity.Metadata
@@ -76,26 +96,19 @@ public class Db : DbContext , IDbSetInbox, IDbSetOutbox, IDbSetQueue
         {
             entity.ToTable(TranslationsTable, SchemaName);
 
-            entity.HasIndex(e => new { e.TermId, e.Language }, "unique_translations_term_id_language").IsUnique();
-
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
+            
             entity.Property(e => e.TermId)
                 .HasColumnName(TermIdColumn);
-
-            entity
-                .Property(e => e.Language)
-                .HasMaxLength(10)
-                .HasColumnName(LanguageCodeColumn);
+            
+            entity.Property(e => e.LanguageId)
+                .HasColumnName(LanguageIdColumn);
 
             entity.Property(e => e.Text)
                 .HasMaxLength(100)
                 .HasColumnName(TextColumn);
-
-            entity.HasOne(d => d.Term).WithMany(p => p.Translations)
-                .HasForeignKey(d => d.TermId)
-                .HasConstraintName("fk_translations_terms");
 
             entity.Ignore(x => x.DomainEvents);
         });

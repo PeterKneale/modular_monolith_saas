@@ -11,6 +11,11 @@ public class Migration1 : Migration
 {
     public override void Up()
     {
+        Create.Table(LanguagesTable)
+            .WithColumn(IdColumn).AsGuid().PrimaryKey()
+            .WithColumn(ProjectIdColumn).AsGuid()
+            .WithColumn(LanguageCodeColumn).AsString(100);
+        
         Create.Table(TermsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(ProjectIdColumn).AsGuid()
@@ -19,7 +24,7 @@ public class Migration1 : Migration
         Create.Table(TranslationsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(TermIdColumn).AsGuid()
-            .WithColumn(LanguageCodeColumn).AsString(10)
+            .WithColumn(LanguageIdColumn).AsGuid()
             .WithColumn(TextColumn).AsString(100);
 
         Create.Table(UsersTable)
@@ -29,14 +34,18 @@ public class Migration1 : Migration
         Create.ForeignKey($"fk_{TranslationsTable}_{TermsTable}")
             .FromTable(TranslationsTable).ForeignColumn(TermIdColumn)
             .ToTable(TermsTable).PrimaryColumn(IdColumn);
+        
+        Create.ForeignKey($"fk_{TranslationsTable}_{LanguagesTable}")
+            .FromTable(TranslationsTable).ForeignColumn(LanguageIdColumn)
+            .ToTable(LanguagesTable).PrimaryColumn(IdColumn);
 
         // Each term can only be added to a project once
         Create.UniqueConstraint($"unique_{TermsTable}_{ProjectIdColumn}_{NameColumn}")
             .OnTable(TermsTable).Columns(ProjectIdColumn, NameColumn);
 
         // Each translation can only be added to a term once per language
-        Create.UniqueConstraint($"unique_{TranslationsTable}_{TermIdColumn}_{LanguageCodeColumn}")
-            .OnTable(TranslationsTable).Columns(TermIdColumn, LanguageCodeColumn);
+        Create.UniqueConstraint($"unique_{TranslationsTable}_{TermIdColumn}_{LanguageIdColumn}")
+            .OnTable(TranslationsTable).Columns(TermIdColumn, LanguageIdColumn);
 
         this.CreateInboxTable();
         this.CreateOutboxTable();
@@ -47,6 +56,7 @@ public class Migration1 : Migration
     {
         Delete.Table(TranslationsTable).IfExists();
         Delete.Table(TermsTable).IfExists();
+        Delete.Table(LanguagesTable).IfExists();
         Delete.Table(UsersTable).IfExists();
 
         this.DropInboxTable();

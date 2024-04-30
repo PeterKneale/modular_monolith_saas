@@ -1,10 +1,8 @@
-﻿using Micro.Translations.Domain.TermAggregate;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class GetTranslation
 {
-    public record Query(Guid TermId, string LanguageCode) : IRequest<Result>;
+    public record Query(Guid TermId, Guid LanguageId) : IRequest<Result>;
 
     public record Result(string Text);
 
@@ -13,26 +11,20 @@ public static class GetTranslation
         public Validator()
         {
             RuleFor(m => m.TermId).NotEmpty();
-            RuleFor(m => m.LanguageCode).NotEmpty();
+            RuleFor(m => m.LanguageId).NotEmpty();
         }
     }
 
-    private class Handler(Db db) : IRequestHandler<Query, Result>
+    private class Handler(IDbConnection db) : IRequestHandler<Query, Result>
     {
         public async Task<Result> Handle(Query query, CancellationToken token)
         {
-            var termId = TermId.Create(query.TermId);
-            var language = Language.FromIsoCode(query.LanguageCode);
-
-            var term = await db.Terms
-                .AsNoTracking()
-                .Include(x => x.Translations)
-                .SingleOrDefaultAsync(x => x.Id == termId, token);
-
-            if (term == null) throw new NotFoundException(nameof(Term), termId.Value);
-            var translation = term.GetTranslation(language);
-
-            return new Result(translation.Text.Value);
+            var termId = query.TermId;
+            var languageId = query.LanguageId;
+            const string sql = "select text from translate.translations where term_id = @termId and language_id = @languageId";
+            var command = new CommandDefinition(sql, new { termId, languageId }, cancellationToken: token);
+            var name = await db.ExecuteScalarAsync<string>(command);
+            return new Result(name);
         }
     }
 }
