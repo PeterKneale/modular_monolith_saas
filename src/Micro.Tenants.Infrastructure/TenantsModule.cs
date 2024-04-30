@@ -1,8 +1,7 @@
-﻿using Micro.Tenants.Infrastructure.Infrastructure;
-using Micro.Users;
+﻿using Micro.Users;
 
 namespace Micro.Tenants.Infrastructure;
 
 public interface ITenantsModule : IModule;
 
-public class TenantsModule() : BaseModule(CompositionRoot.BeginLifetimeScope), ITenantsModule;
+public class TenantsModule() : BaseModule(TenantsCompositionRoot.BeginLifetimeScope), ITenantsModule;

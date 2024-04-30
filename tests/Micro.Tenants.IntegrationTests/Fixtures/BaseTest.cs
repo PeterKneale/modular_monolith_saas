@@ -1,7 +1,7 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Tenants.Application.Organisations.Commands;
-using Micro.Tenants.Infrastructure.Infrastructure;
-using Micro.Tenants.Infrastructure.Infrastructure.Database;
+using Micro.Tenants.Infrastructure;
+using Micro.Tenants.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -36,7 +36,7 @@ public class BaseTest
 
     protected static async Task<IEnumerable<T>> GetOutboxMessages<T>() where T : IIntegrationEvent
     {
-        using var scope = CompositionRoot.BeginLifetimeScope();
+        using var scope = TenantsCompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var messages = await db.Outbox
             .Where(x => x.Type.Contains(typeof(T).FullName!))

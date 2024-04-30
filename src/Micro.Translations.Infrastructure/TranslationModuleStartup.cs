@@ -6,9 +6,8 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Common.Infrastructure.Jobs;
 using Micro.Tenants.Messages;
-using Micro.Translations.Infrastructure.Infrastructure;
-using Micro.Translations.Infrastructure.Infrastructure.Integration;
-using Micro.Translations.Infrastructure.Infrastructure.Integration.Handlers;
+using Micro.Translations.Infrastructure.Integration;
+using Micro.Translations.Infrastructure.Integration.Handlers;
 using Micro.Users.Messages;
 using Microsoft.Extensions.Configuration;
 using Quartz;
@@ -37,7 +36,7 @@ public static class TranslationModuleStartup
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
         
-        CompositionRoot.SetProvider(serviceProvider);
+        TranslationsCompositionRoot.SetProvider(serviceProvider);
 
         if (enableScheduler) _scheduler = await SetupScheduledJobs();
     }

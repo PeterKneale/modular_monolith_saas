@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Micro.Users.Domain.UnitTests")]
 [assembly: InternalsVisibleTo("Micro.Users.IntegrationTests")]
 [assembly: InternalsVisibleTo("Micro.Modules.IntegrationTests")]
+namespace Micro.Users.Infrastructure;
+
 public static class InfrastructureAssemblyInfo
 {
     public static Assembly Assembly => typeof(InfrastructureAssemblyInfo).Assembly;

@@ -21,7 +21,7 @@ public class Name : ValueObject
         return new Name(first, last);
     }
 
-    private string FullName => $"{First} {Last}";
+    public string FullName => $"{First} {Last}";
 
     public string First { get; }
 

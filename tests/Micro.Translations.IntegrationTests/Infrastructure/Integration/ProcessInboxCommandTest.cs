@@ -1,6 +1,5 @@
 ﻿using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Infrastructure;
-using Micro.Translations.Infrastructure.Infrastructure.Database;
+using Micro.Translations.Infrastructure.Database;
 using Micro.Users.Messages;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
@@ -21,7 +20,7 @@ public class ProcessInboxCommandTest(ServiceFixture service, ITestOutputHelper o
         await Service.Command(new ProcessInboxCommand());
 
         // assert
-        using var scope = CompositionRoot.BeginLifetimeScope();
+        using var scope = TranslationsCompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();

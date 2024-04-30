@@ -4,8 +4,7 @@ using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Common.Infrastructure.Jobs;
-using Micro.Users.Infrastructure.Infrastructure;
-using Micro.Users.Infrastructure.Infrastructure.Integration;
+using Micro.Users.Infrastructure.Integration;
 using Microsoft.Extensions.Configuration;
 using Quartz;
 using Quartz.Impl;
@@ -28,7 +27,7 @@ public static class UsersModuleStartup
             .BuildServiceProvider()
             .ApplyDatabaseMigrations(resetDb);
 
-        CompositionRoot.SetProvider(serviceProvider);
+        UsersCompositionRoot.SetProvider(serviceProvider);
 
         if (enableScheduler) _scheduler = await SetupScheduledJobs();
     }

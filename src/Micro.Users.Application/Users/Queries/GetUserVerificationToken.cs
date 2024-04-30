@@ -1,4 +1,4 @@
-﻿namespace Micro.Users.Application.Users.Commands;
+﻿namespace Micro.Users.Application.Users.Queries;
 
 public static class GetUserVerificationToken
 {

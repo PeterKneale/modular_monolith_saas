@@ -3,8 +3,8 @@ using System.Reflection;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Common.Infrastructure.Jobs;
-using Micro.Tenants.Infrastructure.Infrastructure;
-using Micro.Tenants.Infrastructure.Infrastructure.Integration;
+using Micro.Tenants.Infrastructure.Integration;
+using Micro.Tenants.Infrastructure.Integration.Handlers;
 using Microsoft.Extensions.Configuration;
 using Quartz.Impl;
 using Quartz.Logging;
@@ -29,7 +29,7 @@ public static class TenantsModuleStartup
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
 
-        CompositionRoot.SetProvider(serviceProvider);
+        TenantsCompositionRoot.SetProvider(serviceProvider);
 
         if (enableScheduler) _scheduler = await SetupScheduledJobs();
     }

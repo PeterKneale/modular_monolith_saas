@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Micro.Users;
+namespace Micro.Common;
 
 public class BaseModule
 {

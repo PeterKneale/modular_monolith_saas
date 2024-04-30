@@ -6,16 +6,14 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=78DC164C_002D08C1_002D4797_002D8229_002D502F45FF4C96/@EntryIndexedValue">2137843E-DE15-468B-8126-01C8DA8651C1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ae2f4b77_002D1254_002D4466_002D9f6a_002D279b6404b753/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Registering_synchronises_users" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::CB7A4003-0789-4740-A6C6-AD687D80EEA5::net8.0::Micro.Modules.IntegrationTests.RegistrationTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=36e4d235_002D8d2a_002D44ab_002Dac37_002D2c876044158c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;modules&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9e4db3a8_002Dae33_002D4cab_002Db784_002Dec65352ea145/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;modules&amp;gt; #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Micro.Modules.IntegrationTests&amp;gt;" /&gt;&#xD;
-  &lt;/Or&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
 	
 	
 	

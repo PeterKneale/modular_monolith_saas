@@ -1,6 +1,5 @@
 ﻿using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Infrastructure;
-using Micro.Translations.Infrastructure.Infrastructure.Database;
+using Micro.Translations.Infrastructure.Database;
 using Micro.Users.Messages;
 
 namespace Micro.Translations.IntegrationTests.UseCases.Integration;
@@ -19,7 +18,7 @@ public class UserCreatedHandlerTests(ServiceFixture service, ITestOutputHelper o
         await Service.Publish(integrationEvent);
 
         // assert
-        using var scope = CompositionRoot.BeginLifetimeScope();
+        using var scope = TranslationsCompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();
