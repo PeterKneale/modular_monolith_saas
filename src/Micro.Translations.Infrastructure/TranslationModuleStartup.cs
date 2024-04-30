@@ -6,16 +6,16 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Common.Infrastructure.Jobs;
 using Micro.Tenants.IntegrationEvents;
-using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Integration;
-using Micro.Translations.Infrastructure.Integration.Handlers;
+using Micro.Translations.Infrastructure.Infrastructure;
+using Micro.Translations.Infrastructure.Infrastructure.Integration;
+using Micro.Translations.Infrastructure.Infrastructure.Integration.Handlers;
 using Micro.Users.IntegrationEvents;
 using Microsoft.Extensions.Configuration;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Logging;
 
-namespace Micro.Translations;
+namespace Micro.Translations.Infrastructure;
 
 public static class TranslationModuleStartup
 {

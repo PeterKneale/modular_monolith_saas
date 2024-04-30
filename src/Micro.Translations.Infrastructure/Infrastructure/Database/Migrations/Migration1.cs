@@ -2,9 +2,9 @@
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Common.Infrastructure.Integration.Queue;
-using static Micro.Translations.Infrastructure.Database.Constants;
+using static Micro.Translations.Infrastructure.Infrastructure.Database.Constants;
 
-namespace Micro.Translations.Infrastructure.Database.Migrations;
+namespace Micro.Translations.Infrastructure.Infrastructure.Database.Migrations;
 
 [Migration(1)]
 public class Migration1 : Migration

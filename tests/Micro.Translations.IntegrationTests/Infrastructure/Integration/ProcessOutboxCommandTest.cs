@@ -1,5 +1,4 @@
 ﻿using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Database;
 using Micro.Translations.IntegrationEvents;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;

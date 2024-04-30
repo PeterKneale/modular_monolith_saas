@@ -1,6 +1,6 @@
 ﻿using Micro.Translations.Domain.LanguageAggregate;
 
-namespace Micro.Translations.Infrastructure.Database.TypeHandlers;
+namespace Micro.Translations.Infrastructure.Infrastructure.Database.TypeHandlers;
 
 public class LanguageIdTypeHandler : SqlMapper.TypeHandler<LanguageId>
 {

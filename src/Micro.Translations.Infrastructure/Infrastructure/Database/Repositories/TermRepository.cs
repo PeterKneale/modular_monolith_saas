@@ -1,6 +1,6 @@
 ﻿using Micro.Translations.Domain.TermAggregate;
 
-namespace Micro.Translations.Infrastructure.Database.Repositories;
+namespace Micro.Translations.Infrastructure.Infrastructure.Database.Repositories;
 
 internal class TermRepository(Db db) : ITermRepository
 {

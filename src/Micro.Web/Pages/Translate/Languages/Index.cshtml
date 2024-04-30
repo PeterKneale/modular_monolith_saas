@@ -1,19 +1,19 @@
-﻿@page "/org/{org}/projects/{project}/translate/terms/list"
-@model Micro.Web.Pages.Translate.Terms.IndexPage
+﻿@page "/org/{org}/projects/{project}/translate/languages"
+@model Index
 
 <div class="card mb-2">
     <div class="card-header">
         <span class="float-end">
-            Terms: <strong>@Model.Total</strong>
+            Languages: <strong>@Model.Results.Count()</strong>
         </span>
-        <h5>Terms</h5>
+        <h5>Languages</h5>
     </div>
     <div class="card-body">
         @foreach (var item in Model.Results)
         {
             <div class="card mb-2">
                 <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
+                    <h5 class="card-title">@item</h5>
                 </div>
             </div>
         }

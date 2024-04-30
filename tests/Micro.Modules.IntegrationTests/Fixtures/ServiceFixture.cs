@@ -7,6 +7,7 @@ using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.IntegrationTests.Common;
 using Micro.Tenants;
 using Micro.Translations;
+using Micro.Translations.Infrastructure;
 using Micro.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

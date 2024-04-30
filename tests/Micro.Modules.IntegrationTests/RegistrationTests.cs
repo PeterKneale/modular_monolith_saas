@@ -1,6 +1,7 @@
 using Micro.Modules.IntegrationTests.Fixtures;
 using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Database;
+using Micro.Translations.Infrastructure.Infrastructure;
+using Micro.Translations.Infrastructure.Infrastructure.Database;
 using Micro.Users.Application.Users.Commands;
 
 namespace Micro.Modules.IntegrationTests;

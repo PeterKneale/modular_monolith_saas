@@ -1,39 +1,32 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Commands;
 using Micro.Translations.Application.Queries;
+using Micro.Translations.Infrastructure;
 
 namespace Micro.Web.Pages.Translate.Translations;
 
 public class AddPage(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
-    public async Task OnGet()
-    {
-        var result = await module.SendQuery(new ListAllLanguages.Query());
-        Languages = result.Select(x => new SelectListItem(x.Name, x.Code));
-        if (LanguageCode != null)
-        {
-            foreach(var language in Languages)
-            {
-                if (language.Value == LanguageCode)
-                {
-                    language.Selected = true;
-                }
-            }
-        }
-    }
+    [BindProperty(SupportsGet = true)]
+    public string LanguageCode { get; set; }
+    
+    [Required]
+    [BindProperty(SupportsGet = true)]
+    public Guid TermId { get; set; }
+    
+    [Required]
+    [BindProperty]
+    public Guid LanguageId { get; set; }
     
     [Required] 
     [BindProperty] 
     public string Text { get; set; }
 
-    [Required]
-    [BindProperty(SupportsGet = true)]
-    public Guid TermId { get; set; }
+    public async Task OnGet()
+    {
+        LanguageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+    }
 
-    [BindProperty(SupportsGet = true)]
-    public string? LanguageCode { get; set; }
-
-    public IEnumerable<SelectListItem> Languages { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -41,10 +34,10 @@ public class AddPage(ITranslationModule module, IPageContextAccessor context) : 
         {
             return Page();
         }
-
+        
         try
         {
-            await module.SendCommand(new AddTranslation.Command(TermId, LanguageCode, Text));
+            await module.SendCommand(new AddTranslation.Command(TermId, LanguageId, Text));
             TempData.SetAlert(Alert.Success("You have added a translation"));
             
             return RedirectToPage(nameof(Index), new

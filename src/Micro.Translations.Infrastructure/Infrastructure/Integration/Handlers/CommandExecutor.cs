@@ -1,6 +1,6 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 
-namespace Micro.Translations.Infrastructure.Integration.Handlers;
+namespace Micro.Translations.Infrastructure.Infrastructure.Integration.Handlers;
 
 internal static class CommandExecutor
 {

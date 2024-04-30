@@ -1,38 +1,7 @@
-﻿@inject IPageContextAccessor Page
-@{
+﻿@{
     Layout = "_LayoutPageOrganisationProject";
 }
-<div class="btn-toolbar mb-3" role="toolbar">
-    <div class="btn-group" role="group" aria-label="First group">
-        <a class="btn btn-primary"
-           asp-page="/Translate/Terms/Add"
-           asp-route-org="@Page.Organisation.Name"
-           asp-route-project="@Page.Project.Name">
-            <i class="bi bi-plus"></i> Add Term
-        </a>
-        <a class="btn btn-primary active"
-           asp-page="/Translate/Terms/Index"
-           asp-route-org="@Page.Organisation.Name"
-           asp-route-project="@Page.Project.Name">
-            <i class="bi bi-list"></i> View Terms
-        </a>
-        <a class="btn btn-primary"
-           asp-page="/Translate/Terms/Import"
-           asp-route-org="@Page.Organisation.Name"
-           asp-route-project="@Page.Project.Name">
-            <i class="bi bi-file-arrow-up"></i> Import Terms
-        </a>
-    </div>
-    <div class="btn-group ms-2" role="group">
-        <button type="button" class="btn btn-primary"><i class="bi bi-plus"></i> Add Language</button>
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-              Languages
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">en-AU</a></li>
-              <li><a class="dropdown-item" href="#">en-US</a></li>
-            </ul>
-    </div>
-</div>
+
+<vc:translate-menu></vc:translate-menu>
 
 @RenderBody()

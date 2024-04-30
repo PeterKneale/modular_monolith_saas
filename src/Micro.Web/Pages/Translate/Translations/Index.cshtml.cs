@@ -1,6 +1,6 @@
-﻿using Micro.Translations;
-using Micro.Translations.Application.Commands;
+﻿using Micro.Translations.Application.Commands;
 using Micro.Translations.Application.Queries;
+using Micro.Translations.Infrastructure;
 
 namespace Micro.Web.Pages.Translate.Translations;
 
@@ -12,16 +12,18 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
 
     public async Task OnGet()
     {
-        var query = new ListTranslations.Query(LanguageCode);
+        var languageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        var query = new ListTranslations.Query(languageId);
         Results = await module.SendQuery(query);
     }
 
     public ListTranslations.Results Results { get; set; }
 
-    public async Task<RedirectToPageResult> OnGetRemoveTranslation(Guid termId, string languageCode, CancellationToken token)
+    public async Task<RedirectToPageResult> OnGetRemoveTranslation(Guid termId, CancellationToken token)
     {
-        await module.SendCommand(new RemoveTranslation.Command(termId, languageCode));
-
+        var languageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        await module.SendCommand(new RemoveTranslation.Command(termId, languageId));
+        
         return RedirectToPage(nameof(Index), new
         {
             Org,

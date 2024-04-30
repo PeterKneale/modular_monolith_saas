@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations.Infrastructure;
+﻿namespace Micro.Translations.Infrastructure.Infrastructure;
 
 internal static class CompositionRoot
 {

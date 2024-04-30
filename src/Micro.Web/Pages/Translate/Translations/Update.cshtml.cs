@@ -1,6 +1,7 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Commands;
 using Micro.Translations.Application.Queries;
+using Micro.Translations.Infrastructure;
 
 namespace Micro.Web.Pages.Translate.Translations;
 
@@ -8,7 +9,8 @@ public class UpdatePage(ITranslationModule module, IPageContextAccessor context)
 {
     public async Task OnGet()
     {
-        var query = new GetTranslation.Query(TermId, LanguageCode);
+        LanguageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        var query = new GetTranslation.Query(TermId, LanguageId);
         var result = await module.SendQuery(query);
         Text = result.Text;
     }
@@ -19,10 +21,10 @@ public class UpdatePage(ITranslationModule module, IPageContextAccessor context)
         {
             return Page();
         }
-
+        
         try
         {
-            await module.SendCommand(new UpdateTranslation.Command(TermId, LanguageCode, Text));
+            await module.SendCommand(new UpdateTranslation.Command(TermId, LanguageId, Text));
             TempData.SetAlert(Alert.Success("You have updated a translation"));
             
             return RedirectToPage(nameof(Index), new
@@ -44,6 +46,9 @@ public class UpdatePage(ITranslationModule module, IPageContextAccessor context)
     [Required]
     [BindProperty(SupportsGet = true)]
     public Guid TermId { get; set; }
+    
+    [BindProperty(SupportsGet = true)]
+    public Guid LanguageId { get; set; }
 
     [Required]
     [BindProperty(SupportsGet = true)]

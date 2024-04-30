@@ -6,12 +6,15 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=78DC164C_002D08C1_002D4797_002D8229_002D502F45FF4C96/@EntryIndexedValue">2137843E-DE15-468B-8126-01C8DA8651C1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=73a8cd2b_002D825a_002D47de_002Dbb1b_002D99f976afabb3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;And&gt;&#xD;
-    &lt;ProjectFolder&gt;2137843E-DE15-468B-8126-01C8DA8651C1/d:UseCases&lt;/ProjectFolder&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Translations.IntegrationTests" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;translations&amp;gt;\&amp;lt;Micro.Translations.IntegrationTests&amp;gt;" /&gt;&#xD;
-  &lt;/And&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=96db49c4_002Dd18d_002D4b80_002Db3b2_002Dd3dba1135ec0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;modules&amp;gt;\&amp;lt;translations&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;translations&amp;gt;" /&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::303110BA-112C-4CF4-AE69-7376AA933F87::net8.0::Micro.Web.AcceptanceTests.UseCases.SmokeTests.Can_login&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	

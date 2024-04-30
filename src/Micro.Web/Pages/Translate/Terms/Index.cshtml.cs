@@ -1,5 +1,6 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Queries;
+using Micro.Translations.Infrastructure;
 
 namespace Micro.Web.Pages.Translate.Terms;
 

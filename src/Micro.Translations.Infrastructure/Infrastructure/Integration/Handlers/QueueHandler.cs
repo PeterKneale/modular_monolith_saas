@@ -1,7 +1,7 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Queue;
 
-namespace Micro.Translations.Infrastructure.Integration.Handlers;
+namespace Micro.Translations.Infrastructure.Infrastructure.Integration.Handlers;
 
 public class QueueHandler(IDbSetQueue set, ILogger<QueueHandler> log) : IRequestHandler<ProcessQueueCommand>
 {

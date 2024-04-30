@@ -1,7 +1,8 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
+using Micro.Translations.Infrastructure.Infrastructure.Database;
 
-namespace Micro.Translations.Infrastructure.Integration.Handlers;
+namespace Micro.Translations.Infrastructure.Infrastructure.Integration.Handlers;
 
 public class IntegrationEventHandler : IIntegrationEventHandler
 {

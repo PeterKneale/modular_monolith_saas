@@ -1,5 +1,6 @@
 ﻿using Micro.Translations;
 using Micro.Translations.Application.Commands;
+using Micro.Translations.Infrastructure;
 
 namespace Micro.Web.Pages.Translate.Terms;
 
@@ -19,7 +20,7 @@ public class ImportPage(ITranslationModule module, IPageContextAccessor context)
             var lines = (await reader.ReadToEndAsync()).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             await module.SendCommand(new ImportTerms.Command(lines));
             TempData.SetAlert(Alert.Success($"You have imported {lines.Length} term"));
-            return RedirectToPage(nameof(Index), new
+            return RedirectToPage(nameof(Languages.Index), new
             {
                 Org = context.Organisation.Name,
                 Project = context.Project.Name

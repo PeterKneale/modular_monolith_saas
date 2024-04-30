@@ -1,6 +1,7 @@
 ﻿using Micro.Common.Application;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Translations.Infrastructure;
 using Micro.Users;
 using Micro.Users.Application.Users.Commands;
 using Microsoft.Extensions.DependencyInjection;

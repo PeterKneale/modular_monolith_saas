@@ -4,6 +4,7 @@ using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Users.Application.Users.Commands;
 using Micro.Users.Application.Users.Queries;
 using Micro.Translations;
+using Micro.Translations.Infrastructure;
 using Micro.Users;
 using Micro.Web.Api;
 using Micro.Web.Api.Users;

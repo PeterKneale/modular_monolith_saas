@@ -7,7 +7,7 @@
     <div class="card-body">
         @Html.EditorFor(x => x.Text, null, new { autofocus = "autofocus" })
         @Html.HiddenFor(x => x.TermId)
-        @Html.HiddenFor(x => x.LanguageCode)
+        @Html.HiddenFor(x => x.LanguageId)
     </div>
     <div class="card-footer">
         <input type="submit" value="Update" class="btn btn-primary ms-auto" data-testid="Update"/>

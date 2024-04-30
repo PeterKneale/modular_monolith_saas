@@ -1,8 +1,8 @@
-﻿using Micro.Tenants.IntegrationEvents;
-using Micro.Translations.Domain.UserAggregate;
+﻿using Micro.Translations.Domain.UserAggregate;
+using Micro.Translations.Infrastructure.Infrastructure.Database;
 using Micro.Users.IntegrationEvents;
 
-namespace Micro.Translations.Infrastructure.Integration.EventHandlers;
+namespace Micro.Translations.Infrastructure.Infrastructure.Integration.EventHandlers;
 
 public class UserChangedHandler(Db db, ILogger<UserChangedHandler> logs) : INotificationHandler<UserChanged>
 {

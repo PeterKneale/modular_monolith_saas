@@ -3,12 +3,13 @@ using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common;
 using Micro.Common.Infrastructure.Integration;
-using Micro.Translations.Infrastructure.Database.Repositories;
-using Micro.Translations.Infrastructure.Database.TypeHandlers;
+using Micro.Translations.Infrastructure.Infrastructure.Database;
+using Micro.Translations.Infrastructure.Infrastructure.Database.Repositories;
+using Micro.Translations.Infrastructure.Infrastructure.Database.TypeHandlers;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 
-namespace Micro.Translations.Infrastructure;
+namespace Micro.Translations.Infrastructure.Infrastructure;
 
 internal static class ServiceCollectionExtensions
 {

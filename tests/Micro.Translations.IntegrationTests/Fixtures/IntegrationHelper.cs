@@ -2,7 +2,8 @@
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Translations.Infrastructure;
-using Micro.Translations.Infrastructure.Database;
+using Micro.Translations.Infrastructure.Infrastructure;
+using Micro.Translations.Infrastructure.Infrastructure.Database;
 
 namespace Micro.Translations.IntegrationTests.Fixtures;
 

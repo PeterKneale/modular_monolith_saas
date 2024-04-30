@@ -2,7 +2,7 @@
 
 [assembly: ExcludeFromCodeCoverage]
 
-namespace Micro.Translations;
+namespace Micro.Translations.Infrastructure;
 
 public static class InfrastructureAssemblyInfo
 {

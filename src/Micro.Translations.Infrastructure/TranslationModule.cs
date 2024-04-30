@@ -1,8 +1,8 @@
 ﻿using Micro.Common;
-using Micro.Translations.Infrastructure;
+using Micro.Translations.Infrastructure.Infrastructure;
 using Micro.Users;
 
-namespace Micro.Translations;
+namespace Micro.Translations.Infrastructure;
 
 public interface ITranslationModule : IModule;
 

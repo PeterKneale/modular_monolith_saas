@@ -31,7 +31,6 @@ public static class FileDownloads
         var stream = new MemoryStream();
         var writer = new ResXResourceWriter(stream);
         writer.AddMetadata("language-code",results.LanguageCode);
-        writer.AddMetadata("language-name",results.LanguageName);
         foreach (var line in results.Translations)
         {
             writer.AddResource(line.TermName, line.TranslationText);

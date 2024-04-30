@@ -6,10 +6,10 @@ using Micro.Common.Infrastructure.Integration.Queue;
 using Micro.Translations.Domain.LanguageAggregate;
 using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.Domain.UserAggregate;
-using Micro.Translations.Infrastructure.Database.Converters;
-using static Micro.Translations.Infrastructure.Database.Constants;
+using Micro.Translations.Infrastructure.Infrastructure.Database.Converters;
+using static Micro.Translations.Infrastructure.Infrastructure.Database.Constants;
 
-namespace Micro.Translations.Infrastructure.Database;
+namespace Micro.Translations.Infrastructure.Infrastructure.Database;
 
 public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 {

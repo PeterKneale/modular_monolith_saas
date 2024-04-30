@@ -1,17 +1,15 @@
-﻿@page "/org/{org}/projects/{project}/translate/translations/add"
-@model AddPage
+﻿@page "/org/{org}/projects/{project}/translate/langauges/add"
+@model Add
 
 <div class="card mb-2">
     <div class="card-header">
-        <h5>Create a new translation</h5>
+        <h5>Add a language</h5>
     </div>
     <div class="card-body">
         <partial name="_ValidationSummary"/>
         <form method="post" class="card">
             <div class="card-body">
-                @Html.EditorFor(x => x.Text, null, new { autofocus = "autofocus" })
-                @Html.HiddenFor(x => x.TermId)
-                @Html.HiddenFor(x => x.LanguageId)
+                @Html.EditorFor(x => x.LanguageCode, null, new { autofocus = "autofocus" })
             </div>
             <div class="card-footer">
                 <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>
