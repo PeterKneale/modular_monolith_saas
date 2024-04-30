@@ -25,22 +25,28 @@ COPY ["tests/Micro.Common.UnitTests/Micro.Common.UnitTests.csproj", "tests/Micro
 COPY ["tests/Micro.Modules.IntegrationTests/Micro.Modules.IntegrationTests.csproj", "tests/Micro.Modules.IntegrationTests/"]
 
 # module - users
-COPY ["src/Micro.Users/Micro.Users.csproj", "src/Micro.Users/"]
-COPY ["src/Micro.Users.IntegrationEvents/Micro.Users.IntegrationEvents.csproj", "src/Micro.Users.IntegrationEvents/"]
-COPY ["tests/Micro.Users.UnitTests/Micro.Users.UnitTests.csproj", "tests/Micro.Users.UnitTests/"]
-COPY ["tests/Micro.Users.IntegrationTests/Micro.Users.IntegrationTests.csproj", "tests/Micro.Users.IntegrationTests/"]
+COPY ["src/Micro.Users.Application/Micro.Users.Application.csproj", 							"src/Micro.Users.Application/"]
+COPY ["src/Micro.Users.Domain/Micro.Users.Domain.csproj", 										"src/Micro.Users.Domain/"]
+COPY ["src/Micro.Users.Infrastructure/Micro.Users.Infrastructure.csproj", 						"src/Micro.Users.Infrastructure/"]
+COPY ["src/Micro.Users.Messages/Micro.Users.Messages.csproj", 									"src/Micro.Users.Messages/"]
+COPY ["tests/Micro.Users.Domain.UnitTests/Micro.Users.Domain.UnitTests.csproj", 				"tests/Micro.Users.Domain.UnitTests/"]
+COPY ["tests/Micro.Users.IntegrationTests/Micro.Users.IntegrationTests.csproj", 				"tests/Micro.Users.IntegrationTests/"]
 
 # module - tenants
-COPY ["src/Micro.Tenants/Micro.Tenants.csproj", "src/Micro.Tenants/"]
-COPY ["src/Micro.Tenants.IntegrationEvents/Micro.Tenants.IntegrationEvents.csproj", "src/Micro.Tenants.IntegrationEvents/"]
-COPY ["tests/Micro.Tenants.UnitTests/Micro.Tenants.UnitTests.csproj", "tests/Micro.Tenants.UnitTests/"]
-COPY ["tests/Micro.Tenants.IntegrationTests/Micro.Tenants.IntegrationTests.csproj", "tests/Micro.Tenants.IntegrationTests/"]
+COPY ["src/Micro.Tenants.Application/Micro.Tenants.Application.csproj", 						"src/Micro.Tenants.Application/"]
+COPY ["src/Micro.Tenants.Domain/Micro.Tenants.Domain.csproj", 									"src/Micro.Tenants.Domain/"]
+COPY ["src/Micro.Tenants.Infrastructure/Micro.Tenants.Infrastructure.csproj", 					"src/Micro.Tenants.Infrastructure/"]
+COPY ["src/Micro.Tenants.Messages/Micro.Tenants.Messages.csproj",								"src/Micro.Tenants.Messages/"]
+COPY ["tests/Micro.Tenants.Domain.UnitTests/Micro.Tenants.Domain.UnitTests.csproj", 			"tests/Micro.Tenants.Domain.UnitTests/"]
+COPY ["tests/Micro.Tenants.IntegrationTests/Micro.Tenants.IntegrationTests.csproj", 			"tests/Micro.Tenants.IntegrationTests/"]
 
 # module - translations 
-COPY ["src/Micro.Translations/Micro.Translations.csproj", "src/Micro.Translations/"]
-COPY ["src/Micro.Translations.IntegrationEvents/Micro.Translations.IntegrationEvents.csproj", "src/Micro.Translations.IntegrationEvents/"]
-COPY ["tests/Micro.Translations.UnitTests/Micro.Translations.UnitTests.csproj", "tests/Micro.Translations.UnitTests/"]
-COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationTests.csproj", "tests/Micro.Translations.IntegrationTests/"]
+COPY ["src/Micro.Translations.Application/Micro.Translations.Application.csproj", 				"src/Micro.Translations.Application/"]
+COPY ["src/Micro.Translations.Domain/Micro.Translations.Domain.csproj", 						"src/Micro.Translations.Domain/"]
+COPY ["src/Micro.Translations.Infrastructure/Micro.Translations.Infrastructure.csproj", 		"src/Micro.Translations.Infrastructure/"]
+COPY ["src/Micro.Translations.Messages/Micro.Translations.Messages.csproj", 					"src/Micro.Translations.Messages/"]
+COPY ["tests/Micro.Translations.Domain.UnitTests/Micro.Translations.Domain.UnitTests.csproj", 	"tests/Micro.Translations.Domain.UnitTests/"]
+COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationTests.csproj", 	"tests/Micro.Translations.IntegrationTests/"]
 
 # testing
 COPY ["tests/Micro.IntegrationTests.Common/Micro.IntegrationTests.Common.csproj", "tests/Micro.IntegrationTests.Common/"]
