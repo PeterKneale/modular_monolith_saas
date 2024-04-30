@@ -10,6 +10,7 @@ global using Micro.Common.Application;
 global using Micro.Common.Domain;
 global using Micro.Common.Exceptions;
 global using Micro.Common.Infrastructure.Database;
+global using Micro.Translations.Application;
 global using Micro.Translations.Infrastructure.Database;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;

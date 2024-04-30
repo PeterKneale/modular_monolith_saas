@@ -3,7 +3,6 @@ using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using Micro.Common;
 using Micro.Common.Infrastructure.Integration;
-using Micro.Translations.Application;
 using Micro.Translations.Infrastructure.Database.Repositories;
 using Micro.Translations.Infrastructure.Database.TypeHandlers;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +17,12 @@ internal static class ServiceCollectionExtensions
         var connectionString = configuration.GetDbConnectionString(Constants.SchemaName);
         if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
-        // application
-        var assemblies = new[] { Assembly.GetExecutingAssembly(), CommonAssemblyInfo.Assembly };
+        var assemblies = new[]
+        {
+            InfrastructureAssemblyInfo.Assembly,
+            ApplicationAssemblyInfo.Assembly,
+            CommonAssemblyInfo.Assembly
+        };
         services.AddMediatR(c => { c.RegisterServicesFromAssemblies(assemblies); });
         services.AddValidatorsFromAssemblies(assemblies);
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));

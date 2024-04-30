@@ -1,4 +1,5 @@
-﻿using Micro.Translations.Domain.LanguageAggregate;
+﻿using System.Globalization;
+using Micro.Translations.Domain.LanguageAggregate;
 
 namespace Micro.Translations.Application.Queries;
 

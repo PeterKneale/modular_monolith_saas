@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Micro.Translations</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Micro.Translations.Application\Micro.Translations.Application.csproj" />
         <ProjectReference Include="..\Micro.Common\Micro.Common.csproj" />
         <ProjectReference Include="..\Micro.Tenants.IntegrationEvents\Micro.Tenants.IntegrationEvents.csproj" />
         <ProjectReference Include="..\Micro.Translations.Domain\Micro.Translations.Domain.csproj" />

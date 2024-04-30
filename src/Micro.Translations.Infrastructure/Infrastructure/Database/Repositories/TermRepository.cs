@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Application;
-using Micro.Translations.Domain.TermAggregate;
+﻿using Micro.Translations.Domain.TermAggregate;
 
 namespace Micro.Translations.Infrastructure.Database.Repositories;
 

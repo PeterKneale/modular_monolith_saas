@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{CC7829
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations", "src\Micro.Translations\Micro.Translations.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Infrastructure", "src\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.IntegrationTests", "tests\Micro.Translations.IntegrationTests\Micro.Translations.IntegrationTests.csproj", "{2137843E-DE15-468B-8126-01C8DA8651C1}"
 EndProject
@@ -85,6 +85,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cli", "cli", "{99181E11-142C-4C97-B254-9E9E7E27EF05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Domain", "src\Micro.Translations.Domain\Micro.Translations.Domain.csproj", "{FD363FE6-167C-4321-A645-EDAC914D35A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Application", "Micro.Translations.Application\Micro.Translations.Application.csproj", "{7EFB580B-B297-49B0-875A-D6C086B84916}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -172,6 +174,10 @@ Global
 		{FD363FE6-167C-4321-A645-EDAC914D35A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD363FE6-167C-4321-A645-EDAC914D35A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD363FE6-167C-4321-A645-EDAC914D35A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EFB580B-B297-49B0-875A-D6C086B84916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EFB580B-B297-49B0-875A-D6C086B84916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EFB580B-B297-49B0-875A-D6C086B84916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EFB580B-B297-49B0-875A-D6C086B84916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B351D8DC-4C47-4FB8-8CBA-4975D90885A3} = {C5645A63-6FD2-4A01-B273-11061F068C10}
@@ -198,5 +204,6 @@ Global
 		{EC07F9A9-C93F-4E60-B1F0-EB031463181B} = {99181E11-142C-4C97-B254-9E9E7E27EF05}
 		{CB7A4003-0789-4740-A6C6-AD687D80EEA5} = {18275B1C-629B-45E2-A968-E2B4C38FE1AA}
 		{FD363FE6-167C-4321-A645-EDAC914D35A9} = {2FED42D9-12CB-4636-A42B-A1723C72B3DF}
+		{7EFB580B-B297-49B0-875A-D6C086B84916} = {2FED42D9-12CB-4636-A42B-A1723C72B3DF}
 	EndGlobalSection
 EndGlobal

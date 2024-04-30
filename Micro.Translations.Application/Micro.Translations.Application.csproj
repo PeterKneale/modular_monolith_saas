@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\Micro.Translations.Domain\Micro.Translations.Domain.csproj" />
+      <ProjectReference Include="..\src\Micro.Translations.IntegrationEvents\Micro.Translations.IntegrationEvents.csproj" />
+    </ItemGroup>
+
+</Project>

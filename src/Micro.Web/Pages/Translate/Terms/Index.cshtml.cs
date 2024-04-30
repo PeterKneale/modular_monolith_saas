@@ -17,5 +17,5 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
 
     public IEnumerable<ListTerms.Result> Results { get; set; }
     
-    public IEnumerable<ListLanguagesTranslated.Result> Languages { get; set; }
+    public IEnumerable<string> Languages { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using Micro.Common.Infrastructure.Integration.Outbox;
-using Micro.Translations.Domain.TermAggregate;
+﻿using Micro.Translations.Domain.TermAggregate;
 using Micro.Translations.IntegrationEvents;
 
 namespace Micro.Translations.Application.Commands;

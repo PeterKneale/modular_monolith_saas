@@ -32,7 +32,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Micro.Tenants\Micro.Tenants.csproj" />
-        <ProjectReference Include="..\..\src\Micro.Translations\Micro.Translations.csproj" />
+        <ProjectReference Include="..\..\src\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj" />
         <ProjectReference Include="..\..\src\Micro.Users\Micro.Users.csproj" />
         <ProjectReference Include="..\Micro.IntegrationTests.Common\Micro.IntegrationTests.Common.csproj" />
     </ItemGroup>
