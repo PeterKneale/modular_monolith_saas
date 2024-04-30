@@ -42,11 +42,14 @@ var tenantsModule = services.GetRequiredService<ITenantsModule>();
 var translationModule = services.GetRequiredService<ITranslationModule>();
 await usersModule.SendCommand(new RegisterUser.Command(userId, "x", "x", $"x{Guid.NewGuid().ToString()}@example.com", "x"));
 await usersModule.SendCommand(new UpdateUserName.Command("x", "y"));
-
 await usersModule.SendCommand(new ProcessOutboxCommand());
+
 await tenantsModule.SendCommand(new ProcessInboxCommand());
 await translationModule.SendCommand(new ProcessInboxCommand());
 
 await tenantsModule.SendCommand(new CreateOrganisation.Command(organisationId, "x"));
 await tenantsModule.SendCommand(new UpdateOrganisationName.Command("y"));
+await tenantsModule.SendCommand(new ProcessOutboxCommand());
+
+await translationModule.SendCommand(new ProcessInboxCommand());
 await Task.Delay(TimeSpan.FromSeconds(10));

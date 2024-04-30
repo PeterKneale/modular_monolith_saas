@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 #
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.IntegrationTests", "tests\Micro.Tenants.IntegrationTests\Micro.Tenants.IntegrationTests.csproj", "{74F19403-CCCC-4B1C-9810-58E139698770}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{CC782926-4967-457F-88A2-A4BCD13C38EB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{CC782926-4967-457F-88A2-A4BCD13C38EB}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose-infra.yml = docker-compose-infra.yml
 		docker-compose-acceptance.yml = docker-compose-acceptance.yml
@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Web.AcceptanceTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Domain.UnitTests", "tests\Micro.Translations.Domain.UnitTests\Micro.Translations.Domain.UnitTests.csproj", "{8C389821-57AF-4369-8B35-F5AD237B8DC5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E4EC8390-5BB7-4A6D-941F-E9A1131F9DA2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{E4EC8390-5BB7-4A6D-941F-E9A1131F9DA2}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common.UnitTests", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Modules.IntegrationTests", "tests\Micro.Modules.IntegrationTests\Micro.Modules.IntegrationTests.csproj", "{CB7A4003-0789-4740-A6C6-AD687D80EEA5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4451ED11-3583-4CD6-9C83-AF8C6ED0D3FE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".scripts", ".scripts", "{4451ED11-3583-4CD6-9C83-AF8C6ED0D3FE}"
 	ProjectSection(SolutionItems) = preProject
 		run.sh = run.sh
 		watch.sh = watch.sh
@@ -65,7 +65,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.Domain.UnitTest
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "users", "users", "{72E53323-A8EC-4833-A5C1-0C233FA443B5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{644DFC0E-D660-4C21-A3B0-40B264F88C8F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{644DFC0E-D660-4C21-A3B0-40B264F88C8F}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
