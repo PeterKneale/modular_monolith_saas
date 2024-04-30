@@ -15,6 +15,10 @@ public static class ServiceCollectionExtensions
                 {
                     return level >= LogLevel.Warning;
                 }
+                if (category.StartsWith("Micro."))
+                {
+                    return level >= LogLevel.Debug;
+                }
 
                 return level >= LogLevel.Information;
             };

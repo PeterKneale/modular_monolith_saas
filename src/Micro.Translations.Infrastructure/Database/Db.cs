@@ -3,9 +3,9 @@ using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
 using Micro.Common.Infrastructure.Integration.Queue;
+using Micro.Translations.Domain;
 using Micro.Translations.Domain.LanguageAggregate;
 using Micro.Translations.Domain.TermAggregate;
-using Micro.Translations.Domain.UserAggregate;
 using Micro.Translations.Infrastructure.Database.Converters;
 using static Micro.Translations.Infrastructure.Database.Constants;
 
@@ -22,19 +22,21 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
     {
     }
 
-    public virtual DbSet<Language> Languages { get; set; }
+    public virtual DbSet<Language> Languages { get; init; } = null!;
 
-    public virtual DbSet<Term> Terms { get; set; }
+    public virtual DbSet<Term> Terms { get; init; } = null!;
 
-    public virtual DbSet<Translation> Translations { get; set; }
+    public virtual DbSet<Translation> Translations { get; init; } = null!;
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<User> Users { get; init; } = null!;
+    
+    public virtual DbSet<Project> Projects { get; init; } = null!;
 
-    public virtual DbSet<InboxMessage> Inbox { get; set; }
+    public virtual DbSet<InboxMessage> Inbox { get; init; } = null!;
 
-    public virtual DbSet<OutboxMessage> Outbox { get; set; }
+    public virtual DbSet<OutboxMessage> Outbox { get; init; } = null!;
 
-    public virtual DbSet<QueueMessage> Queue { get; set; }
+    public virtual DbSet<QueueMessage> Queue { get; init; } = null!;
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -116,6 +118,18 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable(UsersTable, SchemaName);
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName(IdColumn);
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName(NameColumn);
+        });
+        
+        modelBuilder.Entity<Project>(entity =>
+        {
+            entity.ToTable(ProjectsTable, SchemaName);
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()

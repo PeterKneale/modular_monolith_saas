@@ -1,4 +1,4 @@
-﻿using Micro.Translations.Domain.UserAggregate;
+﻿using Micro.Translations.Domain;
 using Micro.Translations.Infrastructure.Database;
 using Micro.Users.Messages;
 

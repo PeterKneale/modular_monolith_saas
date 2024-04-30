@@ -30,7 +30,11 @@ public class Migration1 : Migration
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(NameColumn).AsString(100);
-
+        
+        Create.Table(ProjectsTable)
+            .WithColumn(IdColumn).AsGuid().PrimaryKey()
+            .WithColumn(NameColumn).AsString(100);
+        
         Create.ForeignKey($"fk_{TranslationsTable}_{TermsTable}")
             .FromTable(TranslationsTable).ForeignColumn(TermIdColumn)
             .ToTable(TermsTable).PrimaryColumn(IdColumn);
@@ -57,6 +61,7 @@ public class Migration1 : Migration
         Delete.Table(TranslationsTable).IfExists();
         Delete.Table(TermsTable).IfExists();
         Delete.Table(LanguagesTable).IfExists();
+        Delete.Table(ProjectsTable).IfExists();
         Delete.Table(UsersTable).IfExists();
 
         this.DropInboxTable();

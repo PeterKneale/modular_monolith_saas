@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations.Domain.UserAggregate;
+﻿namespace Micro.Translations.Domain;
 
 public class User
 {

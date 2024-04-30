@@ -31,10 +31,11 @@ public static class TranslationModuleStartup
             .BuildServiceProvider()
             .ApplyDatabaseMigrations(resetDb);
 
-        bus.Subscribe<OrganisationCreated>(new IntegrationEventHandler());
-        bus.Subscribe<OrganisationUpdated>(new IntegrationEventHandler());
         bus.Subscribe<UserCreated>(new IntegrationEventHandler());
         bus.Subscribe<UserChanged>(new IntegrationEventHandler());
+        bus.Subscribe<OrganisationCreated>(new IntegrationEventHandler());
+        bus.Subscribe<OrganisationUpdated>(new IntegrationEventHandler());
+        bus.Subscribe<ProjectCreated>(new IntegrationEventHandler());
         
         TranslationsCompositionRoot.SetProvider(serviceProvider);
 
