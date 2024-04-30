@@ -7,7 +7,7 @@ public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRe
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var name = typeof(TRequest).FullName;
+        var name = GetName();
 
         if (!validators.Any())
         {
@@ -34,4 +34,6 @@ public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRe
         logs.LogInformation("{Name} Failed validation {@Request} {errors}", name, request, errors);
         throw new Exceptions.ValidationException(errors);
     }
+
+    private static string GetName() => typeof(TRequest).FullName!.Split(".").Last();
 }

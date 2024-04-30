@@ -8,7 +8,7 @@ public class BaseUnitOfWorkBehaviour<TRequest, TResponse>(DbContext db, DomainEv
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var name = typeof(TRequest).FullName.Split(".").Last();
+        var name = GetName();
         
         if (name.Contains("query", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -34,4 +34,6 @@ public class BaseUnitOfWorkBehaviour<TRequest, TResponse>(DbContext db, DomainEv
 
         return response;
     }
+
+    private static string GetName() => typeof(TRequest).FullName!.Split(".").Last();
 }

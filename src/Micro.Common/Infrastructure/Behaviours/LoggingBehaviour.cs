@@ -5,7 +5,7 @@ public class LoggingBehaviour<TRequest, TResponse>(ILogger<TRequest> logs) : IPi
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var name = typeof(TRequest).FullName.Split(".").Last();
+        var name = GetName();
         var body = JsonConvert.SerializeObject(request);
 
         logs.LogDebug("Executing: {Name} - {Body}", name, body);
@@ -23,4 +23,6 @@ public class LoggingBehaviour<TRequest, TResponse>(ILogger<TRequest> logs) : IPi
 
         return result;
     }
+
+    private static string GetName() => typeof(TRequest).FullName!.Split(".").Last();
 }
