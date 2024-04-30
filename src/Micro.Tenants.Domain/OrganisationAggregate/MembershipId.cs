@@ -2,5 +2,7 @@
 
 public record MembershipId(Guid Value)
 {
-    public static MembershipId CreateNew() => new(Guid.NewGuid());
+    public static MembershipId Create() => new(Guid.NewGuid());
+    public static MembershipId Create(Guid guid) => new(guid);
+    public static implicit operator Guid(MembershipId d) => d.Value;
 }

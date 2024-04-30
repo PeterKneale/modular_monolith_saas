@@ -32,10 +32,10 @@ public class Membership : BaseEntity
     public virtual User User { get; private init; } = null!;
 
     public static Membership CreateMember(OrganisationId organisationId, UserId userId) =>
-        new(MembershipId.CreateNew(), organisationId, userId, MembershipRole.Member);
+        new(MembershipId.Create(), organisationId, userId, MembershipRole.Member);
 
     public static Membership CreateOwner(OrganisationId organisationId, UserId userId) =>
-        new(MembershipId.CreateNew(), organisationId, userId, MembershipRole.Owner);
+        new(MembershipId.Create(), organisationId, userId, MembershipRole.Owner);
 
     public void SetRole(MembershipRole role)
     {
