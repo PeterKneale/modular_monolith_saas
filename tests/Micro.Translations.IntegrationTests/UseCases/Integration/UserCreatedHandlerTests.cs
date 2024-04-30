@@ -1,7 +1,7 @@
 ﻿using Micro.Translations.Infrastructure;
 using Micro.Translations.Infrastructure.Infrastructure;
 using Micro.Translations.Infrastructure.Infrastructure.Database;
-using Micro.Users.IntegrationEvents;
+using Micro.Users.Messages;
 
 namespace Micro.Translations.IntegrationTests.UseCases.Integration;
 

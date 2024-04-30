@@ -20,17 +20,17 @@ public class ExecutionContext : IExecutionContext
     {
         if (userId != null)
         {
-            _userId = new UserId(userId.Value);
+            _userId = UserId.Create(userId.Value);
         }
 
         if (organisationId != null)
         {
-            _organisationId = new OrganisationId(organisationId.Value);
+            _organisationId = OrganisationId.Create(organisationId.Value);
         }
 
         if (projectId != null)
         {
-            _projectId = new ProjectId(projectId.Value);
+            _projectId = ProjectId.Create(projectId.Value);
         }
     }
 

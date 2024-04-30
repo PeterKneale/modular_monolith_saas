@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Micro.Users\Micro.Users.csproj" />
+    <ProjectReference Include="..\..\src\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj" />
     <ProjectReference Include="..\Micro.IntegrationTests.Common\Micro.IntegrationTests.Common.csproj" />
   </ItemGroup>
 

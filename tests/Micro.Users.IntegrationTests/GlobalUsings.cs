@@ -8,8 +8,4 @@ global using Micro.Users.Application.Users.Commands;
 global using Micro.Users.Application.Users.Queries;
 global using Micro.Users.IntegrationTests.Fixtures;
 global using Microsoft.Extensions.Configuration;
-global using Xunit;
 global using Xunit.Abstractions;
-using System.Diagnostics.CodeAnalysis;
-[assembly:ExcludeFromCodeCoverage]
-[assembly: AssemblyTrait("Type", "Integration")]

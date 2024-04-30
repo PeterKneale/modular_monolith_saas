@@ -1,8 +1,7 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Tenants.Application.Organisations.Commands;
-using Micro.Tenants.Infrastructure;
-using Micro.Tenants.Infrastructure.Database;
-using Micro.Users.IntegrationEvents;
+using Micro.Tenants.Infrastructure.Infrastructure;
+using Micro.Tenants.Infrastructure.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;

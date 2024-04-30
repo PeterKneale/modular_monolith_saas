@@ -1,6 +1,6 @@
 ﻿using Micro.Translations.Domain.UserAggregate;
 using Micro.Translations.Infrastructure.Infrastructure.Database;
-using Micro.Users.IntegrationEvents;
+using Micro.Users.Messages;
 
 namespace Micro.Translations.Infrastructure.Infrastructure.Integration.EventHandlers;
 

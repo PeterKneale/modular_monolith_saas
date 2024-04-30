@@ -1,10 +1,5 @@
 using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Application.Organisations.Queries;
-using Micro.Tenants.Infrastructure;
-using Micro.Tenants.Infrastructure.Database;
-using Micro.Tenants.IntegrationEvents;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Micro.Tenants.IntegrationTests.UseCases.Organisations;
 
@@ -23,7 +18,7 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
         var projectNameUpdated = Guid.NewGuid().ToString()[..10];
 
         // act
-        await service.Execute(async module =>
+        await Service.Execute(async module =>
         {
             await module.SendCommand(new CreateProject.Command(projectId, projectName));
             
@@ -36,7 +31,7 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
         }, userId, organisationId);
 
         // assert can get by context
-        await service.Execute(async module =>
+        await Service.Execute(async module =>
         {
             // Assert can get by name
             var getByName = new GetProjectByName.Query(projectName);

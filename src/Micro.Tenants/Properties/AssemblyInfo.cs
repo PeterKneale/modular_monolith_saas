@@ -1,4 +1,0 @@
-﻿using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Micro.Tenants.IntegrationTests")]
-[assembly: InternalsVisibleTo("Micro.Modules.IntegrationTests")]

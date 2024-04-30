@@ -3,7 +3,6 @@ global using JetBrains.Annotations;
 global using Micro.Common.Application;
 global using Micro.Common.Exceptions;
 global using Micro.Common.Infrastructure.Context;
-global using Micro.Tenants.IntegrationEvents;
 global using Micro.Translations.IntegrationTests.Fixtures;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;

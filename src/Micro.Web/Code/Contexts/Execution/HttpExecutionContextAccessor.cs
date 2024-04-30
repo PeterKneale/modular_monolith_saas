@@ -15,15 +15,15 @@ public class HttpExecutionContextAccessor(IHttpContextAccessor httpContextAccess
             var pageContext = new PageContextAccessor(httpContextAccessor);
             
             var userId = authContext.IsAuthenticated 
-                ? new UserId(authContext.UserId) 
+                ? UserId.Create(authContext.UserId) 
                 : null;
             
             var organisationId = pageContext.HasOrganisation 
-                ? new OrganisationId(pageContext.Organisation.Id) 
+                ? OrganisationId.Create(pageContext.Organisation.Id) 
                 : null;
             
             var projectId = pageContext.HasProject 
-                ? new ProjectId(pageContext.Project.Id) 
+                ? ProjectId.Create(pageContext.Project.Id) 
                 : null;
 
             return Create(userId, organisationId, projectId);

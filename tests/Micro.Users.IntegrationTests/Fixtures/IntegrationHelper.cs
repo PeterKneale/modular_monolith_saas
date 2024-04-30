@@ -1,8 +1,9 @@
 ﻿using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Inbox;
 using Micro.Common.Infrastructure.Integration.Outbox;
-using Micro.Users.Infrastructure.Database;
 using Micro.Users.Infrastructure;
+using Micro.Users.Infrastructure.Infrastructure;
+using Micro.Users.Infrastructure.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

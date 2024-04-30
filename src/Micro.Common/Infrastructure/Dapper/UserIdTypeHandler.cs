@@ -14,7 +14,7 @@ public class UserIdTypeHandler : SqlMapper.TypeHandler<UserId>
 
     public override UserId Parse(object? value)
     {
-        if (value is Guid id) return new UserId(id);
+        if (value is Guid id) return UserId.Create(id);
 
         throw new FormatException($"Invalid conversion to {nameof(UserId)}");
     }

@@ -14,7 +14,7 @@ public class ProjectIdTypeHandler : SqlMapper.TypeHandler<ProjectId>
 
     public override ProjectId Parse(object? value)
     {
-        if (value is Guid id) return new ProjectId(id);
+        if (value is Guid id) return ProjectId.Create(id);
 
         throw new FormatException($"Invalid conversion to {nameof(ProjectId)}");
     }

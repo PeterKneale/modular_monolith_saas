@@ -1,22 +1,14 @@
 ﻿namespace Micro.Translations.Domain.TermAggregate;
 
-public class TranslationId : ValueObject
+public class TranslationId : IdValueObject
 {
-    private TranslationId(Guid value)
+    private TranslationId(Guid value):base(value)
     {
-        Value = value;
     }
-
-    public Guid Value { get; init; }
 
     public static TranslationId Create() => new(Guid.NewGuid());
-
     public static TranslationId Create(Guid id) => new(id);
 
-    public override string ToString() => Value.ToString();
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Value;
-    }
+    public static implicit operator string(TranslationId d) => d.Value.ToString();
+    public static implicit operator Guid(TranslationId d) => d.Value;
 }

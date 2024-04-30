@@ -1,5 +1,4 @@
-﻿using Micro.Users;
-using Constants = Micro.Users.Constants;
+﻿using DbConstants = Micro.Users.Infrastructure.DbConstants;
 
 namespace Micro.Web.Pages.Auth;
 
@@ -28,7 +27,7 @@ public class ForgotPassword(IUsersModule mediator) : PageModel
     [Display(Name = "Email")]
     [Required]
     [BindProperty]
-    [StringLength(Constants.MaxEmailLength)]
+    [StringLength(DbConstants.MaxEmailLength)]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
 }

@@ -1,5 +1,5 @@
 ﻿using Micro.Translations.Infrastructure;
-using Micro.Translations.IntegrationEvents;
+using Micro.Translations.Messages;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 

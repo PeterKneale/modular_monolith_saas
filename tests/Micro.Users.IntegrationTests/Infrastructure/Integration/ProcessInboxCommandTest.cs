@@ -1,4 +1,4 @@
-﻿using Micro.Users.IntegrationEvents;
+﻿using Micro.Users.Messages;
 
 namespace Micro.Users.IntegrationTests.Infrastructure.Integration;
 

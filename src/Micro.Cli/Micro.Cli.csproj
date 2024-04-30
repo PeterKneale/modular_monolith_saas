@@ -19,9 +19,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Micro.Tenants\Micro.Tenants.csproj"/>
+        <ProjectReference Include="..\Micro.Tenants.Infrastructure\Micro.Tenants.Infrastructure.csproj" />
         <ProjectReference Include="..\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj" />
-        <ProjectReference Include="..\Micro.Users\Micro.Users.csproj" />
+        <ProjectReference Include="..\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

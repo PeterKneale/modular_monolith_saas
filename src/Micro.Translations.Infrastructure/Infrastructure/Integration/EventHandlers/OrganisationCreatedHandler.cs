@@ -1,4 +1,4 @@
-using Micro.Tenants.IntegrationEvents;
+using Micro.Tenants.Messages;
 
 namespace Micro.Translations.Infrastructure.Infrastructure.Integration.EventHandlers;
 

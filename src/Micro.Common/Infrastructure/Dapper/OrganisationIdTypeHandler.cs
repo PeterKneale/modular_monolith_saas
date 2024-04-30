@@ -14,7 +14,7 @@ public class OrganisationIdTypeHandler : SqlMapper.TypeHandler<OrganisationId>
 
     public override OrganisationId Parse(object? value)
     {
-        if (value is Guid id) return new OrganisationId(id);
+        if (value is Guid id) return OrganisationId.Create(id);
 
         throw new FormatException($"Invalid conversion to {nameof(OrganisationId)}");
     }

@@ -31,7 +31,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Micro.Tenants\Micro.Tenants.csproj" />
+      <ProjectReference Include="..\..\src\Micro.Tenants.Application\Micro.Tenants.Application.csproj" />
+      <ProjectReference Include="..\..\src\Micro.Tenants.Infrastructure\Micro.Tenants.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\src\Micro.Users.Messages\Micro.Users.Messages.csproj" />
       <ProjectReference Include="..\Micro.IntegrationTests.Common\Micro.IntegrationTests.Common.csproj" />
     </ItemGroup>
 

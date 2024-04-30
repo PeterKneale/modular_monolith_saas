@@ -1,9 +1,10 @@
 ﻿using Micro.Common.Application;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Tenants.Application.Organisations.Commands;
+using Micro.Tenants.Infrastructure;
 using Micro.Translations.Infrastructure;
-using Micro.Users;
 using Micro.Users.Application.Users.Commands;
+using Micro.Users.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;

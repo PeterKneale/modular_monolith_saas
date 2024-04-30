@@ -1,7 +1,4 @@
-﻿using Micro.Tenants.IntegrationEvents;
-using Micro.Users.IntegrationEvents;
-
-namespace Micro.Tenants.IntegrationTests.Infrastructure.Integration;
+﻿namespace Micro.Tenants.IntegrationTests.Infrastructure.Integration;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class ProcessInboxCommandTest(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
