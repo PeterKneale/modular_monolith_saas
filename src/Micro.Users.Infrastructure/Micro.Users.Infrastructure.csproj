@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Micro.Users.Application\Micro.Users.Application.csproj"/>
+        <ProjectReference Include="..\Micro.Users.Domain\Micro.Users.Domain.csproj"/>
+        <ProjectReference Include="..\Micro.Common\Micro.Common.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3"/>
+        <PackageReference Include="Dapper" Version="2.1.35"/>
+        <PackageReference Include="FluentMigrator" Version="5.2.0"/>
+        <PackageReference Include="FluentMigrator.Runner" Version="5.2.0"/>
+        <PackageReference Include="FluentMigrator.Runner.Postgres" Version="5.2.0"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1"/>
+    </ItemGroup>
+
+</Project>

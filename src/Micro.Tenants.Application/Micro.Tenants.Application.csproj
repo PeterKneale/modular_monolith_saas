@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Micro.Tenants.Domain\Micro.Tenants.Domain.csproj" />
+      <ProjectReference Include="..\Micro.Tenants.Messages\Micro.Tenants.Messages.csproj" />
+    </ItemGroup>
+
+</Project>
