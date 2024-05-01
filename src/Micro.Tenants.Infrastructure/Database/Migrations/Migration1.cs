@@ -9,13 +9,17 @@ public class Migration1 : Migration
     {
         Create.Table(OrganisationsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
-            .WithColumn(NameColumn).AsString(NameMaxLength).Unique();
+            .WithColumn(NameColumn).AsString(NameMaxLength).Unique()
+            .WithColumn(CreatedAt).AsDateTimeOffset() 
+            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();
 
         Create.Table(MembershipsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(OrganisationIdColumn).AsGuid()
             .WithColumn(UserIdColumn).AsGuid() // Loosely coupled
-            .WithColumn(RoleColumn).AsString(RoleMaxLength);
+            .WithColumn(RoleColumn).AsString(RoleMaxLength)
+            .WithColumn(CreatedAt).AsDateTimeOffset() 
+            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();;
 
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
@@ -24,7 +28,9 @@ public class Migration1 : Migration
         Create.Table(ProjectsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(OrganisationIdColumn).AsGuid()
-            .WithColumn(NameColumn).AsString(NameMaxLength);
+            .WithColumn(NameColumn).AsString(NameMaxLength)
+            .WithColumn(CreatedAt).AsDateTimeOffset() 
+            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();;
 
         Create.ForeignKey($"fk_{MembershipsTable}_{OrganisationsTable}")
             .FromTable(MembershipsTable).ForeignColumn(OrganisationIdColumn)
@@ -38,6 +44,7 @@ public class Migration1 : Migration
         this.CreateOutboxTable();
         this.CreateCommandTable();
     }
+
 
     public override void Down()
     {

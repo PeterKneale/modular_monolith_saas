@@ -2,11 +2,11 @@
 
 public static class SystemClock
 {
-    private static DateTime? _customDate;
+    private static DateTimeOffset? _customDate;
 
-    public static DateTime UtcNow => _customDate ?? DateTime.UtcNow;
+    public static DateTimeOffset UtcNow => _customDate ?? DateTime.UtcNow;
 
-    public static void Set(DateTime customDate)
+    public static void Set(DateTimeOffset customDate)
     {
         _customDate = customDate;
     }

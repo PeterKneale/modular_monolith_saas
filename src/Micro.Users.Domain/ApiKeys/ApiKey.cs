@@ -2,24 +2,20 @@
 
 public class ApiKey
 {
-    private ApiKey(ApiKeyName name, ApiKeyValue key, DateTime createdAt)
+    private ApiKey(ApiKeyName name, ApiKeyValue key)
     {
         Name = name;
         Key = key;
-        CreatedAt = createdAt;
+        CreatedAt = SystemClock.UtcNow;
     }
 
     public ApiKeyName Name { get; }
 
     public ApiKeyValue Key { get; }
 
-    public DateTime CreatedAt { get; }
-
-    public bool Match(ApiKey apiKey) => apiKey.Key == Key;
+    public DateTimeOffset CreatedAt { get; }
 
     public override string ToString() => $"{Name}:{Key}";
 
-    public static ApiKey Create(ApiKeyName name, ApiKeyValue key) => new(name, key, SystemClock.UtcNow);
-
-    public static ApiKey From(ApiKeyName name, ApiKeyValue key, DateTime createdAt) => new(name, key, createdAt);
+    public static ApiKey Create(ApiKeyName name, ApiKeyValue key) => new(name, key);
 }

@@ -1,6 +1,5 @@
 ﻿using Micro.Tenants.Domain.OrganisationAggregate.DomainEvents;
 using Micro.Tenants.Domain.OrganisationAggregate.Rules;
-using NotSupportedException = System.NotSupportedException;
 
 namespace Micro.Tenants.Domain.OrganisationAggregate;
 
@@ -20,13 +19,17 @@ public class Organisation : BaseEntity
         Name = name;
         _memberships = [Membership.CreateOwner(organisationId, ownerId)];
         _projects = new();
+        CreatedAt = SystemClock.UtcNow;
         AddDomainEvent(new OrganisationCreatedDomainEvent(organisationId, name));
     }
-
+    
     public OrganisationId OrganisationId { get; } = null!;
 
     public OrganisationName Name { get; private set; } = null!;
 
+    public DateTimeOffset CreatedAt { get; private set; }
+    public DateTimeOffset? UpdatedAt { get; private set; }
+    
     public IReadOnlyCollection<Membership> Memberships => _memberships;
     public IReadOnlyCollection<Project> Projects => _projects;
 
@@ -37,6 +40,7 @@ public class Organisation : BaseEntity
     {
         AddDomainEvent(new OrganisationNameChangedDomainEvent(OrganisationId, name));
         Name = name;
+        UpdatedAt = SystemClock.UtcNow;
     }
 
     public void AddMember(UserId userId)
@@ -85,25 +89,5 @@ public class Organisation : BaseEntity
         var project = _projects.Single(x => x.ProjectId.Equals(projectId));
         project.ChangeName(projectName);
         AddDomainEvent(new ProjectUpdatedDomainEvent(projectId, projectName));
-    }
-}
-
-public class MembershipMustBeForRole(List<Membership> memberships, UserId userId, MembershipRole role) : IBusinessRule
-{
-    public string Message => $"Membership must be for role {role.Name}";
-
-    public bool IsBroken()
-    {
-        foreach (var membership in memberships)
-        {
-            // find membership for user
-            if (membership.UserId.Equals(userId))
-            {
-                // the rule is broken if the role is not the same
-                return !membership.Role.Equals(role);
-            }
-        }
-
-        throw new NotSupportedException("No membership is present");
     }
 }

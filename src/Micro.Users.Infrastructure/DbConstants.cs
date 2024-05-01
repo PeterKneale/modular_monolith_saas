@@ -16,6 +16,7 @@ public static class DbConstants
     public const string LastNameColumn = "last_name";
     public const string NameColumn = "name";
     public const string PasswordColumn = "password";
+    public const string RegisteredAt = "registered_at";
     public const string UserIdColumn = "user_id";
     public const string VerifiedAt = "verified_at";
     public const string VerifiedToken = "verification_token";

@@ -55,6 +55,9 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 .HasMaxLength(100)
                 .HasColumnName(NameColumn);
 
+            entity.Property(e => e.CreatedAt).HasColumnName(CreatedAt);
+            entity.Property(e => e.UpdatedAt).HasColumnName(UpdatedAt);
+            
             entity.Ignore(x => x.DomainEvents);
         });
 
@@ -76,6 +79,9 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
             entity.Property(e => e.UserId)
                 .HasColumnName(UserIdColumn);
 
+            entity.Property(e => e.CreatedAt).HasColumnName(CreatedAt);
+            entity.Property(e => e.UpdatedAt).HasColumnName(UpdatedAt);
+            
             entity
                 .HasOne(d => d.Organisation)
                 .WithMany(p => p.Memberships)
@@ -112,6 +118,9 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 .Property(e => e.OrganisationId)
                 .HasColumnName(OrganisationIdColumn);
 
+            entity.Property(e => e.CreatedAt).HasColumnName(CreatedAt);
+            entity.Property(e => e.UpdatedAt).HasColumnName(UpdatedAt);
+            
             entity
                 .HasOne(d => d.Organisation)
                 .WithMany(p => p.Projects)

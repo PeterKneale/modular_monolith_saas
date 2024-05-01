@@ -19,6 +19,7 @@ public class User : BaseEntity
         EmailAddress = emailAddress;
         HashedPassword = hashedPassword;
         VerificationToken = verificationToken;
+        RegisteredAt = SystemClock.UtcNow;
         AddDomainEvent(new UserCreatedDomainEvent(this));
     }
 
@@ -29,6 +30,8 @@ public class User : BaseEntity
     public EmailAddress EmailAddress { get; } = null!;
 
     public HashedPassword HashedPassword { get; private set; } = null!;
+
+    public DateTimeOffset RegisteredAt { get; private set; }
 
     public bool IsVerified { get; private set; }
 

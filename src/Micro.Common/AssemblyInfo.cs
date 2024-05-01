@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 
-[assembly: ExcludeFromCodeCoverage]
-
 namespace Micro.Common;
 
+[ExcludeFromCodeCoverage]
 public static class CommonAssemblyInfo
 {
     public static Assembly Assembly => typeof(CommonAssemblyInfo).Assembly;

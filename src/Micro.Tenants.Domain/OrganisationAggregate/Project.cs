@@ -6,10 +6,14 @@ public class Project(ProjectId projectId, OrganisationId organisationId, Project
     public OrganisationId OrganisationId { get; } = organisationId;
     public ProjectName Name { get; private set; } = name;
 
+    public DateTimeOffset CreatedAt { get; } = SystemClock.UtcNow;
+    public DateTimeOffset? UpdatedAt { get; private set; }
+
     public virtual Organisation Organisation { get; set; } = null!;
 
     public void ChangeName(ProjectName name)
     {
         Name = name;
+        UpdatedAt = SystemClock.UtcNow;
     }
 }

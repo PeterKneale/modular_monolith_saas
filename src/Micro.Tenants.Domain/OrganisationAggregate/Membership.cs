@@ -6,26 +6,26 @@ namespace Micro.Tenants.Domain.OrganisationAggregate;
 [DebuggerDisplay("{Role.Name} - User:{UserId} - Organisation:{OrganisationId}")]
 public class Membership : BaseEntity
 {
-    private Membership()
-    {
-        // ef core
-    }
-
     private Membership(MembershipId id, OrganisationId organisationId, UserId userId, MembershipRole role)
     {
         Id = id;
         OrganisationId = organisationId;
         UserId = userId;
         Role = role;
+        CreatedAt = SystemClock.UtcNow;
     }
 
-    public MembershipId Id { get; private init; } = null!;
+    public MembershipId Id { get; private init; }
 
-    public OrganisationId OrganisationId { get; private init; } = null!;
+    public OrganisationId OrganisationId { get; private init; }
 
-    public UserId UserId { get; private init; } = null!;
+    public UserId UserId { get; private init; }
 
-    public MembershipRole Role { get; private set; } = null!;
+    public MembershipRole Role { get; private set; }
+    
+    public DateTimeOffset CreatedAt { get;  }
+
+    public DateTimeOffset? UpdatedAt { get; private set; }
 
     public virtual Organisation Organisation { get; private init; } = null!;
 
@@ -40,5 +40,7 @@ public class Membership : BaseEntity
     public void SetRole(MembershipRole role)
     {
         Role = role;
+        UpdatedAt = SystemClock.UtcNow;
     }
+
 }

@@ -72,6 +72,8 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                     .HasMaxLength(100)
                     .HasColumnName("password");
             
+            entity.Property(e => e.RegisteredAt).HasColumnName(RegisteredAt);
+            
             entity.Property(e => e.IsVerified).HasColumnName(IsVerified);
             entity.Property(e => e.VerifiedAt).HasColumnName(VerifiedAt);
             entity.Property(e => e.VerificationToken)

@@ -13,6 +13,8 @@ public static class DbConstants
     // Column Names
     public const string IdColumn = "id";
     public const string NameColumn = "name";
+    public const string CreatedAt = "created_at";
+    public const string UpdatedAt = "updated_at";
     public const string OrganisationIdColumn = "organisation_id";
     public const string UserIdColumn = "user_id";
     public const string RoleColumn = "role";
