@@ -1,5 +1,10 @@
 version: '3.8'
 
+# Demonstrates running three instances of the modular monolith behind a load balancing proxy
+# The proxy instance routes requests to the web instances
+# The two web instances serve requests 
+# The one job instance processes jobs and performs database migrations
+
 services:
   
   proxy:
