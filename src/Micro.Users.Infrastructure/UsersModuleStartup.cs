@@ -16,7 +16,7 @@ public static class UsersModuleStartup
 {
     private static IScheduler? _scheduler;
 
-    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool resetDb = false, bool enableScheduler = true)
+    public static async Task Start(IExecutionContextAccessor accessor, IConfiguration configuration, IEventsBus bus, ILoggerFactory logs, bool enableMigrations = true, bool resetDb = false, bool enableScheduler = true)
     {
         var serviceProvider = new ServiceCollection()
             .AddContextAccessor(accessor)
@@ -24,11 +24,11 @@ public static class UsersModuleStartup
             .AddServices(configuration)
             .AddSingleton(bus)
             .AddSingleton(logs)
-            .BuildServiceProvider()
-            .ApplyDatabaseMigrations(resetDb);
-
+            .BuildServiceProvider();
+        
         UsersCompositionRoot.SetProvider(serviceProvider);
 
+        if (enableMigrations) serviceProvider.ApplyDatabaseMigrations(resetDb);
         if (enableScheduler) _scheduler = await SetupScheduledJobs();
     }
 

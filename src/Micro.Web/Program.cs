@@ -1,5 +1,7 @@
+using Micro.Common.Infrastructure;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Database;
+using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
 using Micro.Users.Application.Users.Commands;
 using Micro.Users.Application.Users.Queries;
@@ -93,9 +95,11 @@ var accessor = app.Services.GetRequiredService<IExecutionContextAccessor>();
 var bus = app.Services.GetRequiredService<IEventsBus>();
 var logs = app.Services.GetRequiredService<ILoggerFactory>();
 
-await UsersModuleStartup.Start(accessor, configuration, bus, logs);
-await TenantsModuleStartup.Start(accessor, configuration, bus, logs);
-await TranslationModuleStartup.Start(accessor, configuration, bus, logs);
+var schedules = configuration.IsSchedulerEnabled();
+var migrations = configuration.IsMigrationEnabled();
+await UsersModuleStartup.Start(accessor, configuration, bus, logs, enableMigrations: migrations, enableScheduler: schedules);
+await TenantsModuleStartup.Start(accessor, configuration, bus, logs, enableMigrations: migrations, enableScheduler: schedules);
+await TranslationModuleStartup.Start(accessor, configuration, bus, logs, enableMigrations: migrations, enableScheduler: schedules);
 
 if (!app.Environment.IsDevelopment())
 {

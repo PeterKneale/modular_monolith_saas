@@ -34,8 +34,8 @@ var bus = services.GetRequiredService<IEventsBus>();
 var logs = services.GetRequiredService<ILoggerFactory>();
 
 await UsersModuleStartup.Start(accessor, configuration, bus, logs, true);
-await TenantsModuleStartup.Start(accessor, configuration, bus, logs, true);
-await TranslationModuleStartup.Start(accessor, configuration, bus, logs, true);
+await TenantsModuleStartup.Start(accessor, configuration, bus, logs, resetDb: true);
+await TranslationModuleStartup.Start(accessor, configuration, bus, logs, resetDb: true);
 
 var usersModule = services.GetRequiredService<IUsersModule>();
 var tenantsModule = services.GetRequiredService<ITenantsModule>();

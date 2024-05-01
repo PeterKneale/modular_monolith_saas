@@ -45,8 +45,8 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         _users = new UsersModule();
 
         await UsersModuleStartup.Start(_accessor, configuration, bus, logs, resetDb:true, enableScheduler:false);
-        await TenantsModuleStartup.Start(_accessor, configuration, bus, logs, resetDb:true, enableScheduler:false);
-        await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, resetDb:true, enableScheduler:false);
+        await TenantsModuleStartup.Start(_accessor, configuration, bus, logs, resetDb: true, enableScheduler: false);
+        await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, resetDb: true, enableScheduler: false);
     }
 
     public Task DisposeAsync()

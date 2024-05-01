@@ -33,7 +33,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         _accessor = new SettableExecutionContextAccessor();
         _module = new TranslationModule();
 
-        await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, true, false);
+        await TranslationModuleStartup.Start(_accessor, configuration, bus, logs, resetDb: true, enableScheduler: false);
     }
 
     public async Task DisposeAsync()
