@@ -13,7 +13,7 @@ public static class ListTerms
             var projectId = context.ProjectId;
             var sql = """
                       SELECT id, name
-                      FROM translate.terms
+                      FROM terms
                       WHERE project_id = @projectId;
                       """;
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);

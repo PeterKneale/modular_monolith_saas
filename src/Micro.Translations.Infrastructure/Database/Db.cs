@@ -62,10 +62,15 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
             entity.Property(e => e.ProjectId)
                 .HasColumnName(ProjectIdColumn);
             
-            entity.OwnsOne(x=>x.Detail)
-                .Property(x=>x.Code)
-                .HasMaxLength(10)
-                .HasColumnName(LanguageCodeColumn);
+            entity.OwnsOne(x => x.Detail, x =>
+            {
+                x.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .HasColumnName(NameColumn);
+                x.Property(e => e.Code)
+                    .HasMaxLength(100)
+                    .HasColumnName(CodeColumn);
+            });
         });
         
         modelBuilder.Entity<Term>(entity =>

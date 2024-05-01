@@ -10,10 +10,10 @@ public static class CountTranslations
         {
             var project = context.ProjectId;
             var sql = """
-                      select count(t.id)
-                      from translate.translations t
-                          join translate.terms term on t.term_id = term.id
-                      where term.project_id = @project
+                      select count(translations.id)
+                      from translations
+                          join terms on translations.term_id = terms.id
+                      where project_id = @project
                       """;
             var command = new CommandDefinition(sql, new { project }, cancellationToken: token);
             return await db.ExecuteScalarAsync<int>(command);

@@ -7,7 +7,7 @@
             Terms: <strong>@Model.Results.TotalTerms</strong>
             Translations: <strong>@Model.Results.TotalTranslations</strong>
         </span>
-        <h5>Translation for @Model.Results.LanguageName</h5>
+        <h5>Translation for @Model.Results.Language.Name</h5>
     </div>
     <div class="card-body">
         @foreach (var item in Model.Results.Translations)
@@ -21,7 +21,7 @@
                                asp-route-org="@Model.Org"
                                asp-route-project="@Model.Project"
                                asp-route-termId="@item.TermId"
-                               asp-route-languageCode="@Model.Results.LanguageCode"
+                               asp-route-languageCode="@Model.Results.Language.Code"
                                class="btn btn-secondary float-end">
                                 Update Translation
                             </a>
@@ -29,7 +29,7 @@
                                asp-route-org="@Model.Org"
                                asp-route-project="@Model.Project"
                                asp-route-termId="@item.TermId"
-                               asp-route-languageCode="@Model.Results.LanguageCode"
+                               asp-route-languageCode="@Model.Results.Language.Code"
                                class="btn btn-secondary btn-danger float-end me-2">
                                 Remove Translation
                             </a>

@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class ListLanguageStatistics
 {
@@ -8,7 +6,9 @@ public static class ListLanguageStatistics
 
     public record Results(int TotalTerms, IEnumerable<LanguageStatistic> Statistics);
 
-    public record LanguageStatistic(string Name, string Code, int Number, int Percentage);
+    public record LanguageStatistic(Language Language, int Count, int Percentage);
+
+    public record Language(Guid Id, string Name, string Code);
 
     private class Handler(IDbConnection db, IExecutionContext context) : IRequestHandler<Query, Results>
     {
@@ -23,23 +23,21 @@ public static class ListLanguageStatistics
 
         private async Task<List<LanguageStatistic>> CalculateStatistics(ProjectId projectId, int totalTerms, CancellationToken token)
         {
-            var languageCodes = await ListAllLanguages(projectId, token);
+            var languages = await ListAllLanguages(projectId, token);
 
-            var translationsByLanguage = await GetTranslationsByLanguage(projectId, token);
+            var translationsByLanguageCode = await GetTranslationsByLanguage(projectId, token);
 
             var list = new List<LanguageStatistic>();
 
             // Iterate through all languages, not just those with translations
-            foreach (var languageCode in languageCodes)
+            foreach (var language in languages)
             {
                 // Check if the language has any translations, otherwise set to 0
-                translationsByLanguage.TryGetValue(languageCode, out var count);
+                translationsByLanguageCode.TryGetValue(language.Code, out var count);
 
-                var languageName = CultureInfo.GetCultureInfo(languageCode).DisplayName;
-                
                 // Add the language statistic with the count (0 if no translations)
                 var percentage = totalTerms == 0 ? 0 : count * 100 / totalTerms;
-                var statistic = new LanguageStatistic(languageName, languageCode, count, percentage);
+                var statistic = new LanguageStatistic(language, count, percentage);
                 list.Add(statistic);
             }
 
@@ -48,22 +46,27 @@ public static class ListLanguageStatistics
 
         private async Task<IDictionary<string, int>> GetTranslationsByLanguage(ProjectId projectId, CancellationToken token)
         {
-            var sql = "SELECT lang.language_code AS Code, COUNT(t.id) AS Count FROM translate.languages lang LEFT JOIN translate.translations t ON lang.id = t.language_id WHERE lang.project_id = @projectId GROUP BY lang.language_code";
+            var sql = """
+                      SELECT code AS Code, COUNT(translations.id) AS Count 
+                      FROM languages 
+                          LEFT JOIN translations ON languages.id = translations.language_id 
+                      WHERE languages.project_id = @projectId GROUP BY languages.code
+                      """;
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
             var results = await db.QueryAsync(command);
             return results.ToDictionary(x => x.code as string, x => (int)x.count)!;
         }
 
-        private async Task<IEnumerable<string>> ListAllLanguages(ProjectId projectId, CancellationToken token)
+        private async Task<IEnumerable<Language>> ListAllLanguages(ProjectId projectId, CancellationToken token)
         {
-            var sql = "SELECT language_code FROM translate.languages WHERE project_id = @projectId";
+            var sql = "SELECT id, name, code FROM languages WHERE project_id = @projectId";
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
-            return await db.QueryAsync<string>(command);
+            return await db.QueryAsync<Language>(command);
         }
 
         private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
         {
-            var sql = "SELECT COUNT(id) FROM translate.terms WHERE project_id = @projectId";
+            var sql = "SELECT COUNT(id) FROM terms WHERE project_id = @projectId";
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
             return await db.ExecuteScalarAsync<int>(command);
         }

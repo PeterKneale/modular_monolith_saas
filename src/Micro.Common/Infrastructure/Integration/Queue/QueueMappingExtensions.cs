@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using static Micro.Common.Infrastructure.Integration.Constants;
 
 namespace Micro.Common.Infrastructure.Integration.Queue;
 
@@ -8,7 +9,7 @@ public static class QueueMappingExtensions
     {
         modelBuilder.Entity<QueueMessage>(entity =>
         {
-            entity.ToTable("queue", schema);
+            entity.ToTable(QueueTable, schema);
             entity.Property(e => e.Id).ValueGeneratedNever().HasColumnName("id");
             entity.Property(e => e.Data).HasColumnName("data");
             entity.Property(e => e.Type).HasColumnName("type");

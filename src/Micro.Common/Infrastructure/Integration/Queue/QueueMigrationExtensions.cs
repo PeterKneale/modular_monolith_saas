@@ -1,4 +1,5 @@
 using FluentMigrator;
+using static Micro.Common.Infrastructure.Integration.Constants;
 
 namespace Micro.Common.Infrastructure.Integration.Queue;
 
@@ -6,7 +7,7 @@ public static class QueueMigrationExtensions
 {
     public static void CreateCommandTable(this Migration migration)
     {
-        migration.Create.Table("queue")
+        migration.Create.Table(QueueTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("type").AsString()
             .WithColumn("data").AsString()
@@ -16,6 +17,6 @@ public static class QueueMigrationExtensions
 
     public static void DropCommandsTable(this Migration migration)
     {
-        migration.Delete.Table("queue").IfExists();
+        migration.Delete.Table(QueueTable).IfExists();
     }
 }

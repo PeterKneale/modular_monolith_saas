@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Micro.Translations.Domain.LanguageAggregate;
+﻿using Micro.Translations.Domain.LanguageAggregate;
 
 namespace Micro.Translations.Application.Queries;
 
@@ -7,7 +6,9 @@ public static class ListTranslations
 {
     public record Query(Guid LanguageId) : IRequest<Results>;
 
-    public record Results(int TotalTerms, int TotalTranslations, Guid LanguageId, string LanguageName, string LanguageCode, IEnumerable<Result> Translations);
+    public record Results(int TotalTerms, int TotalTranslations, Language Language, IEnumerable<Result> Translations);
+
+    public record Language(Guid Id, string Name, string Code);
 
     public record Result(Guid TermId, string TermName, Guid? TranslationId, string? TranslationText);
 
@@ -25,32 +26,31 @@ public static class ListTranslations
         {
             var projectId = context.ProjectId;
             var languageId = LanguageId.Create(query.LanguageId);
-            var languageCode = await GetLanguage(languageId, token);
-            var languageName = CultureInfo.GetCultureInfo(languageCode).DisplayName;
+            var language = await GetLanguage(languageId, token);
             var totalTerms = await CountTerms(projectId, token);
             var totalTranslations = await CountTranslations(projectId, languageId, token);
             var translations = await ListTranslations(projectId, languageId, token);
-            return new Results(totalTerms, totalTranslations, languageId, languageName, languageCode, translations);
+            return new Results(totalTerms, totalTranslations, language, translations);
         }
 
-        private async Task<string> GetLanguage(LanguageId languageId, CancellationToken token)
+        private async Task<Language> GetLanguage(LanguageId languageId, CancellationToken token)
         {
-            const string sql = "select language_code from translate.languages where id = @languageId";
+            const string sql = "select id, name, code from languages where id = @languageId";
 
             var command = new CommandDefinition(sql, new
             {
                 languageId = languageId.Value
             }, cancellationToken: token);
 
-            return await connection.QuerySingleAsync<string>(command);
+            return await connection.QuerySingleAsync<Language>(command);
         }
 
         private async Task<IEnumerable<Result>> ListTranslations(ProjectId projectId, LanguageId languageId, CancellationToken token)
         {
             var sql = """
                       SELECT t.id as TermId, t.name as TermName, tr.id as TranslationId, tr.text as TranslationText
-                      FROM translate.terms t
-                      LEFT JOIN translate.translations tr ON t.id = tr.term_id AND tr.language_id = @languageId
+                      FROM terms t
+                      LEFT JOIN translations tr ON t.id = tr.term_id AND tr.language_id = @languageId
                       WHERE t.project_id = @projectId
                       ORDER BY t.name
                       """;
@@ -61,7 +61,7 @@ public static class ListTranslations
         private async Task<int> CountTranslations(ProjectId projectId, LanguageId languageId, CancellationToken token)
         {
             var sql = """
-                      SELECT COUNT(*) from translate.translations
+                      SELECT COUNT(*) from translations
                       WHERE language_id = @languageId AND term_id IN (
                           SELECT id from translate.terms
                           WHERE project_id = @projectId                     )
@@ -72,7 +72,7 @@ public static class ListTranslations
 
         private async Task<int> CountTerms(ProjectId projectId, CancellationToken token)
         {
-            var sql = "SELECT COUNT(*) from translate.terms WHERE project_id = @projectId";
+            var sql = "SELECT COUNT(*) from terms WHERE project_id = @projectId";
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
             return await connection.ExecuteScalarAsync<int>(command);
         }

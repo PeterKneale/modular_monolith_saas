@@ -121,3 +121,7 @@ dotnet ef dbcontext scaffold "Username=admin;Password=password;Database=db;Host=
   -o Infrastructure/temp \
   -c "Db"
 ```
+
+todo:
+- remove all schema prefixes from application layer
+- remove all ef queries from application layer

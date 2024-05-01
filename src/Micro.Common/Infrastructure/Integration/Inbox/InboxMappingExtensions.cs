@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using static Micro.Common.Infrastructure.Integration.Constants;
 
 namespace Micro.Common.Infrastructure.Integration.Inbox;
 
@@ -8,7 +9,7 @@ public static class InboxMappingExtensions
     {
         modelBuilder.Entity<InboxMessage>(entity =>
         {
-            entity.ToTable("inbox", schema);
+            entity.ToTable(InboxTable, schema);
             entity.Property(e => e.Id).ValueGeneratedNever().HasColumnName("id");
             entity.Property(e => e.Data).HasColumnName("data");
             entity.Property(e => e.Type).HasColumnName("type");

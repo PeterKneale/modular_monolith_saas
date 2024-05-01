@@ -1,4 +1,5 @@
 using FluentMigrator;
+using static Micro.Common.Infrastructure.Integration.Constants;
 
 namespace Micro.Common.Infrastructure.Integration.Outbox;
 
@@ -6,7 +7,7 @@ public static class OutboxMigrationExtensions
 {
     public static void CreateOutboxTable(this Migration migration)
     {
-        migration.Create.Table("outbox")
+        migration.Create.Table(OutboxTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("type").AsString()
             .WithColumn("data").AsString()
@@ -16,6 +17,6 @@ public static class OutboxMigrationExtensions
 
     public static void DropOutboxTable(this Migration migration)
     {
-        migration.Delete.Table("outbox").IfExists();
+        migration.Delete.Table(OutboxTable).IfExists();
     }
 }

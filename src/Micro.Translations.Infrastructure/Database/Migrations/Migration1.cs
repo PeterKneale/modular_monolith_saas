@@ -14,7 +14,8 @@ public class Migration1 : Migration
         Create.Table(LanguagesTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(ProjectIdColumn).AsGuid()
-            .WithColumn(LanguageCodeColumn).AsString(100);
+            .WithColumn(NameColumn).AsString(100)
+            .WithColumn(CodeColumn).AsString(10);
         
         Create.Table(TermsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
@@ -25,7 +26,7 @@ public class Migration1 : Migration
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(TermIdColumn).AsGuid()
             .WithColumn(LanguageIdColumn).AsGuid()
-            .WithColumn(TextColumn).AsString(100);
+            .WithColumn(TextColumn).AsString();
 
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()

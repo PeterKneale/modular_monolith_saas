@@ -21,8 +21,8 @@ public class AddTranslations(ServiceFixture service, ITestOutputHelper outputHel
         await Service.Execute(async ctx =>
         {
             // Add languages
-            await ctx.SendCommand(new AddLanguage.Command(languageId1, "en-AU"));
-            await ctx.SendCommand(new AddLanguage.Command(languageId2, "en-GB"));
+            await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
+            await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
             
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, TestTerm1));
@@ -37,7 +37,8 @@ public class AddTranslations(ServiceFixture service, ITestOutputHelper outputHel
             await ctx.SendCommand(new AddTranslation.Command(termId1, languageId2, TestText3));
 
             var list1 = await ctx.SendQuery(new ListTranslations.Query(languageId1));
-            list1.LanguageCode.Should().Be("en-AU");
+            list1.Language.Code.Should().Be(TestLanguageCode1);
+            list1.Language.Name.Should().Be(TestLanguageName1);
             list1.TotalTerms.Should().Be(3);
             list1.TotalTranslations.Should().Be(2);
             list1.Translations.Select(x => new ValueTuple<Guid, string, string?>

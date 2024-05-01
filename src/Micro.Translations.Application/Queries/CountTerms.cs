@@ -10,11 +10,11 @@ public static class CountTerms
         {
             var projectId = context.ProjectId;
 
-            var sql = @"
-                      SELECT COUNT(id) AS term_count
-                      FROM translate.terms
+            var sql = """
+                      SELECT COUNT(id)
+                      FROM terms
                       WHERE project_id = @projectId;
-                      ";
+                      """;
             
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
             return await db.ExecuteScalarAsync<int>(command);

@@ -22,9 +22,9 @@ public static class CountLanguageTranslations
             var languageId = LanguageId.Create(query.LanguageId);
             var sql = """
                       SELECT COUNT(t.id) AS translation_count
-                      FROM translate.translations AS t
-                      JOIN translate.terms AS term ON t.term_id = term.id
-                      JOIN translate.languages AS lang ON t.language_id = lang.id
+                      FROM translations AS t
+                      JOIN terms AS term ON t.term_id = term.id
+                      JOIN languages AS lang ON t.language_id = lang.id
                       WHERE lang.id =@languageId
                         AND lang.project_id = @projectId;
                       """;

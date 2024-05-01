@@ -15,7 +15,7 @@ internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetDbConnectionString(Constants.SchemaName);
+        var connectionString = configuration.GetDbConnectionString(Database.Constants.SchemaName);
         if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
         var assemblies = new[]
@@ -38,7 +38,7 @@ internal static class ServiceCollectionExtensions
         
         // Database Migrations
         services
-            .AddSingleton<IConventionSet>(new DefaultConventionSet(Constants.SchemaName, null))
+            .AddSingleton<IConventionSet>(new DefaultConventionSet(Database.Constants.SchemaName, null))
             .AddFluentMigratorCore()
             .ConfigureRunner(runner => runner
                 .AddPostgres()

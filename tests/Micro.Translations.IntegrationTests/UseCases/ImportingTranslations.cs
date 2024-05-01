@@ -55,7 +55,7 @@ public class ImportingTranslations(ServiceFixture service, ITestOutputHelper out
     private static async Task Assert(IModule ctx, Guid languageId, Dictionary<string, string> translations)
     {
         var languages = await ctx.SendQuery(new ListLanguagesTranslated.Query());
-        languages.Should().BeEquivalentTo([TestLanguageCode1]);
+        languages.Select(x=>x.Code).Should().BeEquivalentTo([TestLanguageCode1]);
 
         // assert terms are created
         var terms = await ctx.SendQuery(new ListTerms.Query());

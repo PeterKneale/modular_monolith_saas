@@ -1,4 +1,5 @@
 using FluentMigrator;
+using static Micro.Common.Infrastructure.Integration.Constants;
 
 namespace Micro.Common.Infrastructure.Integration.Inbox;
 
@@ -6,7 +7,7 @@ public static class InboxMigrationExtensions
 {
     public static void CreateInboxTable(this Migration migration)
     {
-        migration.Create.Table("inbox")
+        migration.Create.Table(InboxTable)
             .WithColumn("id").AsGuid().PrimaryKey()
             .WithColumn("type").AsString()
             .WithColumn("data").AsString()
@@ -16,6 +17,6 @@ public static class InboxMigrationExtensions
 
     public static void DropInboxTable(this Migration migration)
     {
-        migration.Delete.Table("inbox").IfExists();
+        migration.Delete.Table(InboxTable).IfExists();
     }
 }

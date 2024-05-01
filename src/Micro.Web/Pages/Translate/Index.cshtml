@@ -19,17 +19,17 @@
             <div class="card mb-2">
                 <div class="card-body">
                     <div class="card-title">
-                        @if (item.Number > 0)
+                        @if (item.Count > 0)
                         {
-                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageCode="@item.Code">Download CSV</a>
-                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageCode="@item.Code">Download RESX</a>
+                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageCode="@item.Language.Code">Download CSV</a>
+                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageCode="@item.Language.Code">Download RESX</a>
                         }
                         
                         <a asp-page="Translations/Index"
                            asp-route-org="@Model.Org"
                            asp-route-project="@Model.Project"
-                           asp-route-languageCode="@item.Code">
-                            @item.Name</a> 
+                           asp-route-languageCode="@item.Language.Code">
+                            @item.Language.Name</a> 
                          @item.Percentage%
                     </div>
                     <p class="card-text">

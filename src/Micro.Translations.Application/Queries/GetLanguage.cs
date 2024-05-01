@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class GetLanguage
 {
@@ -18,15 +16,13 @@ public static class GetLanguage
             var languageCode = query.LanguageCode;
 
             var sql = """
-                      SELECT id
-                      FROM translate.languages
-                      WHERE project_id = @projectId AND language_code = @languageCode
+                      SELECT id, name, code
+                      FROM languages
+                      WHERE project_id = @projectId AND code = @languageCode
                       """;
 
             var command = new CommandDefinition(sql, new { projectId, languageCode }, cancellationToken: token);
-            var id = await db.ExecuteScalarAsync<Guid>(command);
-            var name = CultureInfo.GetCultureInfo(languageCode).DisplayName;
-            return new Result(id, languageCode, name);
+            return await db.QuerySingleAsync(command);
         }
     }
 }

@@ -34,7 +34,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
         _accessor = new SettableExecutionContextAccessor();
         _module = new UsersModule();
 
-        await UsersModuleStartup.Start(_accessor, configuration, bus, logs, true);
+        await UsersModuleStartup.Start(_accessor, configuration, bus, logs, resetDb: true, enableScheduler: false);
     }
 
     public async Task DisposeAsync()

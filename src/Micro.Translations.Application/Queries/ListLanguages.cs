@@ -6,7 +6,7 @@ public static class ListLanguages
 {
     public record Query : IRequest<IEnumerable<Result>>;
 
-    public record Result(string Name, string Code);
+    public record Result(Guid Id, string Name, string Code);
 
     public class Validator : AbstractValidator<Query>
     {
@@ -18,13 +18,12 @@ public static class ListLanguages
         {
             var projectId = context.ProjectId;
             var sql = """
-                      SELECT language_code AS Code
-                      FROM translate.languages
+                      SELECT id, name, code
+                      FROM languages
                       WHERE project_id = @projectId
                       """;
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
-            var codes =await db.QueryAsync<string>(command);
-            return codes.Select(x => new Result(CultureInfo.GetCultureInfo(x).DisplayName, x));
+            return await db.QueryAsync<Result>(command);
         }
     }
 }

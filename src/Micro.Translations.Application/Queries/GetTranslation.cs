@@ -21,10 +21,12 @@ public static class GetTranslation
         {
             var termId = query.TermId;
             var languageId = query.LanguageId;
-            const string sql = "select text from translate.translations where term_id = @termId and language_id = @languageId";
+            const string sql = """
+                               select text from translations
+                               where term_id = @termId and language_id = @languageId
+                               """;
             var command = new CommandDefinition(sql, new { termId, languageId }, cancellationToken: token);
-            var name = await db.ExecuteScalarAsync<string>(command);
-            return new Result(name);
+            return await db.QuerySingleAsync<Result>(command);
         }
     }
 }

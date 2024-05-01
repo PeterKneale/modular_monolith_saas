@@ -18,6 +18,6 @@ public static class Constants
     public const string ProjectIdColumn = "project_id";
     public const string LanguageIdColumn = "language_id";
     public const string NameColumn = "name";
-    public const string LanguageCodeColumn = "language_code";
+    public const string CodeColumn = "code";
     public const string TextColumn = "text";
 }

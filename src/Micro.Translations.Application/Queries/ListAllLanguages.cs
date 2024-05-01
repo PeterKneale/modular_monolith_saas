@@ -19,9 +19,6 @@ public static class ListAllLanguages
         {
             var cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
             var languages = cultures.Select(x => LanguageDetail.Create(x.Name));
-
-            // todo remove used
-
             return Task.FromResult(languages.Select(x => new Result(x.Code, x.Name)));
         }
     }
