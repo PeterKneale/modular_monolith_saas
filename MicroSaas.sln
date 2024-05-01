@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{CC78
 		run-docker-compose-build.sh = run-docker-compose-build.sh
 		.dockerignore = .dockerignore
 		docker-compose.yml = docker-compose.yml
+		docker-compose-proxy.yml = docker-compose-proxy.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Infrastructure", "src\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"

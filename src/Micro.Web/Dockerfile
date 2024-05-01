@@ -7,14 +7,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /workspace
-COPY ["MicroSaas.sln", ""]
 
+# solution
+COPY ["MicroSaas.sln", ""]
 
 # cli
 COPY ["src/Micro.Cli/Micro.Cli.csproj", "src/Micro.Cli/"]
 
 # web
 COPY ["src/Micro.Web/Micro.Web.csproj", "src/Micro.Web/"]
+COPY ["src/Micro.Web/Files/DataProtectionKey.xml", "src/Micro.Web/Files/"]
 COPY ["tests/Micro.Web.AcceptanceTests/Micro.Web.AcceptanceTests.csproj", "tests/Micro.Web.AcceptanceTests/"]
 
 # common

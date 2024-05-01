@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  
+  proxy:
+    container_name: proxy
+    build:
+      context: .
+      dockerfile: ./src/Micro.Proxy/Dockerfile
+    ports:
+      - "8080:8080"
+  
+  web1:
+    container_name: web1
+    build:
+      context: .
+      dockerfile: ./src/Micro.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - DOTNET_NOLOGO=true
+      - DOTNET_CLI_TELEMETRY_OPTOUT=true
+      - Logging:LogLevel:Default=Warning
+      - DB_HOST=db
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+  
+  web2:
+    container_name: web2
+    build:
+      context: .
+      dockerfile: ./src/Micro.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - DOTNET_NOLOGO=true
+      - DOTNET_CLI_TELEMETRY_OPTOUT=true
+      - Logging:LogLevel:Default=Warning
+      - DB_HOST=db
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:15.3-alpine
+    container_name: db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"

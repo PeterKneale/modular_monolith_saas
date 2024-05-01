@@ -11,6 +11,7 @@ using Micro.Web.Api.Users;
 using Micro.Web.Code.Contexts.Authentication;
 using Micro.Web.Code.Contexts.Execution;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging.Console;
@@ -23,6 +24,13 @@ var configuration = new ConfigurationBuilder()
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(c => { c.AddSimpleConsole(x => { x.SingleLine = true; }); });
+
+// Data protection keys, necessary for multiple instances of the web server
+var keysFolder = Path.Combine(builder.Environment.ContentRootPath, "Files");
+builder.Services
+    .AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
+    .SetApplicationName(nameof(Micro.Web));
 
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
