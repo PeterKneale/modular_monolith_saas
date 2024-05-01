@@ -24,7 +24,8 @@ public class AddPage(ITranslationModule module, IPageContextAccessor context) : 
 
     public async Task OnGet()
     {
-        LanguageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        var language = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        LanguageId = language.Id;
     }
 
 

@@ -10,5 +10,5 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
         Results = await module.SendQuery(new ListLanguages.Query());
     }
     
-    public IEnumerable<string> Results { get; set; }
+    public IEnumerable<ListLanguages.Result> Results { get; set; }
 }

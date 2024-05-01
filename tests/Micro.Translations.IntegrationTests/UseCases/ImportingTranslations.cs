@@ -71,7 +71,7 @@ public class ImportingTranslations(ServiceFixture service, ITestOutputHelper out
             .BeEquivalentTo(translations);
 
         // assert translations are created
-        var count = await ctx.SendQuery(new CountProjectTranslations.Query());
+        var count = await ctx.SendQuery(new CountTranslations.Query());
         count.Should().Be(translations.Count);
     }
 }

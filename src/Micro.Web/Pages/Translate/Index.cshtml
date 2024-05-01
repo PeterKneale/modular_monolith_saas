@@ -18,27 +18,25 @@
         {
             <div class="card mb-2">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <div class="card-title">
                         @if (item.Number > 0)
                         {
                             <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageCode="@item.Code">Download CSV</a>
                             <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageCode="@item.Code">Download RESX</a>
                         }
-                        @item.Code @item.Percentage%
-                    </h5>
+                        
+                        <a asp-page="Translations/Index"
+                           asp-route-org="@Model.Org"
+                           asp-route-project="@Model.Project"
+                           asp-route-languageCode="@item.Code">
+                            @item.Name</a> 
+                         @item.Percentage%
+                    </div>
                     <p class="card-text">
                         <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-bar" style="width: @(item.Percentage)%"></div>
                         </div>
                     </p>
-                </div>
-                <div class="card-body">
-                    <a class="card-link" asp-page="Translations/Index"
-                       asp-route-org="@Model.Org"
-                       asp-route-project="@Model.Project"
-                       asp-route-languageCode="@item.Code">
-                        View Translations
-                    </a>
                 </div>
             </div>
         }

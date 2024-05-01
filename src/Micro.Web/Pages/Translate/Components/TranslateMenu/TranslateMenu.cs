@@ -10,7 +10,7 @@ public class TranslateMenu(ITranslationModule module) : ViewComponent
         var languages = await module.SendQuery(new ListLanguages.Query());
         return View(new TranslateMenuModel
         {
-            Languages = languages
+            Languages = languages.Select(x=>x.Code)
         });
     }
 }

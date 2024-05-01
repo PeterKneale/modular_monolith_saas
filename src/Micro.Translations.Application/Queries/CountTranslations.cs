@@ -1,6 +1,6 @@
 ﻿namespace Micro.Translations.Application.Queries;
 
-public static class CountProjectTranslations
+public static class CountTranslations
 {
     public record Query : IRequest<int>;
 

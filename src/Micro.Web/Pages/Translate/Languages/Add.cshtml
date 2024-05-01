@@ -9,7 +9,7 @@
         <partial name="_ValidationSummary"/>
         <form method="post" class="card">
             <div class="card-body">
-                @Html.EditorFor(x => x.LanguageCode, null, new { autofocus = "autofocus" })
+                @Html.DropDownListFor(x => x.LanguageCode, Model.Langauges, new { @class = "form-control autofocus" })
             </div>
             <div class="card-footer">
                 <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>

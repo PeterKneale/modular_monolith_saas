@@ -1,12 +1,14 @@
-﻿namespace Micro.Translations.Application.Queries;
+﻿using System.Globalization;
 
-public static class GetTranslationStatistics
+namespace Micro.Translations.Application.Queries;
+
+public static class ListLanguageStatistics
 {
     public record Query : IRequest<Results>;
 
     public record Results(int TotalTerms, IEnumerable<LanguageStatistic> Statistics);
 
-    public record LanguageStatistic(string Code, int Number, int Percentage);
+    public record LanguageStatistic(string Name, string Code, int Number, int Percentage);
 
     private class Handler(IDbConnection db, IExecutionContext context) : IRequestHandler<Query, Results>
     {
@@ -21,21 +23,23 @@ public static class GetTranslationStatistics
 
         private async Task<List<LanguageStatistic>> CalculateStatistics(ProjectId projectId, int totalTerms, CancellationToken token)
         {
-            var allLanguages = await AllLanguages(projectId, token);
+            var languageCodes = await ListAllLanguages(projectId, token);
 
             var translationsByLanguage = await GetTranslationsByLanguage(projectId, token);
 
             var list = new List<LanguageStatistic>();
 
             // Iterate through all languages, not just those with translations
-            foreach (var language in allLanguages)
+            foreach (var languageCode in languageCodes)
             {
                 // Check if the language has any translations, otherwise set to 0
-                translationsByLanguage.TryGetValue(language, out var count);
+                translationsByLanguage.TryGetValue(languageCode, out var count);
 
+                var languageName = CultureInfo.GetCultureInfo(languageCode).DisplayName;
+                
                 // Add the language statistic with the count (0 if no translations)
                 var percentage = totalTerms == 0 ? 0 : count * 100 / totalTerms;
-                var statistic = new LanguageStatistic(language, count, percentage);
+                var statistic = new LanguageStatistic(languageName, languageCode, count, percentage);
                 list.Add(statistic);
             }
 
@@ -50,7 +54,7 @@ public static class GetTranslationStatistics
             return results.ToDictionary(x => x.code as string, x => (int)x.count)!;
         }
 
-        private async Task<IEnumerable<string>> AllLanguages(ProjectId projectId, CancellationToken token)
+        private async Task<IEnumerable<string>> ListAllLanguages(ProjectId projectId, CancellationToken token)
         {
             var sql = "SELECT language_code FROM translate.languages WHERE project_id = @projectId";
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);

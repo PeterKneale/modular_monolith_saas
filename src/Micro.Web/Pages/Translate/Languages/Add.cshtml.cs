@@ -1,14 +1,21 @@
 ﻿using Micro.Translations.Application.Commands;
+using Micro.Translations.Application.Queries;
 using Micro.Translations.Infrastructure;
 
 namespace Micro.Web.Pages.Translate.Languages;
 
 public class Add(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
+    public async Task<IActionResult> OnGetAsync()
+    {
+        return await PopulateLanguages();
+    }
+
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
+            await PopulateLanguages();
             return Page();
         }
 
@@ -24,9 +31,21 @@ public class Add(ITranslationModule module, IPageContextAccessor context) : Page
         }
         catch (PlatformException e)
         {
+            await PopulateLanguages();
             ModelState.AddModelError(string.Empty, e.Message!);
             return Page();
         }
+    }
+
+    private async Task<IActionResult> PopulateLanguages()
+    {
+        var languages = await module.SendQuery(new ListAllLanguages.Query());
+        Langauges = languages.Select(language => new SelectListItem
+        {
+            Value = language.Code,
+            Text = language.Name
+        }).ToList();
+        return Page();
     }
 
     [Display(Name = "Language Code")]
@@ -34,4 +53,6 @@ public class Add(ITranslationModule module, IPageContextAccessor context) : Page
     [BindProperty]
     [StringLength(50)]
     public string LanguageCode { get; set; }
+
+    public List<SelectListItem> Langauges { get; set; }
 }

@@ -28,8 +28,8 @@ public class GettingStatistics(ServiceFixture service, ITestOutputHelper outputH
         await Service.Execute(async ctx =>
         {
             // Add languages
-            await ctx.SendCommand(new AddLanguage.Command(languageId1, "en-AU"));
-            await ctx.SendCommand(new AddLanguage.Command(languageId2, "en-GB"));
+            await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
+            await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
             
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, term1));
@@ -43,12 +43,12 @@ public class GettingStatistics(ServiceFixture service, ITestOutputHelper outputH
             // lang 2 is 33% translated en-UK
             await ctx.SendCommand(new AddTranslation.Command(termId1, languageId2, text3));
 
-            var summary = await ctx.SendQuery(new GetTranslationStatistics.Query());
+            var summary = await ctx.SendQuery(new ListLanguageStatistics.Query());
             summary.TotalTerms.Should().Be(3);
-            summary.Statistics.Should().BeEquivalentTo(new GetTranslationStatistics.LanguageStatistic[]
+            summary.Statistics.Should().BeEquivalentTo(new ListLanguageStatistics.LanguageStatistic[]
             {
-                new(TestLanguageCode1, 2, 66),
-                new(TestLanguageCode2, 1, 33)
+                new(TestLanguageName1, TestLanguageCode1, 2, 66),
+                new(TestLanguageName2, TestLanguageCode2, 1, 33)
             });
         }, projectId: projectId);
     }

@@ -12,7 +12,7 @@ public class OutboxHandler(IDbSetOutbox set, OutboxMessagePublisher publisher, I
             .OrderBy(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
         
-        log.LogDebug($"Found {messages.Count} pending messages in outbox.");
+        log.LogTrace($"Found {messages.Count} pending messages in outbox.");
         
         foreach (var message in messages)
         {

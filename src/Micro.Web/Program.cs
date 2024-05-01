@@ -22,11 +22,7 @@ var configuration = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddLogging(c => { c.AddSimpleConsole(x =>
-{
-    x.SingleLine = false;
-    x.ColorBehavior = LoggerColorBehavior.Enabled;
-}); });
+builder.Services.AddLogging(c => { c.AddSimpleConsole(x => { x.SingleLine = true; }); });
 
 // Add services to the container.
 builder.Services.AddRazorPages(options =>

@@ -12,8 +12,8 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
 
     public async Task OnGet()
     {
-        var languageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
-        var query = new ListTranslations.Query(languageId);
+        var language = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        var query = new ListTranslations.Query(language.Id);
         Results = await module.SendQuery(query);
     }
 
@@ -21,9 +21,9 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
 
     public async Task<RedirectToPageResult> OnGetRemoveTranslation(Guid termId, CancellationToken token)
     {
-        var languageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
-        await module.SendCommand(new RemoveTranslation.Command(termId, languageId));
-        
+        var language = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        await module.SendCommand(new RemoveTranslation.Command(termId, language.Id));
+
         return RedirectToPage(nameof(Index), new
         {
             Org,

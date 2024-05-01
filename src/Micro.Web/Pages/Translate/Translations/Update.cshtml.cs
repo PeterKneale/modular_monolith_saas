@@ -9,7 +9,8 @@ public class UpdatePage(ITranslationModule module, IPageContextAccessor context)
 {
     public async Task OnGet()
     {
-        LanguageId = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        var language = await module.SendQuery(new GetLanguage.Query(LanguageCode));
+        LanguageId = language.Id;
         var query = new GetTranslation.Query(TermId, LanguageId);
         var result = await module.SendQuery(query);
         Text = result.Text;
