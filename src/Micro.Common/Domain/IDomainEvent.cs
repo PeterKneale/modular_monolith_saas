@@ -1,5 +1,3 @@
 ﻿namespace Micro.Common.Domain;
 
-public interface IDomainEvent : INotification
-{
-}
+public interface IDomainEvent : INotification;

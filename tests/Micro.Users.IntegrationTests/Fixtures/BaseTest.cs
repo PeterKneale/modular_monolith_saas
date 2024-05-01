@@ -24,7 +24,7 @@ public abstract class BaseTest
     protected async Task<Guid> GivenRegisteredUser(string? email = null, string? password = null)
     {
         var userId = Guid.NewGuid();
-        var register = Build.RegisterCommand(userId, email, password);
+        var register = TestData.RegisterCommand(userId, email, password);
         await Service.Command(register);
         return userId;
     }

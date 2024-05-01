@@ -7,27 +7,27 @@ public record EmailAddress
         this.Value = Value;
     }
 
-    public static EmailAddress Create(string Value)
+    public static EmailAddress Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(Value))
+        if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException("Email address cannot be empty");
         }
 
-        if (!Value.Contains('@'))
+        if (!value.Contains('@'))
         {
             throw new ArgumentException("The email address is not valid, no '@' found");
         }
-        if (!Value.Contains('.'))
+        if (!value.Contains('.'))
         {
             throw new ArgumentException("The email address is not valid, no '.' found");
         }
-        return new EmailAddress(Value);
+        return new EmailAddress(value);
     }
 
     public static implicit operator string(EmailAddress x) => x.Value;
     
-    public string Value { get; init; }
+    public string Value { get; }
 
     public bool Matches(EmailAddress emailAddress) =>
         string.Equals(emailAddress.Value, Value, StringComparison.InvariantCultureIgnoreCase);

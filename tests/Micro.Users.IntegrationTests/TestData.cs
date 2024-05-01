@@ -2,7 +2,7 @@
 
 namespace Micro.Users.IntegrationTests;
 
-public static class Build
+public static class TestData
 {
     public static RegisterUser.Command RegisterCommand(Guid userId, string? email = null, string? password = null)
     {

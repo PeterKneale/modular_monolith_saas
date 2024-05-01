@@ -7,7 +7,7 @@ public class AlreadyExistsException : PlatformException
     {
     }
     
-    private AlreadyExistsException(string name, string email) : base($"{name} '{email}' already exists")
+    private AlreadyExistsException(string name, string value) : base($"{name} '{value}' already exists")
     {
     }
     
