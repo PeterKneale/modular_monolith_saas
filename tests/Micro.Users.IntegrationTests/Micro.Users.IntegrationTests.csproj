@@ -15,6 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Micro.Users.Application\Micro.Users.Application.csproj" />
     <ProjectReference Include="..\..\src\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj" />
     <ProjectReference Include="..\Micro.IntegrationTests.Common\Micro.IntegrationTests.Common.csproj" />
   </ItemGroup>

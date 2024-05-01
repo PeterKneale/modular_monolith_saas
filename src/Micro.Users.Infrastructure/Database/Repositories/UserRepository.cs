@@ -25,6 +25,6 @@ internal class UserRepository(Db db) : IUserRepository
     {
         return await db.Users
             .Include(x => x.UserApiKeys)
-            .SingleOrDefaultAsync(x => x.EmailAddress.Equals(emailAddress), token);
+            .SingleOrDefaultAsync(x => x.EmailAddress.Canonical.Equals(emailAddress.Canonical), token);
     }
 }

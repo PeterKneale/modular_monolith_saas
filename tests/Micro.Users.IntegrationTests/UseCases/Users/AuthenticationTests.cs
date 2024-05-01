@@ -7,7 +7,7 @@ public class AuthenticationTests(ServiceFixture service, ITestOutputHelper outpu
     public async Task Registering_and_verification_allows_login()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
         
         // act

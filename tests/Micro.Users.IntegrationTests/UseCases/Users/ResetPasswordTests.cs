@@ -7,7 +7,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Can_reset_password_using_forget_password()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -25,7 +25,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Cant_reset_password_with_invalid_token()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -41,7 +41,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Cant_reset_password_unless_requested()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -56,7 +56,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Unverified_users_cannot_have_their_password_reset()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -71,7 +71,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Can_reset_password_multiple_times_and_use_latest_token()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act

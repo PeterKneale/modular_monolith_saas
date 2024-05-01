@@ -8,7 +8,8 @@ public static class DbConstants
 
     // Common Column Names
     public const string CreatedAtColumn = "created_at";
-    public const string EmailColumn = "email";
+    public const string EmailCanonicalColumn = "email_canonical";
+    public const string EmailDisplayColumn = "email_display";
     public const string FirstNameColumn = "first_name";
     public const string IdColumn = "id";
     public const string IsVerified = "is_verified";
@@ -27,6 +28,5 @@ public static class DbConstants
     public const int NameMaxLength = 100;
     public const int KeyMaxLength = 100;
     public const int EmailMaxLength = 200;
-    public const int MaxEmailLength = 200;
     public const int MaxPasswordLength = 100;
 }

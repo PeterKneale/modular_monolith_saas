@@ -17,4 +17,11 @@ public static class TestData
                 )
             ).Generate();
     }
+    
+    public static string GenerateEmailAddress()
+    {
+        return new Faker<string>()
+            .CustomInstantiator(x=>x.Internet.Email())
+            .Generate();
+    }
 }

@@ -34,8 +34,8 @@ public class LoginService(IUsersModule module, IHttpContextAccessor accessor, IL
 
     public async Task Impersonate(Guid userId)
     {
-        var email = await module.SendQuery(new GetEmail.Query(userId));
-        await Authenticate(userId, email);
+        var email = await module.SendQuery(new GetEmailByUserId.Query(userId));
+        await Authenticate(userId, email.Canonical);
     }
 
     private async Task Authenticate(Guid userId, string email)

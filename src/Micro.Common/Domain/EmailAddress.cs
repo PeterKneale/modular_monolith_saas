@@ -1,11 +1,15 @@
 ﻿namespace Micro.Common.Domain;
 
-public record EmailAddress
+public class EmailAddress : ValueObject
 {
-    private EmailAddress(string Value)
+    private EmailAddress(string canonical, string display)
     {
-        this.Value = Value;
+        Canonical = canonical;
+        Display = display;
     }
+    
+    public string Display { get;  }
+    public string Canonical { get;}
 
     public static EmailAddress Create(string value)
     {
@@ -18,19 +22,26 @@ public record EmailAddress
         {
             throw new ArgumentException("The email address is not valid, no '@' found");
         }
+
         if (!value.Contains('.'))
         {
             throw new ArgumentException("The email address is not valid, no '.' found");
         }
-        return new EmailAddress(value);
+
+        var display = value;
+        var canonical = value.ToLowerInvariant();
+        return new EmailAddress(canonical, display);
     }
 
-    public static implicit operator string(EmailAddress x) => x.Value;
-    
-    public string Value { get; }
+    public static implicit operator string(EmailAddress x) => x.Display;
 
     public bool Matches(EmailAddress emailAddress) =>
-        string.Equals(emailAddress.Value, Value, StringComparison.InvariantCultureIgnoreCase);
+        string.Equals(emailAddress.Canonical, Canonical);
 
-    public override string ToString() => $"{Value}";
+    public override string ToString() => $"{Display}";
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Canonical;
+    }
 }

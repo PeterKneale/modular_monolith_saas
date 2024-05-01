@@ -8,7 +8,7 @@ public class ChangePasswordTests(ServiceFixture service, ITestOutputHelper outpu
     {
         // arrange
         var userId = Guid.NewGuid();
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password1 = "password1";
         var password2 = "password2";
 
@@ -31,7 +31,7 @@ public class ChangePasswordTests(ServiceFixture service, ITestOutputHelper outpu
     public async Task Cant_register_with_same_email_address()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var userId1 = Guid.NewGuid();
         var userId2 = Guid.NewGuid();
         var password = "password";
@@ -48,8 +48,8 @@ public class ChangePasswordTests(ServiceFixture service, ITestOutputHelper outpu
     public async Task Cant_register_with_same_user_id()
     {
         // arrange
-        var email1 = GetUniqueEmail();
-        var email2 = GetUniqueEmail();
+        var email1 = TestData.GenerateEmailAddress();
+        var email2 = TestData.GenerateEmailAddress();
         var userId = Guid.NewGuid();
         var password = "password";
 

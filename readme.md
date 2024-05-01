@@ -125,3 +125,4 @@ dotnet ef dbcontext scaffold "Username=admin;Password=password;Database=db;Host=
 todo:
 - remove all schema prefixes from application layer
 - remove all ef queries from application layer
+- look into SqlMapper.AddTypeHandler(LanguageIdTypeHandler.Default);

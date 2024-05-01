@@ -27,7 +27,7 @@ public class ForgotPassword(IUsersModule mediator) : PageModel
     [Display(Name = "Email")]
     [Required]
     [BindProperty]
-    [StringLength(DbConstants.MaxEmailLength)]
+    [StringLength(DbConstants.EmailMaxLength)]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
 }

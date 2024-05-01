@@ -9,3 +9,4 @@ global using Micro.Users.Application.Users.Queries;
 global using Micro.Users.IntegrationTests.Fixtures;
 global using Microsoft.Extensions.Configuration;
 global using Xunit.Abstractions;
+global using static Micro.Users.IntegrationTests.TestData;

@@ -138,7 +138,7 @@ app.MapGet("/Test/GetUserId", async ctx =>
 {
     var module = ctx.RequestServices.GetRequiredService<IUsersModule>();
     var email = ctx.Request.Query["email"]!;
-    var userId = await module.SendQuery(new GetUserId.Query(email!));
+    var userId = await module.SendQuery(new GetUserIdByEmail.Query(email!));
     await ctx.Response.WriteAsync(userId.ToString());
 });
 app.MapGet("/Test/GetUserVerificationToken", async ctx =>

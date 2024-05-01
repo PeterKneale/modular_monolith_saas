@@ -27,7 +27,7 @@ public class User : BaseEntity
 
     public Name Name { get; private set; } = null!;
 
-    public EmailAddress EmailAddress { get; } = null!;
+    public EmailAddress EmailAddress { get; private set; } = null!;
 
     public HashedPassword HashedPassword { get; private set; } = null!;
 
@@ -38,7 +38,7 @@ public class User : BaseEntity
     public DateTimeOffset? VerifiedAt { get; private set; }
 
     public string? VerificationToken { get; private set; }
-    
+
     public string? ForgotPasswordToken { get; set; }
 
     public DateTimeOffset? ForgotPasswordTokenExpiry { get; set; }
@@ -51,7 +51,7 @@ public class User : BaseEntity
         var verificationToken = Guid.NewGuid().ToString();
         return new(id, name, emailAddress, hashedPassword, verificationToken);
     }
-    
+
     public void Verify(string token)
     {
         CheckRule(new MustNotBeVerifiedRule(this));
@@ -81,14 +81,14 @@ public class User : BaseEntity
         var newPasswordHashed = hasher.HashPassword(newPassword);
         HashedPassword = newPasswordHashed;
     }
-    
+
     public void ForgotPassword()
     {
         CheckRule(new MustBeVerifiedRule(this));
         ForgotPasswordToken = Guid.NewGuid().ToString();
         ForgotPasswordTokenExpiry = SystemClock.UtcNow + TimeSpan.FromHours(24);
     }
-    
+
     public void ResetPassword(string token, Password password, IHashPassword hasher)
     {
         CheckRule(new MustBeVerifiedRule(this));

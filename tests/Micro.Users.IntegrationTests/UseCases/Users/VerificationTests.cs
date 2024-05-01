@@ -7,7 +7,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
     public async Task Verification_token_must_be_correct()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
         
         // act
@@ -25,7 +25,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
     public async Task Cant_verify_with_wrong_email()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -41,7 +41,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
     public async Task Cant_verify_with_wrong_verification()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -56,7 +56,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
     public async Task Can_not_verify_multiple_times()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act

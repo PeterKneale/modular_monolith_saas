@@ -36,7 +36,7 @@ public static class CanAuthenticate
                 throw new NotFoundException(nameof(User), userId.Value);
             }
 
-            var email = user.EmailAddress.Value;
+            var email = user.EmailAddress.Display;
 
             return new Result(true, userId, email);
         }

@@ -15,7 +15,8 @@ public class Migration1 : Migration
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(FirstNameColumn).AsString(NameMaxLength)
             .WithColumn(LastNameColumn).AsString(NameMaxLength)
-            .WithColumn(EmailColumn).AsString(EmailMaxLength).Unique()
+            .WithColumn(EmailCanonicalColumn).AsString(EmailMaxLength).Unique()
+            .WithColumn(EmailDisplayColumn).AsString(EmailMaxLength).Unique()
             .WithColumn(PasswordColumn).AsString(NameMaxLength)
             .WithColumn(IsVerified).AsBoolean() // initially false
             .WithColumn(RegisteredAt).AsDateTimeOffset() 

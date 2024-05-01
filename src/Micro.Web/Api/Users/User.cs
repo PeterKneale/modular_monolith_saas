@@ -1,5 +1,4 @@
-﻿using Micro.Users;
-using Micro.Users.Application.Users.Queries;
+﻿using Micro.Users.Application.Users.Queries;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Micro.Web.Api.Users;
@@ -14,7 +13,7 @@ public class User
             var result = await module.SendQuery(query);
             return TypedResults.Ok(new UserDto
             {
-                UserId = result
+                UserId = result.Id
             });
         }
         catch (NotFoundException)

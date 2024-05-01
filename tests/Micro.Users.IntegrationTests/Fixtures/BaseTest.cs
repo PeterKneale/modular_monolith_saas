@@ -24,10 +24,8 @@ public abstract class BaseTest
     protected async Task<Guid> GivenRegisteredUser(string? email = null, string? password = null)
     {
         var userId = Guid.NewGuid();
-        var register = TestData.RegisterCommand(userId, email, password);
+        var register = RegisterCommand(userId, email, password);
         await Service.Command(register);
         return userId;
     }
-    
-    protected static string GetUniqueEmail() => $"test{Guid.NewGuid().ToString()}@example.org";
 }

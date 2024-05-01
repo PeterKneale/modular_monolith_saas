@@ -22,6 +22,6 @@ public class EmailAddressTypeHandler : SqlMapper.TypeHandler<EmailAddress>
     public override void SetValue(IDbDataParameter parameter, EmailAddress? value)
     {
         parameter.DbType = DbType.String;
-        parameter.Value = value?.Value;
+        parameter.Value = value?.Display;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Data;
+using System.Reflection;
 using Dapper;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
@@ -14,6 +15,7 @@ using Micro.Users.Infrastructure.Database;
 using Micro.Users.Infrastructure.Database.Repositories;
 using Micro.Users.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 namespace Micro.Users.Infrastructure;
 
@@ -50,6 +52,7 @@ internal static class ServiceCollectionExtensions
         // Repositories
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
+        services.AddScoped<IDbConnection>(c => new NpgsqlConnection(connectionString));
 
         // Database Migrations
         services

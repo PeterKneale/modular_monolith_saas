@@ -7,7 +7,7 @@ public class SetupTests(ServiceFixture service, ITestOutputHelper outputHelper) 
     public async Task Setup_user_for_manual_testing()
     {
         // arrange
-        var email = GetUniqueEmail();
+        var email = TestData.GenerateEmailAddress();
         var password = "password";
 
         // act

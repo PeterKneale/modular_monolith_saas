@@ -10,7 +10,7 @@ using static Micro.Users.Infrastructure.DbConstants;
 
 namespace Micro.Users.Infrastructure.Database;
 
-public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
+public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 {
     public Db()
     {
@@ -37,7 +37,6 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         configurationBuilder.Properties<UserApiKeyId>().HaveConversion<UserApiKeyIdConverter>();
         configurationBuilder.Properties<ApiKeyValue>().HaveConversion<ApiKeyValueConverter>();
         configurationBuilder.Properties<ApiKeyName>().HaveConversion<ApiKeyNameConverter>();
-        configurationBuilder.Properties<EmailAddress>().HaveConversion<EmailAddressConverter>();
         configurationBuilder.Properties<Password>().HaveConversion<PasswordConverter>();
         configurationBuilder.Properties<HashedPassword>().HaveConversion<HashedPasswordConverter>();
     }
@@ -48,38 +47,44 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         {
             entity.ToTable(UsersTable, SchemaName);
 
-            //entity.HasIndex(e => e.Credentials.Email, "IX_users_email").IsUnique();
-
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("id");
-            
-            entity.OwnsOne(x => x.Name, x =>
+                .HasColumnName(IdColumn);
+
+            entity.OwnsOne(x => x.Name, name =>
             {
-                x.Property(e => e.First)
-                    .HasMaxLength(100)
-                    .HasColumnName("first_name");
-                x.Property(e => e.Last)
-                    .HasMaxLength(100)
-                    .HasColumnName("last_name");
+                name.Property(property => property.First)
+                    .HasMaxLength(NameMaxLength)
+                    .HasColumnName(LastNameColumn);
+                
+                name.Property(property => property.Last)
+                    .HasMaxLength(NameMaxLength)
+                    .HasColumnName(FirstNameColumn);
             });
-            
-            entity.Property(e => e.EmailAddress)
-                    .HasMaxLength(200)
-                    .HasColumnName("email");
-            
+
+            entity.OwnsOne(x => x.EmailAddress, email =>
+            {
+                email.Property(property => property.Canonical)
+                    .HasMaxLength(EmailMaxLength)
+                    .HasColumnName(EmailCanonicalColumn);
+                
+                email.Property(property => property.Display)
+                    .HasMaxLength(EmailMaxLength)
+                    .HasColumnName(EmailDisplayColumn);
+            });
+
             entity.Property(e => e.HashedPassword)
-                    .HasMaxLength(100)
-                    .HasColumnName("password");
-            
+                .HasMaxLength(100)
+                .HasColumnName(PasswordColumn);
+
             entity.Property(e => e.RegisteredAt).HasColumnName(RegisteredAt);
-            
+
             entity.Property(e => e.IsVerified).HasColumnName(IsVerified);
             entity.Property(e => e.VerifiedAt).HasColumnName(VerifiedAt);
             entity.Property(e => e.VerificationToken)
                 .HasMaxLength(50)
                 .HasColumnName(VerifiedToken);
-            
+
             entity.Property(e => e.ForgotPasswordToken)
                 .HasMaxLength(50)
                 .HasColumnName(ForgotToken);
@@ -95,34 +100,32 @@ public partial class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("id");
+                .HasColumnName(IdColumn);
 
             entity.OwnsOne(x => x.ApiKey, x =>
             {
                 x.Property(e => e.Key)
-                    .HasMaxLength(100)
-                    .HasColumnName("key");
+                    .HasMaxLength(KeyMaxLength)
+                    .HasColumnName(KeyColumn);
+                
                 x.Property(e => e.Name)
-                    .HasMaxLength(100)
-                    .HasColumnName("name");
+                    .HasMaxLength(NameMaxLength)
+                    .HasColumnName(NameColumn);
+                
                 x.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at");
+                    .HasColumnName(CreatedAtColumn);
             });
 
-            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.UserId)
+                .HasColumnName(UserIdColumn);
 
             entity.HasOne(d => d.User).WithMany(p => p.UserApiKeys)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_user_api_keys_users");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.AddInbox(SchemaName);
         modelBuilder.AddOutbox(SchemaName);
         modelBuilder.AddQueue(SchemaName);
-        OnModelCreatingPartial(modelBuilder);
     }
-
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
