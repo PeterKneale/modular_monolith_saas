@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Micro.Tenants.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)

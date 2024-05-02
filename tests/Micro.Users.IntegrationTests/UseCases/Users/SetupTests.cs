@@ -1,4 +1,4 @@
-﻿namespace Micro.Users.IntegrationTests.UseCases;
+﻿namespace Micro.Users.IntegrationTests.UseCases.Users;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class SetupTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
@@ -7,7 +7,7 @@ public class SetupTests(ServiceFixture service, ITestOutputHelper outputHelper) 
     public async Task Setup_user_for_manual_testing()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act

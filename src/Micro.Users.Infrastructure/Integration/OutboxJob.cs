@@ -3,6 +3,7 @@ using Quartz;
 
 namespace Micro.Users.Infrastructure.Integration;
 
+[ExcludeFromCodeCoverage]
 public class OutboxJob : IJob
 {
     public async Task Execute(IJobExecutionContext context) => 

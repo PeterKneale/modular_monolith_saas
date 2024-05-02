@@ -12,6 +12,7 @@ using Quartz.Logging;
 
 namespace Micro.Users.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class UsersModuleStartup
 {
     private static IScheduler? _scheduler;

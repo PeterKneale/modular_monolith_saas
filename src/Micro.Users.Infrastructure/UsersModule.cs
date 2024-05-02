@@ -2,4 +2,5 @@
 
 public interface IUsersModule : IModule;
 
+[ExcludeFromCodeCoverage]
 public class UsersModule() : BaseModule(UsersCompositionRoot.BeginLifetimeScope), IUsersModule;

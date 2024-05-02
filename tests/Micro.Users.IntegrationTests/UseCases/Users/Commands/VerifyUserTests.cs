@@ -1,15 +1,15 @@
-﻿namespace Micro.Users.IntegrationTests.UseCases.Users;
+﻿namespace Micro.Users.IntegrationTests.UseCases.Users.Commands;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class VerificationTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
+public class VerifyUserTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Verification_token_must_be_correct()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
-        
+
         // act
         var userId = await GivenRegisteredUser(email, password);
         var token = await Service.Query(new GetUserVerificationToken.Query(userId));
@@ -20,12 +20,12 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
             .ThrowAsync<BusinessRuleBrokenException>()
             .WithMessage("*token*");
     }
-    
+
     [Fact]
     public async Task Cant_verify_with_wrong_email()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -36,12 +36,12 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
         // assert
         await act.Should().ThrowAsync<NotFoundException>();
     }
-    
+
     [Fact]
     public async Task Cant_verify_with_wrong_verification()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -56,7 +56,7 @@ public class VerificationTests(ServiceFixture service, ITestOutputHelper outputH
     public async Task Can_not_verify_multiple_times()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act

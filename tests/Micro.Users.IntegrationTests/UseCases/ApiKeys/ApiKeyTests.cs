@@ -5,7 +5,7 @@ using CanAuthenticate = Micro.Users.Application.ApiKeys.Queries.CanAuthenticate;
 namespace Micro.Users.IntegrationTests.UseCases.ApiKeys;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ApiKeyTests(ServiceFixture service, ITestOutputHelper outputHelper)  :BaseTest(service, outputHelper)
+public class ApiKeyTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Can_create_api_key_and_validate_it()
@@ -14,7 +14,7 @@ public class ApiKeyTests(ServiceFixture service, ITestOutputHelper outputHelper)
         var userId = Guid.NewGuid();
         var keyId = Guid.NewGuid();
 
-        var register = TestData.RegisterCommand(userId);
+        var register = RegisterCommand(userId);
         await Service.Command(register);
 
         var createKey = new CreateApiKey.Command(keyId, "x");

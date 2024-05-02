@@ -1,5 +1,6 @@
 ﻿namespace Micro.Translations.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 internal static class TranslationsCompositionRoot
 {
     private static IServiceProvider? _provider;

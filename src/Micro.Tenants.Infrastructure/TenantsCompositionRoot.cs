@@ -1,5 +1,6 @@
 ﻿namespace Micro.Tenants.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 internal static class TenantsCompositionRoot
 {
     private static IServiceProvider? _provider;

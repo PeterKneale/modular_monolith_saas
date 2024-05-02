@@ -3,7 +3,7 @@
 namespace Micro.Users.IntegrationTests.Infrastructure.Context;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ContextTests(ServiceFixture service, ITestOutputHelper outputHelper)  :BaseTest(service, outputHelper)
+public class ContextTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Performing_an_operation_without_user_context_throws()
@@ -12,7 +12,7 @@ public class ContextTests(ServiceFixture service, ITestOutputHelper outputHelper
         var userId = Guid.NewGuid();
         var keyId = Guid.NewGuid();
 
-        var register = TestData.RegisterCommand(userId);
+        var register = RegisterCommand(userId);
         await Service.Command(register);
 
         // act 

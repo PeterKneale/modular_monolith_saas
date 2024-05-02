@@ -3,6 +3,7 @@ using Micro.Common.Infrastructure.Integration.Queue;
 
 namespace Micro.Translations.Infrastructure.Integration.Handlers;
 
+[ExcludeFromCodeCoverage]
 public class QueueHandler(IDbSetQueue set, ILogger<QueueHandler> log) : IRequestHandler<ProcessQueueCommand>
 {
     public async Task Handle(ProcessQueueCommand command, CancellationToken cancellationToken)

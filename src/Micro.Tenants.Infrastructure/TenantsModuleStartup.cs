@@ -11,6 +11,7 @@ using Quartz.Logging;
 
 namespace Micro.Tenants.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class TenantsModuleStartup
 {
     private static IScheduler? _scheduler;

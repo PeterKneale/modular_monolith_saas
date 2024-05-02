@@ -9,10 +9,10 @@ public class BehaviourTests(ServiceFixture service, ITestOutputHelper outputHelp
         // arrange
         var email = "test";
         var password = "password";
-        
+
         // act
         var action = async () => { await GivenRegisteredUser(email, password); };
-        
+
         // assert
         await action.Should().ThrowAsync<ValidationException>();
     }

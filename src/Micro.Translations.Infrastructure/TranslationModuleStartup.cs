@@ -16,6 +16,7 @@ using Quartz.Logging;
 
 namespace Micro.Translations.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class TranslationModuleStartup
 {
     private static IScheduler? _scheduler;

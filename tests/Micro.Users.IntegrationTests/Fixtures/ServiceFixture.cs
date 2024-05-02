@@ -13,13 +13,13 @@ namespace Micro.Users.IntegrationTests.Fixtures;
 
 public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
-    private IModule _module = null!;
     private SettableExecutionContextAccessor _accessor = null!;
+    private IModule _module = null!;
 
     public async Task InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
+            .AddJsonFile("appsettings.json", false)
             .AddEnvironmentVariables()
             .Build();
 

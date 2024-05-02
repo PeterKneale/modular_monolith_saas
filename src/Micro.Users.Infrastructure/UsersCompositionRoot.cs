@@ -1,5 +1,6 @@
 ﻿namespace Micro.Users.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 internal static class UsersCompositionRoot
 {
     private static IServiceProvider? _provider;

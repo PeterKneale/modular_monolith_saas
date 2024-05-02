@@ -2,14 +2,14 @@
 
 public abstract class BaseTest
 {
-    protected ServiceFixture Service { get; }
-
     protected BaseTest(ServiceFixture service, ITestOutputHelper output)
     {
         Output = output;
         service.OutputHelper = output;
         Service = service;
     }
+
+    protected ServiceFixture Service { get; }
 
     protected ITestOutputHelper Output { get; set; }
 

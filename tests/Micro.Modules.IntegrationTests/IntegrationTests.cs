@@ -15,29 +15,57 @@ public class IntegrationTests(ServiceFixture service, ITestOutputHelper outputHe
         // arrange
         var userId = Guid.NewGuid();
         var email = $"test{userId.ToString()}@example.com";
-        var firstName = "a";
-        var lastName = "a";
+        var firstName = "john";
+        var firstNameUpdated = "joe";
+        var lastName = "smith";
+        var lastNameUpdated = "blogs";
         var organisationId = Guid.NewGuid();
         var organisation = $"Organisation-{organisationId}";
         var projectId = Guid.NewGuid();
         var project = $"Project-{projectId}";
 
-        // act
+        // act and assert
         await Service.CommandUsers(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
-        await Service.CommandTenants(new CreateOrganisation.Command(organisationId, organisation), userId);
-        await Service.CommandTenants(new CreateProject.Command(projectId, project), userId, organisationId);
-        await Service.CommandUsers(new ProcessOutboxCommand()); // user out
-        await Service.CommandTenants(new ProcessInboxCommand()); // user in
-        await Service.CommandTenants(new ProcessOutboxCommand()); // tenant out
-        await Service.CommandTranslations(new ProcessInboxCommand()); // user in, tenant in, project in
-
-        // assert
         await AssertUserPresenceInUsersModule(userId, firstName, lastName);
+        await Sync();
         await AssertUserSyncToTenantsModule(userId, firstName, lastName);
         await AssertUserSyncToTranslationsModule(userId, firstName, lastName);
+
+        await Service.CommandTenants(new CreateOrganisation.Command(organisationId, organisation), userId);
+        await Service.CommandTenants(new CreateProject.Command(projectId, project), userId, organisationId);
+        await Sync();
         await AssertProjectSyncToTranslationsModule(projectId, project);
+
+        await Service.CommandUsers(new UpdateUserName.Command(firstNameUpdated, lastNameUpdated), userId);
+        await AssertUserPresenceInUsersModule(userId, firstNameUpdated, lastNameUpdated);
+        await Sync();
+        await AssertUserSyncToTenantsModule(userId, firstNameUpdated, lastNameUpdated);
+        await AssertUserSyncToTranslationsModule(userId, firstNameUpdated, lastNameUpdated);
     }
-    
+
+    private async Task Sync()
+    {
+        for (var i = 0; i < 10; i++)
+        {
+            await SyncOut();
+            await SyncIn();
+        }
+    }
+
+    private async Task SyncOut()
+    {
+        await Service.CommandUsers(new ProcessOutboxCommand());
+        await Service.CommandTenants(new ProcessOutboxCommand());
+        await Service.CommandTranslations(new ProcessOutboxCommand());
+    }
+
+    private async Task SyncIn()
+    {
+        await Service.CommandUsers(new ProcessInboxCommand());
+        await Service.CommandTenants(new ProcessInboxCommand());
+        await Service.CommandTranslations(new ProcessInboxCommand());
+    }
+
     private static async Task AssertUserPresenceInUsersModule(Guid userId, string firstName, string lastName)
     {
         using var scope = UsersCompositionRoot.BeginLifetimeScope();

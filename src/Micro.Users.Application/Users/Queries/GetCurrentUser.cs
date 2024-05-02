@@ -7,7 +7,7 @@ public static class GetCurrentUser
 {
     public record Query : IRequest<Result>;
     
-    public record Result(Guid Id);
+    public record Result(Guid Id, string FirstName, string LastName);
 
     public class Validator : AbstractValidator<Query>;
     
@@ -18,7 +18,7 @@ public static class GetCurrentUser
             var userId = context.UserId;
             
             const string sql = """
-                               SELECT id
+                               SELECT id, first_name, last_name
                                FROM users
                                WHERE id = @id
                                """;

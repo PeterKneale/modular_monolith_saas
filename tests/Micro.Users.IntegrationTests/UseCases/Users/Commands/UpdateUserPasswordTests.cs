@@ -1,14 +1,14 @@
-﻿namespace Micro.Users.IntegrationTests.UseCases.Users;
+﻿namespace Micro.Users.IntegrationTests.UseCases.Users.Commands;
 
 [Collection(nameof(ServiceFixtureCollection))]
-public class ChangePasswordTests(ServiceFixture service, ITestOutputHelper outputHelper)  :BaseTest(service, outputHelper)
+public class UpdateUserPasswordTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
 {
     [Fact]
     public async Task Can_login_after_changing_password()
     {
         // arrange
         var userId = Guid.NewGuid();
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password1 = "password1";
         var password2 = "password2";
 
@@ -21,17 +21,17 @@ public class ChangePasswordTests(ServiceFixture service, ITestOutputHelper outpu
         // assert
         var results1 = await Service.Query(new CanAuthenticate.Query(email, password1));
         results1.Success.Should().BeFalse();
-        
+
         var results2 = await Service.Query(new CanAuthenticate.Query(email, password2));
         results2.Success.Should().BeTrue();
         results2.UserId.Should().Be(userId);
     }
-    
+
     [Fact]
     public async Task Cant_register_with_same_email_address()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var userId1 = Guid.NewGuid();
         var userId2 = Guid.NewGuid();
         var password = "password";
@@ -43,13 +43,13 @@ public class ChangePasswordTests(ServiceFixture service, ITestOutputHelper outpu
         // assert
         await act.Should().ThrowAsync<AlreadyExistsException>();
     }
-    
+
     [Fact]
     public async Task Cant_register_with_same_user_id()
     {
         // arrange
-        var email1 = TestData.GenerateEmailAddress();
-        var email2 = TestData.GenerateEmailAddress();
+        var email1 = GenerateEmailAddress();
+        var email2 = GenerateEmailAddress();
         var userId = Guid.NewGuid();
         var password = "password";
 

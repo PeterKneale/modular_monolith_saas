@@ -4,6 +4,7 @@ using Micro.Users.Infrastructure.Database;
 
 namespace Micro.Users.Infrastructure.Integration.Handlers;
 
+[ExcludeFromCodeCoverage]
 public class IntegrationEventHandler : IIntegrationEventHandler
 {
     public async Task Handle(IIntegrationEvent integrationEvent, CancellationToken token)

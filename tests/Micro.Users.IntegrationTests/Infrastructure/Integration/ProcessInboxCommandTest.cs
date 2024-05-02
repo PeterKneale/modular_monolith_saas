@@ -15,7 +15,7 @@ public class ProcessInboxCommandTest(ServiceFixture service, ITestOutputHelper o
 
         // act
         await Service.Command(new ProcessInboxCommand());
-        
+
         // assert
         (await IntegrationHelper.CountPendingInboxMessages()).Should().Be(0);
     }

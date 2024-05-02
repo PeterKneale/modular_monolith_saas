@@ -55,11 +55,11 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
             {
                 name.Property(property => property.First)
                     .HasMaxLength(NameMaxLength)
-                    .HasColumnName(LastNameColumn);
+                    .HasColumnName(FirstNameColumn);
                 
                 name.Property(property => property.Last)
                     .HasMaxLength(NameMaxLength)
-                    .HasColumnName(FirstNameColumn);
+                    .HasColumnName(LastNameColumn);
             });
 
             entity.OwnsOne(x => x.EmailAddress, email =>

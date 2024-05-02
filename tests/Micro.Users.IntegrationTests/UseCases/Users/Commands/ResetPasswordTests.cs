@@ -1,4 +1,4 @@
-﻿namespace Micro.Users.IntegrationTests.UseCases.Users;
+﻿namespace Micro.Users.IntegrationTests.UseCases.Users.Commands;
 
 [Collection(nameof(ServiceFixtureCollection))]
 public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output) : BaseTest(service, output)
@@ -7,7 +7,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Can_reset_password_using_forget_password()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -20,12 +20,12 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         var result = await Service.Query(new CanAuthenticate.Query(email, password));
         result.UserId.Should().Be(userId);
     }
-    
+
     [Fact]
     public async Task Cant_reset_password_with_invalid_token()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -41,7 +41,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Cant_reset_password_unless_requested()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -56,7 +56,7 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
     public async Task Unverified_users_cannot_have_their_password_reset()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act
@@ -66,12 +66,12 @@ public class ResetPasswordTests(ServiceFixture service, ITestOutputHelper output
         // assert
         await act.Should().ThrowAsync<BusinessRuleBrokenException>().WithMessage("This action must be performed on a verified user");
     }
-    
+
     [Fact]
     public async Task Can_reset_password_multiple_times_and_use_latest_token()
     {
         // arrange
-        var email = TestData.GenerateEmailAddress();
+        var email = GenerateEmailAddress();
         var password = "password";
 
         // act

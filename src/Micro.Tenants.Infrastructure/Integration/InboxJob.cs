@@ -2,6 +2,7 @@
 
 namespace Micro.Tenants.Infrastructure.Integration;
 
+[ExcludeFromCodeCoverage]
 public class InboxJob : IJob
 {
     public async Task Execute(IJobExecutionContext context) =>

@@ -3,6 +3,7 @@ using Quartz;
 
 namespace Micro.Translations.Infrastructure.Integration;
 
+[ExcludeFromCodeCoverage]
 public class InboxJob : IJob
 {
     public async Task Execute(IJobExecutionContext context) => 
