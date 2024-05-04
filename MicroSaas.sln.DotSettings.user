@@ -3,7 +3,7 @@
   &lt;Assembly Path="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests\bin\Debug\net8.0\Micro.Translations.Application.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.4\System.Private.CoreLib.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\pkne0634\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_MicroSaas.-2053870454\Snapshot\snapshot.utdcvr</s:String>
+	
 	<s:Boolean x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/ShowAdvancedOptions/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=76473D0D_002D3A10_002D480D_002DB356_002DA4C24F35AAA7/@EntryIndexedValue">360D495D-4117-434D-BCFD-FA4CB2EEF296</s:String>
 	
@@ -32,7 +32,7 @@
   &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ae2f4b77_002D1254_002D4466_002D9f6a_002D279b6404b753/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Registering_synchronises_users" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ae2f4b77_002D1254_002D4466_002D9f6a_002D279b6404b753/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Registering_synchronises_users" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::CB7A4003-0789-4740-A6C6-AD687D80EEA5::net8.0::Micro.Modules.IntegrationTests.RegistrationTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;

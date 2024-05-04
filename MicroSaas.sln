@@ -107,8 +107,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Users.Web", "src\Micr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common.Web", "src\Micro.Common.Web\Micro.Common.Web.csproj", "{7B29D074-7802-4DC2-A049-1518BB2769AC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{26C155D9-9B74-48C2-B1C4-3D49D301ED2D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Tenants.Web", "src\Micro.Tenants.Web\Micro.Tenants.Web.csproj", "{F58FB755-03B7-4671-BDC9-68335FD278F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Web", "src\Micro.Translations.Web\Micro.Translations.Web.csproj", "{48A01D25-8342-4667-AA05-4A4856C737F7}"

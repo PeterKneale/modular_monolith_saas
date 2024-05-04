@@ -9,7 +9,7 @@ using Micro.Users.Application.Users.Queries;
 using Micro.Translations.Infrastructure;
 using Micro.Users.Web;
 using Micro.Users.Web.Contexts.Authentication;
-using Micro.Web.Api.Users;
+using Micro.Web.Apis.Users;
 using Micro.Web.Code.Contexts.ExecutionContext;
 using Micro.Web.Code.Contexts.PageContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -138,7 +138,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 });
 
 var usersApi = app.MapGroup("/api/users");
-usersApi.MapGet("/current", User.GetCurrentUser);
+usersApi.MapGet("/current", Api.GetCurrentUser);
 
 app.MapGet("/Test/Auth/Impersonate/", async ctx =>
 {
