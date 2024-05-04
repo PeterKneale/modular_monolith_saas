@@ -1,4 +1,5 @@
-﻿@if (TempData.HasAlert())
+﻿@using Micro.Common.Web.Components
+@if (TempData.HasAlert())
 {
     @await Html.PartialAsync("Shared/_Alert", TempData.GetAlert())
 }

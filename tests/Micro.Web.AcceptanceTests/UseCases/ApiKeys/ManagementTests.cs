@@ -60,8 +60,6 @@ public class ManagementTests : BaseTest
     [Test]
     public async Task Can_add_and_remove()
     {
-        await Page.GivenLoggedIn();
-
         // add records
         await AddToList("X");
         await ListCountShouldBe(1);

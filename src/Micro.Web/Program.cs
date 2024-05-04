@@ -1,22 +1,23 @@
 using Micro.Common.Infrastructure;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Database;
-using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
-using Micro.Users.Application.Users.Commands;
+using Micro.Common.Web.Contexts.AuthContext;
+using Micro.Common.Web.Contexts.PageContext;
+using Micro.Tenants.Web;
 using Micro.Users.Application.Users.Queries;
-using Micro.Translations;
 using Micro.Translations.Infrastructure;
-using Micro.Users;
-using Micro.Web.Api;
+using Micro.Users.Web;
+using Micro.Users.Web.Contexts.Authentication;
 using Micro.Web.Api.Users;
-using Micro.Web.Code.Contexts.Authentication;
-using Micro.Web.Code.Contexts.Execution;
+using Micro.Web.Code.Contexts.ExecutionContext;
+using Micro.Web.Code.Contexts.PageContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.FileProviders;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
@@ -43,8 +44,20 @@ builder.Services.AddRazorPages(options =>
         options.Conventions.AllowAnonymousToPage("/Auth/Login");
         options.Conventions.AllowAnonymousToPage("/Auth/Logout");
         options.Conventions.AllowAnonymousToPage("/Auth/Register");
-    })
+        //TODO: find out why The request verification token is not added for pages served from assemblies
+        options.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+    });
+builder.Services
+    .AddControllersWithViews()
+    .AddApplicationPart(UsersWebAssemblyInfo.Assembly)
+    .AddApplicationPart(TenantsWebAssemblyInfo.Assembly)
     .AddRazorRuntimeCompilation();
+// see: https://learn.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts?view=aspnetcore-8.0
+builder.Services.Configure<MvcRazorRuntimeCompilationOptions>(options =>
+{
+    options.FileProviders.Add(new EmbeddedFileProvider(UsersWebAssemblyInfo.Assembly));
+    options.FileProviders.Add(new EmbeddedFileProvider(TenantsWebAssemblyInfo.Assembly));
+});
 
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -65,7 +78,7 @@ builder.Services
         failureStatus: HealthStatus.Unhealthy,
         tags: new[] { "db" });
 
-builder.Services.AddSingleton<LoginService>();
+builder.Services.AddSingleton<AuthenticationService>();
 
 // Authentication
 builder.Services.AddScoped<ApiKeyAuthenticationMiddleware>();
@@ -129,7 +142,7 @@ usersApi.MapGet("/current", User.GetCurrentUser);
 
 app.MapGet("/Test/Auth/Impersonate/", async ctx =>
 {
-    var login = ctx.RequestServices.GetRequiredService<LoginService>();
+    var login = ctx.RequestServices.GetRequiredService<AuthenticationService>();
     var userId = Guid.Parse(ctx.Request.Query["userId"]!);
     await login.Impersonate(userId);
     ctx.Response.Redirect("/");

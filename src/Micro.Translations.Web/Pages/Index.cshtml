@@ -1,0 +1,44 @@
+﻿@page "/org/{org}/projects/{project}/translate"
+@model Micro.Translations.Web.Pages.Index
+
+<div class="card mb-2">
+    <div class="card-header">
+        <span class="float-end">
+            Total Terms: <strong>@Model.Results.TotalTerms</strong>
+        </span>
+        <h5>Terms</h5>
+    </div>
+</div>
+<div class="card mb-2">
+    <div class="card-header">
+        <h5>Translations</h5>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model.Results.Statistics)
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="card-title">
+                        @if (item.Count > 0)
+                        {
+                            <a class="btn btn-secondary btn-sm float-end ms-2" asp-page-handler="DownloadCsv" asp-route-languageCode="@item.Language.Code">Download CSV</a>
+                            <a class="btn btn-secondary btn-sm float-end" asp-page-handler="DownloadResX" asp-route-languageCode="@item.Language.Code">Download RESX</a>
+                        }
+                        
+                        <a asp-page="Translations/Index"
+                           asp-route-org="@Model.Org"
+                           asp-route-project="@Model.Project"
+                           asp-route-languageCode="@item.Language.Code">
+                            @item.Language.Name</a> 
+                         @item.Percentage%
+                    </div>
+                    <p class="card-text">
+                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: @(item.Percentage)%"></div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@page "/org/{org}/projects/{project}/translate/terms/add"
+@model Micro.Translations.Web.Pages.Terms.AddPage
+
+<div class="card mb-2">
+    <div class="card-header">
+        <h5>Create a new term</h5>
+    </div>
+    <div class="card-body">
+        <partial name="_ValidationSummary"/>
+        <form method="post" class="card">
+            <div class="card-body">
+                @Html.EditorFor(x => x.Term, null, new { autofocus = "autofocus" })
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>
+            </div>
+        </form>
+    </div>
+</div>

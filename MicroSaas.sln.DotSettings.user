@@ -1,6 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests\bin\Debug\net8.0\Micro.Translations.Application.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.4\System.Private.CoreLib.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\pkne0634\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_MicroSaas.-2053870454\Snapshot\snapshot.utdcvr</s:String>
 	<s:Boolean x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/ShowAdvancedOptions/@EntryValue">True</s:Boolean>
@@ -16,6 +17,7 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;xUnit::CB7A4003-0789-4740-A6C6-AD687D80EEA5::net8.0::Micro.Modules.IntegrationTests.IntegrationTests.Users_organisations_and_projects_are_synchronised_to_other_modules&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79d0538d_002D11ab_002D477a_002Db196_002Da699ed6eb22d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;modules&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;

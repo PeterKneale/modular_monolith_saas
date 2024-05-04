@@ -1,7 +1,0 @@
-﻿@page "/org/{org}/projects/{project}"
-@model Details
-@inject IPageContextAccessor Context
-@{
-    ViewData["Title"] = Context.Project.Name;
-    ViewData["PageId"] = "ProjectDetails";
-}

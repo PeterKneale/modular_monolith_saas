@@ -1,6 +1,9 @@
-﻿using Micro.Tenants.Application.Organisations.Queries;
+﻿using Micro.Common.Web;
+using Micro.Common.Web.Contexts.AuthContext;
+using Micro.Common.Web.Contexts.PageContext;
+using Micro.Tenants.Application.Organisations.Queries;
 using Micro.Tenants.Domain.OrganisationAggregate;
-using Micro.Web.Code.Contexts.Authentication;
+using Micro.Web.Code.Contexts.PageContext;
 
 namespace Micro.Web.Pages.Shared.Components.Menu;
 

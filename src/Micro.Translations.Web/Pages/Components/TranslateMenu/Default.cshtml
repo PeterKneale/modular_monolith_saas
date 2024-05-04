@@ -1,0 +1,75 @@
+﻿@inject IPageContextAccessor Page
+@using Micro.Common.Web.Contexts.PageContext
+@model Micro.Translations.Web.Pages.Components.TranslateMenu.TranslateMenuModel
+
+<div class="btn-toolbar mb-3" role="toolbar">
+
+    <div class="btn-group me-2" role="group">
+
+        <a type="button" class="btn btn-primary"
+           asp-page="/Translate/Index"
+           asp-route-org="@Page.Organisation.Name"
+           asp-route-project="@Page.Project.Name">
+            <i class="bi bi-house"></i>
+        </a>
+
+    </div>
+
+    <div class="btn-group me-2" role="group">
+
+        <a type="button" class="btn btn-primary"
+           asp-page="/Translate/Languages/Add"
+           asp-route-org="@Page.Organisation.Name"
+           asp-route-project="@Page.Project.Name">
+            <i class="bi bi-plus"></i> Add Language
+        </a>
+
+        <a type="button" class="btn btn-primary"
+           asp-page="/Translate/Languages/Index"
+           asp-route-org="@Page.Organisation.Name"
+           asp-route-project="@Page.Project.Name">
+            <i class="bi bi-list"></i> View Languages
+        </a>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="First group">
+        <a class="btn btn-primary"
+           asp-page="/Translate/Terms/Add"
+           asp-route-org="@Page.Organisation.Name"
+           asp-route-project="@Page.Project.Name">
+            <i class="bi bi-plus"></i> Add Term
+        </a>
+        <a class="btn btn-primary active"
+           asp-page="/Translate/Terms/Index"
+           asp-route-org="@Page.Organisation.Name"
+           asp-route-project="@Page.Project.Name">
+            <i class="bi bi-list"></i> View Terms
+        </a>
+        <a class="btn btn-primary"
+           asp-page="/Translate/Terms/Import"
+           asp-route-org="@Page.Organisation.Name"
+           asp-route-project="@Page.Project.Name">
+            <i class="bi bi-file-arrow-up"></i> Import Terms
+        </a>
+    </div>
+
+    <div class="btn-group ms-2" role="group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            Translations
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (var language in Model.Languages)
+            {
+                <li>
+                    <a class="dropdown-item"
+                       asp-page="/Translate/Translations/Index"
+                       asp-route-org="@Page.Organisation.Name"
+                       asp-route-project="@Page.Project.Name"
+                       asp-route-languageCode="@language">
+                        @language
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

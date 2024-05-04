@@ -1,0 +1,18 @@
+﻿@page
+@model Login
+@{
+    ViewBag.Title = "Login";
+    ViewBag.PageId = "Login";
+}
+
+@await Html.PartialAsync("Shared/_ValidationSummary")
+
+<form method="post" class="card">
+    <div class="card-body">
+        @Html.EditorFor(x => x.Email, null, new { autofocus = "autofocus" })
+        @Html.EditorFor(x => x.Password)
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="Login" class="btn btn-primary ms-auto" data-testid="Login"/>
+    </div>
+</form>

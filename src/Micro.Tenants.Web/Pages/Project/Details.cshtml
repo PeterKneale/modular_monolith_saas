@@ -1,0 +1,8 @@
+﻿@page "/org/{org}/projects/{project}"
+@using Micro.Common.Web.Contexts.PageContext
+@model Details
+@inject IPageContextAccessor Context
+@{
+    ViewData["Title"] = Context.Project.Name;
+    ViewData["PageId"] = "ProjectDetails";
+}

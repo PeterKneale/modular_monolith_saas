@@ -1,4 +1,7 @@
-﻿@inject IPageContextAccessor PageContext
+﻿@using Micro.Web.Code.Contexts.PageContext
+@using Micro.Common.Web
+@using Micro.Common.Web.Contexts.PageContext
+@inject IPageContextAccessor PageContext
 
 @if (PageContext.HasOrganisation)
 {
