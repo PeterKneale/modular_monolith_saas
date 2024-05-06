@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations.Web.Pages.Languages;
+﻿namespace Micro.Translations.Web.Pages.Translate.Languages;
 
 public class Add(ITranslationModule module, IPageContextAccessor context) : PageModel
 {

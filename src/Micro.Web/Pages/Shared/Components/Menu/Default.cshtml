@@ -11,7 +11,9 @@
                     <h6 class="dropdown-header">User</h6>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-area="" asp-page="/User/ApiKeys/Index">ApiKeys</a>
+                    <a class="dropdown-item" 
+                       asp-area="" 
+                       asp-page="/User/ApiKeys/Index">ApiKeys</a>
                 </li>
                 <li>
                     <hr class="dropdown-divider">
@@ -20,7 +22,10 @@
                     <h6 class="dropdown-header">Organisations</h6>
                 </li>
                 <li>
-                    <a class="dropdown-item" asp-area="" asp-page="/Organisations/Create" data-testid="CreateOrganisationButton">Create...</a>
+                    <a class="dropdown-item" 
+                       asp-area="" 
+                       asp-page="/Organisations/Create" 
+                       data-testid="CreateOrganisationButton">Create...</a>
                 </li>
                 @foreach (var org in Model.Organisations)
                 {
@@ -31,7 +36,11 @@
                         }
                         else
                         {
-                            <a class="dropdown-item" asp-area="" asp-page="/Organisation/Details" asp-route-org="@org.Name" data-testid="Organisation">@org.Name</a>
+                            <a class="dropdown-item" 
+                               asp-area="" 
+                               asp-page="/Organisation/Details" 
+                               asp-route-org="@org.Name" 
+                               data-testid="Organisation">@org.Name</a>
                         }
                     </li>
                 }
@@ -45,7 +54,11 @@
                         <h6 class="dropdown-header">Projects</h6>
                     </li>
                     <li>
-                        <a class="dropdown-item" asp-area="" asp-page="/Projects/Create" asp-route-org="@organisation.Name" data-testid="CreateProjectButton">
+                        <a class="dropdown-item"
+                           asp-area=""
+                           asp-page="/Projects/Create" 
+                           asp-route-org="@organisation.Name" 
+                           data-testid="CreateProjectButton">
                             Create...
                         </a>
                     </li>
@@ -54,11 +67,23 @@
                         <li data-testid="Projects">
                             @if (project.IsCurrent)
                             {
-                                <a class="dropdown-item active" aria-current="true" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name" data-testid="SelectedProject">@project.Name</a>
+                                <a class="dropdown-item active" 
+                                   aria-current="true" 
+                                   asp-page="/Project/Details" 
+                                   asp-route-org="@organisation.Name" 
+                                   asp-route-project="@project.Name" 
+                                   data-testid="SelectedProject">@project.Name</a>
                             }
                             else
                             {
-                                <a class="dropdown-item" asp-area="" asp-page="/Project/Details" asp-route-org="@organisation.Name" asp-route-project="@project.Name" data-testid="Project">@project.Name</a>
+                                <a class="dropdown-item"
+                                   asp-area=""
+                                   asp-page="/Project/Details"
+                                   asp-route-org="@organisation.Name"
+                                   asp-route-project="@project.Name"
+                                   data-testid="Project">
+                                    @project.Name
+                                </a>
                             }
                         </li>
                     }
@@ -74,7 +99,13 @@
                             <h6 class="dropdown-header">Tools</h6>
                         </li>
                         <li>
-                            <a class="dropdown-item" asp-area="" asp-page="/Translate/Index" asp-route-org="@organisation.Name" asp-route-project="@project.Name">Translate</a>
+                            <a class="dropdown-item"
+                               asp-area=""
+                               asp-page="/Translate/Index"
+                               asp-route-org="@organisation.Name"
+                               asp-route-project="@project.Name">
+                                Translate
+                            </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">

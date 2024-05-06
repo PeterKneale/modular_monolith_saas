@@ -24,6 +24,7 @@
         <ProjectReference Include="..\Micro.Tenants.Infrastructure\Micro.Tenants.Infrastructure.csproj" />
         <ProjectReference Include="..\Micro.Tenants.Web\Micro.Tenants.Web.csproj" />
         <ProjectReference Include="..\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj" />
+        <ProjectReference Include="..\Micro.Translations.Web\Micro.Translations.Web.csproj" />
         <ProjectReference Include="..\Micro.Users.Application\Micro.Users.Application.csproj" />
         <ProjectReference Include="..\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj" />
         <ProjectReference Include="..\Micro.Users.Web\Micro.Users.Web.csproj" />

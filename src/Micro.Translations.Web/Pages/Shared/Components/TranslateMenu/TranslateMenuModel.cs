@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations.Web.Pages.Components.TranslateMenu;
+﻿namespace Micro.Translations.Web.Pages.Shared.Components.TranslateMenu;
 
 public class TranslateMenuModel
 {

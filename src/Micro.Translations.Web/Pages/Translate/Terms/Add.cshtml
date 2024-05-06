@@ -1,15 +1,15 @@
-﻿@page "/org/{org}/projects/{project}/translate/langauges/add"
-@model Micro.Translations.Web.Pages.Languages.Add
+﻿@page "/org/{org}/projects/{project}/translate/terms/add"
+@model AddPage
 
 <div class="card mb-2">
     <div class="card-header">
-        <h5>Add a language</h5>
+        <h5>Create a new term</h5>
     </div>
     <div class="card-body">
         <partial name="_ValidationSummary"/>
         <form method="post" class="card">
             <div class="card-body">
-                @Html.DropDownListFor(x => x.LanguageCode, Model.Langauges, new { @class = "form-control autofocus" })
+                @Html.EditorFor(x => x.Term, null, new { autofocus = "autofocus" })
             </div>
             <div class="card-footer">
                 <input type="submit" value="Add" class="btn btn-primary ms-auto" data-testid="Add"/>

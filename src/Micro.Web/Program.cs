@@ -7,6 +7,7 @@ using Micro.Common.Web.Contexts.PageContext;
 using Micro.Tenants.Web;
 using Micro.Users.Application.Users.Queries;
 using Micro.Translations.Infrastructure;
+using Micro.Translations.Web;
 using Micro.Users.Web;
 using Micro.Users.Web.Contexts.Authentication;
 using Micro.Web.Apis.Users;
@@ -51,12 +52,14 @@ builder.Services
     .AddControllersWithViews()
     .AddApplicationPart(UsersWebAssemblyInfo.Assembly)
     .AddApplicationPart(TenantsWebAssemblyInfo.Assembly)
+    .AddApplicationPart(TranslationsWebAssemblyInfo.Assembly)
     .AddRazorRuntimeCompilation();
 // see: https://learn.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts?view=aspnetcore-8.0
 builder.Services.Configure<MvcRazorRuntimeCompilationOptions>(options =>
 {
     options.FileProviders.Add(new EmbeddedFileProvider(UsersWebAssemblyInfo.Assembly));
     options.FileProviders.Add(new EmbeddedFileProvider(TenantsWebAssemblyInfo.Assembly));
+    options.FileProviders.Add(new EmbeddedFileProvider(TranslationsWebAssemblyInfo.Assembly));
 });
 
 builder.Services

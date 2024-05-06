@@ -1,4 +1,4 @@
-﻿namespace Micro.Translations.Web.Pages;
+﻿namespace Micro.Translations.Web.Pages.Translate;
 
 public class Index(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {

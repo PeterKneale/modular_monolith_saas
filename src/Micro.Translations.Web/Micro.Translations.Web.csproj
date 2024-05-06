@@ -23,4 +23,12 @@
     <ProjectReference Include="..\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Shared\Components\TranslateMenu\Default.cshtml" />
+  </ItemGroup>
+
 </Project>
