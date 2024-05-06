@@ -4,7 +4,7 @@ public static class GetLanguage
 {
     public record Query(string LanguageCode) : IRequest<Result>;
 
-    public record Result(Guid Id, string Code, string Name);
+    public record Result(Guid Id, string Name, string Code);
 
     public class Validator : AbstractValidator<Query>;
 
@@ -22,7 +22,7 @@ public static class GetLanguage
                       """;
 
             var command = new CommandDefinition(sql, new { projectId, languageCode }, cancellationToken: token);
-            return await db.QuerySingleAsync(command);
+            return await db.QuerySingleAsync<Result>(command);
         }
     }
 }
