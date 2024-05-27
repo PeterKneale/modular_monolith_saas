@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Micro.Web.AcceptanceTests.Pages.ApiKeys;
 using Micro.Web.AcceptanceTests.Pages.Auth;
 using Micro.Web.AcceptanceTests.Pages.Layouts;
 using Micro.Web.AcceptanceTests.Pages.Organisations;
@@ -16,11 +17,11 @@ public static class PageIdExtensions
 
     public static async Task AssertPageId(this LoginPage page) =>
         await page.AssertPageId("Login");
-    
-    public static async Task AssertPageId(this ApiKeys.AddPage page) =>
+
+    public static async Task AssertPageId(this AddPage page) =>
         await page.AssertPageId("AddApiKey");
-    
-    public static async Task AssertPageId(this ApiKeys.ListPage page) =>
+
+    public static async Task AssertPageId(this ListPage page) =>
         await page.AssertPageId("ListApiKeys");
 
     public static async Task AssertPageId(this RegisterPage page) =>

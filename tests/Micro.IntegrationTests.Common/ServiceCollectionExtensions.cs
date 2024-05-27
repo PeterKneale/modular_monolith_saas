@@ -11,14 +11,8 @@ public static class ServiceCollectionExtensions
         {
             c.Filter = (category, level) =>
             {
-                if (category.Contains("Microsoft.EntityFrameworkCore"))
-                {
-                    return level >= LogLevel.Warning;
-                }
-                if (category.StartsWith("Micro."))
-                {
-                    return level >= LogLevel.Debug;
-                }
+                if (category.Contains("Microsoft.EntityFrameworkCore")) return level >= LogLevel.Warning;
+                if (category.StartsWith("Micro.")) return level >= LogLevel.Debug;
 
                 return level >= LogLevel.Information;
             };

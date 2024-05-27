@@ -7,10 +7,7 @@ public class PageId(IPage page)
     public async Task<string> GetPageId()
     {
         var value = await _pageId.GetAttributeAsync("data-value");
-        if (value is null)
-        {
-            throw new Exception("PageId not found on page");
-        }
+        if (value is null) throw new Exception("PageId not found on page");
         return value;
     }
 }

@@ -3,6 +3,7 @@ using Micro.Tenants.Infrastructure;
 using Micro.Translations.Infrastructure;
 using Micro.Users.Application.Users.Commands;
 using Micro.Users.Infrastructure;
+using Micro.Users.Infrastructure.Database;
 
 namespace Micro.Modules.IntegrationTests;
 
@@ -69,7 +70,7 @@ public class IntegrationTests(ServiceFixture service, ITestOutputHelper outputHe
     private static async Task AssertUserPresenceInUsersModule(Guid userId, string firstName, string lastName)
     {
         using var scope = UsersCompositionRoot.BeginLifetimeScope();
-        var db = scope.ServiceProvider.GetRequiredService<Users.Infrastructure.Database.Db>();
+        var db = scope.ServiceProvider.GetRequiredService<Db>();
         var user = await db.Users.SingleOrDefaultAsync(x => x.Id == userId);
         user.Should().NotBeNull();
         user!.Name.First.Should().Be(firstName);

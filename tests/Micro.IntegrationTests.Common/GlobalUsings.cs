@@ -4,4 +4,4 @@ global using MartinCostello.Logging.XUnit;
 global using Micro.Common;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly:ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage]

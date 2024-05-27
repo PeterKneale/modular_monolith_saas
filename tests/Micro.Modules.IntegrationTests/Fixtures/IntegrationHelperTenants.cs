@@ -12,24 +12,18 @@ public static class IntegrationHelperTenants
     {
         using var scope = TranslationsCompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
-        foreach(var message in await db.Inbox.ToListAsync())
-        {
-            db.Inbox.Remove(message);
-        }
+        foreach (var message in await db.Inbox.ToListAsync()) db.Inbox.Remove(message);
         await db.SaveChangesAsync();
     }
-    
+
     public static async Task PurgeOutbox()
     {
         using var scope = TranslationsCompositionRoot.BeginLifetimeScope();
         var db = scope.ServiceProvider.GetRequiredService<Db>();
-        foreach(var message in await db.Outbox.ToListAsync())
-        {
-            db.Outbox.Remove(message);
-        }
+        foreach (var message in await db.Outbox.ToListAsync()) db.Outbox.Remove(message);
         await db.SaveChangesAsync();
     }
-    
+
     public static async Task PushMessageIntoInbox(IIntegrationEvent integrationEvent)
     {
         using var scope = TranslationsCompositionRoot.BeginLifetimeScope();
@@ -37,7 +31,7 @@ public static class IntegrationHelperTenants
         await db.Inbox.AddAsync(InboxMessage.CreateFrom(integrationEvent));
         await db.SaveChangesAsync();
     }
-    
+
     public static async Task PushMessageIntoOutbox(IIntegrationEvent integrationEvent)
     {
         using var scope = TranslationsCompositionRoot.BeginLifetimeScope();

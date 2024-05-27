@@ -4,8 +4,6 @@ namespace Micro.Web.AcceptanceTests.Pages.Projects;
 
 public record ProjectCreatePageData
 {
-    public string Name { get; init; } = null!;
-
     private static readonly Faker<ProjectCreatePageData> Fake;
 
     static ProjectCreatePageData()
@@ -16,6 +14,8 @@ public record ProjectCreatePageData
                 .Replace("_", string.Empty)
                 .Replace(" ", string.Empty));
     }
+
+    public string Name { get; init; } = null!;
 
     public static ProjectCreatePageData CreateValid() => Fake.Generate();
 }

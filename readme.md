@@ -68,7 +68,7 @@
 - :x: AWS SQS for outbox/inbox (https://github.com/awslabs/aws-dotnet-messaging or similar)
 - :v: Distinct container instance and composition root foreach module 
 - :x: Security at the postgres connection level via connection context being set
- 
+
 ### Conventions
 As the razor pages co-habitate in the web host a convention is needed to ensure the routes are globally unique.
 :question: Perhaps modules could defined user, org and project scoped functionality?
