@@ -6,14 +6,14 @@ public class IndexPage(ITranslationModule module, IPageContextAccessor context) 
     [BindProperty(SupportsGet = true)]
     public string LanguageCode { get; set; }
 
+    public ListTranslations.Results Results { get; set; }
+
     public async Task OnGet()
     {
         var language = await module.SendQuery(new GetLanguage.Query(LanguageCode));
         var query = new ListTranslations.Query(language.Id);
         Results = await module.SendQuery(query);
     }
-
-    public ListTranslations.Results Results { get; set; }
 
     public async Task<RedirectToPageResult> OnGetRemoveTranslation(Guid termId, CancellationToken token)
     {

@@ -12,19 +12,19 @@ public class CountingTranslations(ServiceFixture service, ITestOutputHelper outp
         // arrange
         var projectId = Guid.NewGuid();
         var languageId = Guid.NewGuid();
-        
+
         // act
         await Service.Execute(async ctx =>
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId, "en-AU"));
-            
+
             // assert
             var count = await ctx.SendQuery(new CountLanguageTranslations.Query(languageId));
             count.Should().Be(0);
         }, projectId: projectId);
     }
-    
+
     [Fact]
     public async Task Can_count_translations_when_terms_exist_but_no_translations_exist()
     {
@@ -32,7 +32,7 @@ public class CountingTranslations(ServiceFixture service, ITestOutputHelper outp
         var projectId = Guid.NewGuid();
         var termId = Guid.NewGuid();
         var languageId = Guid.NewGuid();
-        
+
         // act
         await Service.Execute(async ctx =>
         {
@@ -40,7 +40,7 @@ public class CountingTranslations(ServiceFixture service, ITestOutputHelper outp
             await ctx.SendCommand(new AddLanguage.Command(languageId, "en-AU"));
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId, TestTerm1));
-            
+
             // assert
             var count = await ctx.SendQuery(new CountLanguageTranslations.Query(languageId));
             count.Should().Be(0);
@@ -64,7 +64,7 @@ public class CountingTranslations(ServiceFixture service, ITestOutputHelper outp
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, "en-AU"));
             await ctx.SendCommand(new AddLanguage.Command(languageId2, "en-GB"));
-            
+
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, TestTerm1));
             await ctx.SendCommand(new AddTerm.Command(termId2, TestTerm2));

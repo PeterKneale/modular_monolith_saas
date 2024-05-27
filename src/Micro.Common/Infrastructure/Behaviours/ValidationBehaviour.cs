@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ValidationException = Micro.Common.Exceptions.ValidationException;
 
 namespace Micro.Common.Infrastructure.Behaviours;
 
@@ -32,7 +33,7 @@ public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRe
 
         var errors = string.Join(",", failures.Select(x => x.ErrorMessage));
         logs.LogInformation("{Name} Failed validation {@Request} {errors}", name, request, errors);
-        throw new Exceptions.ValidationException(errors);
+        throw new ValidationException(errors);
     }
 
     private static string GetName() => typeof(TRequest).FullName!.Split(".").Last();

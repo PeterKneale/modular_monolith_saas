@@ -8,6 +8,7 @@ using Micro.Translations.Infrastructure.Database.Repositories;
 using Micro.Translations.Infrastructure.Database.TypeHandlers;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using Constants = Micro.Translations.Infrastructure.Database.Constants;
 
 namespace Micro.Translations.Infrastructure;
 
@@ -16,7 +17,7 @@ internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetDbConnectionString(Database.Constants.SchemaName);
+        var connectionString = configuration.GetDbConnectionString(Constants.SchemaName);
         if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("Connection string missing");
 
         var assemblies = new[]
@@ -32,14 +33,14 @@ internal static class ServiceCollectionExtensions
         // Repositories
         services.AddScoped<ILanguageRepository, LanguageRepository>();
         services.AddScoped<ITermRepository, TermRepository>();
-        
+
         // dapper
         services.AddScoped<IDbConnection>(c => new NpgsqlConnection(connectionString));
         SqlMapper.AddTypeHandler(LanguageIdTypeHandler.Default);
-        
+
         // Database Migrations
         services
-            .AddSingleton<IConventionSet>(new DefaultConventionSet(Database.Constants.SchemaName, null))
+            .AddSingleton<IConventionSet>(new DefaultConventionSet(Constants.SchemaName, null))
             .AddFluentMigratorCore()
             .ConfigureRunner(runner => runner
                 .AddPostgres()

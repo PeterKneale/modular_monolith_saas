@@ -2,11 +2,13 @@
 
 public class Index(ITranslationModule module, IPageContextAccessor context) : ContextualPageModel(context)
 {
+    public ListLanguageStatistics.Results Results { get; set; }
+
     public async Task OnGet()
     {
         Results = await module.SendQuery(new ListLanguageStatistics.Query());
     }
-    
+
     public async Task<FileStreamResult> OnGetDownloadCsv(string languageCode, CancellationToken token)
     {
         var language = await module.SendQuery(new GetLanguage.Query(languageCode));
@@ -18,7 +20,7 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
             FileDownloadName = name
         };
     }
-    
+
     public async Task<FileStreamResult> OnGetDownloadResx(string languageCode, CancellationToken token)
     {
         var language = await module.SendQuery(new GetLanguage.Query(languageCode));
@@ -30,6 +32,4 @@ public class Index(ITranslationModule module, IPageContextAccessor context) : Co
             FileDownloadName = name
         };
     }
-
-    public ListLanguageStatistics.Results Results { get; set; }
 }

@@ -11,7 +11,7 @@ public class LanguageDetailTest
     [Fact]
     public void Code_is_correct() =>
         LanguageDetail.Create("en-AU").Code.Should().Be("en-AU");
-   
+
     [Fact]
     public void LoweCase_is_accepted() =>
         LanguageDetail.Create("en-au").Code.Should().Be("en-AU");

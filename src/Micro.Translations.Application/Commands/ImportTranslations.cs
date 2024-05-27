@@ -25,10 +25,7 @@ public static class ImportTranslations
             var projectId = context.ProjectId;
             var languageId = LanguageId.Create(command.LanguageId);
             var language = await languages.GetAsync(languageId, token);
-            if (language == null)
-            {
-                throw new NotFoundException(nameof(Language), languageId.Value);
-            }
+            if (language == null) throw new NotFoundException(nameof(Language), languageId.Value);
 
             var termsThatExist = (await repository.ListAsync(projectId, token)).ToList();
             foreach (var item in command.Translations)

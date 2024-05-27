@@ -36,7 +36,7 @@ public static class TranslationModuleStartup
         bus.Subscribe<OrganisationCreated>(new IntegrationEventHandler());
         bus.Subscribe<OrganisationUpdated>(new IntegrationEventHandler());
         bus.Subscribe<ProjectCreated>(new IntegrationEventHandler());
-        
+
         TranslationsCompositionRoot.SetProvider(serviceProvider);
 
         if (enableMigrations) serviceProvider.ApplyDatabaseMigrations(resetDb);

@@ -29,7 +29,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
     public virtual DbSet<Translation> Translations { get; init; } = null!;
 
     public virtual DbSet<User> Users { get; init; } = null!;
-    
+
     public virtual DbSet<Project> Projects { get; init; } = null!;
 
     public virtual DbSet<InboxMessage> Inbox { get; init; } = null!;
@@ -54,14 +54,14 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         modelBuilder.Entity<Language>(entity =>
         {
             entity.ToTable(LanguagesTable, SchemaName);
-            
+
             entity.Property(e => e.LanguageId)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
-            
+
             entity.Property(e => e.ProjectId)
                 .HasColumnName(ProjectIdColumn);
-            
+
             entity.OwnsOne(x => x.Detail, x =>
             {
                 x.Property(e => e.Name)
@@ -72,7 +72,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                     .HasColumnName(CodeColumn);
             });
         });
-        
+
         modelBuilder.Entity<Term>(entity =>
         {
             entity.ToTable(TermsTable, SchemaName);
@@ -106,10 +106,10 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName(IdColumn);
-            
+
             entity.Property(e => e.TermId)
                 .HasColumnName(TermIdColumn);
-            
+
             entity.Property(e => e.LanguageId)
                 .HasColumnName(LanguageIdColumn);
 
@@ -131,7 +131,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 .HasMaxLength(100)
                 .HasColumnName(NameColumn);
         });
-        
+
         modelBuilder.Entity<Project>(entity =>
         {
             entity.ToTable(ProjectsTable, SchemaName);

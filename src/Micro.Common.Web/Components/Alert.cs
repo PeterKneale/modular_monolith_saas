@@ -2,8 +2,13 @@ namespace Micro.Common.Web.Components;
 
 public class Alert
 {
-    public string Message { get; init; }
-    public AlertLevel Level { get; init; }
+    public enum AlertLevel
+    {
+        Info,
+        Success,
+        Warning,
+        Danger
+    }
 
     public Alert()
     {
@@ -16,13 +21,8 @@ public class Alert
         Level = level;
     }
 
-    public enum AlertLevel
-    {
-        Info,
-        Success,
-        Warning,
-        Danger
-    }
+    public string Message { get; init; }
+    public AlertLevel Level { get; init; }
 
     public string CssClass => $"alert alert-{Enum.GetName(Level)!.ToLower()}";
 

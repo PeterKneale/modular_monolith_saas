@@ -17,7 +17,7 @@ public class LoggingBehaviour<TRequest, TResponse>(ILogger<TRequest> logs) : IPi
         }
         catch (Exception e)
         {
-            logs.LogError(e,"Error Executing: {Name} - {Body}", name, body);
+            logs.LogError(e, "Error Executing: {Name} - {Body}", name, body);
             throw;
         }
 

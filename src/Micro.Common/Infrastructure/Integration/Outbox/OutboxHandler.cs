@@ -11,9 +11,9 @@ public class OutboxHandler(IDbSetOutbox set, OutboxMessagePublisher publisher, I
             .Where(x => x.ProcessedAt == null)
             .OrderBy(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
-        
+
         log.LogTrace($"Found {messages.Count} pending messages in outbox.");
-        
+
         foreach (var message in messages)
         {
             await publisher.PublishToBus(message, cancellationToken);

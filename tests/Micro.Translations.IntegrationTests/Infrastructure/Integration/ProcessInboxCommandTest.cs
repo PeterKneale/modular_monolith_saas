@@ -15,7 +15,7 @@ public class ProcessInboxCommandTest(ServiceFixture service, ITestOutputHelper o
         var userId = Guid.NewGuid();
         var name = "X";
         await IntegrationHelper.PushMessageIntoInbox(new UserCreated { UserId = userId, Name = name });
-        
+
         // act
         await Service.Command(new ProcessInboxCommand());
 

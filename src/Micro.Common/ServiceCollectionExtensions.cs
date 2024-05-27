@@ -25,21 +25,21 @@ public static class ServiceCollectionExtensions
         services.AddScoped<DomainEventAccessor>();
         services.AddScoped<DomainEventPublisher>();
         services.AddScoped<OutboxMessagePublisher>();
-        
+
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-        
+
         // inbox
         services.AddScoped<InboxWriter>();
         services.AddScoped<InboxHandler>();
-        
+
         // outbox
         services.AddScoped<OutboxWriter>();
         services.AddScoped<OutboxHandler>();
-        
+
         // queue
         services.AddScoped<QueueWriter>();
-        
+
         return services;
     }
 

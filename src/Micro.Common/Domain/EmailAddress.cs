@@ -7,26 +7,17 @@ public class EmailAddress : ValueObject
         Canonical = canonical;
         Display = display;
     }
-    
-    public string Display { get;  }
-    public string Canonical { get;}
+
+    public string Display { get; }
+    public string Canonical { get; }
 
     public static EmailAddress Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Email address cannot be empty");
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Email address cannot be empty");
 
-        if (!value.Contains('@'))
-        {
-            throw new ArgumentException("The email address is not valid, no '@' found");
-        }
+        if (!value.Contains('@')) throw new ArgumentException("The email address is not valid, no '@' found");
 
-        if (!value.Contains('.'))
-        {
-            throw new ArgumentException("The email address is not valid, no '.' found");
-        }
+        if (!value.Contains('.')) throw new ArgumentException("The email address is not valid, no '.' found");
 
         var display = value;
         var canonical = value.ToLowerInvariant();

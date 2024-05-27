@@ -7,14 +7,10 @@ public class MembershipMustBeForRole(List<Membership> memberships, UserId userId
     public bool IsBroken()
     {
         foreach (var membership in memberships)
-        {
             // find membership for user
             if (membership.UserId.Equals(userId))
-            {
                 // the rule is broken if the role is not the same
                 return !membership.Role.Equals(role);
-            }
-        }
 
         throw new NotSupportedException("No membership is present");
     }

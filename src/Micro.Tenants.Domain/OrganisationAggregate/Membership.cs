@@ -22,8 +22,8 @@ public class Membership : BaseEntity
     public UserId UserId { get; private init; }
 
     public MembershipRole Role { get; private set; }
-    
-    public DateTimeOffset CreatedAt { get;  }
+
+    public DateTimeOffset CreatedAt { get; }
 
     public DateTimeOffset? UpdatedAt { get; private set; }
 
@@ -42,5 +42,4 @@ public class Membership : BaseEntity
         Role = role;
         UpdatedAt = SystemClock.UtcNow;
     }
-
 }

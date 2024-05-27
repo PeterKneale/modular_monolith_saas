@@ -15,7 +15,7 @@ public static class CountTerms
                       FROM terms
                       WHERE project_id = @projectId;
                       """;
-            
+
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);
             return await db.ExecuteScalarAsync<int>(command);
         }

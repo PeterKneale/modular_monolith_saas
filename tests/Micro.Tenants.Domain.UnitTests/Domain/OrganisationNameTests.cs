@@ -11,7 +11,7 @@ public class OrganisationNameTests
         name1.Equals(name2).Should().BeTrue();
         name1.Should().Be(name2);
     }
-    
+
     [Fact]
     public void Organisation_names_are_not_equal_if_the_underlying_value_is_different()
     {

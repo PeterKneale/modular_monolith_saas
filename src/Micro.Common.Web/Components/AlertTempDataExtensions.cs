@@ -12,10 +12,7 @@ public static class AlertTempDataExtensions
 
     public static void SetAlert(this ITempDataDictionary dictionary, Alert alert)
     {
-        if (dictionary.HasAlert())
-        {
-            throw new Exception("Alert already set");
-        }
+        if (dictionary.HasAlert()) throw new Exception("Alert already set");
         var value = JsonConvert.SerializeObject(alert);
         dictionary.Add(Key, value);
     }

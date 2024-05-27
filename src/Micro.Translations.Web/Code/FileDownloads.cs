@@ -15,10 +15,7 @@ public static class FileDownloads
     {
         var stream = new MemoryStream();
         var writer = new StreamWriter(stream, Encoding.UTF8);
-        foreach (var line in results.Translations)
-        {
-            await writer.WriteLineAsync($"{line.TermName},{line.TranslationText}");
-        }
+        foreach (var line in results.Translations) await writer.WriteLineAsync($"{line.TermName},{line.TranslationText}");
 
         await writer.FlushAsync(token);
         stream.Position = 0;
@@ -29,11 +26,8 @@ public static class FileDownloads
     {
         var stream = new MemoryStream();
         var writer = new ResXResourceWriter(stream);
-        writer.AddMetadata("language-code",results.Language.Code);
-        foreach (var line in results.Translations)
-        {
-            writer.AddResource(line.TermName, line.TranslationText);
-        }
+        writer.AddMetadata("language-code", results.Language.Code);
+        foreach (var line in results.Translations) writer.AddResource(line.TermName, line.TranslationText);
 
         writer.Generate();
         stream.Position = 0;

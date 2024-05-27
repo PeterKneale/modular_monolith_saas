@@ -1,40 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <!-- https://learn.microsoft.com/en-us/aspnet/core/razor-pages/sdk?view=aspnetcore-8.0>-->
-    <!-- TODO: This should be enabled by default -->
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <!-- https://learn.microsoft.com/en-us/aspnet/core/razor-pages/sdk?view=aspnetcore-8.0>-->
+        <!-- TODO: This should be enabled by default -->
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser"/>
-  </ItemGroup>
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj"/>
-    <ProjectReference Include="..\Micro.Tenants.Infrastructure\Micro.Tenants.Infrastructure.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj"/>
+        <ProjectReference Include="..\Micro.Tenants.Infrastructure\Micro.Tenants.Infrastructure.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Pages\"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="Pages\Organisations\Create.cshtml" />
-    <AdditionalFiles Include="Pages\Organisations\_ViewStart.cshtml" />
-    <AdditionalFiles Include="Pages\Organisation\Details.cshtml" />
-    <AdditionalFiles Include="Pages\Organisation\_ViewStart.cshtml" />
-    <AdditionalFiles Include="Pages\Projects\Create.cshtml" />
-    <AdditionalFiles Include="Pages\Projects\_ViewStart.cshtml" />
-    <AdditionalFiles Include="Pages\Project\Details.cshtml" />
-    <AdditionalFiles Include="Pages\Project\_ViewStart.cshtml" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="Pages\Organisations\Create.cshtml"/>
+        <AdditionalFiles Include="Pages\Organisations\_ViewStart.cshtml"/>
+        <AdditionalFiles Include="Pages\Organisation\Details.cshtml"/>
+        <AdditionalFiles Include="Pages\Organisation\_ViewStart.cshtml"/>
+        <AdditionalFiles Include="Pages\Projects\Create.cshtml"/>
+        <AdditionalFiles Include="Pages\Projects\_ViewStart.cshtml"/>
+        <AdditionalFiles Include="Pages\Project\Details.cshtml"/>
+        <AdditionalFiles Include="Pages\Project\_ViewStart.cshtml"/>
+    </ItemGroup>
 
 </Project>

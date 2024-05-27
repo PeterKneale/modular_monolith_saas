@@ -2,7 +2,7 @@
 
 namespace Micro.Common.Infrastructure;
 
-public static class ConfigurationExtensions 
+public static class ConfigurationExtensions
 {
     public static bool IsSchedulerEnabled(this IConfiguration configuration)
     {
@@ -10,7 +10,7 @@ public static class ConfigurationExtensions
         var enabled = configuration[key] ?? bool.TrueString;
         return bool.Parse(enabled);
     }
-    
+
     public static bool IsMigrationEnabled(this IConfiguration configuration)
     {
         const string key = "MIGRATIONS_ENABLED";

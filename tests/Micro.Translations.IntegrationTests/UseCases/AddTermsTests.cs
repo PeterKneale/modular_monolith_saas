@@ -16,7 +16,7 @@ public class AddTermsTests(ServiceFixture service, ITestOutputHelper outputHelpe
 
         // act
         await Service.Command(new AddTerm.Command(termId, name), projectId: projectId);
-        
+
         // assert
         var results = await Service.Query(new GetTerm.Query(termId), projectId: projectId);
         results.Name.Should().Be(name);
@@ -33,8 +33,8 @@ public class AddTermsTests(ServiceFixture service, ITestOutputHelper outputHelpe
 
         var act = async () =>
         {
-        await Service.Command(new AddTerm.Command(termId, name), projectId: projectId);
-        await Service.Command(new AddTerm.Command(termId, name), projectId: projectId);
+            await Service.Command(new AddTerm.Command(termId, name), projectId: projectId);
+            await Service.Command(new AddTerm.Command(termId, name), projectId: projectId);
         };
 
         // assert

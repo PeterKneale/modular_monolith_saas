@@ -10,7 +10,7 @@ public class BaseModule
     {
         _scopeFactory = scopeFactory;
     }
-    
+
     public async Task SendCommand(IRequest command)
     {
         using var scope = _scopeFactory.Invoke();

@@ -8,7 +8,7 @@ public class ContextualPageModel : PageModel
     {
         _context = context;
     }
-    
+
     public string Org => _context.Organisation.Name;
     public string Project => _context.Project.Name;
 }

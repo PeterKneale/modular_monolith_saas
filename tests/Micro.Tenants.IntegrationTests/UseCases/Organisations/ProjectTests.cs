@@ -10,7 +10,7 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
     public async Task Can_manage_project()
     {
         // arrange
-        var userId =  await GivenUser();
+        var userId = await GivenUser();
         var organisationId = await GivenOrganisation(userId);
         var projectId = Guid.NewGuid();
         var orgName = Guid.NewGuid().ToString()[..10];
@@ -21,13 +21,12 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
         await Service.Execute(async module =>
         {
             await module.SendCommand(new CreateProject.Command(projectId, projectName));
-            
+
             // Assert can get by id
             var getById = new GetProjectById.Query(projectId);
             var getByIdResult = await module.SendQuery(getById);
             getByIdResult.Id.Should().Be(projectId);
             getByIdResult.Name.Should().Be(projectName);
-
         }, userId, organisationId);
 
         // assert can get by context
@@ -38,7 +37,7 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
             var getByNameResult = await module.SendQuery(getByName);
             getByNameResult.Id.Should().Be(projectId);
             getByNameResult.Name.Should().Be(projectName);
-            
+
             // Update project name
             await module.SendCommand(new UpdateProjectName.Command(projectNameUpdated));
 
@@ -47,7 +46,7 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
             var getByUpdatedNameResult = await module.SendQuery(getByUpdatedName);
             getByUpdatedNameResult.Id.Should().Be(projectId);
             getByUpdatedNameResult.Name.Should().Be(projectNameUpdated);
-            
+
             var getByContext = new GetProjectByContext.Query();
             var getByContextResult = await module.SendQuery(getByContext);
             getByContextResult.Id.Should().Be(projectId);

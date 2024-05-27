@@ -47,9 +47,9 @@ public static class ListLanguageStatistics
         private async Task<IDictionary<string, int>> GetTranslationsByLanguage(ProjectId projectId, CancellationToken token)
         {
             var sql = """
-                      SELECT code AS Code, COUNT(translations.id) AS Count 
-                      FROM languages 
-                          LEFT JOIN translations ON languages.id = translations.language_id 
+                      SELECT code AS Code, COUNT(translations.id) AS Count
+                      FROM languages
+                          LEFT JOIN translations ON languages.id = translations.language_id
                       WHERE languages.project_id = @projectId GROUP BY languages.code
                       """;
             var command = new CommandDefinition(sql, new { projectId }, cancellationToken: token);

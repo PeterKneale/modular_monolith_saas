@@ -8,9 +8,9 @@ namespace Micro.Translations.Domain.UnitTests.TermAggregate;
 [TestSubject(typeof(Term))]
 public class TermTest
 {
+    private readonly ProjectId _projectId = ProjectId.Create();
     private readonly Term _term;
     private readonly TermId _termId = TermId.Create();
-    private readonly ProjectId _projectId = ProjectId.Create();
     private readonly TermName _termName = TermName.Create("name");
 
     public TermTest()
@@ -19,11 +19,11 @@ public class TermTest
     }
 
     [Fact]
-    public void Translations_are_empty() => 
+    public void Translations_are_empty() =>
         _term.Translations.Should().BeEmpty();
 
     [Fact]
-    public void Created_domain_event_is_raised() => 
+    public void Created_domain_event_is_raised() =>
         _term.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<TermCreatedDomainEvent>();
 
     [Fact]

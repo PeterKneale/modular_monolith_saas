@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-
 namespace Micro.Tenants.Application;
 
 [ExcludeFromCodeCoverage]

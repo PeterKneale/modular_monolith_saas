@@ -1,5 +1,4 @@
-﻿using Micro.Translations.Infrastructure;
-using Micro.Translations.Messages;
+﻿using Micro.Translations.Messages;
 
 namespace Micro.Translations.IntegrationTests.Infrastructure.Integration;
 
@@ -19,7 +18,7 @@ public class ProcessOutboxCommandTest(ServiceFixture service, ITestOutputHelper 
         await Service.Command(new ProcessOutboxCommand());
 
         // assert
-        
+
         // TODO: how to assert,
     }
 }

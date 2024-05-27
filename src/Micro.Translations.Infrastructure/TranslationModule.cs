@@ -1,5 +1,4 @@
 ﻿using Micro.Common;
-using Micro.Users;
 
 namespace Micro.Translations.Infrastructure;
 

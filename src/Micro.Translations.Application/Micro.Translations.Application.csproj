@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Micro.Translations.Domain\Micro.Translations.Domain.csproj" />
-      <ProjectReference Include="..\Micro.Translations.Messages\Micro.Translations.Messages.csproj" />
+        <ProjectReference Include="..\Micro.Translations.Domain\Micro.Translations.Domain.csproj"/>
+        <ProjectReference Include="..\Micro.Translations.Messages\Micro.Translations.Messages.csproj"/>
     </ItemGroup>
 
 </Project>

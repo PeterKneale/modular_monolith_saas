@@ -9,7 +9,7 @@ public class IntegrationEventTests(ServiceFixture service, ITestOutputHelper out
     public async Task Creating_an_organisation_publishes_an_integration_events()
     {
         // arrange
-        var userId =  await GivenUser();
+        var userId = await GivenUser();
 
         // act
         var organisationId = await GivenOrganisation(userId);
@@ -24,7 +24,7 @@ public class IntegrationEventTests(ServiceFixture service, ITestOutputHelper out
     public async Task Creating_and_updating_project_publishes_an_integration_events()
     {
         // arrange
-        var userId =  await GivenUser();
+        var userId = await GivenUser();
         var organisationId = await GivenOrganisation(userId);
         var projectId = Guid.NewGuid();
         var projectName = Guid.NewGuid().ToString()[..10];

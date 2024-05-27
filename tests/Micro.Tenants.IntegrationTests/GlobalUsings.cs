@@ -10,5 +10,5 @@ global using Xunit;
 global using Xunit.Abstractions;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly:ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage]
 [assembly: AssemblyTrait("Type", "Integration")]

@@ -23,7 +23,7 @@ public class AddTranslations(ServiceFixture service, ITestOutputHelper outputHel
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, TestLanguageCode1));
             await ctx.SendCommand(new AddLanguage.Command(languageId2, TestLanguageCode2));
-            
+
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId1, TestTerm1));
             await ctx.SendCommand(new AddTerm.Command(termId2, TestTerm2));
@@ -81,7 +81,7 @@ public class AddTranslations(ServiceFixture service, ITestOutputHelper outputHel
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId1, "en-AU"));
-            
+
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId, TestTerm1));
 
@@ -115,7 +115,7 @@ public class AddTranslations(ServiceFixture service, ITestOutputHelper outputHel
         {
             // Add languages
             await ctx.SendCommand(new AddLanguage.Command(languageId, "en-AU"));
-            
+
             // Add terms
             await ctx.SendCommand(new AddTerm.Command(termId, TestTerm1));
 

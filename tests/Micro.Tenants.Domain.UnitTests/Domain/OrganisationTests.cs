@@ -2,13 +2,15 @@ namespace Micro.Tenants.Domain.UnitTests.Domain;
 
 public class OrganisationTests
 {
-    private readonly Organisation _organisation;
-    private readonly UserId _ownerId = UserId.Create();
     private readonly OrganisationId _id = OrganisationId.Create();
     private readonly OrganisationName _name = OrganisationName.Create("x");
+    private readonly Organisation _organisation;
+    private readonly UserId _ownerId = UserId.Create();
 
-    public OrganisationTests() =>
+    public OrganisationTests()
+    {
         _organisation = Organisation.Create(_id, _name, _ownerId);
+    }
 
     [Fact]
     public void Initially_organisation_id_is_set() =>

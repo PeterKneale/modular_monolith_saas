@@ -57,7 +57,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
             entity.Property(e => e.CreatedAt).HasColumnName(CreatedAt);
             entity.Property(e => e.UpdatedAt).HasColumnName(UpdatedAt);
-            
+
             entity.Ignore(x => x.DomainEvents);
         });
 
@@ -81,7 +81,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
             entity.Property(e => e.CreatedAt).HasColumnName(CreatedAt);
             entity.Property(e => e.UpdatedAt).HasColumnName(UpdatedAt);
-            
+
             entity
                 .HasOne(d => d.Organisation)
                 .WithMany(p => p.Memberships)
@@ -120,7 +120,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
 
             entity.Property(e => e.CreatedAt).HasColumnName(CreatedAt);
             entity.Property(e => e.UpdatedAt).HasColumnName(UpdatedAt);
-            
+
             entity
                 .HasOne(d => d.Organisation)
                 .WithMany(p => p.Projects)

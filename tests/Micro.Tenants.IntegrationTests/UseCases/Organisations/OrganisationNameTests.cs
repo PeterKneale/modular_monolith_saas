@@ -48,8 +48,8 @@ public class OrganisationNameTests(ServiceFixture service, ITestOutputHelper out
     {
         // arrange
         var userId = await GivenUser();
-        var organisationId1 = await GivenOrganisation(userId,"X");
-        var organisationId2 = await GivenOrganisation(userId,"Y");
+        var organisationId1 = await GivenOrganisation(userId, "X");
+        var organisationId2 = await GivenOrganisation(userId, "Y");
 
         // act
         var action = async () =>

@@ -10,13 +10,13 @@ namespace Micro.Tenants.IntegrationTests.Fixtures;
 
 public class BaseTest
 {
-    protected ServiceFixture Service { get; }
-
     protected BaseTest(ServiceFixture service, ITestOutputHelper output)
     {
         service.OutputHelper = output;
         Service = service;
     }
+
+    protected ServiceFixture Service { get; }
 
     protected async Task<Guid> GivenUser()
     {

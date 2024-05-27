@@ -2,6 +2,18 @@
 
 public class UpdatePage(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
+    [Required] [BindProperty] public string Text { get; set; }
+
+    [Required]
+    [BindProperty(SupportsGet = true)]
+    public Guid TermId { get; set; }
+
+    [BindProperty(SupportsGet = true)] public Guid LanguageId { get; set; }
+
+    [Required]
+    [BindProperty(SupportsGet = true)]
+    public string LanguageCode { get; set; }
+
     public async Task OnGet()
     {
         var language = await module.SendQuery(new GetLanguage.Query(LanguageCode));
@@ -13,20 +25,17 @@ public class UpdatePage(ITranslationModule module, IPageContextAccessor context)
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
-        
+        if (!ModelState.IsValid) return Page();
+
         try
         {
             await module.SendCommand(new UpdateTranslation.Command(TermId, LanguageId, Text));
             TempData.SetAlert(Alert.Success("You have updated a translation"));
-            
+
             return RedirectToPage(nameof(Index), new
             {
-                LanguageCode = LanguageCode,
-                Org = context.Organisation.Name, 
+                LanguageCode,
+                Org = context.Organisation.Name,
                 Project = context.Project.Name
             });
         }
@@ -36,17 +45,4 @@ public class UpdatePage(ITranslationModule module, IPageContextAccessor context)
             return Page();
         }
     }
-
-    [Required] [BindProperty] public string Text { get; set; }
-
-    [Required]
-    [BindProperty(SupportsGet = true)]
-    public Guid TermId { get; set; }
-    
-    [BindProperty(SupportsGet = true)]
-    public Guid LanguageId { get; set; }
-
-    [Required]
-    [BindProperty(SupportsGet = true)]
-    public string LanguageCode { get; set; }
 }

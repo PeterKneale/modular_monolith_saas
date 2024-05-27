@@ -10,9 +10,9 @@ public class OrganisationDeletionTests(ServiceFixture service, ITestOutputHelper
     public async Task Organisation_can_be_deleted()
     {
         // arrange
-        var userId =  await GivenUser();
+        var userId = await GivenUser();
         var organisationId = await GivenOrganisation(userId);
-        
+
         // act
         var command = new DeleteOrganisation.Command();
         await Service.Command(command, userId, organisationId);

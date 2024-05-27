@@ -1,34 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <!-- https://learn.microsoft.com/en-us/aspnet/core/razor-pages/sdk?view=aspnetcore-8.0>-->
-    <!-- TODO: This should be enabled by default -->
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <!-- https://learn.microsoft.com/en-us/aspnet/core/razor-pages/sdk?view=aspnetcore-8.0>-->
+        <!-- TODO: This should be enabled by default -->
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser"/>
-  </ItemGroup>
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
-    <PackageReference Include="ResXResourceReader.NetStandard" Version="1.3.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
+        <PackageReference Include="ResXResourceReader.NetStandard" Version="1.3.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj"/>
-    <ProjectReference Include="..\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj"/>
+        <ProjectReference Include="..\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Shared\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Pages\Shared\"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="Pages\Shared\Components\TranslateMenu\Default.cshtml" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="Pages\Shared\Components\TranslateMenu\Default.cshtml"/>
+    </ItemGroup>
 
 </Project>

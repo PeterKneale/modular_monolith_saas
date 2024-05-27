@@ -20,6 +20,6 @@ public record ProjectName
     }
 
     public static implicit operator string(ProjectName d) => d.Value;
-    
+
     public override string ToString() => $"{Value}";
 }

@@ -2,26 +2,23 @@
 
 public class LanguageDetail : ValueObject
 {
-    public string Code { get; }
-    public string Name { get; }
-
     private LanguageDetail()
     {
         // EF Core   
     }
-    
+
     private LanguageDetail(string code, string name)
     {
         Code = code;
         Name = name;
     }
 
+    public string Code { get; }
+    public string Name { get; }
+
     public static LanguageDetail Create(string isoCode)
     {
-        if (string.IsNullOrWhiteSpace(isoCode))
-        {
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(isoCode));
-        }
+        if (string.IsNullOrWhiteSpace(isoCode)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(isoCode));
 
         var culture = CultureInfo.GetCultureInfo(isoCode);
         var name = culture.DisplayName;

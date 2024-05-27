@@ -2,12 +2,15 @@
 
 public class AddPage(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
+    [Display(Name = "Name")]
+    [Required]
+    [BindProperty]
+    [StringLength(50)]
+    public string Term { get; set; }
+
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
         try
         {
@@ -25,10 +28,4 @@ public class AddPage(ITranslationModule module, IPageContextAccessor context) : 
             return Page();
         }
     }
-
-    [Display(Name = "Name")]
-    [Required]
-    [BindProperty]
-    [StringLength(50)]
-    public string Term { get; set; }
 }

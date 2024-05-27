@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-
 namespace Micro.Translations.Application;
 
 [ExcludeFromCodeCoverage]

@@ -2,10 +2,15 @@
 
 public class Add(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
-    public async Task<IActionResult> OnGetAsync()
-    {
-        return await PopulateLanguages();
-    }
+    [Display(Name = "Language Code")]
+    [Required]
+    [BindProperty]
+    [StringLength(50)]
+    public string LanguageCode { get; set; }
+
+    public List<SelectListItem> Langauges { get; set; }
+
+    public async Task<IActionResult> OnGetAsync() => await PopulateLanguages();
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -43,12 +48,4 @@ public class Add(ITranslationModule module, IPageContextAccessor context) : Page
         }).ToList();
         return Page();
     }
-
-    [Display(Name = "Language Code")]
-    [Required]
-    [BindProperty]
-    [StringLength(50)]
-    public string LanguageCode { get; set; }
-
-    public List<SelectListItem> Langauges { get; set; }
 }

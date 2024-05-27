@@ -2,12 +2,11 @@
 
 public class ImportPage(ITranslationModule module, IPageContextAccessor context) : PageModel
 {
+    [BindProperty] public IFormFile ImportFile { get; set; }
+
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
         try
         {
@@ -28,7 +27,4 @@ public class ImportPage(ITranslationModule module, IPageContextAccessor context)
             return Page();
         }
     }
-
-    [BindProperty]
-    public IFormFile ImportFile { get; set; }
 }

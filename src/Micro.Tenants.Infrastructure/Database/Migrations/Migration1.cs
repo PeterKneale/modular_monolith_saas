@@ -10,7 +10,7 @@ public class Migration1 : Migration
         Create.Table(OrganisationsTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(NameColumn).AsString(NameMaxLength).Unique()
-            .WithColumn(CreatedAt).AsDateTimeOffset() 
+            .WithColumn(CreatedAt).AsDateTimeOffset()
             .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();
 
         Create.Table(MembershipsTable)
@@ -18,8 +18,9 @@ public class Migration1 : Migration
             .WithColumn(OrganisationIdColumn).AsGuid()
             .WithColumn(UserIdColumn).AsGuid() // Loosely coupled
             .WithColumn(RoleColumn).AsString(RoleMaxLength)
-            .WithColumn(CreatedAt).AsDateTimeOffset() 
-            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();;
+            .WithColumn(CreatedAt).AsDateTimeOffset()
+            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();
+        ;
 
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
@@ -29,8 +30,9 @@ public class Migration1 : Migration
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
             .WithColumn(OrganisationIdColumn).AsGuid()
             .WithColumn(NameColumn).AsString(NameMaxLength)
-            .WithColumn(CreatedAt).AsDateTimeOffset() 
-            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();;
+            .WithColumn(CreatedAt).AsDateTimeOffset()
+            .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();
+        ;
 
         Create.ForeignKey($"fk_{MembershipsTable}_{OrganisationsTable}")
             .FromTable(MembershipsTable).ForeignColumn(OrganisationIdColumn)

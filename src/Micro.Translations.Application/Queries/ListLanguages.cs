@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Micro.Translations.Application.Queries;
+﻿namespace Micro.Translations.Application.Queries;
 
 public static class ListLanguages
 {
