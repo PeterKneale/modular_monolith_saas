@@ -26,7 +26,7 @@ public static class UsersModuleStartup
             .AddSingleton(bus)
             .AddSingleton(logs)
             .BuildServiceProvider();
-        
+
         UsersCompositionRoot.SetProvider(serviceProvider);
 
         if (enableMigrations) serviceProvider.ApplyDatabaseMigrations(resetDb);

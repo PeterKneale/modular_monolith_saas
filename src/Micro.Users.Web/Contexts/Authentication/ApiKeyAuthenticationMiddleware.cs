@@ -5,7 +5,7 @@ namespace Micro.Users.Web.Contexts.Authentication;
 public class ApiKeyAuthenticationMiddleware(IUsersModule module, IHttpContextAccessor accessor, ILogger<ApiKeyAuthenticationMiddleware> log) : IMiddleware
 {
     public const string ApiHeaderName = "x-api-key";
-    
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         if (accessor.HttpContext == null) throw new InvalidOperationException("HttpContext is null");

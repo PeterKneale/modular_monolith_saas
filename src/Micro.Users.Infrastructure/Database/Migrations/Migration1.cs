@@ -19,7 +19,7 @@ public class Migration1 : Migration
             .WithColumn(EmailDisplayColumn).AsString(EmailMaxLength).Unique()
             .WithColumn(PasswordColumn).AsString(NameMaxLength)
             .WithColumn(IsVerified).AsBoolean() // initially false
-            .WithColumn(RegisteredAt).AsDateTimeOffset() 
+            .WithColumn(RegisteredAt).AsDateTimeOffset()
             .WithColumn(VerifiedAt).AsDateTimeOffset().Nullable() // initially null then set on verification
             .WithColumn(VerifiedToken).AsString(50).Nullable() // initially set then cleared on verification
             .WithColumn(ForgotToken).AsString(50).Nullable()

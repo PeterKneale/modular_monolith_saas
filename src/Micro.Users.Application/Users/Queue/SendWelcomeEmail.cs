@@ -8,7 +8,7 @@ public static class SendWelcomeEmail
     {
         public UserId UserId { get; init; } = null!;
     }
-    
+
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
@@ -27,7 +27,7 @@ public static class SendWelcomeEmail
             if (user == null) throw new NotFoundException(nameof(User), userId.ToString());
 
             var actionUrl = $"http://localhost:8080/Auth/VerifyEmail?userId={user.Id}&token={user.VerificationToken}";
-            
+
             logs.LogInformation($"Sending welcome email to {user.EmailAddress} with action url {actionUrl}");
         }
     }

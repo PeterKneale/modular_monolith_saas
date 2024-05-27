@@ -25,9 +25,12 @@ public class UserApiKey
 
     public virtual User User { get; set; } = null!;
 
-    public override string ToString() => $"{Id} - {UserId} - {ApiKey}";
+    public override string ToString()
+        => $"{Id} - {UserId} - {ApiKey}";
 
-    public static UserApiKey CreateNew(UserApiKeyId id, UserId userId, ApiKeyName name, IApiKeyService service) => new(id, userId, ApiKey.Create(name, service.GenerateApiKey()));
+    public static UserApiKey CreateNew(UserApiKeyId id, UserId userId, ApiKeyName name, IApiKeyService service) =>
+        new(id, userId, ApiKey.Create(name, service.GenerateApiKey()));
 
-    public static UserApiKey Create(UserApiKeyId id, UserId userId, ApiKey key) => new(id, userId, key);
+    public static UserApiKey Create(UserApiKeyId id, UserId userId, ApiKey key) =>
+        new(id, userId, key);
 }

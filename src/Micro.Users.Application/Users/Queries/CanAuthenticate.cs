@@ -23,14 +23,14 @@ public static class CanAuthenticate
         {
             var email = EmailAddress.Create(query.Email);
             var password = Password.Create(query.Password);
-            
+
             var user = await users.GetAsync(email, token);
             if (user == null) return new Result(false);
 
             try
             {
-                user.Login(email,password,checker);
-                return new Result(true,user.Id);
+                user.Login(email, password, checker);
+                return new Result(true, user.Id);
             }
             catch (BusinessRuleBrokenException e)
             {

@@ -21,5 +21,5 @@
         <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj"/>
         <ProjectReference Include="..\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj"/>
     </ItemGroup>
-    
+
 </Project>

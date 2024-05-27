@@ -2,5 +2,5 @@
 
 public interface ICheckPassword
 {
-    bool Matches(Password password, HashedPassword hashedPassword);
+    bool Matches(Password password, PasswordHash passwordHash);
 }

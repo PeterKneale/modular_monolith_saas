@@ -2,5 +2,5 @@
 
 public interface IHashPassword
 {
-    HashedPassword HashPassword(Password password);
+    PasswordHash HashPassword(Password password);
 }

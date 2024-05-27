@@ -17,5 +17,6 @@ public class ApiKey
 
     public override string ToString() => $"{Name}:{Key}";
 
-    public static ApiKey Create(ApiKeyName name, ApiKeyValue key) => new(name, key);
+    public static ApiKey Create(ApiKeyName name, ApiKeyValue key)
+        => new(name, key);
 }

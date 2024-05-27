@@ -34,10 +34,7 @@ internal static class ServiceCollectionExtensions
             ApplicationAssemblyInfo.Assembly,
             CommonAssemblyInfo.Assembly
         };
-        services.AddMediatR(c =>
-        {
-            c.RegisterServicesFromAssemblies(assemblies);
-        });
+        services.AddMediatR(c => { c.RegisterServicesFromAssemblies(assemblies); });
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         services.AddValidatorsFromAssemblies(assemblies);
@@ -72,7 +69,7 @@ internal static class ServiceCollectionExtensions
             // options.EnableSensitiveDataLogging();
             // options.EnableDetailedErrors();
         });
-        
+
         // Inbox/Outbox
         services.AddScoped<IDbSetInbox>(c => c.GetRequiredService<Db>());
         services.AddScoped<IDbSetOutbox>(c => c.GetRequiredService<Db>());

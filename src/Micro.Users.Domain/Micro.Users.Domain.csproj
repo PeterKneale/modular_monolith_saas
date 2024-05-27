@@ -4,10 +4,11 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <WarningsAsErrors>true</WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Micro.Common\Micro.Common.csproj" />
+        <ProjectReference Include="..\Micro.Common\Micro.Common.csproj"/>
     </ItemGroup>
 
 </Project>

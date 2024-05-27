@@ -7,18 +7,15 @@ public record Password
         Value = value;
     }
 
+    public string Value { get; }
+
     public static Password Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Password cannot be empty");
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Password cannot be empty");
         return new Password(value);
     }
 
     public static implicit operator string(Password x) => x.Value;
-    
-    public string Value { get; }
 
     public override string ToString() => "*******";
 }

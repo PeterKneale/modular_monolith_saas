@@ -23,18 +23,12 @@ public static class CanAuthenticate
             var value = new ApiKeyValue(query.ApiKeyValue);
 
             var userApiKey = await keys.GetByKey(value, token);
-            if (userApiKey == null)
-            {
-                return new Result(false);
-            }
+            if (userApiKey == null) return new Result(false);
 
             var userId = userApiKey.UserId;
-            
+
             var user = await users.GetAsync(userId, token);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(User), userId.Value);
-            }
+            if (user == null) throw new NotFoundException(nameof(User), userId.Value);
 
             var email = user.EmailAddress.Display;
 

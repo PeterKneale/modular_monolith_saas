@@ -23,7 +23,7 @@ public class UserLoginTest
         var user = User.Create(userId, userName, emailAddress, password, service);
         user.Verify(user.VerificationToken!);
         var action = () => user.Login(EmailAddress.Create(email2), Password.Create(password2), service);
-        
+
         // assert
         if (expected)
             action.Should().NotThrow(because);

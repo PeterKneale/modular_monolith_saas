@@ -38,7 +38,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
         configurationBuilder.Properties<ApiKeyValue>().HaveConversion<ApiKeyValueConverter>();
         configurationBuilder.Properties<ApiKeyName>().HaveConversion<ApiKeyNameConverter>();
         configurationBuilder.Properties<Password>().HaveConversion<PasswordConverter>();
-        configurationBuilder.Properties<HashedPassword>().HaveConversion<HashedPasswordConverter>();
+        configurationBuilder.Properties<PasswordHash>().HaveConversion<PasswordHashConverter>();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,7 +56,7 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 name.Property(property => property.First)
                     .HasMaxLength(NameMaxLength)
                     .HasColumnName(FirstNameColumn);
-                
+
                 name.Property(property => property.Last)
                     .HasMaxLength(NameMaxLength)
                     .HasColumnName(LastNameColumn);
@@ -67,13 +67,13 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 email.Property(property => property.Canonical)
                     .HasMaxLength(EmailMaxLength)
                     .HasColumnName(EmailCanonicalColumn);
-                
+
                 email.Property(property => property.Display)
                     .HasMaxLength(EmailMaxLength)
                     .HasColumnName(EmailDisplayColumn);
             });
 
-            entity.Property(e => e.HashedPassword)
+            entity.Property(e => e.PasswordHash)
                 .HasMaxLength(100)
                 .HasColumnName(PasswordColumn);
 
@@ -107,11 +107,11 @@ public class Db : DbContext, IDbSetInbox, IDbSetOutbox, IDbSetQueue
                 x.Property(e => e.Key)
                     .HasMaxLength(KeyMaxLength)
                     .HasColumnName(KeyColumn);
-                
+
                 x.Property(e => e.Name)
                     .HasMaxLength(NameMaxLength)
                     .HasColumnName(NameColumn);
-                
+
                 x.Property(e => e.CreatedAt)
                     .HasColumnName(CreatedAtColumn);
             });

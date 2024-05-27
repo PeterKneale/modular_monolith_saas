@@ -3,6 +3,7 @@
   &lt;Assembly Path="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests\bin\Debug\net8.0\Micro.Translations.Application.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.4\System.Private.CoreLib.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\pkne0634\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_MicroSaas.-2053870454\Snapshot\snapshot.utdcvr</s:String>
 	
 	<s:Boolean x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/ShowAdvancedOptions/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=76473D0D_002D3A10_002D480D_002DB356_002DA4C24F35AAA7/@EntryIndexedValue">360D495D-4117-434D-BCFD-FA4CB2EEF296</s:String>
@@ -11,7 +12,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=F6117A4E_002D3072_002D452A_002D9E25_002D526D6C6EF596/@EntryIndexedValue">1E66C0C9-DAA3-4E55-86C7-F6197E900D57</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=480429eb_002D27e1_002D498e_002Db74e_002Dace49c25060b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Throw_context_exception_when_no_current_user" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=480429eb_002D27e1_002D498e_002Db74e_002Dace49c25060b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Throw_context_exception_when_no_current_user" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
@@ -20,7 +21,7 @@
     &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79d0538d_002D11ab_002D477a_002Db196_002Da699ed6eb22d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;modules&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79d0538d_002D11ab_002D477a_002Db196_002Da699ed6eb22d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;modules&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
     &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Micro.Modules.IntegrationTests&amp;gt;" /&gt;&#xD;

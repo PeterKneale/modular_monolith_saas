@@ -6,6 +6,6 @@ namespace Micro.Users.Infrastructure.Integration;
 [ExcludeFromCodeCoverage]
 public class InboxJob : IJob
 {
-    public async Task Execute(IJobExecutionContext context) => 
+    public async Task Execute(IJobExecutionContext context) =>
         await CommandExecutor.SendCommand(new ProcessInboxCommand());
 }

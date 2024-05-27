@@ -18,18 +18,18 @@ public class Organisation : BaseEntity
         OrganisationId = organisationId;
         Name = name;
         _memberships = [Membership.CreateOwner(organisationId, ownerId)];
-        _projects = new();
+        _projects = [];
         CreatedAt = SystemClock.UtcNow;
         AddDomainEvent(new OrganisationCreatedDomainEvent(organisationId, name));
     }
-    
+
     public OrganisationId OrganisationId { get; } = null!;
 
     public OrganisationName Name { get; private set; } = null!;
 
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset? UpdatedAt { get; private set; }
-    
+
     public IReadOnlyCollection<Membership> Memberships => _memberships;
     public IReadOnlyCollection<Project> Projects => _projects;
 

@@ -24,10 +24,7 @@ public static class GetUserIdByEmail
             const string sql = "SELECT id FROM users WHERE email_canonical = @Email";
             var command = new CommandDefinition(sql, new { Email = email.Canonical }, cancellationToken: token);
             var userId = await db.QuerySingleOrDefaultAsync<Guid?>(command);
-            if (!userId.HasValue)
-            {
-                throw new NotFoundException(nameof(User), email);
-            }
+            if (!userId.HasValue) throw new NotFoundException(nameof(User), email);
 
             return userId.Value;
         }

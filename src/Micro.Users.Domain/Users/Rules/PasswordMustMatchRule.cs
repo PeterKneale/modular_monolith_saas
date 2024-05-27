@@ -6,8 +6,5 @@ public class PasswordMustMatchRule(User user, Password password, ICheckPassword 
 {
     public string Message => "The password is incorrect.";
 
-    public bool IsBroken()
-    {
-        return !checker.Matches(password, user.HashedPassword);
-    }
+    public bool IsBroken() => !checker.Matches(password, user.PasswordHash);
 }

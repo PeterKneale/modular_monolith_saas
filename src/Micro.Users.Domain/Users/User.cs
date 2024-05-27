@@ -12,12 +12,12 @@ public class User : BaseEntity
         // ef 
     }
 
-    private User(UserId id, Name name, EmailAddress emailAddress, HashedPassword hashedPassword, string verificationToken)
+    private User(UserId id, Name name, EmailAddress emailAddress, PasswordHash passwordHash, string verificationToken)
     {
         Id = id;
         Name = name;
         EmailAddress = emailAddress;
-        HashedPassword = hashedPassword;
+        PasswordHash = passwordHash;
         VerificationToken = verificationToken;
         RegisteredAt = SystemClock.UtcNow;
         AddDomainEvent(new UserCreatedDomainEvent(this));
@@ -29,7 +29,7 @@ public class User : BaseEntity
 
     public EmailAddress EmailAddress { get; private set; } = null!;
 
-    public HashedPassword HashedPassword { get; private set; } = null!;
+    public PasswordHash PasswordHash { get; private set; } = null!;
 
     public DateTimeOffset RegisteredAt { get; private set; }
 
@@ -49,7 +49,7 @@ public class User : BaseEntity
     {
         var hashedPassword = hasher.HashPassword(password);
         var verificationToken = Guid.NewGuid().ToString();
-        return new(id, name, emailAddress, hashedPassword, verificationToken);
+        return new User(id, name, emailAddress, hashedPassword, verificationToken);
     }
 
     public void Verify(string token)
@@ -79,7 +79,7 @@ public class User : BaseEntity
         CheckRule(new MustBeVerifiedRule(this));
         CheckRule(new PasswordMustMatchRule(this, oldPassword, checker));
         var newPasswordHashed = hasher.HashPassword(newPassword);
-        HashedPassword = newPasswordHashed;
+        PasswordHash = newPasswordHashed;
     }
 
     public void ForgotPassword()
@@ -97,6 +97,6 @@ public class User : BaseEntity
         CheckRule(new ForgotTokenMustNotBeExpiredRule(this));
         ForgotPasswordToken = null;
         ForgotPasswordTokenExpiry = null;
-        HashedPassword = hasher.HashPassword(password);
+        PasswordHash = hasher.HashPassword(password);
     }
 }
