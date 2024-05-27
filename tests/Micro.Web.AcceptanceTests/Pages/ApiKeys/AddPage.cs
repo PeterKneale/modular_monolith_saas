@@ -13,7 +13,7 @@ public class AddPage(IPage page) : PageLayout(page)
         return new AddPage(page);
     }
 
-    public async Task EnterName(string name) => 
+    public async Task EnterName(string name) =>
         await Page.GetByTestId(NameField).FillAsync(name);
 
     public async Task ClickSubmit() =>

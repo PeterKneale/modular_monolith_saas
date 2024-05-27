@@ -5,7 +5,7 @@ public static class LocatorAssertionsExtensions
     private const string CssClassIsValid = "is-valid";
 
     private const string CssClassIsInvalid = "is-invalid";
-    
+
     public static Task ToBe(this ILocatorAssertions assertions, bool valid) =>
         valid ? assertions.ToBeValid() : assertions.ToBeInvalid();
 

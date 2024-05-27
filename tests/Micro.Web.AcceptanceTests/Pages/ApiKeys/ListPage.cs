@@ -4,10 +4,10 @@ namespace Micro.Web.AcceptanceTests.Pages.ApiKeys;
 
 public class ListPage(IPage page) : PageLayout(page)
 {
+    private static readonly string Name = "Name";
     private static string AddButton => "AddButton";
     private static string DeleteButton => "DeleteButton";
     private static string Row => "Row";
-    private static string Name = "Name";
 
     public async Task<int> GetRowCount() =>
         await Page.GetByTestId(Row).CountAsync();
@@ -42,6 +42,7 @@ public class ListPage(IPage page) : PageLayout(page)
             var text = await row.GetByTestId(Name).InnerTextAsync();
             list.Add(text);
         }
+
         return list;
     }
 }

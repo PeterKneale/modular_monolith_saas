@@ -19,7 +19,7 @@ public class UserVerificationTests : BaseTest
 
         var verify = await VerifyEmailPage.Goto(Page, userId, token);
         await verify.Alert.AssertSuccess("verified");
-        
+
         await TestContext.Out.WriteLineAsync($"Registered user {data.Email} {data.Password}.");
     }
 
@@ -29,14 +29,14 @@ public class UserVerificationTests : BaseTest
         var verify = await VerifyEmailPage.Goto(Page, null, Guid.NewGuid());
         await verify.Alert.AssertError();
     }
-    
+
     [Test]
     public async Task TokenMustBeSupplied()
     {
-        var verify = await VerifyEmailPage.Goto(Page, Guid.NewGuid(), null);
+        var verify = await VerifyEmailPage.Goto(Page, Guid.NewGuid());
         await verify.Alert.AssertError();
     }
-    
+
     [Test]
     public async Task Cant_verify_more_than_once()
     {
@@ -53,7 +53,7 @@ public class UserVerificationTests : BaseTest
         var verify2 = await VerifyEmailPage.Goto(Page, userId, token);
         await verify2.Alert.AssertError("This user has already been verified");
     }
-    
+
     [Test]
     public async Task Cant_verify_with_incorrect_token()
     {

@@ -7,4 +7,4 @@ global using NUnit.Framework;
 global using static Micro.Web.AcceptanceTests.Config;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly:ExcludeFromCodeCoverage]
+[assembly: ExcludeFromCodeCoverage]

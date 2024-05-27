@@ -11,17 +11,17 @@ public class PasswordResetTests : BaseTest
     {
         var register = await RegisterPage.Goto(Page);
         await register.AssertPageId();
-        
+
         var user = TestUser.CreateValid();
 
         await register.Register(user.FirstName, user.LastName, user.Email, user.Password);
-        
+
         var userId = await Page.GetUserId(user.Email);
         var token = await Page.GetUserVerificationToken(userId);
 
         // The user is verified by clicking on the verification link
         await VerifyEmailPage.Goto(Page, userId, token);
-        
+
         // redirect to login should occur
         var loginPage = new LoginPage(Page);
         await loginPage.AssertPageId();
@@ -34,16 +34,16 @@ public class PasswordResetTests : BaseTest
         await forgot.Alert.AssertSuccess();
 
         var token2 = await Page.GetResetPasswordToken(userId);
-        
+
         user.RegeneratePassword();
-        
+
         var reset = await ResetPasswordPage.Goto(Page, userId, token2);
         await reset.AssertPageId();
         await reset.EnterPassword(user.Password);
         await reset.ClickSubmit();
         await reset.Alert.AssertSuccess("Your password has been reset");
     }
-    
+
     [Test]
     public async Task Cant_reset_password_unless_verified()
     {

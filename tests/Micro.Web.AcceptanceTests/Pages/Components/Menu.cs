@@ -6,16 +6,16 @@ namespace Micro.Web.AcceptanceTests.Pages.Components;
 public class Menu(IPage page)
 {
     private readonly ILocator _component = page.GetByTestId("Menu");
-    private readonly string _dropdown = "Dropdown";
 
     private readonly string _createOrganisationButton = "CreateOrganisationButton";
-    private readonly string _organisations = "Organisations";
-    private readonly string _organisation = "Organisation";
-    private readonly string _selectedOrganisation = "SelectedOrganisation";
 
     private readonly string _createProjectButton = "CreateProjectButton";
-    private readonly string _projects = "Projects";
+    private readonly string _dropdown = "Dropdown";
+    private readonly string _organisation = "Organisation";
+    private readonly string _organisations = "Organisations";
     private readonly string _project = "Project";
+    private readonly string _projects = "Projects";
+    private readonly string _selectedOrganisation = "SelectedOrganisation";
     private readonly string _selectedProject = "SelectedProject";
 
     public async Task<bool> IsPresent() =>
@@ -71,10 +71,7 @@ public class Menu(IPage page)
         var projects = await GetAllProjects();
         var index = position - 1;
         var option = projects.ElementAtOrDefault(index);
-        if (option == null)
-        {
-            throw new Exception($"No project found found at position {position}");
-        }
+        if (option == null) throw new Exception($"No project found found at position {position}");
 
         return await ClickProject(option);
     }
@@ -84,16 +81,13 @@ public class Menu(IPage page)
         var organisations = await GetAllOrganisations();
         var index = position - 1;
         var option = organisations.ElementAtOrDefault(index);
-        if (option == null)
-        {
-            throw new Exception($"No organisations found found at position {position}");
-        }
+        if (option == null) throw new Exception($"No organisations found found at position {position}");
 
         return await ClickOrganisation(option);
     }
 
     public async Task Activate() => await _component.ClickAsync();
-    
+
     public async Task<OrganisationCreatePage> SelectCreateOrganisation()
     {
         await _component.GetByTestId(_createOrganisationButton).ClickAsync();
@@ -124,12 +118,8 @@ public class Menu(IPage page)
     {
         var options = await page.GetByTestId(_projects).GetByTestId(_project).AllAsync();
         foreach (var option in options)
-        {
             if (await option.InnerTextAsync() == name)
-            {
                 return option;
-            }
-        }
 
         throw new Exception($"Project Option with name {name} not found among {options.Count} options");
     }
@@ -137,12 +127,8 @@ public class Menu(IPage page)
     private async Task<ILocator> GetOrganisationOption(string name)
     {
         foreach (var option in await page.GetByTestId(_organisations).GetByTestId(_organisation).AllAsync())
-        {
             if (await option.InnerTextAsync() == name)
-            {
                 return option;
-            }
-        }
 
         throw new Exception($"Organisation Option with name {name} not found");
     }

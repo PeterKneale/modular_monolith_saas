@@ -17,7 +17,7 @@ public class ForgotPasswordPage(IPage page) : PageLayout(page)
     {
         await Page.GetByTestId(EmailField).FillAsync(email);
     }
-    
+
     public async Task ClickSubmit()
     {
         await Page.GetByTestId(Button).ClickAsync();

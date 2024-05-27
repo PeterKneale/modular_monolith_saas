@@ -8,13 +8,13 @@ namespace Micro.Web.AcceptanceTests.UseCases.ApiKeys;
 [TestFixture]
 public class UsageTests : BaseTest
 {
-    private TestUser _data = null!;
-
     [SetUp]
     public async Task Setup()
     {
         _data = await Page.GivenLoggedIn();
     }
+
+    private TestUser _data = null!;
 
     [Test]
     public async Task Can_retrieve_current_user()
@@ -24,7 +24,7 @@ public class UsageTests : BaseTest
 
         // act
         var client = BuildHttpClient(key);
-        
+
         // assert
         var response = await client.GetFromJsonAsync<UserDto>("/api/users/current");
         response.UserId.Should().Be(_data.UserId);
@@ -53,8 +53,8 @@ public class UsageTests : BaseTest
         return key;
     }
 
-    class UserDto
+    private class UserDto
     {
-        public Guid UserId { get; set; }
+        public Guid UserId { get; }
     }
 }

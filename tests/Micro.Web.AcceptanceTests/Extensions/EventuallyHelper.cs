@@ -43,6 +43,5 @@ public static class EventuallyHelper
         Trace.WriteLine(log);
         Debug.WriteLine(log);
         Console.WriteLine(log);
-        
     }
 }

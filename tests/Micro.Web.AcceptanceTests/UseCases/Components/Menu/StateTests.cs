@@ -7,26 +7,20 @@ namespace Micro.Web.AcceptanceTests.UseCases.Components.Menu;
 [TestFixture]
 public class StateTests : BaseTest
 {
-    private HomePage _home = null!;
-
     [SetUp]
     public async Task SetUp()
     {
         await Page.GivenLoggedIn();
         _home = await HomePage.Goto(Page);
     }
-    
-    [Test]
-    public async Task The_menu_is_present()
-    {
-        (await _home.Menu.IsPresent()).Should().BeTrue();
-    }
+
+    private HomePage _home = null!;
 
     [Test]
-    public async Task The_menu_is_not_visible()
-    {
-        (await _home.Menu.IsVisible()).Should().BeFalse();
-    }
+    public async Task The_menu_is_present() => (await _home.Menu.IsPresent()).Should().BeTrue();
+
+    [Test]
+    public async Task The_menu_is_not_visible() => (await _home.Menu.IsVisible()).Should().BeFalse();
 
     [Test]
     public async Task The_menu_is_visible_when_clicked()

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Micro.Web.AcceptanceTests.Pages;
 using Micro.Web.AcceptanceTests.Pages.Organisations;
 using Micro.Web.AcceptanceTests.Pages.Projects;
 
@@ -59,7 +58,7 @@ public class ProjectTests : BaseTest
         (await details.Menu.GetSelectedOrganisation()).Should().Be(organisation);
         (await details.Menu.GetSelectedProject()).Should().Be(project);
     }
-    
+
     [Test]
     public async Task Selecting_create_project_navigates_to_the_project_creation_page()
     {

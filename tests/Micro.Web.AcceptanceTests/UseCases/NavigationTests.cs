@@ -8,13 +8,13 @@ namespace Micro.Web.AcceptanceTests.UseCases;
 public class NavigationTests : BaseTest
 {
     [Test]
-    public async Task LoginPageAllowsAnonymous() => 
+    public async Task LoginPageAllowsAnonymous() =>
         await (await LoginPage.Goto(Page)).AssertPageId();
-    
+
     [Test]
-    public async Task RegisterPageAllowsAnonymous() => 
+    public async Task RegisterPageAllowsAnonymous() =>
         await (await RegisterPage.Goto(Page)).AssertPageId();
-    
+
     [Test]
     public async Task LogoutPageAllowsAnonymousAndRedirectsToHomePage()
     {
@@ -24,18 +24,18 @@ public class NavigationTests : BaseTest
     }
 
     [Test]
-    public async Task ForbiddenPageAllowsAnonymous() => 
+    public async Task ForbiddenPageAllowsAnonymous() =>
         await (await ForbiddenPage.Goto(Page)).AssertPageId();
-    
+
     [Test]
-    public async Task ResetPasswordPageAllowsAnonymous() => 
+    public async Task ResetPasswordPageAllowsAnonymous() =>
         await (await ResetPasswordPage.Goto(Page)).AssertPageId();
-    
+
     [Test]
-    public async Task ForgotPasswordPagePageAllowsAnonymous() => 
+    public async Task ForgotPasswordPagePageAllowsAnonymous() =>
         await (await ForgotPasswordPage.Goto(Page)).AssertPageId();
-    
+
     [Test]
-    public async Task VerifyPagePageAllowsAnonymous() => 
+    public async Task VerifyPagePageAllowsAnonymous() =>
         await (await VerifyEmailPage.Goto(Page)).AssertPageId();
 }

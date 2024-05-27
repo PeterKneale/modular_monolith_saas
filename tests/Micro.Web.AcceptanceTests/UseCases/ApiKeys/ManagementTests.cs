@@ -12,7 +12,7 @@ public class ManagementTests : BaseTest
     {
         await Page.GivenLoggedIn();
     }
-    
+
     [Test]
     public async Task Can_show_initial_state()
     {
@@ -49,7 +49,7 @@ public class ManagementTests : BaseTest
         // assert
         await page.Alert.AssertError("already in use");
     }
-    
+
     private async Task ListShouldContain(IEnumerable<string> names)
     {
         var list = await ListPage.Goto(Page);

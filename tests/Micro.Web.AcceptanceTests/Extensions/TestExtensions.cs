@@ -15,7 +15,7 @@ public static class TestExtensions
         await page.GotoRelativeUrlAsync($"/Test/GetUserVerificationToken?userId={userId}");
         return await GetGuidFromBody(page);
     }
-    
+
     public static async Task<Guid> GetResetPasswordToken(this IPage page, Guid userId)
     {
         await page.GotoRelativeUrlAsync($"/Test/GetPasswordResetToken?userId={userId}");

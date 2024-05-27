@@ -4,7 +4,7 @@ namespace Micro.Web.AcceptanceTests.UseCases.Auth;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]
-public class UserRegistrationTests: BaseTest
+public class UserRegistrationTests : BaseTest
 {
     [Test]
     public async Task Can_register()
@@ -15,7 +15,7 @@ public class UserRegistrationTests: BaseTest
         await page.Register(data.FirstName, data.LastName, data.Email, data.Password);
         await page.Alert.AssertSuccess("you have been registered");
     }
-    
+
     [Test]
     public async Task Cant_register_twice_with_same_email()
     {
@@ -24,7 +24,7 @@ public class UserRegistrationTests: BaseTest
         var page = await RegisterPage.Goto(Page);
         await page.Register(data.FirstName, data.LastName, data.Email, data.Password);
         await page.Alert.AssertSuccess("you have been registered");
-        
+
         page = await RegisterPage.Goto(Page);
         await page.Register(data.FirstName, data.LastName, data.Email, data.Password);
         await page.Alert.AssertError("already exists");

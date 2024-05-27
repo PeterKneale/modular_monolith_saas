@@ -55,7 +55,7 @@ public class OrganisationTests : BaseTest
         (await details.Menu.GetAllOrganisations()).Should().ContainSingle();
         (await details.Menu.GetSelectedOrganisation()).Should().Be(organisation);
     }
-    
+
     [Test]
     public async Task Selecting_create_organisation_navigates_to_the_organisation_creation_page()
     {

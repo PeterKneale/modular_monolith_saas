@@ -2,8 +2,8 @@
 
 public abstract class BaseTest : IDisposable
 {
-    private IPlaywright _playwright = null!;
     private IBrowser _browser = null!;
+    private IPlaywright _playwright = null!;
 
     protected BaseTest()
     {
@@ -12,12 +12,18 @@ public abstract class BaseTest : IDisposable
 
     protected IPage Page { get; private set; } = null!;
 
+    public void Dispose()
+    {
+        _browser?.DisposeAsync().GetAwaiter().GetResult();
+        _playwright?.Dispose();
+    }
+
     private async Task Setup()
     {
         _playwright = await Playwright.CreateAsync();
         _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = true,
+            Headless = true
             //Headless = false,
             //SlowMo = 100
         });
@@ -30,11 +36,5 @@ public abstract class BaseTest : IDisposable
             (await http.GetAsync(Instance.AliveEndpoint)).EnsureSuccessStatusCode();
             (await http.GetAsync(Instance.ReadyEndpoint)).EnsureSuccessStatusCode();
         }, "Web server is not alive and ready");
-    }
-
-    public void Dispose()
-    {
-        _browser?.DisposeAsync().GetAwaiter().GetResult();
-        _playwright?.Dispose();
     }
 }

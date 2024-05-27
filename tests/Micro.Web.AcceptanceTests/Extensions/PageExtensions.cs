@@ -34,10 +34,10 @@ public static class PageExtensions
         await login.Alert.AssertSuccess();
 
         await LogImpersonationLink(userId, data.Email);
-        
+
         return data with { UserId = userId };
     }
-    
+
     private static async Task LogImpersonationLink(Guid userId, string email)
     {
         var baseUri = Instance.BaseUrl;
