@@ -21,7 +21,7 @@ services:
       - test
       - --collect:"XPlat Code Coverage"
       - --configuration=Release
-      - --verbosity=normal
+      - --verbosity=quiet
       - --filter=Type=System
     depends_on:
       - db

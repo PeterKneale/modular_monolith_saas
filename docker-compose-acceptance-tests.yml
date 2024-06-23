@@ -17,7 +17,7 @@ services:
       - test
       - Micro.Web.AcceptanceTests.dll
       - --configuration=Release
-      - --verbosity=minimal
+      - --verbosity=quiet
     depends_on:
       - web
   
