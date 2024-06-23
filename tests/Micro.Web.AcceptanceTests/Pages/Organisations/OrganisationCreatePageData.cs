@@ -14,6 +14,7 @@ public class OrganisationCreatePageData
                 .Replace("_", string.Empty)
                 .Replace(" ", string.Empty)
                 .Replace(",", string.Empty)
+                .Replace("'", string.Empty)
                 .Replace("-", string.Empty));
     }
 
