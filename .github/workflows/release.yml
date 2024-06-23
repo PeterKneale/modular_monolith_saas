@@ -39,9 +39,9 @@ jobs:
       - name: Publish to GHCR
         env:
           ORIGINAL: microsaas-web
-          IMAGE: microsaas
+          IMAGE: modular_monolith_saas
           OWNER: peterkneale
-          REPO: microsaas
+          REPO: modular_monolith_saas
           VERSION: ${{ steps.version.outputs.tag }}
         run: |
           docker tag $ORIGINAL ghcr.io/$OWNER/$REPO/$IMAGE:$VERSION
