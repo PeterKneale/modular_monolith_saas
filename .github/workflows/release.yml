@@ -45,7 +45,7 @@ jobs:
 
       - name: Publish to GHCR
         env:
-          ORIGINAL: microsaas-web
+          ORIGINAL: modular_monolith_saas-web
           IMAGE: modular_monolith_saas
           OWNER: peterkneale
           REPO: modular_monolith_saas
