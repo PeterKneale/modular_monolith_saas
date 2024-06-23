@@ -4,17 +4,14 @@ using Micro.Common;
 using Micro.Common.Infrastructure.Context;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
-using Micro.IntegrationTests.Common;
 using Micro.Tenants.Infrastructure;
 using Micro.Translations.Infrastructure;
 using Micro.Users.Infrastructure;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
 
-namespace Micro.Modules.IntegrationTests.Fixtures;
+namespace Micro.Modules.SystemTests.Fixtures;
 
-public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
+public class SystemFixture : ITestOutputHelperAccessor, IAsyncLifetime
 {
     private SettableExecutionContextAccessor _accessor = null!;
     private IModule _tenants = null!;
@@ -29,7 +26,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
             .Build();
 
         var services = new ServiceCollection()
-            .AddTestLogging(this)
+            .AddLogging()  
             .AddInMemoryEventBus()
             .BuildServiceProvider();
 

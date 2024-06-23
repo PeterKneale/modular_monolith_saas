@@ -27,7 +27,7 @@ public class UsageTests : BaseTest
 
         // assert
         var response = await client.GetFromJsonAsync<UserDto>("/api/users/current");
-        response.UserId.Should().Be(_data.UserId);
+        response!.UserId.Should().Be(_data.UserId);
     }
 
     private static HttpClient BuildHttpClient(string key)
@@ -55,6 +55,6 @@ public class UsageTests : BaseTest
 
     private class UserDto
     {
-        public Guid UserId { get; }
+        public Guid UserId { get; set; }
     }
 }

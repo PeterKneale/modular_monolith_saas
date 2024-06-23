@@ -21,7 +21,7 @@ public class Alert
         Level = level;
     }
 
-    public string Message { get; init; }
+    public string Message { get; init; } = null!;
     public AlertLevel Level { get; init; }
 
     public string CssClass => $"alert alert-{Enum.GetName(Level)!.ToLower()}";

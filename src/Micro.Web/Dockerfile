@@ -24,8 +24,8 @@ COPY ["src/Micro.Common/Micro.Common.csproj", "src/Micro.Common/"]
 COPY ["src/Micro.Common.Web/Micro.Common.Web.csproj", "src/Micro.Common.Web/"]
 COPY ["tests/Micro.Common.UnitTests/Micro.Common.UnitTests.csproj", "tests/Micro.Common.UnitTests/"]
 
-# module
-COPY ["tests/Micro.Modules.IntegrationTests/Micro.Modules.IntegrationTests.csproj", "tests/Micro.Modules.IntegrationTests/"]
+# system
+COPY ["tests/Micro.Modules.SystemTests/Micro.Modules.SystemTests.csproj", "tests/Micro.Modules.SystemTests/"]
 
 # module - users
 COPY ["src/Micro.Users.Application/Micro.Users.Application.csproj", 							"src/Micro.Users.Application/"]
@@ -54,15 +54,17 @@ COPY ["src/Micro.Translations.Web/Micro.Translations.Web.csproj", 								"src/M
 COPY ["tests/Micro.Translations.Domain.UnitTests/Micro.Translations.Domain.UnitTests.csproj", 	"tests/Micro.Translations.Domain.UnitTests/"]
 COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationTests.csproj", 	"tests/Micro.Translations.IntegrationTests/"]
 
-# testing
-COPY ["tests/Micro.IntegrationTests.Common/Micro.IntegrationTests.Common.csproj", "tests/Micro.IntegrationTests.Common/"]
-
 RUN dotnet restore
 COPY . .
+RUN chmod +x *.sh
 WORKDIR "/workspace/"
 RUN dotnet build "src/Micro.Web/Micro.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS tests
+FROM build AS unit-tests
+
+FROM build AS integration-tests
+
+FROM build AS system-tests
 
 FROM build AS publish
 ARG BUILD_VERSION=1.0.0

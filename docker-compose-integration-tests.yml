@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
 
@@ -7,22 +6,23 @@ services:
     build:
       context: .
       dockerfile: ./src/Micro.Web/Dockerfile
-      target: tests
+      target: integration-tests
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
       - DOTNET_NOLOGO=true
       - DOTNET_CLI_TELEMETRY_OPTOUT=true
+      - DOTNET_NUGET_SIGNATURE_VERIFICATION=false
       - Logging:LogLevel:Default=Warning
       - DB_HOST=db
       - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
     entrypoint:
       - dotnet
       - test
+      - --collect:"XPlat Code Coverage"
       - --configuration=Release
-      - --filter=Type=Integration
       - --verbosity=quiet
-      - --logger=GitHubActions
+      - --filter=Type=Integration
     depends_on:
       - db
 

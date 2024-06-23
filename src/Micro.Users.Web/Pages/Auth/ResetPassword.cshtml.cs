@@ -11,7 +11,7 @@ public class ResetPassword(IUsersModule mediator, ILogger<ResetPassword> logs) :
 
     [Required]
     [BindProperty(SupportsGet = true)]
-    public string Token { get; set; }
+    public string Token { get; set; } = null!;
 
     [Display(Name = "Password")]
     [Required]

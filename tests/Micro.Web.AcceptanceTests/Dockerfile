@@ -15,7 +15,7 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "Micro.Web.AcceptanceTests.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/playwright/dotnet:v1.43.0-jammy AS final
+FROM mcr.microsoft.com/playwright/dotnet:v1.44.0-jammy AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Micro.Web.AcceptanceTests.dll"]

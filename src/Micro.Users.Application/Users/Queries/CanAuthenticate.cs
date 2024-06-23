@@ -32,7 +32,7 @@ public static class CanAuthenticate
                 user.Login(email, password, checker);
                 return new Result(true, user.Id);
             }
-            catch (BusinessRuleBrokenException e)
+            catch (BusinessRuleBrokenException)
             {
                 return new Result(false);
             }

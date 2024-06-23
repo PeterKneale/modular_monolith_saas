@@ -1,14 +1,15 @@
-﻿using Micro.Tenants.Application.Organisations.Commands;
+﻿using Micro.Modules.SystemTests.Fixtures;
+using Micro.Tenants.Application.Organisations.Commands;
 using Micro.Tenants.Infrastructure;
 using Micro.Translations.Infrastructure;
 using Micro.Users.Application.Users.Commands;
 using Micro.Users.Infrastructure;
 using Micro.Users.Infrastructure.Database;
 
-namespace Micro.Modules.IntegrationTests;
+namespace Micro.Modules.SystemTests;
 
-[Collection(nameof(ServiceFixtureCollection))]
-public class IntegrationTests(ServiceFixture service, ITestOutputHelper outputHelper) : BaseTest(service, outputHelper)
+[Collection(nameof(SystemFixtureCollection))]
+public class SyncTests(SystemFixture system, ITestOutputHelper outputHelper) : BaseTest(system, outputHelper)
 {
     [Fact]
     public async Task Users_organisations_and_projects_are_synchronised_to_other_modules()
@@ -26,18 +27,18 @@ public class IntegrationTests(ServiceFixture service, ITestOutputHelper outputHe
         var project = $"Project-{projectId}";
 
         // act and assert
-        await Service.CommandUsers(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
+        await System.CommandUsers(new RegisterUser.Command(userId, firstName, lastName, email, "password"));
         await AssertUserPresenceInUsersModule(userId, firstName, lastName);
         await Sync();
         await AssertUserSyncToTenantsModule(userId, firstName, lastName);
         await AssertUserSyncToTranslationsModule(userId, firstName, lastName);
 
-        await Service.CommandTenants(new CreateOrganisation.Command(organisationId, organisation), userId);
-        await Service.CommandTenants(new CreateProject.Command(projectId, project), userId, organisationId);
+        await System.CommandTenants(new CreateOrganisation.Command(organisationId, organisation), userId);
+        await System.CommandTenants(new CreateProject.Command(projectId, project), userId, organisationId);
         await Sync();
         await AssertProjectSyncToTranslationsModule(projectId, project);
 
-        await Service.CommandUsers(new UpdateUserName.Command(firstNameUpdated, lastNameUpdated), userId);
+        await System.CommandUsers(new UpdateUserName.Command(firstNameUpdated, lastNameUpdated), userId);
         await AssertUserPresenceInUsersModule(userId, firstNameUpdated, lastNameUpdated);
         await Sync();
         await AssertUserSyncToTenantsModule(userId, firstNameUpdated, lastNameUpdated);
@@ -55,16 +56,16 @@ public class IntegrationTests(ServiceFixture service, ITestOutputHelper outputHe
 
     private async Task SyncOut()
     {
-        await Service.CommandUsers(new ProcessOutboxCommand());
-        await Service.CommandTenants(new ProcessOutboxCommand());
-        await Service.CommandTranslations(new ProcessOutboxCommand());
+        await System.CommandUsers(new ProcessOutboxCommand());
+        await System.CommandTenants(new ProcessOutboxCommand());
+        await System.CommandTranslations(new ProcessOutboxCommand());
     }
 
     private async Task SyncIn()
     {
-        await Service.CommandUsers(new ProcessInboxCommand());
-        await Service.CommandTenants(new ProcessInboxCommand());
-        await Service.CommandTranslations(new ProcessInboxCommand());
+        await System.CommandUsers(new ProcessInboxCommand());
+        await System.CommandTenants(new ProcessInboxCommand());
+        await System.CommandTranslations(new ProcessInboxCommand());
     }
 
     private static async Task AssertUserPresenceInUsersModule(Guid userId, string firstName, string lastName)

@@ -3,7 +3,6 @@ using MediatR;
 using Micro.Common;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
-using Micro.IntegrationTests.Common;
 using Micro.Tenants.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,7 +23,7 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
             .Build();
 
         var services = new ServiceCollection()
-            .AddTestLogging(this)
+            .AddLogging()  
             .AddInMemoryEventBus()
             .BuildServiceProvider();
 

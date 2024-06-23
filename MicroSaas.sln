@@ -6,14 +6,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{CC782926-4967-457F-88A2-A4BCD13C38EB}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose-infra.yml = docker-compose-infra.yml
-		docker-compose-acceptance.yml = docker-compose-acceptance.yml
-		docker-compose-integration.yml = docker-compose-integration.yml
-		docker-compose-unit.yml = docker-compose-unit.yml
+		docker-compose-acceptance-tests.yml = docker-compose-acceptance-tests.yml
+		docker-compose-integration-tests.yml = docker-compose-integration-tests.yml
+		docker-compose-unit-tests.yml = docker-compose-unit-tests.yml
 		run-docker-compose-test.sh = run-docker-compose-test.sh
 		run-docker-compose-build.sh = run-docker-compose-build.sh
 		.dockerignore = .dockerignore
 		docker-compose.yml = docker-compose.yml
 		docker-compose-proxy.yml = docker-compose-proxy.yml
+		docker-compose-system-tests.yml = docker-compose-system-tests.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Infrastructure", "src\Micro.Translations.Infrastructure\Micro.Translations.Infrastructure.csproj", "{78DC164C-08C1-4797-8229-502F45FF4C96}"
@@ -49,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Translations.Messages
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Common.UnitTests", "tests\Micro.Common.UnitTests\Micro.Common.UnitTests.csproj", "{D83D5413-12DA-49BE-89CA-3A55041DA1E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Modules.IntegrationTests", "tests\Micro.Modules.IntegrationTests\Micro.Modules.IntegrationTests.csproj", "{CB7A4003-0789-4740-A6C6-AD687D80EEA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.Modules.SystemTests", "tests\Micro.Modules.SystemTests\Micro.Modules.SystemTests.csproj", "{CB7A4003-0789-4740-A6C6-AD687D80EEA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".scripts", ".scripts", "{4451ED11-3583-4CD6-9C83-AF8C6ED0D3FE}"
 	ProjectSection(SolutionItems) = preProject
@@ -74,8 +75,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{882D2D96-59E4-408F-AF68-9E83F4B454E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{18275B1C-629B-45E2-A968-E2B4C38FE1AA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.IntegrationTests.Common", "tests\Micro.IntegrationTests.Common\Micro.IntegrationTests.Common.csproj", "{94FFE5B1-1AED-459E-9326-0CE9105B5A8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{F43D780D-0CAF-4662-935C-D7572DF70078}"
 EndProject
@@ -181,10 +180,6 @@ Global
 		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{360D495D-4117-434D-BCFD-FA4CB2EEF296}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94FFE5B1-1AED-459E-9326-0CE9105B5A8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94FFE5B1-1AED-459E-9326-0CE9105B5A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94FFE5B1-1AED-459E-9326-0CE9105B5A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94FFE5B1-1AED-459E-9326-0CE9105B5A8A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD363FE6-167C-4321-A645-EDAC914D35A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD363FE6-167C-4321-A645-EDAC914D35A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD363FE6-167C-4321-A645-EDAC914D35A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -245,7 +240,6 @@ Global
 		{882D2D96-59E4-408F-AF68-9E83F4B454E1} = {C5645A63-6FD2-4A01-B273-11061F068C10}
 		{7F5702D7-1808-443D-BD92-FFD5FADE5158} = {882D2D96-59E4-408F-AF68-9E83F4B454E1}
 		{D83D5413-12DA-49BE-89CA-3A55041DA1E1} = {882D2D96-59E4-408F-AF68-9E83F4B454E1}
-		{94FFE5B1-1AED-459E-9326-0CE9105B5A8A} = {18275B1C-629B-45E2-A968-E2B4C38FE1AA}
 		{89D08F8E-6B4C-494E-995F-B35314A1C233} = {F43D780D-0CAF-4662-935C-D7572DF70078}
 		{303110BA-112C-4CF4-AE69-7376AA933F87} = {F43D780D-0CAF-4662-935C-D7572DF70078}
 		{EC07F9A9-C93F-4E60-B1F0-EB031463181B} = {99181E11-142C-4C97-B254-9E9E7E27EF05}

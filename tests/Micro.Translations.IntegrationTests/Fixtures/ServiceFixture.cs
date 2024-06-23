@@ -3,7 +3,6 @@ using MediatR;
 using Micro.Common;
 using Micro.Common.Infrastructure.Integration;
 using Micro.Common.Infrastructure.Integration.Bus;
-using Micro.IntegrationTests.Common;
 using Micro.Translations.Infrastructure;
 using Microsoft.Extensions.Logging;
 using ExecutionContext = Micro.Common.Infrastructure.Context.ExecutionContext;
@@ -21,9 +20,9 @@ public class ServiceFixture : ITestOutputHelperAccessor, IAsyncLifetime
             .AddJsonFile("appsettings.json", false)
             .AddEnvironmentVariables()
             .Build();
-
+        
         var services = new ServiceCollection()
-            .AddTestLogging(this)
+            .AddLogging()  
             .AddInMemoryEventBus()
             .BuildServiceProvider();
 

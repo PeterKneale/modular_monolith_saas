@@ -14,9 +14,9 @@ public class Language : BaseEntity
         Detail = detail;
     }
 
-    public LanguageId LanguageId { get; }
-    public ProjectId ProjectId { get; }
-    public LanguageDetail Detail { get; }
+    public LanguageId LanguageId { get; } = null!;
+    public ProjectId ProjectId { get; } = null!;
+    public LanguageDetail Detail { get; } = null!;
 
     public static Language FromIsoCode(LanguageId languageId, ProjectId projectId, string isoCode)
     {

@@ -7,19 +7,20 @@
         <!-- https://learn.microsoft.com/en-us/aspnet/core/razor-pages/sdk?view=aspnetcore-8.0>-->
         <!-- TODO: This should be enabled by default -->
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+        <NoWarn>CS8618</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-        <SupportedPlatform Include="browser"/>
+        <SupportedPlatform Include="browser" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.6" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj"/>
-        <ProjectReference Include="..\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Micro.Common.Web\Micro.Common.Web.csproj" />
+        <ProjectReference Include="..\Micro.Users.Infrastructure\Micro.Users.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

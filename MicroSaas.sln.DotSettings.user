@@ -12,32 +12,22 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=F6117A4E_002D3072_002D452A_002D9E25_002D526D6C6EF596/@EntryIndexedValue">1E66C0C9-DAA3-4E55-86C7-F6197E900D57</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=480429eb_002D27e1_002D498e_002Db74e_002Dace49c25060b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Throw_context_exception_when_no_current_user" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b013dc63_002Df2d3_002D4169_002D8d0d_002D8d36b596ca6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;xUnit::CB7A4003-0789-4740-A6C6-AD687D80EEA5::net8.0::Micro.Modules.IntegrationTests.IntegrationTests.Users_organisations_and_projects_are_synchronised_to_other_modules&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
-  &lt;/Or&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79d0538d_002D11ab_002D477a_002Db196_002Da699ed6eb22d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;modules&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;modules&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Micro.Modules.IntegrationTests&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;ProjectFolder&gt;303110BA-112C-4CF4-AE69-7376AA933F87/d:UseCases&lt;/ProjectFolder&gt;&#xD;
+      &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
+    &lt;/And&gt;&#xD;
+    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Modules.SystemTests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Micro.Modules.SystemTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=91c7fef2_002D40fb_002D4f76_002D9424_002Da3563d987e15/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\dev\projects\MicroSaas" Presentation="&amp;lt;tests&amp;gt;" /&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ae2f4b77_002D1254_002D4466_002D9f6a_002D279b6404b753/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Registering_synchronises_users" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::CB7A4003-0789-4740-A6C6-AD687D80EEA5::net8.0::Micro.Modules.IntegrationTests.RegistrationTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
 	
 	
 	

@@ -13,8 +13,8 @@ public class LanguageDetail : ValueObject
         Name = name;
     }
 
-    public string Code { get; }
-    public string Name { get; }
+    public string Code { get; } = null!;
+    public string Name { get; } = null!;
 
     public static LanguageDetail Create(string isoCode)
     {

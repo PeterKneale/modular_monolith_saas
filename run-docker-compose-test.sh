@@ -3,10 +3,9 @@ set -e
 
 echo "##########################################"
 echo "Running unit tests"
-echo "Running unit tests" >> $GITHUB_STEP_SUMMARY
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-unit.yml build
-docker compose --progress quiet -f docker-compose-unit.yml up \
+docker compose --progress quiet -f docker-compose-unit-tests.yml build
+docker compose --progress quiet -f docker-compose-unit-tests.yml up \
   --force-recreate \
   --remove-orphans \
   --no-log-prefix \
@@ -15,10 +14,9 @@ docker compose --progress quiet -f docker-compose-unit.yml up \
 
 echo "##########################################"
 echo "Running integration tests"
-echo "Running integration Tests" >> $GITHUB_STEP_SUMMARY
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-integration.yml build
-docker compose --progress quiet -f docker-compose-integration.yml up \
+docker compose --progress quiet -f docker-compose-integration-tests.yml build
+docker compose --progress quiet -f docker-compose-integration-tests.yml up \
   --force-recreate \
   --remove-orphans \
   --no-log-prefix \
@@ -26,11 +24,21 @@ docker compose --progress quiet -f docker-compose-integration.yml up \
   --exit-code-from integration-tests
   
 echo "##########################################"
-echo "Running acceptance tests"
-echo "Running acceptance Tests" >> $GITHUB_STEP_SUMMARY
+echo "Running system tests"
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-acceptance.yml build
-docker compose --progress quiet -f docker-compose-acceptance.yml up \
+docker compose --progress quiet -f docker-compose-system-tests.yml build
+docker compose --progress quiet -f docker-compose-system-tests.yml up \
+  --force-recreate \
+  --remove-orphans \
+  --no-log-prefix \
+  --abort-on-container-exit \
+  --exit-code-from system-tests
+  
+echo "##########################################"
+echo "Running acceptance tests"
+echo "##########################################"
+docker compose --progress quiet -f docker-compose-acceptance-tests.yml build
+docker compose --progress quiet -f docker-compose-acceptance-tests.yml up \
   --force-recreate \
   --remove-orphans \
   --no-log-prefix \
