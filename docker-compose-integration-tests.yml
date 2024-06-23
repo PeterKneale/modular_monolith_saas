@@ -23,6 +23,7 @@ services:
       - --configuration=Release
       - --verbosity=quiet
       - --filter=Type=Integration
+      - --logger GitHubActions
     depends_on:
       - db
 

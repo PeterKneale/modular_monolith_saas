@@ -21,3 +21,4 @@ services:
       - --configuration=Release
       - --verbosity=quiet 
       - --filter=Type=Unit
+      - --logger GitHubActions
