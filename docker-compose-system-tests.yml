@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./src/Micro.Web/Dockerfile
-      target: system-tests
+      target: tests
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
@@ -19,6 +19,7 @@ services:
     entrypoint:
       - dotnet
       - test
+      - --no-restore
       - --collect:"XPlat Code Coverage"
       - --configuration=Release
       - --verbosity=quiet

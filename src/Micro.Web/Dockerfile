@@ -56,15 +56,10 @@ COPY ["tests/Micro.Translations.IntegrationTests/Micro.Translations.IntegrationT
 
 RUN dotnet restore
 COPY . .
-RUN chmod +x *.sh
 WORKDIR "/workspace/"
-RUN dotnet build "src/Micro.Web/Micro.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS unit-tests
-
-FROM build AS integration-tests
-
-FROM build AS system-tests
+FROM build AS tests
 
 FROM build AS publish
 ARG BUILD_VERSION=1.0.0

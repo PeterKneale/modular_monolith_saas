@@ -16,6 +16,7 @@ services:
       - dotnet
       - test
       - Micro.Web.AcceptanceTests.dll
+      - --no-restore
       - --configuration=Release
       - --verbosity=quiet
       - --logger=GitHubActions

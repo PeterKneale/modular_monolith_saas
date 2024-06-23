@@ -1,43 +1,21 @@
 #!/bin/bash
-set -e
-docker compose build
 
-echo "##########################################"
-echo "::notice ::Running unit tests"
-echo "##########################################"
-docker compose --progress quiet -f docker-compose-unit-tests.yml up \
-  --force-recreate \
-  --remove-orphans \
-  --no-log-prefix \
-  --abort-on-container-exit \
-  --exit-code-from unit-tests
+run_tests() {
+  local test_type=$1
+  local compose_file="docker-compose-${test_type}-tests.yml"
 
-echo "##########################################"
-echo "::notice ::Running integration tests"
-echo "##########################################"
-docker compose --progress quiet -f docker-compose-integration-tests.yml up \
-  --force-recreate \
-  --remove-orphans \
-  --no-log-prefix \
-  --abort-on-container-exit \
-  --exit-code-from integration-tests
-  
-echo "##########################################"
-echo "::notice ::Running system tests"
-echo "##########################################"
-docker compose --progress quiet -f docker-compose-system-tests.yml up \
-  --force-recreate \
-  --remove-orphans \
-  --no-log-prefix \
-  --abort-on-container-exit \
-  --exit-code-from system-tests
-  
-echo "##########################################"
-echo "::notice ::Running acceptance tests"
-echo "##########################################"
-docker compose --progress quiet -f docker-compose-acceptance-tests.yml up \
-  --force-recreate \
-  --remove-orphans \
-  --no-log-prefix \
-  --abort-on-container-exit \
-  --exit-code-from acceptance-tests
+  echo "::notice ::Running ${test_type} tests"
+  docker compose --progress quiet -f "${compose_file}" up \
+    --force-recreate \
+    --remove-orphans \
+    --no-log-prefix \
+    --abort-on-container-exit \
+    --exit-code-from "${test_type}-tests"
+}
+
+echo "::notice ::Running tests..."
+run_tests "unit"
+run_tests "integration"
+run_tests "system"
+run_tests "acceptance"
+echo "::notice ::Running tests completed."
