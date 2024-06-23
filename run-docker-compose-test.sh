@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
+docker compose build
 
 echo "##########################################"
-echo "Running unit tests"
+echo "::notice ::Running unit tests"
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-unit-tests.yml build
 docker compose --progress quiet -f docker-compose-unit-tests.yml up \
   --force-recreate \
   --remove-orphans \
@@ -13,9 +13,8 @@ docker compose --progress quiet -f docker-compose-unit-tests.yml up \
   --exit-code-from unit-tests
 
 echo "##########################################"
-echo "Running integration tests"
+echo "::notice ::Running integration tests"
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-integration-tests.yml build
 docker compose --progress quiet -f docker-compose-integration-tests.yml up \
   --force-recreate \
   --remove-orphans \
@@ -24,9 +23,8 @@ docker compose --progress quiet -f docker-compose-integration-tests.yml up \
   --exit-code-from integration-tests
   
 echo "##########################################"
-echo "Running system tests"
+echo "::notice ::Running system tests"
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-system-tests.yml build
 docker compose --progress quiet -f docker-compose-system-tests.yml up \
   --force-recreate \
   --remove-orphans \
@@ -35,9 +33,8 @@ docker compose --progress quiet -f docker-compose-system-tests.yml up \
   --exit-code-from system-tests
   
 echo "##########################################"
-echo "Running acceptance tests"
+echo "::notice ::Running acceptance tests"
 echo "##########################################"
-docker compose --progress quiet -f docker-compose-acceptance-tests.yml build
 docker compose --progress quiet -f docker-compose-acceptance-tests.yml up \
   --force-recreate \
   --remove-orphans \
