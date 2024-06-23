@@ -21,7 +21,10 @@ jobs:
 
       - name: Test
         run: ./run-docker-compose-test.sh
-        
+
+      - name: Display
+        run: docker images
+            
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
