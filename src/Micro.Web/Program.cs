@@ -30,10 +30,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(c => { c.AddSimpleConsole(x => { x.SingleLine = true; }); });
 
 // Data protection keys, necessary for multiple instances of the web server
-var keysFolder = Path.Combine(builder.Environment.ContentRootPath, "Files");
 builder.Services
     .AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "Files")))
+    .DisableAutomaticKeyGeneration()
     .SetApplicationName(nameof(Micro.Web));
 
 // Add services to the container.
