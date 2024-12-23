@@ -33,7 +33,6 @@ builder.Services.AddLogging(c => { c.AddSimpleConsole(x => { x.SingleLine = true
 builder.Services
     .AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "Files")))
-    .DisableAutomaticKeyGeneration()
     .SetApplicationName(nameof(Micro.Web));
 
 // Add services to the container.
