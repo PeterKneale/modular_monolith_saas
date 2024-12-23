@@ -11,11 +11,6 @@ jobs:
     runs-on: self-hosted
     steps:
 
-      - name: 'Cleanup build folder'
-        run: |
-          rm -rf ./* || true
-          rm -rf ./.??* || true
-
       - uses: actions/checkout@v4
         with:
           show-progress: 'false'
