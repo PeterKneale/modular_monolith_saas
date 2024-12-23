@@ -11,6 +11,11 @@ run_tests() {
     --no-log-prefix \
     --abort-on-container-exit \
     --exit-code-from "${test_type}-tests"
+
+  if [ $? -ne 0 ]; then
+    echo "::error file=${compose_file},line=1,col=1::${test_type^} tests failed"
+    exit 1
+  fi
 }
 
 echo "::notice ::Running tests..."
