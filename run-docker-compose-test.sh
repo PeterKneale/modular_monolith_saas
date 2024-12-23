@@ -8,7 +8,6 @@ run_tests() {
   docker compose --progress quiet -f "${compose_file}" up \
     --force-recreate \
     --remove-orphans \
-    --no-log-prefix \
     --abort-on-container-exit \
     --exit-code-from "${test_type}-tests"
 
