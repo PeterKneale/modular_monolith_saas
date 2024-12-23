@@ -14,11 +14,8 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b013dc63_002Df2d3_002D4169_002D8d0d_002D8d36b596ca6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
-    &lt;And&gt;&#xD;
-      &lt;ProjectFolder&gt;303110BA-112C-4CF4-AE69-7376AA933F87/d:UseCases&lt;/ProjectFolder&gt;&#xD;
-      &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Web.AcceptanceTests" Presentation="&amp;lt;web&amp;gt;\&amp;lt;Micro.Web.AcceptanceTests&amp;gt;" /&gt;&#xD;
-    &lt;/And&gt;&#xD;
-    &lt;Project Location="C:\dev\projects\MicroSaas\tests\Micro.Modules.SystemTests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Micro.Modules.SystemTests&amp;gt;" /&gt;&#xD;
+    &lt;Project Location="C:\dev\personal\modular_monolith_saas\tests\Micro.Users.Domain.UnitTests" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;users&amp;gt;\&amp;lt;tests&amp;gt;\&amp;lt;Micro.Users.Domain.UnitTests&amp;gt;" /&gt;&#xD;
+    &lt;Project Location="C:\dev\personal\modular_monolith_saas\tests\Micro.Translations.Domain.UnitTests" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;translations&amp;gt;\&amp;lt;tests&amp;gt;\&amp;lt;Micro.Translations.Domain.UnitTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
