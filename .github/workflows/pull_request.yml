@@ -1,0 +1,21 @@
+name: pull_request
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  
+  pull_request:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: 'false'
+
+      - name: Build
+        run: ./run-docker-compose-build.sh
+
+      - name: Test
+        run: ./run-docker-compose-test.sh
