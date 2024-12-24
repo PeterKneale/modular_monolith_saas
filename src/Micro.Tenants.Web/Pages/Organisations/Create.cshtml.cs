@@ -23,7 +23,7 @@ public class Create(ITenantsModule module) : PageModel
         }
         catch (PlatformException e)
         {
-            ModelState.AddModelError(string.Empty, e.Message!);
+            ModelState.AddModelError(string.Empty, e.Message);
             return Page();
         }
     }

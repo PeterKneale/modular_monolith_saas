@@ -35,7 +35,7 @@ internal static class ServiceCollectionExtensions
         services.AddSingleton<ConnectionFactory>(_ => new ConnectionFactory(connectionString));
 
         // Services
-        services.AddSingleton<IOrganisationNameCheck, OrganisationNameCheck>();
+        services.AddScoped<IOrganisationNameCheck, OrganisationNameCheck>();
 
         // Repositories
         services.AddScoped<IOrganisationRepository, OrganisationRepository>();
@@ -54,8 +54,8 @@ internal static class ServiceCollectionExtensions
         {
             options.UseNpgsql(connectionString);
             options.UseLoggerFactory(ctx.GetRequiredService<ILoggerFactory>());
-            // options.EnableSensitiveDataLogging();
-            // options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
         });
 
         // Inbox/Outbox

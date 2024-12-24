@@ -12,4 +12,7 @@ internal static class TenantsCompositionRoot
 
     public static IServiceScope BeginLifetimeScope() =>
         _provider?.CreateScope() ?? throw new Exception("Service provider not set.");
+    
+    public static AsyncServiceScope BeginAsyncLifetimeScope() =>
+        _provider?.CreateAsyncScope() ?? throw new Exception("Service provider not set.");
 }

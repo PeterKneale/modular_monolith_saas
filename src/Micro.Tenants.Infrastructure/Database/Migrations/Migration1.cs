@@ -20,7 +20,6 @@ public class Migration1 : Migration
             .WithColumn(RoleColumn).AsString(RoleMaxLength)
             .WithColumn(CreatedAt).AsDateTimeOffset()
             .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();
-        ;
 
         Create.Table(UsersTable)
             .WithColumn(IdColumn).AsGuid().PrimaryKey()
@@ -32,7 +31,6 @@ public class Migration1 : Migration
             .WithColumn(NameColumn).AsString(NameMaxLength)
             .WithColumn(CreatedAt).AsDateTimeOffset()
             .WithColumn(UpdatedAt).AsDateTimeOffset().Nullable();
-        ;
 
         Create.ForeignKey($"fk_{MembershipsTable}_{OrganisationsTable}")
             .FromTable(MembershipsTable).ForeignColumn(OrganisationIdColumn)
