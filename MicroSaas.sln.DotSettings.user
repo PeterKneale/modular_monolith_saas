@@ -1,4 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AConcurrencyDetector_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FUsers_003Fpeter_002Ekneale_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F9c8f16a6f2a832e3e14957cfc4ac2c6fe5a78bacb9e21524267e621242e_003FConcurrencyDetector_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASingleQueryingEnumerable_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FUsers_003Fpeter_002Ekneale_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F413341ec7da6e42cb630e52ba9208edacb2e7267da1d9296f51628fcd35e81d9_003FSingleQueryingEnumerable_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\dev\projects\MicroSaas\tests\Micro.Modules.IntegrationTests\bin\Debug\net8.0\Micro.Translations.Application.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.4\System.Private.CoreLib.dll" /&gt;&#xD;
@@ -12,12 +14,14 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=7F5702D7_002D1808_002D443D_002DBD92_002DFFD5FADE5158/@EntryIndexedValue">D83D5413-12DA-49BE-89CA-3A55041DA1E1</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=F6117A4E_002D3072_002D452A_002D9E25_002D526D6C6EF596/@EntryIndexedValue">1E66C0C9-DAA3-4E55-86C7-F6197E900D57</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b013dc63_002Df2d3_002D4169_002D8d0d_002D8d36b596ca6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;Project Location="C:\dev\personal\modular_monolith_saas\tests\Micro.Users.Domain.UnitTests" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;users&amp;gt;\&amp;lt;tests&amp;gt;\&amp;lt;Micro.Users.Domain.UnitTests&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="C:\dev\personal\modular_monolith_saas\tests\Micro.Translations.Domain.UnitTests" Presentation="&amp;lt;modules&amp;gt;\&amp;lt;translations&amp;gt;\&amp;lt;tests&amp;gt;\&amp;lt;Micro.Translations.Domain.UnitTests&amp;gt;" /&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=22012913_002D896a_002D41cd_002Db49f_002Dc20e070aa276/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Many_can_be_created_at_once" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::74F19403-CCCC-4B1C-9810-58E139698770::net9.0::Micro.Tenants.IntegrationTests.UseCases.Organisations.ParallelisationTest.Many_can_be_created_at_once&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
+	
 	
 	
 	

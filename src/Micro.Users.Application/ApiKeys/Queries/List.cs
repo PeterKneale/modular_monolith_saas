@@ -6,9 +6,7 @@ public static class List
 
     public record Result(Guid Id, string Name);
 
-    public class Validator : AbstractValidator<Query>
-    {
-    }
+    public class Validator : AbstractValidator<Query>;
 
     public class Handler(IApiKeyRepository keys, IExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
     {

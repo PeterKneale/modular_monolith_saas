@@ -136,7 +136,7 @@ app.MapHealthChecks("/health/alive", new HealthCheckOptions
 });
 app.MapHealthChecks("/health/ready", new HealthCheckOptions
 {
-    Predicate = checks => checks.Tags.Contains("db"),
+    Predicate = checks => checks.Tags.Contains("db")
 });
 
 var usersApi = app.MapGroup("/api/users");

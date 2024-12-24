@@ -4,9 +4,7 @@ public static class DeleteOrganisation
 {
     public record Command : IRequest;
 
-    public class Validator : AbstractValidator<Command>
-    {
-    }
+    public class Validator : AbstractValidator<Command>;
 
     public class Handler(IExecutionContext context, IOrganisationRepository organisations) : IRequestHandler<Command>
     {

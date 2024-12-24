@@ -4,9 +4,7 @@ public static class ForgotPassword
 {
     public record Command(string Email) : IRequest;
 
-    public class Validator : AbstractValidator<Command>
-    {
-    }
+    public class Validator : AbstractValidator<Command>;
 
     public class Handler(IUserRepository users) : IRequestHandler<Command>
     {

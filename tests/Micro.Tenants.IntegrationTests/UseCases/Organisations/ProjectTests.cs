@@ -13,7 +13,6 @@ public class ProjectTests(ServiceFixture service, ITestOutputHelper outputHelper
         var userId = await GivenUser();
         var organisationId = await GivenOrganisation(userId);
         var projectId = Guid.NewGuid();
-        var orgName = Guid.NewGuid().ToString()[..10];
         var projectName = Guid.NewGuid().ToString()[..10];
         var projectNameUpdated = Guid.NewGuid().ToString()[..10];
 
