@@ -3,4 +3,4 @@
 public interface ITenantsModule : IModule;
 
 [ExcludeFromCodeCoverage]
-public class TenantsModule() : BaseModule(TenantsCompositionRoot.BeginLifetimeScope), ITenantsModule;
+public class TenantsModule() : BaseModule(TenantsCompositionRoot.BeginAsyncLifetimeScope), ITenantsModule;

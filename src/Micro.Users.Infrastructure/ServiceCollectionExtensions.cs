@@ -66,8 +66,8 @@ internal static class ServiceCollectionExtensions
         {
             options.UseNpgsql(connectionString);
             options.UseLoggerFactory(ctx.GetRequiredService<ILoggerFactory>());
-            // options.EnableSensitiveDataLogging();
-            // options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
         });
 
         // Inbox/Outbox

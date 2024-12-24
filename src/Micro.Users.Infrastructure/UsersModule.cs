@@ -3,4 +3,4 @@
 public interface IUsersModule : IModule;
 
 [ExcludeFromCodeCoverage]
-public class UsersModule() : BaseModule(UsersCompositionRoot.BeginLifetimeScope), IUsersModule;
+public class UsersModule() : BaseModule(UsersCompositionRoot.BeginAsyncLifetimeScope), IUsersModule;
