@@ -13,7 +13,6 @@ services:
       - DOTNET_CLI_TELEMETRY_OPTOUT=true
       - DOTNET_NUGET_SIGNATURE_VERIFICATION=false
       - Logging:LogLevel:Default=Warning
-      - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
     entrypoint:
       - dotnet 
       - test 
@@ -22,4 +21,3 @@ services:
       - --configuration=Release
       - --verbosity=quiet 
       - --filter=Type=Unit
-      - --logger=GitHubActions

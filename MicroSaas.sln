@@ -70,6 +70,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{644DFC0E-D660-4C21-A3B0-40B264F88C8F}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\pull_request.yml = .github\workflows\pull_request.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{882D2D96-59E4-408F-AF68-9E83F4B454E1}"

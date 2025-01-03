@@ -8,9 +8,13 @@ run_tests() {
   docker compose --progress quiet -f "${compose_file}" up \
     --force-recreate \
     --remove-orphans \
-    --no-log-prefix \
     --abort-on-container-exit \
     --exit-code-from "${test_type}-tests"
+
+  if [ $? -ne 0 ]; then
+    echo "::error file=${compose_file},line=1,col=1::${test_type^} tests failed"
+    exit 1
+  fi
 }
 
 echo "::notice ::Running tests..."

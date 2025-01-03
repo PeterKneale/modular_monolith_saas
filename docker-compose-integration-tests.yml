@@ -15,7 +15,6 @@ services:
       - DOTNET_NUGET_SIGNATURE_VERIFICATION=false
       - Logging:LogLevel:Default=Warning
       - DB_HOST=db
-      - GITHUB_ACTIONS=${GITHUB_ACTIONS:-FALSE}
     entrypoint:
       - dotnet
       - test
@@ -24,7 +23,6 @@ services:
       - --configuration=Release
       - --verbosity=quiet
       - --filter=Type=Integration
-      - --logger=GitHubActions
     depends_on:
       - db
 

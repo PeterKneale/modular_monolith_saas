@@ -6,9 +6,7 @@ public static class ListLanguages
 
     public record Result(Guid Id, string Name, string Code);
 
-    public class Validator : AbstractValidator<Query>
-    {
-    }
+    public class Validator : AbstractValidator<Query>;
 
     public class Handler(IDbConnection db, IExecutionContext context) : IRequestHandler<Query, IEnumerable<Result>>
     {

@@ -15,7 +15,8 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "Micro.Web.AcceptanceTests.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/playwright/dotnet:v1.44.0-jammy AS final
+FROM mcr.microsoft.com/playwright/dotnet:v1.49.0-jammy AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --install-dir /usr/share/dotnet --channel 9.0
 ENTRYPOINT ["dotnet", "Micro.Web.AcceptanceTests.dll"]

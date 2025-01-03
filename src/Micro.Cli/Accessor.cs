@@ -1,9 +1,8 @@
 ﻿using Micro.Common.Application;
 
-namespace Micro.Cli
+namespace Micro.Cli;
+
+public class Accessor : IExecutionContextAccessor
 {
-    public class Accessor : IExecutionContextAccessor
-    {
-        public IExecutionContext ExecutionContext { get; set; } = null!;
-    }
+    public IExecutionContext ExecutionContext { get; init; } = null!;
 }

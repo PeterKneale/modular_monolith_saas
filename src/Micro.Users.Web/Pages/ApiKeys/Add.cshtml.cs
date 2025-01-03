@@ -26,7 +26,7 @@ internal class Add(IUsersModule module) : PageModel
         }
         catch (PlatformException e)
         {
-            ModelState.AddModelError(string.Empty, e.Message!);
+            ModelState.AddModelError(string.Empty, e.Message);
             return Page();
         }
     }

@@ -9,9 +9,7 @@ public static class ListAllLanguages
 
     public record Result(string Code, string Name);
 
-    public class Validator : AbstractValidator<Query>
-    {
-    }
+    public class Validator : AbstractValidator<Query>;
 
     public class Handler : IRequestHandler<Query, IEnumerable<Result>>
     {
