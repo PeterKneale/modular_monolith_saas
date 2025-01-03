@@ -2,6 +2,4 @@
 
 namespace Micro.Tenants.Web.Pages.Project;
 
-public class Details(IPageContextAccessor context) : ContextualPageModel(context)
-{
-}
+public class Details(IPageContextAccessor context) : ContextualPageModel(context);

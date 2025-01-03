@@ -6,9 +6,7 @@ public static class GetOrganisationByContext
 
     public record Result(Guid Id, string Name);
 
-    public class Validator : AbstractValidator<Query>
-    {
-    }
+    public class Validator : AbstractValidator<Query>;
 
     public class Handler(IExecutionContext context, IOrganisationRepository organisations) : IRequestHandler<Query, Result>
     {

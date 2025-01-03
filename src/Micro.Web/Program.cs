@@ -30,10 +30,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(c => { c.AddSimpleConsole(x => { x.SingleLine = true; }); });
 
 // Data protection keys, necessary for multiple instances of the web server
-var keysFolder = Path.Combine(builder.Environment.ContentRootPath, "Files");
 builder.Services
     .AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "Files")))
     .SetApplicationName(nameof(Micro.Web));
 
 // Add services to the container.
@@ -137,7 +136,7 @@ app.MapHealthChecks("/health/alive", new HealthCheckOptions
 });
 app.MapHealthChecks("/health/ready", new HealthCheckOptions
 {
-    Predicate = checks => checks.Tags.Contains("db"),
+    Predicate = checks => checks.Tags.Contains("db")
 });
 
 var usersApi = app.MapGroup("/api/users");
